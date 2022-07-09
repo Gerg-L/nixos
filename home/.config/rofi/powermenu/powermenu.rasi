@@ -1,0 +1,42 @@
+* {
+  background: #00000000;
+  black: #000000;
+  blue: #7aa2f7;
+  deepblue: #03339c;
+}
+* {
+  background-color: #00000000;
+  text-color: @blue;
+  font: "Material Design Icons 60";
+}
+prompt,inputbar,entry,textbox-prompt-colon { enabled: false; }
+#window {
+  width: 100%;
+  height: 100%;
+  background-color: @background;
+  transparency: "real";
+  children: [dummy, listview, dummy];
+}
+#dummyofdummy {
+  children: [dummy, listview, dummy];
+}
+#dummy {
+  expand: true;
+}
+listview {
+  lines: 4;
+  layout: horizontal;
+  children: [element];
+  margin: 100px 0px 100px 585px;
+}
+#element {
+  padding: 30px 40px;
+  background-color: @black;
+  border-color: #00000000;
+  border-radius: 20px;
+  text-color: @black;
+}
+#element.selected {
+  text-color: @black;
+  background-color: @deepblue;
+}

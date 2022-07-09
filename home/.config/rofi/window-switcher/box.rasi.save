@@ -1,0 +1,109 @@
+configuration {
+    show-icons:              true;
+    icon-theme:              "Flat-Remix-Blue-Dark";
+    disable-history:         true;
+    fullscreen:              false;
+    hide-scrollbar:          true;
+    sidebar-mode:            false;
+    display-window:          "";
+    window-format :          "{t}";
+    window-thumbnail:        false;
+}
+
+* {
+    background-color: #000000;
+    black: #000000;
+    text-color: #7AA2F7;
+    blue: #7AA2F7;
+    deepblue: #03339c;
+    clear: #00000000;
+    font: "Overpass 16";
+}
+
+window {
+    border: 0px;
+    border-color: @deepblue;
+    border-radius: 20px;
+    height: 18.8%;
+    location: center;
+    x-offset: 0;
+    y-offset: 0;
+}
+
+prompt {
+    enabled: false;
+    padding: 0.25% 0.75% 0% -0.25%;
+}
+
+entry {
+    enabled: false;
+    placeholder-color: @blue;
+    expand: false;
+    horizontal-align: 0;
+    placeholder: "Switch to...";
+    padding: 0% 0% 0% 0%;
+    blink: true;
+}
+
+inputbar {
+    enabled: false;
+    children: [ prompt, entry];
+    expand: false;
+    border: 0.3% 0% 0.3% 0%;
+    border-radius: 100%;
+    border-color: @deepblue;
+    margin: 0% 0% 0% 0%;
+}
+
+listview {
+    margin: 0.3% 0% 0% 0%;
+    columns: 6;
+    row: 1;
+    spacing: 1%;
+    cycle: true;
+    dynamic: true;
+    layout: vertical;
+    fixed-height  : true;
+}
+
+mainbox {
+    border: 0% 0% 0% 0%;
+    border-radius: 0% 0% 0% 0%;
+    border-color: @accent;
+    children: [ inputbar, listview];
+    spacing: -100%;
+    padding: 1.5% 1% 1% 1%;
+}
+
+element {
+    orientation: vertical;
+    border-radius: 100px;
+    padding: 2% 0% 0% 0%;
+}
+
+element-icon {
+    size: 100px;
+    border: 0px;
+}
+
+element-text {
+    expand: false;
+    horizontal-align: 0.5;
+    vertical-align: 0.9;
+    margin: 1% 0.5% 0.7% 0.5%;
+}
+
+element selected {
+    background-color: @deepblue;
+    border: 3px;
+    border-radius: 15px;
+    border-color: @deepblue;
+}
+
+element-text, element-icon, element {
+	background-color:		inherit;
+}
+
+listview, element, element selected, element-icon, element-text {
+	cursor:				pointer;
+}

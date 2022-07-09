@@ -1,0 +1,111 @@
+configuration{
+    modi: "run,drun,window";
+    lines: 5;
+    show-icons: true;
+    icon-theme: "Flat-Remix-Blue-Dark";
+    terminal: "alacritty";
+    drun-display-format: "{name}";
+    location: 0;
+    disable-history: false;
+    hide-scrollbar: true;
+    display-drun: " 󰵆  Apps ";
+    display-run: " 󰆍  Run ";
+    display-window: " 󱂬  Window";
+    sidebar-mode: true;
+}
+@theme "/dev/null"
+* {
+    background-color: #000000;
+    text-color: #7AA2F7;
+    black:  #000000;
+    blue: #7AA2F7;
+    deepblue: #03339c;
+    clear: #00000000;
+    width: 800;
+    font: "Overpass 16";
+}
+window {
+    height: 500px;
+    border: 0px;
+    border-radius: 15;
+}
+
+mainbox {
+    children: [ mode-switcher, inputbar, listview ];
+}
+
+inputbar {
+    children: [prompt,entry];
+    background-color: @black;
+    border-radius: 5px;
+    padding: 2px;
+}
+
+prompt {
+    background-color: @blue;
+    padding: 6px;
+    text-color: @black;
+    border-radius: 5px;
+    margin: 20px 0px 0px 20px;
+}
+
+textbox-prompt-colon {
+    expand: false;
+    str: ":";
+}
+
+entry {
+    padding: 6px;
+    margin: 20px 0px 0px 10px;
+}
+
+listview {
+    border: 0px 0px 0px;
+    padding: 10 10 0;
+    margin: 10 10 0 10;
+    columns: 4;
+    spacing: 15;
+}
+
+element {
+    padding: 5px;
+    orientation: vertical;
+    spacing: 10;
+}
+
+element-icon {
+    size: 56px;
+    horizontal-align: 0.5;
+    background-color: @clear;
+}
+
+element selected {
+    background-color:  @deepblue ;
+    text-color: @black  ;
+    border-radius: 8px;
+}
+
+element-text {
+    vertical-align: 0.5;
+    horizontal-align: 0.5;
+    expand: true;
+    background-color: @clear;
+}
+
+mode-switcher {
+    spacing: 0;
+    margin: 5 10 5 10;
+    padding: 10 50 5 50;
+}
+
+button {
+    padding: 10px;
+    vertical-align: 0.5; 
+    horizontal-align: 0.5;
+}
+
+button selected {
+  background-color:  @blue ;
+  text-color: @black;
+  border-radius: 10px;
+}
