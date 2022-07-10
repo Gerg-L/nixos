@@ -9,6 +9,7 @@
       ./packages.nix
       ./fonts.nix
       ./thunar.nix
+      ./nur.nix
     ];
   nix = {
     package = pkgs.nixFlakes;

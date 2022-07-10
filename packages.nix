@@ -21,6 +21,7 @@ environment.systemPackages = with pkgs; [
      dash
      #user/gui
      discord
+     spotify
      spotify-tray
      vlc
      bitwarden
@@ -45,5 +46,5 @@ environment.systemPackages = with pkgs; [
      gpick
      xclip
      alsa-utils
-   ];
+  ];
 }

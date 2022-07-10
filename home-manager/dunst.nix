@@ -3,8 +3,8 @@
   services.dunst = {
     enable = true;
     iconTheme = {
-      name = "Papirus";
-      package = pkgs.papirus-icon-theme;
+      package = pkgs.flat-remix-icon-theme;
+      name = "Flat-Remix-Blue-Dark";
       size = "128X128";
     };
     settings = {

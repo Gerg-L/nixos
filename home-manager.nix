@@ -14,6 +14,8 @@
   ];
   programs.home-manager.enable = true;
   home = {
+    username = "gerg";
+    homeDirectory = "/home/gerg";
     stateVersion = "22.11";
     file = {
       ".background-image".source = ./images/stars.jpg;
