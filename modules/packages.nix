@@ -8,6 +8,7 @@ environment.systemPackages = with pkgs; [
      htop
      efibootmgr
      maim
+     curlFull
      #lightdm
      lightdm
      lightdm-mini-greeter
@@ -19,6 +20,7 @@ environment.systemPackages = with pkgs; [
      pciutils
      git
      dash
+     binutils
      #user/gui
      discord
      spotify

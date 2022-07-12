@@ -1,27 +1,10 @@
-{ config, pkgs, callPackage, lib, ... }:
+{ config, pkgs, lib, ... }:
 {
-  #important stuff first
-  imports =
-    [
-      ./boot.nix
-      ./prime.nix
-      ./networking.nix
-      ./packages.nix
-      ./fonts.nix
-      ./thunar.nix
-      ./nur.nix
-    ];
-  nix = {
-    package = pkgs.nixFlakes;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
+  networking = {
+    firewall.enable = true;
+    useDHCP = lib.mkDefault true;
+    networkmanager. enable = true;
   };
-  services.xserver = import ./xserver.nix;
-  fileSystems = import ./fileSystems.nix;
-  system.stateVersion = "22.11";
-  hardware.cpu.amd.updateMicrocode = true;  
-  # end important stuff
   qt5 = {
     enable = true;
     style = "gtk2";
@@ -57,14 +40,6 @@
     package = pkgs.pulseaudioFull;
   };
    nixpkgs.config.pulseaudio = true;
-  # user managment
-  users = {
-    defaultUserShell = pkgs.zsh;
-    users.gerg = {
-      isNormalUser = true;
-      extraGroups = [ "wheel" "audio" "networkmanager"];
-    };
-  };
 
   #enable ssh
   programs.mtr.enable = true;
@@ -74,4 +49,3 @@
     };
   services.openssh.enable = true;
 }
-

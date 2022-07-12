@@ -1,3 +1,26 @@
+{config, ... }:
+{
+  services.xserver = {
+    enable = true;
+    videoDrivers = 
+      if (config.networking.hostName == "gerg-laptop")
+        then ["modesetting"  "nvidia"] 
+      else [ "nvidia" ];
+    layout = "us";
+    libinput.enable = true;
+    desktopManager = {
+      xterm.enable = false;
+    };
+    windowManager.bspwm = {
+      enable = true;
+    };
+     displayManager = {
+      defaultSession = "none+bspwm";
+      lightdm = {
+        enable = true;
+        greeters.mini = {
+          enable = true;
+           extraConfig = ''
 [greeter]
 user = gerg
 show-password-label = false
@@ -36,3 +59,11 @@ password-background-color = "#24283B"
 password-border-color = "#000000"
 password-border-width = 2px
 password-border-radius = 0.341125em
+
+         '';
+        };
+      };
+    };
+  };
+}
+

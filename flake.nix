@@ -1,13 +1,12 @@
 {
-  description = "testing";
+  description = "my personal configurations";
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixkpkgs.follows = "nixpkgs";
-    nur.url = "github:nix-community/NUR";
   };
 
-  outputs = { nixpkgs, home-manager, nur, ... }:
+  outputs = { nixpkgs, home-manager, ... }:
   let
     system = "x86_64-linux";
     pkgs = import nixpkgs {
@@ -28,8 +27,7 @@
       gerg = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
-          nur.nixosModules.nur
-          ./home-manager.nix
+          ./home-manager/home-manager.nix
         ];
       };
     };
@@ -37,8 +35,15 @@
       gerg-laptop = lib.nixosSystem { 
         inherit system pkgs;
         modules = [
-          nur.nixosModules.nur
-          ./configuration.nix
+          ./hardware-configuration.nix
+          ./systems/gerg-laptop.nix
+        ];
+      };
+      gerg-desktop = lib.nixosSystem { 
+        inherit system pkgs;
+        modules = [
+          ./hardware-configuration.nix
+          ./systems/gerg-desktop.nix
         ];
       };
     };
