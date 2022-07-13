@@ -10,6 +10,11 @@
       "xsetroot -cursor_name left_ptr"
       "xsetroot -solid \"#000000\""
       "flashfocus"
+      "bspc monitor -a I"
+      "bspc monitor -a II"
+      "bspc monitor -a III"
+      "bspc monitor -a IV"
+      "bspc monitor -a X"
     ];
     settings = {
       border_width = 0;
@@ -21,9 +26,6 @@
       spilt_ratio = 0.52;
       borderless_monocle = true;
       gapless_monocle = true;
-    };
-    monitors = {
-      eDP-1 = [ "I" "II" "III" "IV" "V" ];
     };
   };
 }

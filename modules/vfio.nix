@@ -1,7 +1,8 @@
+{ pkgs, ... }:
 {
   boot = {
     kernelParams = [ "amd_iommu=on" ];
-    boot.kernelModules = [ "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
+    kernelModules = [ "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
     initrd.kernelModules = [ "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
     extraModprobeConfig = "options vfio-pci ids=10de:228e,10de:2504";
   };
@@ -9,11 +10,12 @@
     libvirtd = {
       enable = true;
       qemu = {
-        runAsRoot = false;
-        ovmf = {
-          enable = true;
-          package = pkgs.OVMFFull;
-         };
+        runAsRoot = true;
+        ovmf.enable = true;
+#        verbatimConfig = ''
+#          user = gerg 
+#          namespaces = [] 
+#        '';
       };
     };
   };

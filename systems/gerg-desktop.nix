@@ -11,6 +11,7 @@
       ../modules/scripts.nix
       ../modules/misc.nix
       ../modules/vfio.nix
+      ../modules/xserver.nix
     ];
   networking.hostName = "gerg-desktop";
   nix = {
@@ -19,7 +20,6 @@
       experimental-features = nix-command flakes
     '';
   };
-  services.xserver = import ../modules/xserver.nix;
   system.stateVersion = "22.11";
   hardware.cpu.amd.updateMicrocode = true;  
   # end important stuff
@@ -29,7 +29,7 @@
     defaultUserShell = pkgs.zsh;
     users.gerg = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "audio" "networkmanager" "libvirt" ];
+      extraGroups = [ "wheel" "audio" "networkmanager" "kvm" "libvirtd" ];
     };
   };
 }

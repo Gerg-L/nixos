@@ -27,7 +27,7 @@
   </cputune>
   <os>
     <type arch="x86_64" machine="pc-q35-6.2">hvm</type>
-    <loader readonly="yes" type="pflash">/usr/share/edk2-ovmf/x64/OVMF_CODE.fd</loader>
+    <loader readonly="yes" type="pflash">/run/libvirt/nix-ovmf/OVMF_CODE.fd</loader>
     <nvram>/var/lib/libvirt/qemu/nvram/Main_VM_VARS.fd</nvram>
     <boot dev="hd"/>
     <bootmenu enable="yes"/>
@@ -72,7 +72,7 @@
   <on_reboot>restart</on_reboot>
   <on_crash>destroy</on_crash>
   <devices>
-    <emulator>/usr/bin/qemu-system-x86_64</emulator>
+    <emulator>/run/libvirt/nix-emulators/qemu-system-x86_64</emulator>
     <disk type="block" device="disk">
       <driver name="qemu" type="raw" cache="none" io="native" discard="unmap"/>
       <source dev="/dev/disk/by-id/ata-Samsung_SSD_870_EVO_500GB_S6PXNM0T402828A"/>
@@ -164,7 +164,7 @@
     </controller>
     <interface type="bridge">
       <mac address="52:54:00:05:03:2d"/>
-      <source bridge="bridge0"/>
+      <source bridge="virbr0"/>
       <model type="virtio"/>
       <link state="up"/>
       <address type="pci" domain="0x0000" bus="0x01" slot="0x00" function="0x0"/>
