@@ -12,10 +12,11 @@
       qemu = {
         runAsRoot = true;
         ovmf.enable = true;
-#        verbatimConfig = ''
-#          user = gerg 
-#          namespaces = [] 
-#        '';
+        verbatimConfig = ''
+        user = "gerg"
+        group = "kvm"
+        namespaces = []
+        '';
       };
     };
   };
