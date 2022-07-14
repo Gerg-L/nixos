@@ -78,7 +78,7 @@
       "bar/right" = {
         width = "180px";
         offset.x = 1720;
-        modules.center = "tray pulseaudio network battery  powermenu";
+        modules.center = "tray pulseaudio network-wireless network-wired battery powermenu";
         height = "20pt";
         radius = 6;
         fixed.center = false;
@@ -205,7 +205,7 @@
           background = "\${colors.background}";
         };
       };
-      "module/network" = {
+      "module/network-wireless" = {
         type = "internal/network";
         interface.type = "wireless";
         interval = "3.0";
@@ -217,16 +217,35 @@
           disconnected =  "\"%{A1:networkmanager_dmenu:}<label-disconnected>%{A}\"";
         };
         label.disconnected = {
-          text = "󰤭";
-          foreground = "\${colors.alert}";
-          background = "\${colors.background}";
-          padding = 1;
+          text = "";
+          padding = 0;
         };
         ramp.signal = {
           text = ["󰤯" "󰤟" "󰤢" "󰤥" "󰤨"];
           foreground = "\${colors.foreground}";
           background = "\${colors.background}";
           padding = 1;
+        };
+      };
+      "module/network-wired" = {
+        type = "internal/network";
+        interface.type = "wired";
+        interval = "3.0";
+        udspeed.minwidth = 5;
+        accumulate.stats = true;
+        unknown.as.up = true;
+        format = {
+          connected = "\"%{A1:networkmanager_dmenu:}<label-connected>%{A}\"";
+          disconnected =  "\"%{A1:networkmanager_dmenu:}<label-disconnected>%{A}\"";
+        };
+        label.connected = {
+          text = "";
+          foreground = "\${colors.foreground}";
+          background = "\${colors.background}";
+          padding = 1;
+        };
+        label.disconnected = {
+          text = "";
         };
       };
       "module/powermenu" = {
@@ -243,8 +262,8 @@
         type = "internal/battery";
         full.at = 100;
         low.at = 20;
-        battery = "BAT0";
-        adapter = "ACAD";
+#        battery = "BAT0";
+#        adapter = "ACAD";
         poll.interval = 5;
         format = {
           charging = "\"%{A1:xfce4-power-menu -c:}<animation-charging>%{A}\"";
