@@ -11,6 +11,7 @@
       ../modules/scripts.nix
       ../modules/misc.nix
       ../modules/vfio.nix
+      ../modules/refreshrate.nix
       ../modules/xserver.nix
     ];
   networking.hostName = "gerg-desktop";

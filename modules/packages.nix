@@ -43,6 +43,7 @@ environment.systemPackages = with pkgs; [
      networkmanagerapplet
      dmenu
      qsudo
+     mate.mate-polkit
      flashfocus
      pavucontrol
      gpick
