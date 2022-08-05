@@ -8,8 +8,10 @@ let
 
   clean-store = pkgs.writeScriptBin "clean-store" ''
     #!${pkgs.stdenv.shell}
-     nix-collect-garbage -d
-     nix-store --gc
+     sudo nix-collect-garbage -d
+     sudo nix-store --optimise
+     sudo -u gerg nix-collect-garbage -d
+
   ''; 
 
   apply-users = pkgs.writeScriptBin "apply-users" ''

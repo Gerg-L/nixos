@@ -24,7 +24,10 @@
   system.stateVersion = "22.11";
   hardware.cpu.amd.updateMicrocode = true;  
   # end important stuff
-  
+  environment.systemPackages = with pkgs; [
+    android-tools
+    openjdk
+  ];
 # user managment
   users = {
     defaultUserShell = pkgs.zsh;

@@ -10,7 +10,7 @@
               owner = "ISnortPennies";
               repo = "user.js";
               rev = "master";
-              sha256 = "BMEUZDelkcHDF8Yt9aa+3pGkGkodL7VEQ1hQBU6Fuug=";
+              sha256 = "9hmYqb5R8KOILNYylTspMr6CEmlLMg24JCGDFH0KA9k=";
             } + "/user.js") );
         };
       };

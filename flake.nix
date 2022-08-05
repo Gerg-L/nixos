@@ -36,14 +36,14 @@
         inherit system pkgs;
         modules = [
           ./hardware-configuration.nix
-          ./systems/gerg-laptop.nix
+          ./systems/laptop.nix
         ];
       };
       gerg-desktop = lib.nixosSystem { 
         inherit system pkgs;
         modules = [
           ./hardware-configuration.nix
-          ./systems/gerg-desktop.nix
+          ./systems/desktop.nix
         ];
       };
     };

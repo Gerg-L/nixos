@@ -1,5 +1,6 @@
 { config, pkgs, lib, ... }:
 {
+  nix.settings.auto-optimise-store = true;
   networking = {
     firewall.enable = true;
     useDHCP = lib.mkDefault true;
