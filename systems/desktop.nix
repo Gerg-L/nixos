@@ -13,6 +13,7 @@
       ../modules/vfio.nix
       ../modules/refreshrate.nix
       ../modules/xserver.nix
+      ../modules/smb.nix
     ];
   networking.hostName = "gerg-desktop";
   nix = {
@@ -30,9 +31,10 @@
   ];
 # user managment
   users = {
-    defaultUserShell = pkgs.zsh;
+    defaultUserShell = pkgs.dash;
     users.gerg = {
       isNormalUser = true;
+      shell = pkgs.zsh;
       extraGroups = [ "wheel" "audio" "networkmanager" "kvm" "libvirtd" ];
     };
   };

@@ -10,6 +10,7 @@
       "xsetroot -cursor_name left_ptr"
       "xsetroot -solid \"#000000\""
       "flashfocus"
+      "polkit-gnome-authentication-agent-1"
     ];
     settings = {
       border_width = 0;

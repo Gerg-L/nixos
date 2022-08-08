@@ -11,7 +11,9 @@
     ./alacritty.nix
     ./theme.nix
     ./picom.nix
+    ./git.nix
   ];
+  xsession.numlock.enable = true;
   programs.home-manager.enable = true;
   home = {
     username = "gerg";

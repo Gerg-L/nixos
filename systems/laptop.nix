@@ -23,12 +23,16 @@
   system.stateVersion = "22.11";
   hardware.cpu.amd.updateMicrocode = true;  
   # end important stuff
+  environment.systemPackages = with pkgs; [
+    xorg.xf86videoamdgpu
+  ];
   
 # user managment
   users = {
-    defaultUserShell = pkgs.zsh;
+    defaultUserShell = pkgs.dash;
     users.gerg = {
       isNormalUser = true;
+      shell = pkgs.zsh;
       extraGroups = [ "wheel" "audio" "networkmanager"];
     };
   };

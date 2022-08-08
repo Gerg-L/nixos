@@ -1,36 +1,31 @@
 { config, pkgs, callPackage, ... }:
 {
 environment.systemPackages = with pkgs; [     
-     #single commands
-     nano 
+     nano #editor
      wget
-     neofetch
-     htop
-     efibootmgr
-     maim
+     htop #view tasks
+     efibootmgr #efi editor
+     maim #screenshooter
      curlFull
-     #lightdm
+     #lightm stuff
      lightdm
      lightdm-mini-greeter
      #needed utils
-     pipewire
-     xorg.xf86videoamdgpu
-     mesa
-     mesa-demos
+     mesa #3d acceleration
+     git #git duh
      pciutils
-     git
-     dash
      binutils
+     alsa-utils
+     btrfs-progs #for external harddrive
      #user/gui
      discord
      spotify
      spotify-tray
      vlc
      bitwarden
-     protonvpn-gui
      gimp
      qbittorrent
-     feh
+     feh #for wallpaper
      #explicit xfce4 for bspwm
      xarchive
      xfce.catfish
@@ -42,11 +37,13 @@ environment.systemPackages = with pkgs; [
      networkmanager_dmenu
      networkmanagerapplet
      dmenu
-     qsudo
      flashfocus
      pavucontrol
-     gpick
      xclip
-     alsa-utils
+     neofetch
+     #my polkit fix
+     polkit_fix
+     #for thunar root
+     qsudo
   ];
 }

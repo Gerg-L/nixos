@@ -15,6 +15,13 @@
         allowUnfree = true;
         packageOverrides = super: let self = super.pkgs; in {
           #more overrides can go here
+          polkit_fix = self.polkit_gnome.overrideAttrs ( oldAttrs: rec 
+          {
+            postInstall = ''
+             mkdir $out/bin
+             ln -s $out/libexec/polkit-gnome-authentication-agent-1 $out/bin/polkit-gnome-authentication-agent-1
+            '';
+          });
           nerdfonts-overpass = self.nerdfonts.override {
             fonts = [ "Overpass" ];
           };

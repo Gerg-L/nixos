@@ -3,8 +3,9 @@
   nix.settings.auto-optimise-store = true;
   networking = {
     firewall.enable = true;
+    firewall.allowPing = true;
     useDHCP = lib.mkDefault true;
-    networkmanager. enable = true;
+    networkmanager.enable = true;
   };
   qt5 = {
     enable = true;
