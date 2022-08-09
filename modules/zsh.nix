@@ -1,14 +1,17 @@
 {
- programs = {
+  programs = {
     zsh = {
-     enable = true;
-     enableAutosuggestions = true;
-     enableSyntaxHighlighting = true;
-     completionInit = "neofetch";
+      enable = true;
+      autosuggestions = {
+        enable = true;
+      };
+      syntaxHighlighting = {
+        enable = true;
+      };
+      interactiveShellInit = "neofetch";
     };
     starship = {
       enable = true;
-      enableZshIntegration = true;
       settings = {
         add_newline = false;
         format="$sudo \n $directory$git_branch$character";

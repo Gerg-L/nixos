@@ -8,13 +8,14 @@
       else [ "nvidia" ];
     layout = "us";
     libinput.enable = true;
+    xautolock.enable = false;
     desktopManager = {
       xterm.enable = false;
     };
     windowManager.bspwm = {
       enable = true;
     };
-     displayManager = {
+    displayManager = {
       defaultSession = "none+bspwm";
       lightdm = {
         enable = true;

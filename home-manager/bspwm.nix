@@ -10,7 +10,7 @@
       "xsetroot -cursor_name left_ptr"
       "xsetroot -solid \"#000000\""
       "flashfocus"
-      "polkit-gnome-authentication-agent-1"
+      "polkit-gnome"
     ];
     settings = {
       border_width = 0;
@@ -25,7 +25,7 @@
     };
     monitors = {
       HDMI-0 = [ "I" "II" "III" "IV" "V" ];
-#      eDP-1 =  [ "VI" "VII" "VIII" "IX" "X" ];
+      eDP-1 =  [ "VI" "VII" "VIII" "IX" "X" ];
     };
   };
 }

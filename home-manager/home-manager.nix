@@ -1,7 +1,6 @@
 {config, pkgs, home-manager, ...}:
 {
   imports = [
-    ./zsh.nix
     ./firefox.nix
     ./bspwm.nix
     ./sxhkd.nix
@@ -12,6 +11,7 @@
     ./theme.nix
     ./picom.nix
     ./git.nix
+    ./neovim.nix
   ];
   xsession.numlock.enable = true;
   programs.home-manager.enable = true;

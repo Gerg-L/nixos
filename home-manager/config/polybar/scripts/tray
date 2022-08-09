@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-u=$(xprop -name "Polybar tray window" _NET_WM_PID | awk '{print $3}')
-if [ $u -Z ]
-then polybar tray &
-else kill $u
-fi

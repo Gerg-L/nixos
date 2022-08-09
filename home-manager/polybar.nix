@@ -199,7 +199,7 @@
       "module/tray" = {
         type = "custom/text";
         content = " ";
-        click.left = "\$HOME/.config/polybar/scripts/tray";
+        click.left = "polybar-tray";
         label = {
           padding = 3;
           background = "\${colors.background}";

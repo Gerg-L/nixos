@@ -1,7 +1,6 @@
 { config, pkgs, callPackage, ... }:
 {
 environment.systemPackages = with pkgs; [     
-     nano #editor
      wget
      htop #view tasks
      efibootmgr #efi editor
@@ -12,7 +11,6 @@ environment.systemPackages = with pkgs; [
      lightdm-mini-greeter
      #needed utils
      mesa #3d acceleration
-     git #git duh
      pciutils
      binutils
      alsa-utils

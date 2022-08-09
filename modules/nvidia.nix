@@ -1,9 +1,8 @@
 { config, ... }:
-
 {
   hardware = {
     nvidia = {
-      nvidiaPersistenced = true;
+      nvidiaPersistenced = false;
       nvidiaSettings = true;
       package = config.boot.kernelPackages.nvidiaPackages.stable;
       modesetting.enable = true;
@@ -12,7 +11,7 @@
       enable = true;
       driSupport = true;
       driSupport32Bit = true;
-      };
+    };
   };
 }
 

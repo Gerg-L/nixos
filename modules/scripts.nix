@@ -25,6 +25,15 @@ let
     #!${pkgs.stdenv.shell}
      nixos-rebuild switch --flake /etc/nixos/#
   ''; 
+
+  polybar-tray = pkgs.writeScriptBin "polybar-tray" ''
+    #!${pkgs.stdenv.shell}
+    u=$(xprop -name "Polybar tray window" _NET_WM_PID | awk '{print $3}')
+    if [ $u -Z ]
+    then polybar tray &
+    else kill $u
+    fi
+  '';
 in {
-  environment.systemPackages = [ update-system clean-store apply-users apply-system ];
+  environment.systemPackages = [ update-system clean-store apply-users apply-system polybar-tray ];
 }
