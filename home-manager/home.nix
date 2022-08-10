@@ -1,4 +1,4 @@
-{config, pkgs, home-manager, ...}:
+{config, pkgs, ...}:
 {
   imports = [
     ./firefox.nix
@@ -12,6 +12,7 @@
     ./picom.nix
     ./git.nix
     ./neovim.nix
+    ./spicetify.nix
   ];
   xsession.numlock.enable = true;
   programs.home-manager.enable = true;

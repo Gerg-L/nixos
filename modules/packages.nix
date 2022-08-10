@@ -17,7 +17,6 @@ environment.systemPackages = with pkgs; [
      btrfs-progs #for external harddrive
      #user/gui
      discord
-     spotify
      spotify-tray
      vlc
      bitwarden

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 let
   update-system = pkgs.writeScriptBin "update-system" ''
@@ -16,14 +16,12 @@ let
 
   apply-users = pkgs.writeScriptBin "apply-users" ''
     #!${pkgs.stdenv.shell}
-     nix build /etc/nixos/#homeManagerConfiguration.gerg.activationPackage
-     ./result/activate
-     rm -rf ./result
+    home-manager switch --flake /etc/nixos/#$(whoami)
   ''; 
 
   apply-system = pkgs.writeScriptBin "apply-system" ''
     #!${pkgs.stdenv.shell}
-     nixos-rebuild switch --flake /etc/nixos/#
+     nixos-rebuild switch --flake /etc/nixos/#${config.networking.hostName}
   ''; 
 
   polybar-tray = pkgs.writeScriptBin "polybar-tray" ''

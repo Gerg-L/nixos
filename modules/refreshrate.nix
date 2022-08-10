@@ -4,9 +4,6 @@
       {
         output = "HDMI-0";
         primary = true;
-        monitorConfig = ''
-          Option "DPMS" "false"
-        '';
       }
     ];
     screenSection = '' 

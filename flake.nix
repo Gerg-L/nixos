@@ -2,12 +2,16 @@
   description = "my personal configurations";
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager/master";
-    home-manager.inputs.nixkpkgs.follows = "nixpkgs";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixkpkgs.follows = "nixpkgs";
+    };
+    spicetify-nix.url = "github:the-argus/spicetify-nix";
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs = {self, nixpkgs, home-manager, spicetify-nix, ... }@inputs:
   let
+    username = "gerg";
     system = "x86_64-linux";
     pkgs = import nixpkgs {
       inherit system;
@@ -31,13 +35,18 @@
     };
     lib = nixpkgs.lib;
   in {
-    homeManagerConfiguration = {
-      gerg = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [
-          ./home-manager/home-manager.nix
-        ];
-      };
+    homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
+      inherit pkgs;
+      modules = [
+        ./home-manager/home.nix
+      ];
+      extraSpecialArgs = { inherit spicetify-nix; };
+    };
+    homeConfigurations.root = home-manager.lib.homeManagerConfiguration {
+      inherit pkgs;
+      modules = [
+        ./home-manager/root.nix
+      ];
     };
     nixosConfigurations = {
       gerg-laptop = lib.nixosSystem { 
