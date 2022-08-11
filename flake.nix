@@ -53,7 +53,6 @@
         inherit system pkgs;
         modules = [
           ./configuration.nix
-          ./hardware-configuration.nix
           ./systems/laptop.nix
         ];
       };
@@ -61,7 +60,6 @@
         inherit system pkgs;
         modules = [
           ./configuration.nix
-          ./hardware-configuration.nix
           ./systems/desktop.nix
         ];
       };

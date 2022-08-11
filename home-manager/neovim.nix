@@ -15,12 +15,15 @@
       vim-nix
       vim-polyglot
       vim-smoothie
+      nvim-tree-lua
+      nvim-web-devicons
       tokyonight-nvim
       rainbow
       indentLine
       undotree
     ];
     extraConfig = ''
+      :lua require("nvim-tree").setup()
       set tabstop=2
       set expandtab
       set shiftwidth=2

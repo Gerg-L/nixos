@@ -16,7 +16,7 @@
       ../modules/zsh.nix
     ];
   networking.hostName = "gerg-desktop";
-
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   hardware.cpu.amd.updateMicrocode = true;  
 #end important stuff
   environment.systemPackages = with pkgs; [
@@ -29,6 +29,20 @@
     users.gerg = {
       isNormalUser = true;
       extraGroups = [ "wheel" "audio" "networkmanager" "kvm" "libvirtd" ];
+    };
+  };
+  boot = {
+    initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "uas" "sd_mod" ];
+    kernelModules = [ "kvm-amd" ];
+  };
+  fileSystems = {
+    "/" ={
+      device = "/dev/disk/by-uuid/f0f46e34-874f-4052-855c-38c88bd7987a";
+      fsType = "ext4";
+    };
+    "/boot" = {
+      device = "/dev/disk/by-uuid/5F00-1D91";
+      fsType = "vfat";
     };
   };
 }

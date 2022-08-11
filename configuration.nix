@@ -1,7 +1,6 @@
 { config, pkgs, lib, ... }:
 {
   system.stateVersion = "22.11";
-  boot.kernelPackages = pkgs.linuxPackages_latest;
   environment = {
     defaultPackages = [];
     binsh = "${pkgs.dash}/bin/dash";

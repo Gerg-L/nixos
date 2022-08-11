@@ -16,7 +16,7 @@ environment.systemPackages = with pkgs; [
      alsa-utils
      btrfs-progs #for external harddrive
      #user/gui
-     discord
+     (discord.override { nss = nss_latest; })
      spotify-tray
      vlc
      bitwarden
