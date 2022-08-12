@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{pkgs, ... }:
 {
   programs.neovim = {
     enable = true;
@@ -12,26 +12,16 @@
       package = pkgs.vimPlugins.coc-nvim;
     };
     plugins = with pkgs.vimPlugins; [
-      vim-nix
-      vim-polyglot
-      vim-smoothie
-      nvim-tree-lua
-      nvim-web-devicons
-      tokyonight-nvim
-      rainbow
-      indentLine
-      undotree
+      vim-smoothie #smooth scrolling
+      tokyonight-nvim #color scheme
+      undotree # better undos
+      #extra stuff
+      nvim-tree-lua # file browser
+      nvim-web-devicons # for tree-lua
+#      telescope-nvim # file finder
+      indentLine # indentlines
+      nvim-treesitter #syntax highlighting
     ];
-    extraConfig = ''
-      :lua require("nvim-tree").setup()
-      set tabstop=2
-      set expandtab
-      set shiftwidth=2
-      set ignorecase
-      set incsearch
-      set number 
-      set noswapfile
-      let mapleader = "'"
-    '';
+    extraConfig = "lua << EOF\n" + builtins.readFile ./init.lua + "\nEOF";
   };
 }

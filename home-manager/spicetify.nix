@@ -9,6 +9,6 @@
       "adblock.js"
       "hidePodcasts.js"
     ];
-    theme = "SpotifyNoPremium";
+    theme = spicetify-nix.pkgs.themes.SpotifyNoPremium;
   };
 }

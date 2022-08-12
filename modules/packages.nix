@@ -5,7 +5,6 @@ environment.systemPackages = with pkgs; [
      htop #view tasks
      efibootmgr #efi editor
      maim #screenshooter
-     curlFull
      #lightm stuff
      lightdm
      lightdm-mini-greeter
@@ -42,7 +41,7 @@ environment.systemPackages = with pkgs; [
      polkit_fix
      #for thunar root
      qsudo
-
+     gcc #for neovim tree-sitter
      nix-tree
   ];
 }
