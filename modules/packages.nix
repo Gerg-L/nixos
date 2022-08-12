@@ -42,5 +42,7 @@ environment.systemPackages = with pkgs; [
      polkit_fix
      #for thunar root
      qsudo
+
+     nix-tree
   ];
 }

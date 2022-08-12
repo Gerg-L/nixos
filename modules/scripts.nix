@@ -2,36 +2,59 @@
 
 let
   update-system = pkgs.writeScriptBin "update-system" ''
-    #!${pkgs.stdenv.shell}
+     #!/bin/sh
+    if ! [ $(id -u) = 0 ]; then
+      echo "RUN AS ROOT"
+      exit 1
+    fi
      nix flake update /etc/nixos/#
   ''; 
 
   clean-store = pkgs.writeScriptBin "clean-store" ''
-    #!${pkgs.stdenv.shell}
-     sudo nix-collect-garbage -d
-     sudo nix-store --optimise
-     sudo -u gerg nix-collect-garbage -d
-
+    #!/bin/sh
+    if ! [ $(id -u) = 0 ]; then
+      echo "RUN AS ROOT"
+      exit 1
+    fi
+    rm /nix/var/nix/gcroots/auto/*
+    nix-collect-garbage -d
+    sudo -u gerg nix-collect-garbage -d
   ''; 
 
   apply-users = pkgs.writeScriptBin "apply-users" ''
-    #!${pkgs.stdenv.shell}
+    #!/bin/sh
     home-manager switch --flake /etc/nixos/#$(whoami)
   ''; 
 
   apply-system = pkgs.writeScriptBin "apply-system" ''
-    #!${pkgs.stdenv.shell}
-     nixos-rebuild switch --flake /etc/nixos/#${config.networking.hostName}
+    #!/bin/sh
+    if ! [ $(id -u) = 0 ]; then
+      echo "RUN AS ROOT"
+      exit 1
+    fi
+    nixos-rebuild switch --flake /etc/nixos/#${config.networking.hostName}
   ''; 
 
   polybar-tray = pkgs.writeScriptBin "polybar-tray" ''
-    #!${pkgs.stdenv.shell}
+    #!/bin/sh
     u=$(xprop -name "Polybar tray window" _NET_WM_PID | awk '{print $3}')
     if [ $u -Z ]
     then polybar tray &
     else kill $u
     fi
   '';
+  full-upgrade = pkgs.writeScriptBin "full-upgrade" ''
+    #!/bin/sh
+    if ! [ $(id -u) = 0 ]; then
+      echo "RUN AS ROOT"
+      exit 1
+    fi
+    update-system
+    apply-system
+    apply-users
+    sudo -u gerg apply-users
+    clean-store
+  '';
 in {
-  environment.systemPackages = [ update-system clean-store apply-users apply-system polybar-tray ];
+  environment.systemPackages = [ update-system clean-store apply-users apply-system polybar-tray full-upgrade];
 }

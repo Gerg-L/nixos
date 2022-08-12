@@ -3,8 +3,7 @@
   hardware = {
     nvidia = {
       nvidiaPersistenced = false;
-      nvidiaSettings = true;
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
+      nvidiaSettings = false;
       modesetting.enable = true;
     };
     opengl = {

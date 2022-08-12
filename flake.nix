@@ -1,7 +1,7 @@
 {
   description = "my personal configurations";
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable"; 
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixkpkgs.follows = "nixpkgs";

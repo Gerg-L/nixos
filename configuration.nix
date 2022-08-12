@@ -10,8 +10,13 @@
   };
   nix = {
     package = pkgs.nixFlakes;
-    settings.auto-optimise-store = true;
+    settings = {
+      auto-optimise-store = true;
+      cores = 0;
+    };
     extraOptions = ''
+      keep-outputs = false
+      keep-derivations = false
       experimental-features = nix-command flakes
     '';
   };
