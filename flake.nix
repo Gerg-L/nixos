@@ -32,6 +32,11 @@
           };
         };
       };
+      overlays = [
+          (final: prev: rec {
+            AFKCommands =  final.callPackage ./pkgs/AFKCommands {};
+            }
+          )];
     };
     lib = nixpkgs.lib;
   in {

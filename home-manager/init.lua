@@ -11,7 +11,7 @@ o.backup = false
 o.writebackup = false
 --formatting
 o.expandtab = true
-o.shiftwidth = true
+o.shiftwidth = 2
 o.tabstop = 2
 -- pretty numbers
 o.signcolumn = "number"

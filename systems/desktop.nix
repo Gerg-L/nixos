@@ -22,6 +22,7 @@
   environment.systemPackages = with pkgs; [
     android-tools
     openjdk
+    AFKCommands
   ];
 #user managment
   users = {
