@@ -17,7 +17,6 @@
       inherit system;
       config = {
         allowUnfree = true;
-        pulseaudio = true;
         packageOverrides = super: let self = super.pkgs; in {
           #more overrides can go here
           polkit_fix = self.polkit_gnome.overrideAttrs ( oldAttrs: rec 

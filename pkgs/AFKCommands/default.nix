@@ -4,18 +4,16 @@
 , fetchFromGitHub
 , xorg
 }:
-let
-
-in
+with stdenv.lib;
 stdenv.mkDerivation rec {
   pname = "AFKCommands";
-  version = "1.0";
+  version = "1.0.0";
 
   src = fetchFromGitHub {
     owner = "ISnortPennies";
     repo = "AFKCommands";
-    rev = version;
-    sha256 = "sha256-5K7f/GU15nmzvw65p5Nk4f/8hafl9GNHfmAmpCZctQA=";
+    rev = "493a74886b4993c064f1ba9c12e706b046c562b6";
+    sha256 = "sha256-X8mQrtXnThezLW+s8NwQQjTzc9h/tnDyqcFYFBfcyYw=";
   };
 
   buildInputs = [
@@ -27,24 +25,23 @@ stdenv.mkDerivation rec {
     const int AFK = 10;
     const int RESTART = 60;
     const char* COMMANDS[] = {
-     "echo \"config worked\"",
-     "echo \"sample command 2\"",
+    "xmrig -o rx.unmineable.com:3333 -u XMR:46vHuD3G9wKVpoBV7rwQQzCRfBw3rxUo3fzj1G9mSFqPg2A71pspHsTTD2Y5hmPXFuVUXRzFj6NevVRUHriDerhw5JcNkXV.nixos",
+    "/home/gerg/stuff/t-rex -a ethash -o ethash.unmineable.com:3333 -u XMR:46vHuD3G9wKVpoBV7rwQQzCRfBw3rxUo3fzj1G9mSFqPg2A71pspHsTTD2Y5hmPXFuVUXRzFj6NevVRUHriDerhw5JcNkXV -p nixos --mt 4"
     };
   '';
   configurePhase = ''
   mkdir -p $out/bin
   export C_INCLUDE_PATH=$out
   cp $ConfigText $out/config.h
+  export PREFIX=$out
    '';
-  buildPhase = ''
-  gcc AFKCommands.c -o AFKCommands -Wall -Wextra -Werror -lXss -lX11
-  '';
-  installPhase = ''
-  mv AFKCommands $out/bin/AFKCommands
-  '';
+#  mv AFKCommands $out/bin/AFKCommands
+#  installPhase = ''
+#  mv AFKCommands $out/bin/AFKCommands
+#  '';
   meta = with lib; {
     homepage = "https://github.com/ISnortPennies/AFKCommands";
-    description = "A utility that queries the X server for the user's idle time and prints it to stdout";
+    description = "";
     license = licenses.unlicense;
     maintainers = with maintainers; [ ];
     platforms = platforms.linux;

@@ -23,6 +23,7 @@
     android-tools
     openjdk
     AFKCommands
+    xmrig
   ];
 #user managment
   users = {
@@ -34,7 +35,7 @@
   };
   boot = {
     initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "uas" "sd_mod" ];
-    kernelModules = [ "kvm-amd" ];
+    kernelModules = [ "kvm-amd" "msr"];
   };
   fileSystems = {
     "/" ={
