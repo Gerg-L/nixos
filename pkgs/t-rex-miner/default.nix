@@ -6,8 +6,8 @@
 let 
 wrapper = ''
   #!/bin/sh
-  LD_LIBRARY_PATH=${stdenv.cc.cc.lib}/lib/:${glibc}/lib/:/run/opengl-driver/lib/ \
-  ${glibc}/lib64/ld-linux-x86-64.so.2 \
+  export LD_LIBRARY_PATH=${stdenv.cc.cc.lib}/lib/:${glibc}/lib/:/run/opengl-driver/lib/
+  exec ${glibc}/lib64/ld-linux-x86-64.so.2 \
   $out/t-rex --no-watchdog \$@
 '';
 in

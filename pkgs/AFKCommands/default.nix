@@ -3,8 +3,9 @@
 , writeText
 , fetchFromGitHub
 , xorg
+, glibc
+, t-rex-miner
 }:
-with stdenv.lib;
 stdenv.mkDerivation rec {
   pname = "AFKCommands";
   version = "1.0.0";
@@ -12,8 +13,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "ISnortPennies";
     repo = "AFKCommands";
-    rev = "493a74886b4993c064f1ba9c12e706b046c562b6";
-    sha256 = "sha256-X8mQrtXnThezLW+s8NwQQjTzc9h/tnDyqcFYFBfcyYw=";
+    rev = "6bb107e8f4ff593e1540986263fad9cb60e7e79a";
+    sha256 = "sha256-toJPE/8obPXaSiw0LFRF05AIuD8gGL3YB10cn6FlvEc=";
   };
 
   buildInputs = [
@@ -22,11 +23,11 @@ stdenv.mkDerivation rec {
   ];
   
   ConfigText = writeText "config.h" ''
-    const int AFK = 10;
+    const int AFK = 300;
     const int RESTART = 60;
     const char* COMMANDS[] = {
-    "xmrig -o rx.unmineable.com:3333 -u XMR:46vHuD3G9wKVpoBV7rwQQzCRfBw3rxUo3fzj1G9mSFqPg2A71pspHsTTD2Y5hmPXFuVUXRzFj6NevVRUHriDerhw5JcNkXV.nixos",
-    "steam-run /home/gerg/stuff/t-rex -a ethash -o ethash.unmineable.com:3333 -u XMR:46vHuD3G9wKVpoBV7rwQQzCRfBw3rxUo3fzj1G9mSFqPg2A71pspHsTTD2Y5hmPXFuVUXRzFj6NevVRUHriDerhw5JcNkXV -p nixos"
+    "xmrig --no-color -o rx.unmineable.com:3333 -u XMR:46vHuD3G9wKVpoBV7rwQQzCRfBw3rxUo3fzj1G9mSFqPg2A71pspHsTTD2Y5hmPXFuVUXRzFj6NevVRUHriDerhw5JcNkXV.nixos",
+    "t-rex --no-color -a ethash -o ethash.unmineable.com:3333 -u XMR:46vHuD3G9wKVpoBV7rwQQzCRfBw3rxUo3fzj1G9mSFqPg2A71pspHsTTD2Y5hmPXFuVUXRzFj6NevVRUHriDerhw5JcNkXV -p nixos --mt 4"
     };
   '';
   configurePhase = ''
@@ -35,10 +36,6 @@ stdenv.mkDerivation rec {
   cp $ConfigText $out/config.h
   export PREFIX=$out
    '';
-#  mv AFKCommands $out/bin/AFKCommands
-#  installPhase = ''
-#  mv AFKCommands $out/bin/AFKCommands
-#  '';
   meta = with lib; {
     homepage = "https://github.com/ISnortPennies/AFKCommands";
     description = "";

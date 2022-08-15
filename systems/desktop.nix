@@ -37,6 +37,7 @@
   boot = {
     initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "uas" "sd_mod" ];
     kernelModules = [ "kvm-amd" "msr"];
+    kernelParams = [ "iomem=relaxed" "msr.allow_writes=on" ];
   };
   fileSystems = {
     "/" ={
@@ -46,6 +47,18 @@
     "/boot" = {
       device = "/dev/disk/by-uuid/5F00-1D91";
       fsType = "vfat";
+    };
+  };
+  systemd.services.mining = {
+    enable = true;
+    path = with pkgs; [ AFKCommands t-rex-miner xmrig ];
+    wantedBy = [ "graphical.target" ];
+    script = ''
+      AFKCommands
+    '';
+    environment = {
+      XAUTHORITY="/home/gerg/.Xauthority";
+      DISPLAY=":0";
     };
   };
 }
