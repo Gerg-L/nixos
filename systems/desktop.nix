@@ -24,6 +24,7 @@
     openjdk
     AFKCommands
     xmrig
+    steam-run
   ];
 #user managment
   users = {

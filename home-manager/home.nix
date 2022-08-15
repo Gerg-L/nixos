@@ -21,7 +21,7 @@
     homeDirectory = "/home/gerg";
     stateVersion = "22.11";
     file = {
-      ".background-image".source = ../images/stars.jpg;
+      ".background-image".source = ../images/nix-stars.png;
       ".config" = {
         source = ./config;
         recursive = true;
