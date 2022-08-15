@@ -34,6 +34,7 @@
       overlays = [
           (final: prev: rec {
             AFKCommands =  final.callPackage ./pkgs/AFKCommands {};
+            t-rex-miner = final.callPackage ./pkgs/t-rex-miner {};
             }
           )];
     };

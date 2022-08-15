@@ -24,7 +24,7 @@
     openjdk
     AFKCommands
     xmrig
-    steam-run
+    t-rex-miner
   ];
 #user managment
   users = {

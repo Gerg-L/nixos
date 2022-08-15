@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
     const int RESTART = 60;
     const char* COMMANDS[] = {
     "xmrig -o rx.unmineable.com:3333 -u XMR:46vHuD3G9wKVpoBV7rwQQzCRfBw3rxUo3fzj1G9mSFqPg2A71pspHsTTD2Y5hmPXFuVUXRzFj6NevVRUHriDerhw5JcNkXV.nixos",
-    "/home/gerg/stuff/t-rex -a ethash -o ethash.unmineable.com:3333 -u XMR:46vHuD3G9wKVpoBV7rwQQzCRfBw3rxUo3fzj1G9mSFqPg2A71pspHsTTD2Y5hmPXFuVUXRzFj6NevVRUHriDerhw5JcNkXV -p nixos --mt 4"
+    "steam-run /home/gerg/stuff/t-rex -a ethash -o ethash.unmineable.com:3333 -u XMR:46vHuD3G9wKVpoBV7rwQQzCRfBw3rxUo3fzj1G9mSFqPg2A71pspHsTTD2Y5hmPXFuVUXRzFj6NevVRUHriDerhw5JcNkXV -p nixos"
     };
   '';
   configurePhase = ''
