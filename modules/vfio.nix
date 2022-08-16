@@ -1,10 +1,12 @@
 { pkgs, ... }:
 {
   boot = {
-    kernelParams = [ "amd_iommu=on" ];
+    kernelParams = [ "amd_iommu=on" "kvm.ignore_msrs=1" ];
     kernelModules = [ "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
     initrd.kernelModules = [ "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
-    extraModprobeConfig = "options vfio-pci ids=10de:228e,10de:2504";
+    extraModprobeConfig = ''
+    options vfio-pci ids=10de:228e,10de:2504
+    '';
   };
   virtualisation = {
     libvirtd = {
