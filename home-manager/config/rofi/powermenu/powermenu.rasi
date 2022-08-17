@@ -1,42 +1,67 @@
+configuration {
+    location:                       0;
+    font:                           "Overpass:style=regular";
+}
 * {
-  background: #00000000;
-  black: #000000;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  spacing: 0;
+  background: #000000;
   blue: #7aa2f7;
   deepblue: #03339c;
-}
-* {
-  background-color: #00000000;
-  text-color: @blue;
-  font: "Material Design Icons 60";
-}
-prompt,inputbar,entry,textbox-prompt-colon { enabled: false; }
-#window {
-  width: 100%;
-  height: 100%;
   background-color: @background;
-  transparency: "real";
-  children: [dummy, listview, dummy];
+  text-color: @blue;
 }
-#dummyofdummy {
-  children: [dummy, listview, dummy];
+ 
+ 
+window {
+    background-color:               @background;
+    border:                         2px;
+    border-color:                   @deepblue;
+    border-radius:                  50px;
+    width:                          490px;   
+    height:                         130px;          
+    x-offset:                       -4;
+    y-offset:                       0;
 }
-#dummy {
-  expand: true;
-}
+ 
 listview {
-  lines: 4;
-  layout: horizontal;
-  children: [element];
-  margin: 100px 0px 100px 585px;
+    background-color:               @background;
+    columns:                        1;
+    lines:                          5;
+    spacing:                        50px;
+    layout:                         horizontal;
 }
-#element {
-  padding: 30px 40px;
-  background-color: @black;
-  border-color: #00000000;
-  border-radius: 20px;
-  text-color: @black;
+ 
+mainbox {
+    background-color:               @background;
+    children:                       [ listview ];
+    padding:                        40px;
 }
-#element.selected {
-  text-color: @black;
-  background-color: @deepblue;
+ 
+element {
+    background-color:               @background;
+    text-color:                     @blue;
+    orientation:                    horizontal;
+    /*border-radius:                  100%;*/
+    /*padding:                        8px 32px 8px 32px;*/
+}
+ 
+element-text {
+    background-color:               inherit;
+    text-color:                     inherit;
+    font:                           "Material Design Icons 30";
+    expand:                         false;
+    horizontal-align:               0.5;
+    vertical-align:                 0.5;
+    margin:                         0px;
+}
+ 
+element selected {
+    background-color:               @background;
+    text-color:                     @deepblue;
+    border:                         0px;
+    /*border-radius:                  100%;*/
+    border-color:                   @blue;
 }
