@@ -43,5 +43,6 @@ environment.systemPackages = with pkgs; [
      qsudo
      gcc #for neovim tree-sitter
      nix-tree
+     git-filter-repo
   ];
 }
