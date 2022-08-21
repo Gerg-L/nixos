@@ -7,10 +7,6 @@
     withNodeJs = true;
     withPython3 = true;
     withRuby = true;
-    coc = {
-      enable = true;
-      package = pkgs.vimPlugins.coc-nvim;
-    };
     plugins = with pkgs.vimPlugins; [
       vim-smoothie #smooth scrolling
       tokyonight-nvim #color scheme
@@ -20,8 +16,10 @@
       nvim-web-devicons # for tree-lua
 #      telescope-nvim # file finder
       indentLine # indentlines
-      nvim-treesitter #syntax highlighting
+      (nvim-treesitter.withPlugins (plugins: pkgs.tree-sitter.allGrammars)) #syntax highlighting
+      coq_nvim # autocompletions
     ];
     extraConfig = "lua << EOF\n" + builtins.readFile ./init.lua + "\nEOF";
+    
   };
 }

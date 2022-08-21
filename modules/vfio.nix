@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   boot = {
-    kernelParams = [ "amd_iommu=on" "kvm.ignore_msrs=1" ];
+    kernelParams = [ "amd_iommu=on" "iommu=pt" "vfio_iommu_type1.allow_unsafe_interrupts=1" "kvm.ignore_msrs=1" ];
     kernelModules = [ "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
     initrd.kernelModules = [ "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
     extraModprobeConfig = ''
@@ -31,7 +31,7 @@
       OPERATION="$2"
       SUB_OPERATION="$3"
 
-      if [ "$GUEST_NAME" == "Main_VM" ]; then
+      if [ "$GUEST_NAME" == "Windows" ]; then
         if [ "$OPERATION" == "start" ]; then
           systemctl set-property --runtime -- user.slice AllowedCPUs=0,1,2,6,7,8
           systemctl set-property --runtime -- system.slice AllowedCPUs=0,1,2,6,7,8

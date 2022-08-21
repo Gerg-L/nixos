@@ -26,9 +26,6 @@ local function map(mode, lhs, rhs, opts)
 end
 -- show tree
 map("n", "<Leader>t", ":NvimTreeToggle<CR>")
--- coc completion
-map("i", "<cr>", 'pumvisible() ? coc#_select_confirm() : \"\\<C-g>u\\<CR>\"', {silent = true, expr = true})
-
 -- plugin setups
 require("nvim-tree").setup {
   open_on_setup = true,
@@ -41,12 +38,21 @@ require("nvim-tree").setup {
 }
 require("nvim-web-devicons").setup()
 require("nvim-treesitter.configs").setup {
-  ensure_installed = "all",
+  ensure_installed = "",
   sync_install = false,
-  auto_install = true,
+  auto_install = false,
   highlight = {
     enable = true,
     additional_vim_regex_highlighting = false
   }
 }
-
+vim.g.coq_settings = {
+	auto_start = "shut-up",
+  xdg = true,
+  keymap = {
+    pre_select = true,
+  },
+}
+-- shapes and colors
+vim.cmd[[colorscheme tokyonight]]
+vim.cmd[[hi Normal guibg=#000000]]

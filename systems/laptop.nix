@@ -14,7 +14,7 @@
       ../modules/zsh.nix
     ];
   networking.hostName = "gerg-laptop";
-  boot.kernelPackages = pkgs.linuxPackages_5_18;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   hardware.cpu.amd.updateMicrocode = true;  
   
   # end important stuff
