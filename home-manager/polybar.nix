@@ -19,13 +19,13 @@
       };
       "bar/left" = {
         width = "180px";
-        offset.x = 20;
+        offset.x = 10;
         modules.center = "xworkspaces";
         height = "20pt";
         radius = 6;
         fixed.center = false;
         dpi = 96;
-        offset.y = 20;
+        offset.y = 10;
         font = [ "Overpass Nerd Font:style=Regular:size=14;4"  "Material Design Icons:style=Regular:size=16;4" ];
         background = "\${colors.background}";
         foreground = "\${colors.foreground}";
@@ -33,7 +33,7 @@
         border = {
           size = "7pt";
           color = "\${colors.background}";
-          radius = 15;
+          radius = 7;
         };
         padding = {
           left = 0;
@@ -54,7 +54,7 @@
         radius = 6;
         fixed.center = false;
         dpi = 96;
-        offset.y = 20;
+        offset.y = 10;
         font = [ "Overpass Nerd Font:style=Regular:size=14;4"  "Material Design Icons:style=Regular:size=16;4" ];
         background = "\${colors.background}";
         foreground = "\${colors.foreground}";
@@ -62,7 +62,7 @@
         border = {
           size = "7pt";
           color = "\${colors.background}";
-          radius = 15;
+          radius = 7;
         };
         padding = {
           left = 0;
@@ -77,13 +77,13 @@
       };
       "bar/right" = {
         width = "180px";
-        offset.x = 1720;
+        offset.x = 1730;
         modules.center = "tray pulseaudio network-wireless network-wired battery powermenu";
         height = "20pt";
         radius = 6;
         fixed.center = false;
         dpi = 96;
-        offset.y = 20;
+        offset.y = 10;
         font = [ "Overpass Nerd Font:style=Regular:size=14;4"  "Material Design Icons:style=Regular:size=16;4" ];
         background = "\${colors.background}";
         foreground = "\${colors.foreground}";
@@ -91,7 +91,7 @@
         border = {
           size = "7pt";
           color = "\${colors.background}";
-          radius = 15;
+          radius = 7;
         };
         padding = {
           left = 0;
@@ -106,7 +106,7 @@
       };
       "bar/tray" = {
         width = "180px";
-        offset.x = 1540;
+        offset.x = 1550;
         module.margin.left = 0;
         module.margin.right = 0;
         modules.right = "sep";
@@ -125,7 +125,7 @@
         radius = 6;
         fixed.center = false;
         dpi = 96;
-        offset.y = 20;
+        offset.y = 10;
         font = [ "Overpass Nerd Font:style=Regular:size=14;4"  "Material Design Icons:style=Regular:size=16;4" ];
         background = "\${colors.background}";
         foreground = "\${colors.foreground}";
@@ -133,7 +133,7 @@
         border = {
           size = "7pt";
           color = "\${colors.background}";
-          radius = 15;
+          radius = 7;
         };
         padding = {
           left = 0;
