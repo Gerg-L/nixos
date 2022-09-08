@@ -16,7 +16,6 @@ environment.systemPackages = with pkgs; [
      btrfs-progs #for external harddrive
      #user/gui
      (discord.override { nss = nss_latest; })
-     spotify-tray
      vlc
      bitwarden
      gimp
