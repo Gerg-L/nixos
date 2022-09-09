@@ -1,4 +1,4 @@
-{config, ... }:
+{config, pkgs, ... }:
 {
   services.xserver = {
     enable = true;
@@ -9,9 +9,8 @@
     layout = "us";
     libinput.enable = true;
     xautolock.enable = false;
-    desktopManager = {
-      xterm.enable = false;
-    };
+    desktopManager.xterm.enable = false;
+    excludePackages = [ pkgs.xterm ];
     windowManager.bspwm = {
       enable = true;
     };
