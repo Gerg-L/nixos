@@ -26,8 +26,8 @@
       "super + alt + {h,j,k,l}" = "bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}";
       "super + alt + shift + {h,j,k,l}" ="bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}";
       "super + {Left,Down,Up,Right}" = "bspc node -v {-20 0,0 20,0 -20,20 0}";
-      "XF86AudioPlay" = "playerctl play";
-      "XF86AudioPause" = "playerctl pause";
+      "XF86AudioPlay" = "playerctl play-pause";
+      "XF86AudioPause" = "playerctl play-pause";
       "XF86AudioNext" = "playerctl next";
       "XF86AudioPrev" = "playerctl previous"; 
       "alt + Tab" = "bash ~/.config/rofi/window-switcher/window-switcher.sh";
