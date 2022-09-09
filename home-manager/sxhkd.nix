@@ -2,11 +2,33 @@
   services.sxhkd = {
     enable = true;
     keybindings = {
+      #terminal
       "super + Return" = "alacritty";
+      #application launcher
       "super + @space" = "rofi -show drun";
+      #kill sxhkd
       "super + Escape" = "pkill -USR1 -x sxhkd";
+      #restart bspwm
       "super + alt + {q,r}" = "bspc {quit,wm -r}";
+      #kill current windows
       "alt + {F4, shift + F4}" = "bspc node -{c,k}";
+      #media keybindings
+      "XF86AudioPlay" = "playerctl play-pause";
+      "XF86AudioPause" = "playerctl play-pause";
+      "XF86AudioStop" = "playerctl stop";
+      "XF86AudioNext" = "playerctl next";
+      "XF86AudioPrev" = "playerctl previous"; 
+      "XF86AudioRaiseVolume" = "amixer sset Master 5%+";
+      "XF86AudioLowerVolume" = "amixer sset Master 5%-";
+      "XF86AudioMute" = "amixer sset Master toggle ";
+      "XF86MonBrightnessUp" = "brightnessctl s 20+";
+      "XF86MonBrightnessDown" = "brightnessctl s 20-";
+      #switch windows
+      "alt + Tab" = "~/.config/rofi/window-switcher/window-switcher.sh";
+      #screenshot stuff
+      "Print" = "maim $HOME/Screenshots/$(date +%Y-%m-%d_%H-%m-%s).jpg";
+      "super + Print" = "maim -s $HOME/Screenshots/$(date +%Y-%m-%d_%H-%m-%s).jpg";
+      #stuff i'm not so sure about
       "super + m" = "bspc desktop -l next";
       "super + y" = "bspc node newest.marked.local -n newest.!automatic.local";
       "super + g" = "bspc node -s biggest.window";
@@ -26,20 +48,6 @@
       "super + alt + {h,j,k,l}" = "bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}";
       "super + alt + shift + {h,j,k,l}" ="bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}";
       "super + {Left,Down,Up,Right}" = "bspc node -v {-20 0,0 20,0 -20,20 0}";
-      "XF86AudioPlay" = "playerctl play-pause";
-      "XF86AudioPause" = "playerctl play-pause";
-      "XF86AudioNext" = "playerctl next";
-      "XF86AudioPrev" = "playerctl previous"; 
-      "alt + Tab" = "bash ~/.config/rofi/window-switcher/window-switcher.sh";
-      "ctrl + shift + Print" = "$HOME/.scripts/screenshot --full";
-      "ctrl + Print" = "$HOME/.scripts/screenshot --area";
-      "XF86AudioRaiseVolume" = "amixer sset Master 5%+";
-      "XF86AudioLowerVolume" = "amixer sset Master 5%-";
-      "XF86AudioMute" = "amixer sset Master toggle ";
-      "XF86MonBrightnessUp" = "brightnessctl s 20+";
-      "XF86MonBrightnessDown" = "brightnessctl s 20-";
-      "Print" = "maim $HOME/Screenshots/$(date +%Y-%m-%d_%H-%m-%s).jpg";
-      "super + Print" = "maim -s $HOME/Screenshots/$(date +%Y-%m-%d_%H-%m-%s).jpg";
     };
   };
 }
