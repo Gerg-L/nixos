@@ -18,7 +18,7 @@
       keep-outputs = false
       keep-derivations = false
       experimental-features = nix-command flakes
-    '';
+      '';
   };
   networking = {
     firewall.enable = true;
@@ -38,32 +38,35 @@
       enable = true;
       servers = [
         "time.google.com"
-        "time2.google.com"
+          "time2.google.com"
       ];
     };
   };
-  # Select internationalisation properties.
+# Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
     font = "Lat2-Terminus16";
     useXkbConfig = true;
   };
+#pipewire sound
+  sound.enable = false;
 
-  # Enable sound.
+# rtkit is optional but recommended
   security.rtkit.enable = true;
-  hardware.pulseaudio = {
+  services.pipewire = {
     enable = true;
-    support32Bit = true;
-    package = pkgs.pulseaudioFull;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = true;
   };
-
-  #enable ssh
-  programs = {
-    mtr.enable = true;
-    gnupg.agent = {
-      enable = true;
-      enableSSHSupport = true;
+#enable ssh
+    programs = {
+      mtr.enable = true;
+      gnupg.agent = {
+        enable = true;
+        enableSSHSupport = true;
+      };
     };
-  };
-  services.openssh.enable = true;
-}
+    services.openssh.enable = true;
+  }
