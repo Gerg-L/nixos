@@ -1,8 +1,7 @@
 { pkgs, config, ... }:
 
 let
-  update-system = pkgs.writeScriptBin "update-system" ''
-     #!/bin/sh
+  update-system = pkgs.writeShellScriptBin "update-system" ''
     if ! [ $(id -u) = 0 ]; then
       echo "RUN AS ROOT"
       exit 1
@@ -10,51 +9,46 @@ let
      nix flake update /etc/nixos/#
   ''; 
 
-  clean-store = pkgs.writeScriptBin "clean-store" ''
-    #!/bin/sh
+  clean-store = pkgs.writeShellScriptBin "clean-store" ''
     if ! [ $(id -u) = 0 ]; then
       echo "RUN AS ROOT"
       exit 1
     fi
     rm /nix/var/nix/gcroots/auto/*
     nix-collect-garbage -d
-    sudo -u gerg nix-collect-garbage -d
   ''; 
 
-  apply-users = pkgs.writeScriptBin "apply-users" ''
-    #!/bin/sh
+  apply-user = pkgs.writeShellScriptBin "apply-users" ''
     home-manager switch --flake /etc/nixos/#$(whoami)
   ''; 
 
-  apply-system = pkgs.writeScriptBin "apply-system" ''
-    #!/bin/sh
+  apply-system = pkgs.writeShellScriptBin "apply-system" ''
     if ! [ $(id -u) = 0 ]; then
       echo "RUN AS ROOT"
       exit 1
     fi
-    nixos-rebuild switch --flake /etc/nixos/#${config.networking.hostName}
+    nixos-rebuild switch --flake /etc/nixos/#
   ''; 
 
-  polybar-tray = pkgs.writeScriptBin "polybar-tray" ''
-    #!/bin/sh
-    u=$(xprop -name "Polybar tray window" _NET_WM_PID | awk '{print $3}')
-    if [ $u -Z ]
-    then polybar tray &
-    else kill $u
-    fi
-  '';
-  full-upgrade = pkgs.writeScriptBin "full-upgrade" ''
-    #!/bin/sh
+  full-upgrade = pkgs.writeShellScriptBin "full-upgrade" ''
     if ! [ $(id -u) = 0 ]; then
       echo "RUN AS ROOT"
       exit 1
     fi
     update-system
     apply-system
-    apply-users
-    sudo -u gerg apply-users
+    apply-user
+    sudo -u gerg apply-user
     clean-store
   '';
+
+  polybar-tray = pkgs.writeShellScriptBin "polybar-tray" ''
+    u=$(xprop -name "Polybar tray window" _NET_WM_PID | awk '{print $3}')
+    if [ $u -Z ]
+    then polybar tray &
+    else kill $u
+    fi
+  '';
 in {
-  environment.systemPackages = [ update-system clean-store apply-users apply-system polybar-tray full-upgrade];
+  environment.systemPackages = [ update-system clean-store apply-user apply-system polybar-tray full-upgrade];
 }
