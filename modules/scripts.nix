@@ -18,7 +18,7 @@ let
     nix-collect-garbage -d
   ''; 
 
-  apply-user = pkgs.writeShellScriptBin "apply-users" ''
+  apply-user = pkgs.writeShellScriptBin "apply-user" ''
     home-manager switch --flake /etc/nixos/#$(whoami)
   ''; 
 
