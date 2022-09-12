@@ -1,4 +1,4 @@
-{ config, pkgs, callPackage, ... }:
+{ config, pkgs, callPackage, webcord, ... }:
 {
 environment.systemPackages = with pkgs; [     
      wget
@@ -15,7 +15,6 @@ environment.systemPackages = with pkgs; [
      alsa-utils
      btrfs-progs #for external harddrive
      #user/gui
-     (discord.override { nss = nss_latest; })
      vlc
      bitwarden
      gimp
@@ -43,5 +42,6 @@ environment.systemPackages = with pkgs; [
      gcc #for neovim tree-sitter
      nix-tree
      git-filter-repo
+     webcord.packages.${pkgs.system}.default
   ];
 }

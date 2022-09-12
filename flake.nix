@@ -7,9 +7,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     spicetify-nix.url = "github:the-argus/spicetify-nix";
+    webcord.url = "github:fufexan/webcord-flake";
   };
 
-  outputs = {self, nixpkgs, home-manager, spicetify-nix, ... }@inputs:
+  outputs = {self, nixpkgs, home-manager, spicetify-nix, webcord, ... }@inputs:
   let
     username = "gerg";
     system = "x86_64-linux";
@@ -56,6 +57,7 @@
     nixosConfigurations = {
       gerg-laptop = lib.nixosSystem { 
         inherit system pkgs;
+        specialArgs = inputs;
         modules = [
           ./configuration.nix
           ./systems/laptop.nix
@@ -63,6 +65,7 @@
       };
       gerg-desktop = lib.nixosSystem { 
         inherit system pkgs;
+        specialArgs = inputs;
         modules = [
           ./configuration.nix
           ./systems/desktop.nix
