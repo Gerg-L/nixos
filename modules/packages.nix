@@ -43,5 +43,6 @@ environment.systemPackages = with pkgs; [
      nix-tree
      git-filter-repo
      webcord.packages.${pkgs.system}.default
+     spotify-tray
   ];
 }
