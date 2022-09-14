@@ -18,8 +18,8 @@
       "XF86AudioStop" = "playerctl stop";
       "XF86AudioNext" = "playerctl next";
       "XF86AudioPrev" = "playerctl previous"; 
-      "XF86AudioRaiseVolume" = "amixer sset Master 5%+";
-      "XF86AudioLowerVolume" = "amixer sset Master 5%-";
+      "XF86AudioRaiseVolume" = "amixer sset Master 40+";
+      "XF86AudioLowerVolume" = "amixer sset Master 40-";
       "XF86AudioMute" = "amixer sset Master toggle ";
       "XF86MonBrightnessUp" = "brightnessctl s 20+";
       "XF86MonBrightnessDown" = "brightnessctl s 20-";
