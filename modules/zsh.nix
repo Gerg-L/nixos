@@ -9,6 +9,9 @@
         enable = true;
       };
       interactiveShellInit = "neofetch";
+      shellAliases = {
+        ls = "exa --long --icons";
+      };
     };
     starship = {
       enable = true;

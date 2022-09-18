@@ -1,8 +1,8 @@
 { config, pkgs, callPackage, webcord, ... }:
 {
 environment.systemPackages = with pkgs; [     
-     wget
-     htop #view tasks
+     wget #wget
+     btop #view tasks
      efibootmgr #efi editor
      maim #screenshooter
      #lightm stuff
@@ -19,30 +19,31 @@ environment.systemPackages = with pkgs; [
      bitwarden
      gimp
      qbittorrent
+     webcord.packages.${pkgs.system}.default
+     spotify-tray
      feh #for wallpaper
      #explicit xfce4 for bspwm
      xarchive
      xfce.catfish
      xfce.mousepad
      xfce.xfce4-power-manager
-     #shiny
-     brightnessctl
-     playerctl
-     networkmanager_dmenu
-     networkmanagerapplet
-     dmenu
-     flashfocus
-     pavucontrol
-     xclip
-     neofetch
+
+     brightnessctl #brightness control for laptop
+     playerctl #music control
+     networkmanager_dmenu #pretty gui connection control
+     networkmanagerapplet #gui connection control
+     dmenu #for networkmanager_dmenu
+     flashfocus #flash when switching windows
+     pavucontrol #gui volume control
+     xclip #commandline clipboard access
      #my polkit fix
      polkit_fix
-     #for thunar root
-     qsudo
-     gcc #for neovim tree-sitter
-     nix-tree
+     qsudo #for running thunar as root
+     nix-tree #show nixpkgs
      git-filter-repo
-     webcord.packages.${pkgs.system}.default
-     spotify-tray
+     exa #ls replacement
+     cava #pretty audio
+     neofetch
   ];
 }
+
