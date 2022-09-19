@@ -9,7 +9,6 @@ environment.systemPackages = with pkgs; [
      lightdm
      lightdm-mini-greeter
      #needed utils
-     mesa #3d acceleration
      pciutils
      binutils
      alsa-utils

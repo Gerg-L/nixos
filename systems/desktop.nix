@@ -20,9 +20,7 @@
   hardware.cpu.amd.updateMicrocode = true;  
 #end important stuff
   environment.systemPackages = with pkgs; [
-    android-tools
-    openjdk
-    AFKCommands
+    afk-cmds
     xmrig
     t-rex-miner
   ];
@@ -51,10 +49,10 @@
   };
   systemd.services.mining = {
     enable = true;
-    path = with pkgs; [ AFKCommands t-rex-miner xmrig ];
+    path = with pkgs; [ afk-cmds t-rex-miner xmrig alacritty zsh ];
     wantedBy = [ "graphical.target" ];
     script = ''
-      AFKCommands
+      afk_cmds -c /home/gerg/afk-cmds.json
     '';
     environment = {
       XAUTHORITY="/home/gerg/.Xauthority";

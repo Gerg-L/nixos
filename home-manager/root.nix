@@ -4,8 +4,8 @@
     ./theme.nix
     ./git.nix
     ./neovim.nix
+    ./alacritty.nix
   ];
-  xsession.numlock.enable = true;
   programs.home-manager.enable = true;
   home = {
     username = "root";
