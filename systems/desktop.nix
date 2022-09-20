@@ -23,6 +23,7 @@
     afk-cmds
     xmrig
     t-rex-miner
+    vscodium
   ];
 #user managment
   users = {

@@ -5,9 +5,6 @@ environment.systemPackages = with pkgs; [
      btop #view tasks
      efibootmgr #efi editor
      maim #screenshooter
-     #lightm stuff
-     lightdm
-     lightdm-mini-greeter
      #needed utils
      pciutils
      binutils
@@ -26,7 +23,6 @@ environment.systemPackages = with pkgs; [
      xfce.catfish
      xfce.mousepad
      xfce.xfce4-power-manager
-
      brightnessctl #brightness control for laptop
      playerctl #music control
      networkmanager_dmenu #pretty gui connection control
