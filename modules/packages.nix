@@ -2,7 +2,7 @@
 {
 environment.systemPackages = with pkgs; [     
      wget #wget
-     btop #view tasks
+     bottom #view tasks
      efibootmgr #efi editor
      maim #screenshooter
      #needed utils
@@ -39,6 +39,8 @@ environment.systemPackages = with pkgs; [
      exa #ls replacement
      cava #pretty audio
      neofetch
+     piper # mouse configuration
+     libratbag
   ];
 }
 
