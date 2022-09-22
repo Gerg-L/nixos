@@ -10,7 +10,6 @@
       "xsetroot -cursor_name left_ptr"
       "xsetroot -solid \"#000000\""
       "flashfocus"
-      "polkit-gnome"
     ];
     settings = {
       border_width = 0;

@@ -10,8 +10,8 @@
     ./theme.nix
     ./picom.nix
     ./git.nix
-    ./neovim.nix
     ./spicetify.nix
+    ./neovim
   ];
   xsession.numlock.enable = true;
   programs.home-manager.enable = true;

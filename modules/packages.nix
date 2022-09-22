@@ -31,8 +31,6 @@ environment.systemPackages = with pkgs; [
      flashfocus #flash when switching windows
      pavucontrol #gui volume control
      xclip #commandline clipboard access
-     #my polkit fix
-     polkit_fix
      qsudo #for running thunar as root
      nix-tree #show nixpkgs
      git-filter-repo
@@ -41,6 +39,8 @@ environment.systemPackages = with pkgs; [
      neofetch
      piper # mouse configuration
      libratbag
+
+     st
   ];
 }
 

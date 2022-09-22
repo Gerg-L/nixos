@@ -3,7 +3,7 @@
   imports = [
     ./theme.nix
     ./git.nix
-    ./neovim.nix
+    ./neovim
     ./alacritty.nix
   ];
   programs.home-manager.enable = true;
