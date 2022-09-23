@@ -1,22 +1,10 @@
 {pkgs, ... }:
-let
-  luaRequire = module:
-    builtins.readFile (builtins.toString
-      ./config
-      + "/${module}.lua");
-  luaConfig = builtins.concatStringsSep "\n" (map luaRequire [
-    "init"
-    "lspconfig"
-    "nvim-cmp"
-  ]);
-in 
 {
   programs.neovim = {
     enable = true;
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
-    luaInit = true;
     extraPackages = with pkgs; [gcc ripgrep fd];
     plugins = with pkgs.vimPlugins; [
       (nvim-treesitter.withPlugins (plugins: pkgs.tree-sitter.allGrammars)) #syntax highlighting
@@ -46,6 +34,22 @@ in
       vim-moonfly #color scheme
       lightline-vim #bottom bar
     ];
-    extraConfig = luaConfig;
+    extraConfig = let
+  luaRequire = module:
+    builtins.readFile (builtins.toString
+      ./config
+      + "/${module}.lua");
+  luaConfig = builtins.concatStringsSep "\n" (map luaRequire [
+    "init"
+    "lspconfig"
+    "nvim-cmp"
+  ]);
+in ''
+lua << EOF
+${luaConfig}
+EOF
+
+'';
   };
 }
+

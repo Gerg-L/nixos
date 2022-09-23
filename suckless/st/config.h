@@ -65,7 +65,7 @@ static unsigned int blinktimeout = 0;
 /*
  * thickness of underline and bar cursors
  */
-static unsigned int cursorthickness = 1;
+static unsigned int cursorthickness = 2;
 /*
  * enable smooth box drawing
  */
@@ -129,7 +129,7 @@ static const char *colorname[] = {
 	/* more colors can be added after 255 to use with DefaultXX */
   [256] = "#282a36", 
   [257] = "#f8f8f2",
-  [258]= "#eeeeee",
+  [258] = "#eeeeee",
   [259] = "#080808",
 };
 
@@ -140,8 +140,8 @@ static const char *colorname[] = {
  */
 unsigned int defaultfg = 258;
 unsigned int defaultbg = 259;
-unsigned int defaultcs = 256;
-static unsigned int defaultrcs = 257;
+unsigned int defaultcs = 257;
+static unsigned int defaultrcs = 256;
 
 /*
  * Default shape of cursor
