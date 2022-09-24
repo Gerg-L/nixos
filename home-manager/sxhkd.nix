@@ -3,7 +3,7 @@
     enable = true;
     keybindings = {
       #terminal
-      "super + Return" = "alacritty";
+      "super + Return" = "st";
       #application launcher
       "super + @space" = "rofi -show drun";
       #kill sxhkd

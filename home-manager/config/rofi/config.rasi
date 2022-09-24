@@ -3,7 +3,7 @@ configuration{
     lines: 5;
     show-icons: true;
     icon-theme: "Flat-Remix-Blue-Dark";
-    terminal: "alacritty";
+    terminal: "st";
     drun-display-format: "{name}";
     location: 0;
     disable-history: false;

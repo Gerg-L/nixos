@@ -1,9 +1,9 @@
 { config, pkgs, callPackage, lib, ... }:
 {
-  #important stuff first
+#important stuff first
   imports =
     [
-      ../modules/boot.nix
+    ../modules/boot.nix
       ../modules/packages.nix
       ../modules/nvidia.nix
       ../modules/fonts.nix
@@ -21,9 +21,9 @@
 #end important stuff
   environment.systemPackages = with pkgs; [
     afk-cmds
-    xmrig
-    t-rex-miner
-    vscodium
+      xmrig
+      t-rex-miner
+      vscodium
   ];
 #user managment
   users = {
@@ -50,14 +50,18 @@
   };
   systemd.services.mining = {
     enable = true;
-    path = with pkgs; [ afk-cmds t-rex-miner xmrig alacritty zsh ];
+    path = with pkgs; [t-rex-miner afk-cmds st zsh dbus xmrig];
     wantedBy = [ "graphical.target" ];
     script = ''
-      afk_cmds -c /home/gerg/afk-cmds.json
-    '';
+      afk-cmds -c /home/gerg/afk-cmds.json
+      '';
     environment = {
+    #  PATH="/run/current-system/sw/bin"; missing something with dbus
       XAUTHORITY="/home/gerg/.Xauthority";
       DISPLAY=":0";
+      XDG_DATA_DIRS="/nix/var/nix/profiles/default/share:/run/current-system/sw/share";
+      DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/1000/bus";
+      NO_AT_BRIDGE="1";
     };
   };
 }

@@ -1,7 +1,17 @@
 { lib
 , rustPlatform
 , fetchFromGitHub
-, xorg
+, wrapGAppsHook
+, libX11
+, libXScrnSaver
+, pkg-config
+, cairo
+, glib
+, gdk-pixbuf
+, gtkmm3
+, pango
+, libappindicator-gtk3
+, atk
 }:
 rustPlatform.buildRustPackage rec {
   pname = "afk-cmds";
@@ -10,16 +20,34 @@ rustPlatform.buildRustPackage rec {
   src = fetchFromGitHub {
     owner = "ISnortPennies";
     repo = "afk-cmds";
-    rev = "6a131c4892ea411281426d1165a48607e556f729";
-    sha256 = "sha256-LK6XeQc5Rc7KxwL2r2L3dCAKtbENuigbyTTuS+7JKnQ=";
+    rev = "b345d5a038a86c6ca31d3bd8800ac759da912a22";
+    sha256 = "sha256-yleq8bg3ZnilbYTNXRteBALiJ/fIXOxXxqf966OokqQ=";
   };
-
-  buildInputs = [
-    xorg.libXScrnSaver
-    xorg.libX11
-  ];
   
-  cargoSha256 = "sha256-Osxg/KuHOdnz8UYnbT69dmNFLHW6Cq1fLb32/UJeDUg=";
+  buildInputs = [
+  libX11
+  libXScrnSaver
+  cairo
+  glib
+  gdk-pixbuf
+  gtkmm3
+  pango
+  libappindicator-gtk3
+  atk
+  ];
+
+  nativeBuildInputs = [
+    pkg-config
+    wrapGAppsHook
+  ];
+
+  postFixup = '' 
+    wrapProgram $out/bin/afk-cmds \
+      --prefix LD_LIBRARY_PATH : ${(lib.makeLibraryPath buildInputs)}
+    mkdir -p $out/share/icons/hicolor/256x256/apps/
+    cp $src/afk-icon.png $out/share/icons/hicolor/256x256/apps/afk-icon.png
+  '';
+  cargoSha256 = "sha256-CPpFUdgb0zTZAVlv4uhJ0Y7eocCjuEZNgQJdNwV1FI4=";
 
   meta = with lib; {
     homepage = "https://github.com/ISnortPennies/AFKCommands";
@@ -28,5 +56,6 @@ rustPlatform.buildRustPackage rec {
     maintainers = with maintainers; [ ];
     platforms = platforms.linux;
   };
+
 }
 

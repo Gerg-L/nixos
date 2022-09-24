@@ -31,22 +31,6 @@
        }
       )
       (import ./suckless)
-      (self: super:
-        let
-          vim-moonfly = super.vimUtils.buildVimPlugin {
-            name = "vim-moonfly";
-            src = pkgs.fetchFromGitHub {
-              owner = "bluz71";
-              repo = "vim-moonfly-colors";
-              rev = "065c99b95355b33dfaa05bde11ad758e519b04a3";
-              sha256 = "sha256-TEYN8G/VNxitpPJPM7+O9AGLm6V7bPkiTlFG5op55pI=";
-            };
-          };
-        in {
-          vimPlugins =
-            super.vimPlugins // { inherit vim-moonfly; };
-          }
-      )
     ];
   };
   lib = nixpkgs.lib;

@@ -6,7 +6,6 @@
     ./sxhkd.nix
     ./rofi.nix
     ./polybar.nix
-    ./alacritty.nix
     ./theme.nix
     ./picom.nix
     ./git.nix
