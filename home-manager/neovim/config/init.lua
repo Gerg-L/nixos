@@ -33,6 +33,9 @@ vim.g.loaded_netrwPlugin = 1
 require("nvim-tree").setup {
   open_on_setup = true,
   sort_by = "case_sensitive",
+  view = {
+    adaptive_size = true,
+  },
   actions = {
     open_file = {
       quit_on_open = true,
