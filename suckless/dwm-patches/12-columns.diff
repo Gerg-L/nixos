@@ -1,0 +1,65 @@
+diff --git a/config.def.h b/config.def.h
+index 56659ef..ca9dd12 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -57,6 +57,7 @@ static const Layout layouts[] = {
+ 	{ "[M]",      monocle },
+ 	{ "|M|",      centeredmaster },
+ 	{ ">M>",      centeredfloatingmaster },
++  { "|||",      col },
+ };
+ 
+ /* key definitions */
+@@ -93,6 +94,7 @@ static const Key keys[] = {
+ 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+   { MODKEY,                       XK_u,      setlayout,      {.v = &layouts[3]} },
+   { MODKEY,                       XK_o,      setlayout,      {.v = &layouts[4]} },
++  { MODKEY,                       XK_c,      setlayout,      {.v = &layouts[5]} },
+ 	{ MODKEY,                       XK_f,      fullscreen,     {0} },
+ 	{ MODKEY,                       XK_space,  setlayout,      {0} },
+ 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
+diff --git a/dwm.c b/dwm.c
+index 9dc53d0..444d390 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -161,6 +161,7 @@ static void checkotherwm(void);
+ static void cleanup(void);
+ static void cleanupmon(Monitor *mon);
+ static void clientmessage(XEvent *e);
++static void col(Monitor *);
+ static void configure(Client *c);
+ static void configurenotify(XEvent *e);
+ static void configurerequest(XEvent *e);
+@@ -1780,6 +1781,32 @@ tagmon(const Arg *arg)
+ 	sendmon(selmon->sel, dirtomon(arg->i));
+ }
+ 
++void
++col(Monitor *m)
++{
++	unsigned int i, n, h, w, x, y, mw;
++	Client *c;
++
++	for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
++	if (n == 0)
++		return;
++
++	if (n > m->nmaster)
++		mw = m->nmaster ? m->ww * m->mfact : 0;
++	else
++		mw = m->ww;
++	for (i = x = y = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
++		if (i < m->nmaster) {
++			w = (mw - x) / (MIN(n, m->nmaster) - i);
++			resize(c, x + m->wx, m->wy, w - (2 * c->bw), m->wh - (2 * c->bw), 0);
++			x += WIDTH(c);
++		} else {
++			h = (m->wh - y) / (n - i);
++			resize(c, x + m->wx, m->wy + y, m->ww - x - (2 * c->bw), h - (2 * c->bw), 0);
++			y += HEIGHT(c);
++		}
++}
++
+ void
+ tile(Monitor *m)
+ {

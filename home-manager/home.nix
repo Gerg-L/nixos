@@ -24,6 +24,10 @@
         source = ./config;
         recursive = true;
       };
+      ".dwm" = {
+        source = ./dwm;
+        recursive = true;
+      };
     };
   };
 }

@@ -1,0 +1,69 @@
+diff --git a/config.def.h b/config.def.h
+index 8a50720..f12e7d6 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -7,6 +7,7 @@ static const unsigned int gappx     = 10;       /* default gap between windows i
+ static const unsigned int snap      = 32;       /* snap pixel */
+ static const int showbar            = 1;        /* 0 means no bar */
+ static const int topbar             = 1;        /* 0 means bottom bar */
++static const int startontag         = 0;        /* 0 means no tag active on start */
+ static const double activeopacity   = 1.0f;     /* Window opacity when it's focused (0 <= opacity <= 1) */
+ static const double inactiveopacity = 0.875f;   /* Window opacity when it's inactive (0 <= opacity <= 1) */
+ static       Bool bUseOpacity       = True;     /* Starts with opacity on any unfocused windows */
+diff --git a/dwm.c b/dwm.c
+index 9c7575a..6f5e261 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -341,7 +341,9 @@ applyrules(Client *c)
+ 		XFree(ch.res_class);
+ 	if (ch.res_name)
+ 		XFree(ch.res_name);
+-	c->tags = c->tags & TAGMASK ? c->tags & TAGMASK : c->mon->tagset[c->mon->seltags];
++	if(c->tags & TAGMASK)                    c->tags = c->tags & TAGMASK;
++	else if(c->mon->tagset[c->mon->seltags]) c->tags = c->mon->tagset[c->mon->seltags];
++	else                                     c->tags = 1;
+ }
+ 
+ int
+@@ -664,7 +666,7 @@ createmon(void)
+ 	Monitor *m;
+ 
+ 	m = ecalloc(1, sizeof(Monitor));
+-	m->tagset[0] = m->tagset[1] = 1;
++	m->tagset[0] = m->tagset[1] = startontag ? 1 : 0;
+ 	m->mfact = mfact;
+ 	m->nmaster = nmaster;
+ 	m->showbar = showbar;
+@@ -1561,7 +1563,7 @@ sendmon(Client *c, Monitor *m)
+ 	detach(c);
+ 	detachstack(c);
+ 	c->mon = m;
+-	c->tags = m->tagset[m->seltags]; /* assign tags of target monitor */
++	c->tags = (m->tagset[m->seltags] ? m->tagset[m->seltags] : 1);
+ 	attach(c);
+ 	attachstack(c);
+ 	focus(NULL);
+@@ -1991,11 +1993,9 @@ toggleview(const Arg *arg)
+ {
+ 	unsigned int newtagset = selmon->tagset[selmon->seltags] ^ (arg->ui & TAGMASK);
+ 
+-	if (newtagset) {
+-		selmon->tagset[selmon->seltags] = newtagset;
+-		focus(NULL);
+-		arrange(selmon);
+-	}
++	selmon->tagset[selmon->seltags] = newtagset;
++	focus(NULL);
++	arrange(selmon);
+ }
+ 
+ void
+@@ -2295,7 +2295,7 @@ updatewmhints(Client *c)
+ void
+ view(const Arg *arg)
+ {
+-	if ((arg->ui & TAGMASK) == selmon->tagset[selmon->seltags])
++	if(arg->ui && (arg->ui & TAGMASK) == selmon->tagset[selmon->seltags])
+ 		return;
+ 	selmon->seltags ^= 1; /* toggle sel tagset */
+ 	if (arg->ui & TAGMASK)

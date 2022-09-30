@@ -1,0 +1,75 @@
+diff --git a/config.def.h b/config.def.h
+index 9f30227..9ea29c4 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -120,7 +120,7 @@ static const Key keys[] = {
+ 	TAGKEYS(                        XK_7,                      6)
+ 	TAGKEYS(                        XK_8,                      7)
+ 	TAGKEYS(                        XK_9,                      8)
+-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
++	{ MODKEY|ShiftMask,             XK_q,      quitprompt,           {0} },
+ };
+ 
+ /* button definitions */
+diff --git a/dwm.c b/dwm.c
+index c77ed1b..7b4689a 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -195,6 +195,7 @@ static void opacity(Client *c, double opacity);
+ static void pop(Client *c);
+ static void propertynotify(XEvent *e);
+ static void quit(const Arg *arg);
++static void quitprompt(const Arg *arg);
+ static Monitor *recttomon(int x, int y, int w, int h);
+ static void resize(Client *c, int x, int y, int w, int h, int interact);
+ static void resizeclient(Client *c, int x, int y, int w, int h);
+@@ -282,6 +283,7 @@ static void (*handler[LASTEvent]) (XEvent *) = {
+ };
+ static Atom wmatom[WMLast], netatom[NetLast];
+ static int running = 1;
++static int restart = 1;
+ static Cur *cursor[CurLast];
+ static Clr **scheme;
+ static Display *dpy;
+@@ -1258,6 +1260,31 @@ quit(const Arg *arg)
+ 	running = 0;
+ }
+ 
++void
++quitprompt(const Arg *arg)
++{
++	FILE *pp = popen("echo -e \"no\nrestart\nyes\" | dmenu -i -sb red -p \"Quit DWM?\"", "r");
++	if(pp != NULL) {
++		char buf[1024];
++		if (fgets(buf, sizeof(buf), pp) == NULL) {
++			fprintf(stderr, "Quitprompt: Error reading pipe!\n");
++			return;
++		}
++		if (strcmp(buf, "yes\n") == 0) {
++			pclose(pp);
++			restart = 0;
++			quit(NULL);
++		} else if (strcmp(buf, "restart\n") == 0) {
++			pclose(pp);
++			restart = 1;
++			quit(NULL);
++		} else if (strcmp(buf, "no\n") == 0) {
++			pclose(pp);
++			return;
++		}
++	}
++}
++
+ Monitor *
+ recttomon(int x, int y, int w, int h)
+ {
+@@ -2351,6 +2378,9 @@ main(int argc, char *argv[])
+ 	run();
+ 	cleanup();
+ 	XCloseDisplay(dpy);
++	if (restart == 1) {
++		execlp("dwm", "dwm", NULL);
++	}
+ 	return EXIT_SUCCESS;
+ }
+ 

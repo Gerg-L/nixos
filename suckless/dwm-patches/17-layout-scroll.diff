@@ -1,0 +1,67 @@
+diff --git a/config.def.h b/config.def.h
+index 8a64179..59432be 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -110,6 +110,8 @@ static const Key keys[] = {
+ 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
+ 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
+ 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
++  { MODKEY|ShiftMask,             XK_h,      layoutscroll,   {.i = -1 } },
++	{ MODKEY|ShiftMask,             XK_l,      layoutscroll,   {.i = +1 } },
+ 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
+ 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+ 	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = GAP_TOGGLE} },
+diff --git a/dwm.c b/dwm.c
+index 03a5c2d..a4762fc 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -138,6 +138,7 @@ struct Monitor {
+ 	Monitor *next;
+ 	Window barwin;
+ 	const Layout *lt[2];
++	int ltcur; /* current layout */
+ };
+ 
+ typedef struct {
+@@ -211,6 +212,7 @@ static void sendmon(Client *c, Monitor *m);
+ static void setclientstate(Client *c, long state);
+ static void setfocus(Client *c);
+ static void setfullscreen(Client *c, int fullscreen);
++static void layoutscroll(const Arg *arg);
+ static void fullscreen(const Arg *arg);
+ static void setgaps(const Arg *arg);
+ static void setlayout(const Arg *arg);
+@@ -670,6 +672,7 @@ createmon(void)
+ 	m->nmaster = nmaster;
+ 	m->showbar = showbar;
+ 	m->topbar = topbar;
++  m->ltcur = 0;
+ 	m->gappx = gappx;
+ 	m->drawwithgaps = startwithgaps;
+ 	m->lt[0] = &layouts[0];
+@@ -1679,6 +1682,25 @@ fullscreen(const Arg *arg)
+ 	togglebar(arg);
+ }
+ 
++void
++layoutscroll(const Arg *arg)
++{
++	if (!arg || !arg->i)
++		return;
++	int switchto = selmon->ltcur + arg->i;
++	int l = LENGTH(layouts);
++
++	if (switchto == l)
++		switchto = 0;
++	else if(switchto < 0)
++		switchto = l - 1;
++
++	selmon->ltcur = switchto;
++	Arg arg2 = {.v= &layouts[switchto] };
++	setlayout(&arg2);
++
++}
++
+ void
+ setlayout(const Arg *arg)
+ {
