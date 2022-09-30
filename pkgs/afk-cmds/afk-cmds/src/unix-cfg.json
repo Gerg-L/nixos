@@ -1,0 +1,17 @@
+{
+  "process_info": [
+    {
+      "enabled": true,
+      "path": "/run/current-system/sw/bin/st",
+      "cwd": "/home/gerg/",
+      "args": [
+        "ping",
+        "1.1.1.1"
+      ],
+      "show_window": true,
+      "while_afk": true,
+      "kill": true
+    }
+  ],
+  "afk_seconds": 3
+}

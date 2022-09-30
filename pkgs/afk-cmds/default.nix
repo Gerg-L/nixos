@@ -17,12 +17,7 @@ rustPlatform.buildRustPackage rec {
   pname = "afk-cmds";
   version= "1.0.0";
 
-  src = fetchFromGitHub {
-    owner = "ISnortPennies";
-    repo = "afk-cmds";
-    rev = "b345d5a038a86c6ca31d3bd8800ac759da912a22";
-    sha256 = "sha256-yleq8bg3ZnilbYTNXRteBALiJ/fIXOxXxqf966OokqQ=";
-  };
+  src = ./afk-cmds;
   
   buildInputs = [
   libX11

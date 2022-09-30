@@ -1,0 +1,17 @@
+{
+  "process_info": [
+    {
+      "enabled": true,
+      "path": "C:\\Windows\\system32\\cmd.exe",
+      "cwd": "C:\\",
+      "args": [
+        "/K",
+        "ping 1.1.1.1"
+      ],
+      "show_window": true,
+      "while_afk": true,
+      "kill": true
+    }
+  ],
+  "afk_seconds": 3
+}
