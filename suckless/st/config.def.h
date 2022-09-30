@@ -5,8 +5,8 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Overpass Mono:pixelsize=13:autohint=true";
-static int borderpx = 0;
+static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
+static int borderpx = 2;
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -63,7 +63,7 @@ static double maxlatency = 33;
  * blinking timeout (set to 0 to disable blinking) for the terminal blinking
  * attribute.
  */
-static unsigned int blinktimeout = 0;
+static unsigned int blinktimeout = 800;
 
 /*
  * thickness of underline and bar cursors
@@ -76,8 +76,8 @@ static unsigned int cursorthickness = 2;
  *    Bold affects lines thickness if boxdraw_bold is not 0. Italic is ignored.
  * 0: disable (render all U25XX glyphs normally from the font).
  */
-const int boxdraw = 1;
-const int boxdraw_bold = 1;
+const int boxdraw = 0;
+const int boxdraw_bold = 0;
 
 /* braille (U28XX):  1: render as adjacent "pixels",  0: use font */
 const int boxdraw_braille = 0;
@@ -109,7 +109,7 @@ char *termname = "st-256color";
 unsigned int tabspaces = 8;
 
 /* bg opacity */
-float alpha = 0.9, alphaUnfocused = 0.6;
+float alpha = 0.8, alphaUnfocused = 0.6;
 
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
@@ -140,6 +140,7 @@ static const char *colorname[] = {
   [257] = "#f8f8f2",
   [258] = "#eeeeee",
   [259] = "#080808",
+  "black",
 };
 
 
@@ -151,7 +152,7 @@ unsigned int defaultfg = 258;
 unsigned int defaultbg = 259;
 unsigned int defaultcs = 257;
 static unsigned int defaultrcs = 256;
-unsigned int bg = 16, bgUnfocused = 16;
+unsigned int bg = 17, bgUnfocused = 16;
 /*
  * Default shape of cursor
  * 2: Block ("█")
@@ -159,7 +160,7 @@ unsigned int bg = 16, bgUnfocused = 16;
  * 6: Bar ("|")
  * 7: Snowman ("☃")
  */
-static unsigned int cursorshape = 6;
+static unsigned int cursorshape = 2;
 
 /*
  * Default columns and rows numbers
@@ -192,7 +193,7 @@ static uint forcemousemod = ShiftMask;
  * Beware that overloading Button1 will disable the selection.
  */
 
-const unsigned int mousescrollincrement = 5;
+const unsigned int mousescrollincrement = 1;
 
 static MouseShortcut mshortcuts[] = {
 	/* mask                 button   function        argument       release */
@@ -519,4 +520,4 @@ static char ascii_printable[] =
 #define UNDERCURL_SPIKY 1
 #define UNDERCURL_CAPPED 2
 // Active style
-#define UNDERCURL_STYLE UNDERCURL_CURLY
+#define UNDERCURL_STYLE UNDERCURL_SPIKY

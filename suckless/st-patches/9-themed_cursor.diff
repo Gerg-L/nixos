@@ -1,0 +1,69 @@
+diff --git a/config.def.h b/config.def.h
+index 818a4da..0771ad8 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -170,11 +170,10 @@ static unsigned int cols = 80;
+ static unsigned int rows = 24;
+ 
+ /*
+- * Default colour and shape of the mouse cursor
++ * Default shape of the mouse cursor
+  */
+-static unsigned int mouseshape = XC_xterm;
+-static unsigned int mousefg = 7;
+-static unsigned int mousebg = 0;
++
++static char* mouseshape = "xterm";
+ 
+ /*
+  * Color used to display font attributes when fontconfig selected a font which
+diff --git a/config.mk b/config.mk
+index 55d0008..e795277 100644
+--- a/config.mk
++++ b/config.mk
+@@ -17,7 +17,7 @@ PKG_CONFIG = pkg-config
+ INCS = -I$(X11INC) \
+        `$(PKG_CONFIG) --cflags fontconfig` \
+        `$(PKG_CONFIG) --cflags freetype2`
+-LIBS = -L$(X11LIB) -lm -lrt -lX11 -lutil -lXft -lXrender\
++LIBS = -L$(X11LIB) -lm -lrt -lX11 -lutil -lXft -lXrender -lXcursor\
+        `$(PKG_CONFIG) --libs fontconfig` \
+        `$(PKG_CONFIG) --libs freetype2`
+ 
+diff --git a/x.c b/x.c
+index d56db85..e99388a 100644
+--- a/x.c
++++ b/x.c
+@@ -14,6 +14,7 @@
+ #include <X11/keysym.h>
+ #include <X11/Xft/Xft.h>
+ #include <X11/XKBlib.h>
++#include <X11/Xcursor/Xcursor.h>
+ 
+ char *argv0;
+ #include "arg.h"
+@@ -1225,23 +1226,9 @@ xinit(int cols, int rows)
+ 	}
+ 
+ 	/* white cursor, black outline */
+-	cursor = XCreateFontCursor(xw.dpy, mouseshape);
++        cursor = XcursorLibraryLoadCursor(xw.dpy, mouseshape);
+ 	XDefineCursor(xw.dpy, xw.win, cursor);
+ 
+-	if (XParseColor(xw.dpy, xw.cmap, colorname[mousefg], &xmousefg) == 0) {
+-		xmousefg.red   = 0xffff;
+-		xmousefg.green = 0xffff;
+-		xmousefg.blue  = 0xffff;
+-	}
+-
+-	if (XParseColor(xw.dpy, xw.cmap, colorname[mousebg], &xmousebg) == 0) {
+-		xmousebg.red   = 0x0000;
+-		xmousebg.green = 0x0000;
+-		xmousebg.blue  = 0x0000;
+-	}
+-
+-	XRecolorCursor(xw.dpy, cursor, &xmousefg, &xmousebg);
+-
+ 	xw.xembed = XInternAtom(xw.dpy, "_XEMBED", False);
+ 	xw.wmdeletewin = XInternAtom(xw.dpy, "WM_DELETE_WINDOW", False);
+ 	xw.netwmname = XInternAtom(xw.dpy, "_NET_WM_NAME", False);
