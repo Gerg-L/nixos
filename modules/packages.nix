@@ -1,46 +1,35 @@
 { config, pkgs, callPackage, webcord, ... }:
 {
-environment.systemPackages = with pkgs; [     
-     wget #wget
-     bottom #view tasks
-     efibootmgr #efi editor
-     maim #screenshooter
-     #needed utils
-     pciutils
-     binutils
-     alsa-utils
-     btrfs-progs #for external harddrive
-     #user/gui
-     vlc
-     bitwarden
-     gimp
-     qbittorrent
-     webcord.packages.${pkgs.system}.default
-     spotify-tray
-     feh #for wallpaper
-     #explicit xfce4 for bspwm
-     xarchive
-     xfce.catfish
-     xfce.mousepad
-     xfce.xfce4-power-manager
-     brightnessctl #brightness control for laptop
-     playerctl #music control
-     networkmanager_dmenu #pretty gui connection control
-     networkmanagerapplet #gui connection control
-     dmenu #for networkmanager_dmenu
-     flashfocus #flash when switching windows
-     pavucontrol #gui volume control
-     xclip #commandline clipboard access
-     qsudo #for running thunar as root
-     nix-tree #show nixpkgs
-     git-filter-repo
-     exa #ls replacement
-     cava #pretty audio
-     neofetch
-     piper # mouse configuration
-     libratbag
-
-     st
-  ];
+  environment.systemPackages = with pkgs; [     
+    bottom #view tasks
+    efibootmgr #efi editor
+    maim #screenshooter
+    pciutils #lspci
+    alsa-utils #volume control
+    btrfs-progs #for external harddrive
+    vlc #play stuff
+    bitwarden #store stuff
+    gimp #edit stuff 
+    qbittorrent #steal stuff 
+    webcord.packages.${pkgs.system}.default # talk to people (gross)
+    spotify-tray # tray icons are nice
+    feh #for wallpaper
+    xfce.mousepad
+    brightnessctl #brightness control for laptop
+    playerctl #music control
+    networkmanager_dmenu #pretty gui connection control
+    networkmanagerapplet #gui connection control
+    dmenu #for networkmanager_dmenu
+    pavucontrol #gui volume control
+    xclip #commandline clipboard access
+    exa #ls replacement
+    cava #pretty audio
+    neofetch # cus yes
+    st #suckless terminal
+    pipes-rs # more fun things
+    pcmanfm #file manager 
+    haskellPackages.squeeze #file compression
+    nix-tree #view packages
+    ];
 }
 

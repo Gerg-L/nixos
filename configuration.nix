@@ -9,7 +9,6 @@
     };
   };
   nix = {
-    package = pkgs.nixFlakes;
     settings = {
       auto-optimise-store = true;
       cores = 0;
@@ -26,6 +25,7 @@
     useDHCP = lib.mkDefault true;
     networkmanager.enable = true;
   };
+  services.gvfs.enable = true;
   qt5 = {
     enable = true;
     style = "gtk2";
@@ -61,12 +61,12 @@
     jack.enable = true;
   };
 #enable ssh
-    programs = {
-      mtr.enable = true;
-      gnupg.agent = {
-        enable = true;
-        enableSSHSupport = true;
-      };
+  programs = {
+    mtr.enable = true;
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
     };
-    services.openssh.enable = true;
-  }
+  };
+  services.openssh.enable = true;
+}

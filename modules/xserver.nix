@@ -11,11 +11,9 @@
     xautolock.enable = false;
     desktopManager.xterm.enable = false;
     excludePackages = [ pkgs.xterm ];
-    windowManager.bspwm = {
-      enable = true;
-    };
+    windowManager.dwm.enable = true;
     displayManager = {
-      defaultSession = "none+bspwm";
+      defaultSession = "none+dwm";
       lightdm = {
         enable = true;
         greeters.mini = {

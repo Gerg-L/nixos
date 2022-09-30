@@ -7,15 +7,15 @@
       enable = true;
       theme = "breeze";
       logo = ../images/nixos.png;
-      };
+    };
     loader = {
       systemd-boot = {
         enable = true;
         consoleMode = "max";
         editor = false;
       };
-    efi.canTouchEfiVariables = true;
-    timeout = 0;
+      efi.canTouchEfiVariables = true;
+      timeout = 0;
     };
   };
 }

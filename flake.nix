@@ -30,7 +30,7 @@
        afk-cmds = final.callPackage ./pkgs/afk-cmds {};
        }
       )
-      (import ./suckless)
+        (import ./suckless)
     ];
   };
   lib = nixpkgs.lib;

@@ -12,68 +12,21 @@
       };
       "colors" = {
         background = "#000000";
-        foreground = "#495eb8";
-        blue = "#7aa2f7";
-        alert = "#ad032e";
-        deepblue = "#03339c";
-      };
-      "bar/left" = {
-        width = "180px";
-        offset.x = 10;
-        modules.center = "xworkspaces";
-        height = "20pt";
-        radius = 6;
-        fixed.center = false;
-        dpi = 96;
-        offset.y = 10;
-        font = [ "Overpass Nerd Font:style=Regular:size=14;4"  "Material Design Icons:style=Regular:size=16;4" ];
-        background = "\${colors.background}";
-        foreground = "\${colors.foreground}";
-        line.size = "3pt";
-        border = {
-          size = "7pt";
-          color = "\${colors.background}";
-          radius = 7;
-        };
-        padding = {
-          left = 0;
-          right = 0;
-        };
-        cursor = {
-          click = "pointer";
-          scroll = "ns-resize";
-        };
-        enable.ipc = true;
-        wm.restack = "bspwm";
+        foreground = "#80a0ff";
+        blue = "#74b2ff";
+        alert = "#ff5189";
+        deepblue = "#36c692";
       };
       "bar/middle" = {
-        width = "130px";
-        offset.x = 895;
+        width = 100;
+        offset.x = 910;
         modules.center = "date";
-        height = "20pt";
-        radius = 6;
+        height = 20;
         fixed.center = false;
-        dpi = 96;
         offset.y = 10;
-        font = [ "Overpass Nerd Font:style=Regular:size=14;4"  "Material Design Icons:style=Regular:size=16;4" ];
+        font = [ "Overpass Nerd Font:style=Regular:size=12;5" ];
         background = "\${colors.background}";
         foreground = "\${colors.foreground}";
-        line.size = "3pt";
-        border = {
-          size = "7pt";
-          color = "\${colors.background}";
-          radius = 7;
-        };
-        padding = {
-          left = 0;
-          right = 0;
-        };
-        cursor = {
-          click = "pointer";
-          scroll = "ns-resize";
-        };
-        enable.ipc = true;
-        wm.restack = "bspwm";
       };
       "bar/right" = {
         width = "180px";
@@ -188,7 +141,7 @@
         interval = 1;
         date = {
           text = "\"%I:%M %p\"";
-          alt = "\"%a,  %B %d\"";
+          alt = "\"%m/%d/%y\"";
         };
         label = {
           text = "\"%date%%{A}\"";

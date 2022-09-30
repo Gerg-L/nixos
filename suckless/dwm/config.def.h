@@ -11,12 +11,12 @@ static const int startontag         = 0;        /* 0 means no tag active on star
 static const double activeopacity   = 1.0f;     /* Window opacity when it's focused (0 <= opacity <= 1) */
 static const double inactiveopacity = 0.875f;   /* Window opacity when it's inactive (0 <= opacity <= 1) */
 static       Bool bUseOpacity       = True;     /* Starts with opacity on any unfocused windows */
-static const int user_bh            = 0;        /* 0 means that dwm will calculate bar height, >= 1 means dwm willcalculate bar height, >= 1 means dwm will user_bh as bar height */
-static const int barwidth           = 250;
+static const int user_bh            = 20;        /* 0 means that dwm will calculate bar height, >= 1 means dwm willcalculate bar height, >= 1 means dwm will user_bh as bar height */
+static const int barwidth           = 225;
 static const int focusonwheel       = 0;
 static const int vertpad            = 10;       /* vertical padding of bar */
 static const int sidepad            = 10;       /* horizontal padding of bar */
-static const char *fonts[]          = { "monospace:size=15" };
+static const char *fonts[]          = { "monospace:size=12" };
 static const char dmenufont[]       = "monospace:size=12";
 static const char col_gray1[]       = "#000000";
 static const char col_gray2[]       = "#79dac8";

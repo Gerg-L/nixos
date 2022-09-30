@@ -2,7 +2,8 @@
 
 let
 vim-moonfly = pkgs.vimUtils.buildVimPlugin {
-  name = "vim-moonfly";
+  pname = "vim-moonfly";
+  version = "1.0.0";
   src = pkgs.fetchFromGitHub {
     owner = "bluz71";
     repo = "vim-moonfly-colors";

@@ -29,8 +29,8 @@
           style = "bold red";
         };
         sudo ={
-        format = "[ ](#7aa2f7)";
-        disabled = false;
+          format = "[ ](#7aa2f7)";
+          disabled = false;
         };
       };
     };

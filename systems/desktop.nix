@@ -7,7 +7,6 @@
       ../modules/packages.nix
       ../modules/nvidia.nix
       ../modules/fonts.nix
-      ../modules/thunar.nix
       ../modules/scripts.nix
       ../modules/vfio.nix
       ../modules/refreshrate.nix
@@ -49,7 +48,7 @@
     };
   };
   systemd.services.mining = {
-    enable = true;
+    enable = false;
     path = with pkgs; [t-rex-miner afk-cmds st zsh dbus xmrig];
     wantedBy = [ "graphical.target" ];
     script = ''

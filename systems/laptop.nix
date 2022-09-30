@@ -8,7 +8,6 @@
       ../modules/nvidia.nix
       ../modules/packages.nix
       ../modules/fonts.nix
-      ../modules/thunar.nix
       ../modules/scripts.nix
       ../modules/xserver.nix
       ../modules/zsh.nix

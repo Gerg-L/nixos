@@ -2,7 +2,6 @@
 {
   imports = [
     ./librewolf.nix
-    ./bspwm.nix
     ./sxhkd.nix
     ./rofi.nix
     ./polybar.nix
