@@ -7,10 +7,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     spicetify-nix.url = "github:the-argus/spicetify-nix";
-    webcord.url = "github:fufexan/webcord-flake";
   };
 
-  outputs = {self, nixpkgs, home-manager, spicetify-nix, webcord, ... }@inputs:
+  outputs = {self, nixpkgs, home-manager, spicetify-nix, ... }@inputs:
     let
     username = "gerg";
   system = "x86_64-linux";
@@ -26,11 +25,14 @@
     };
     overlays = [
       (final: prev: rec {
-       t-rex-miner = final.callPackage ./pkgs/t-rex-miner {};
-       afk-cmds = final.callPackage ./pkgs/afk-cmds {};
-       }
-      )
-        (import ./suckless)
+        t-rex-miner = final.callPackage ./pkgs/t-rex-miner {};
+        afk-cmds = final.callPackage ./pkgs/afk-cmds {};
+        discord = prev.discord.override {
+          withOpenASAR = true;
+          nss = prev.nss_latest;
+        };
+      })
+      (import ./suckless)
     ];
   };
   lib = nixpkgs.lib;

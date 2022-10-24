@@ -1,4 +1,4 @@
-{ config, pkgs, callPackage, webcord, ... }:
+{ config, pkgs, callPackage, ... }:
 {
   environment.systemPackages = with pkgs; [     
     bottom #view tasks
@@ -11,7 +11,7 @@
     bitwarden #store stuff
     gimp #edit stuff 
     qbittorrent #steal stuff 
-    webcord.packages.${pkgs.system}.default # talk to people (gross)
+    discord # talk to people (gross)
     spotify-tray # tray icons are nice
     feh #for wallpaper
     xfce.mousepad

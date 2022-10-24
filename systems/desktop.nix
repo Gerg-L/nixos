@@ -19,7 +19,7 @@
   hardware.cpu.amd.updateMicrocode = true;  
 #end important stuff
   environment.systemPackages = with pkgs; [
-    afk-cmds
+      #afk-cmds
       xmrig
       t-rex-miner
       vscodium

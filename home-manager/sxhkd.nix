@@ -15,7 +15,9 @@
       "XF86MonBrightnessDown" = "brightnessctl s 20-";
       #screenshot stuff
       "Print" = "maim $HOME/Screenshots/$(date +%Y-%m-%d_%H-%m-%s).jpg";
+      "Print + shift" = "maim | xclip -selection clipboard -t image/png";
       "super + Print" = "maim -s $HOME/Screenshots/$(date +%Y-%m-%d_%H-%m-%s).jpg";
+      "super + Print + shift" = "maim -s | xclip -selection clipboard -t image/png";
     };
   };
 }

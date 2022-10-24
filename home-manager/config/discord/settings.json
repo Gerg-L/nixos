@@ -1,0 +1,15 @@
+{
+  "debugLogging": false,
+  "IS_MAXIMIZED": false,
+  "IS_MINIMIZED": false,
+  "MIN_WIDTH": 0,
+  "MIN_HEIGHT": 0,
+  "OPEN_ON_STARTUP": false,
+  "MINIMIZE_TO_TRAY": false,
+  "openasar": {
+    "setup": true,
+    "noTyping": true,
+    "quickstart": true,
+    "css": "@import url(\"https://nyri5.github.io/Discolored/main.css\");\n@import url(\"https://luckfire.github.io/amoled-cord/src/support/compiled.css\");\n"
+  }
+}
