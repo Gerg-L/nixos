@@ -10,6 +10,6 @@
     "setup": true,
     "noTyping": true,
     "quickstart": true,
-    "css": "@import url(\"https://nyri5.github.io/Discolored/main.css\");\n@import url(\"https://luckfire.github.io/amoled-cord/src/support/compiled.css\");\n"
+    "css": "@import url('https://mwittrien.github.io/BetterDiscordAddons/Themes/DiscordRecolor/DiscordRecolor.css');\n\n:root {\n  --accentcolor: 54,198,146;\n  --accentcolor2: 255,84,84;\n  --linkcolor: 116,178,255;\n  --mentioncolor: 227,199,138;\n  --textbrightest: 255,255,255;\n  --textbrighter: 222,222,222;\n  --textbright: 185,185,185;\n  --textdark: 140,140,140;\n  --textdarker: 115,115,115;\n  --textdarkest: 80,80,80;\n  --font: Overpass;\n  --backgroundaccent: 50,52,55;\n  --backgroundprimary: 0,0,0;\n  --backgroundsecondary: 0,0,0;\n  --backgroundsecondaryalt: 0,0,0;\n  --backgroundtertiary: 50,52,55;\n  --backgroundfloating: 50,52,55;\n  --settingsicons: 1;\n}"
   }
 }
