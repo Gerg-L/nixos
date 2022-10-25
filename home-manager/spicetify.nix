@@ -13,7 +13,7 @@
     theme = spicetify-nix.pkgs.themes.Dribbblish;
     colorScheme = "custom";
     customColorScheme = {
-      text = "79dac8";
+      text = "f8f8f8";
       subtext = "f8f8f8";
       sidebar-text = "79dac8";
       main = "000000";
