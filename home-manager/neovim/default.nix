@@ -13,7 +13,7 @@ vim-moonfly = pkgs.vimUtils.buildVimPlugin {
 };
 in
 {
-  home.packages = with pkgs; [rustc cargo rust-analyzer clang-tools];
+ # home.packages = with pkgs; [rustc cargo rust-analyzer clang-tools];
   programs.neovim = {
     enable = true;
     viAlias = true;

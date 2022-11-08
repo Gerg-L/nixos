@@ -1,3 +1,3 @@
 local lspc = require("lspconfig")
-lspc.rust_analyzer.setup{}
-lspc.clangd.setup{}
+-- lspc.rust_analyzer.setup{}
+-- lspc.clangd.setup{}

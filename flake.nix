@@ -27,6 +27,7 @@
       (final: prev: rec {
         t-rex-miner = final.callPackage ./pkgs/t-rex-miner {};
         afk-cmds = final.callPackage ./pkgs/afk-cmds {};
+        parrot = final.callPackage ./pkgs/parrot {};
         discord = prev.discord.override {
           withOpenASAR = true;
           nss = prev.nss_latest;
