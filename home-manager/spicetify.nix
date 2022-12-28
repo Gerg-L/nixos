@@ -1,16 +1,19 @@
 { pkgs, lib, spicetify-nix, ... }:
+let
+  spicePkgs = spicetify-nix.packages.${pkgs.system}.default;
+in
 {
   imports = [ spicetify-nix.homeManagerModule ];
   programs.spicetify = {
     spotifyPackage = pkgs.spotify-unwrapped;
     spicetifyPackage = pkgs.spicetify-cli;
     enable = true;
-    enabledExtensions = with spicetify-nix.pkgs.extensions; [
-      "adblock.js"
-        "hidePodcasts.js"
-        "shuffle+.js"
+    enabledExtensions = with spicePkgs.extensions; [
+      adblock
+      hidePodcasts
+      shuffle
     ];
-    theme = spicetify-nix.pkgs.themes.Dribbblish;
+    theme = spicePkgs.themes.Dribbblish;
     colorScheme = "custom";
     customColorScheme = {
       text = "f8f8f8";

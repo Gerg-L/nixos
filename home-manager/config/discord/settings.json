@@ -1,15 +1,16 @@
 {
-  "debugLogging": false,
-  "IS_MAXIMIZED": false,
-  "IS_MINIMIZED": false,
-  "MIN_WIDTH": 0,
-  "MIN_HEIGHT": 0,
-  "OPEN_ON_STARTUP": false,
-  "MINIMIZE_TO_TRAY": false,
   "openasar": {
     "setup": true,
     "noTyping": true,
+    "themeSync": true,
     "quickstart": true,
     "css": "@import url('https://mwittrien.github.io/BetterDiscordAddons/Themes/DiscordRecolor/DiscordRecolor.css');\n\n:root {\n  --accentcolor: 121,218,200;\n  --accentcolor2: 255,84,84;\n  --linkcolor: 128,160,255;\n  --mentioncolor: 227,199,138;\n  --textbrightest: 255,255,255;\n  --textbrighter: 222,222,222;\n  --textbright: 185,185,185;\n  --textdark: 140,140,140;\n  --textdarker: 115,115,115;\n  --textdarkest: 80,80,80;\n  --font: Overpass;\n  --backgroundaccent: 50,52,55;\n  --backgroundprimary: 0,0,0;\n  --backgroundsecondary: 0,0,0;\n  --backgroundsecondaryalt: 0,0,0;\n  --backgroundtertiary: 50,52,55;\n  --backgroundfloating: 50,52,55;\n  --settingsicons: 1;\n}"
-  }
+  },
+  "IS_MAXIMIZED": false,
+  "IS_MINIMIZED": false,
+  "SKIP_HOST_UPDATE": true,
+  "MIN_WIDTH": 0,
+  "MIN_HEIGHT": 0,
+  "OPEN_ON_STARTUP": false,
+  "MINIMIZE_TO_TRAY": false
 }

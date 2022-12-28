@@ -5,7 +5,7 @@
     videoDrivers = 
       if (config.networking.hostName == "gerg-laptop")
         then ["modesetting"  "nvidia"] 
-      else [ "nvidia" ];
+      else [ "amdgpu" ];
     layout = "us";
     libinput.enable = true;
     xautolock.enable = false;

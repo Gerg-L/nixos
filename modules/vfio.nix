@@ -33,15 +33,15 @@
 
       if [ "$GUEST_NAME" == "Windows" ]; then
         if [ "$OPERATION" == "start" ]; then
-          systemctl set-property --runtime -- user.slice AllowedCPUs=0,1,2,6,7,8
-          systemctl set-property --runtime -- system.slice AllowedCPUs=0,1,2,6,7,8
-          systemctl set-property --runtime -- init.scope AllowedCPUs=0,1,2,6,7,8
+          systemctl set-property --runtime -- user.slice AllowedCPUs=0-7,16-23
+          systemctl set-property --runtime -- system.slice AllowedCPUs=0-7,16-23
+          systemctl set-property --runtime -- init.scope AllowedCPUs=0-7,16-23
         fi
 
         if [ "$OPERATION" == "stopped" ]; then
-          systemctl set-property --runtime -- user.slice AllowedCPUs=0-11
-          systemctl set-property --runtime -- system.slice AllowedCPUs=0-11
-          systemctl set-property --runtime -- init.scope AllowedCPUs=0-11
+          systemctl set-property --runtime -- user.slice AllowedCPUs=0-31
+          systemctl set-property --runtime -- system.slice AllowedCPUs=0-31
+          systemctl set-property --runtime -- init.scope AllowedCPUs=0-31
         fi
       fi
     '';

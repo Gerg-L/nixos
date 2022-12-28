@@ -12,7 +12,6 @@
     gimp #edit stuff 
     qbittorrent #steal stuff 
     discord # talk to people (gross)
-    spotify-tray # tray icons are nice
     feh #for wallpaper
     xfce.mousepad
     brightnessctl #brightness control for laptop
@@ -30,6 +29,7 @@
     pcmanfm #file manager 
     haskellPackages.squeeze #file compression
     nix-tree #view packages
+    docker
     ];
 }
 

@@ -3,9 +3,9 @@
 #important stuff first
   imports =
     [
-    ../modules/boot.nix
+      ../modules/amd.nix
       ../modules/packages.nix
-      ../modules/nvidia.nix
+      ../modules/boot.nix
       ../modules/fonts.nix
       ../modules/scripts.nix
       ../modules/vfio.nix
@@ -47,6 +47,8 @@
       fsType = "vfat";
     };
   };
+  virtualisation.docker.enable = true;
+  #mining stuff
   systemd.services.mining = {
     enable = false;
     path = with pkgs; [t-rex-miner afk-cmds st zsh dbus xmrig];
