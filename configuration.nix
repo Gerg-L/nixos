@@ -8,6 +8,8 @@
       EDITOR = "nvim";
     };
   };
+  # boot faster
+  systemd.services.NetworkManager-wait-online.enable = false;
   nix = {
     settings = {
       auto-optimise-store = true;

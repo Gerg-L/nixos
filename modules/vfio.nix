@@ -33,9 +33,9 @@
 
       if [ "$GUEST_NAME" == "Windows" ]; then
         if [ "$OPERATION" == "start" ]; then
-          systemctl set-property --runtime -- user.slice AllowedCPUs=0-7,16-23
-          systemctl set-property --runtime -- system.slice AllowedCPUs=0-7,16-23
-          systemctl set-property --runtime -- init.scope AllowedCPUs=0-7,16-23
+          systemctl set-property --runtime -- user.slice AllowedCPUs=8-15,24-31
+          systemctl set-property --runtime -- system.slice AllowedCPUs=8-15,24-31
+          systemctl set-property --runtime -- init.scope AllowedCPUs=8-15,24-31
         fi
 
         if [ "$OPERATION" == "stopped" ]; then
