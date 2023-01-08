@@ -45,8 +45,8 @@ require("nvim-tree").setup {
 require("nvim-web-devicons").setup()
 -- language support
  require("nvim-treesitter.configs").setup {
-	ensure_installed = "",
-	sync_install = false,
+  ensure_installed = "",
+	sync_install = true,
 	auto_install = false,
 	highlight = {
 		enable = true,
@@ -61,7 +61,7 @@ require("nvim-web-devicons").setup()
 -- shapes and colors
 vim.cmd[[colorscheme moonfly]]
 -- pretty colors
-require"colorizer".setup()
+require("colorizer").setup()
 require("telescope").load_extension("fzy_native")
 require("gitsigns").setup()
 require("nvim-autopairs").setup()

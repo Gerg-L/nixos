@@ -21,7 +21,7 @@ in
     vimdiffAlias = true;
     extraPackages = with pkgs; [gcc ripgrep fd];
     plugins = with pkgs.vimPlugins; [
-      (nvim-treesitter.withPlugins (plugins: pkgs.tree-sitter.allGrammars)) #syntax highlighting
+        nvim-treesitter.withAllGrammars
         rainbow nvim-ts-rainbow # rainbow for tree-sitter
         nvim-colorizer-lua # colors
         nvim-tree-lua # file browser
