@@ -50,13 +50,14 @@
     font = "Lat2-Terminus16";
     useXkbConfig = true;
   };
-#pipewire sound
+#should be false
   sound.enable = false;
 
 # rtkit is optional but recommended
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
+    wireplumber.enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
