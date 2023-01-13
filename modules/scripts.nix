@@ -39,7 +39,6 @@ let
     apply-system
     apply-user
     sudo -u gerg apply-user
-    clean-store
   '';
 
   polybar-tray = pkgs.writeShellScriptBin "polybar-tray" ''
