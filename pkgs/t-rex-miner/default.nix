@@ -3,13 +3,13 @@
 , fetchzip
 , glibc
 }:
-let 
-wrapper = ''
-  #!/bin/sh
-  export LD_LIBRARY_PATH=${stdenv.cc.cc.lib}/lib/:${glibc}/lib/:/run/opengl-driver/lib/
-  exec ${glibc}/lib64/ld-linux-x86-64.so.2 \
-  $out/t-rex --no-watchdog \$@
-'';
+let
+  wrapper = ''
+    #!/bin/sh
+    export LD_LIBRARY_PATH=${stdenv.cc.cc.lib}/lib/:${glibc}/lib/:/run/opengl-driver/lib/
+    exec ${glibc}/lib64/ld-linux-x86-64.so.2 \
+    $out/t-rex --no-watchdog \$@
+  '';
 in
 stdenv.mkDerivation rec {
   pname = "t-rex-miner";
@@ -20,19 +20,19 @@ stdenv.mkDerivation rec {
     stripRoot = false;
   };
   installPhase = ''
-  install -Dm555 $src/t-rex $out/t-rex
-  mkdir -p $out/bin
-  touch $out/bin/t-rex
-  echo "${wrapper}" > $out/bin/t-rex
-  chmod +x $out/bin/t-rex
+    install -Dm555 $src/t-rex $out/t-rex
+    mkdir -p $out/bin
+    touch $out/bin/t-rex
+    echo "${wrapper}" > $out/bin/t-rex
+    chmod +x $out/bin/t-rex
   '';
 
   meta = with lib; {
-  homepage = "https://github.com/ISnortPennies/AFKCommands";
-  description = "";
-  license = licenses.unlicense;
-  maintainers = with maintainers; [ ];
-  platforms = platforms.linux;
+    homepage = "https://github.com/ISnortPennies/AFKCommands";
+    description = "";
+    license = licenses.unlicense;
+    maintainers = with maintainers; [ ];
+    platforms = platforms.linux;
   };
 }
 

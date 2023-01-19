@@ -1,6 +1,6 @@
 { config, pkgs, callPackage, ... }:
 {
-  environment.systemPackages = with pkgs; [     
+  environment.systemPackages = with pkgs; [
     bottom #view tasks
     efibootmgr #efi editor
     maim #screenshooter
@@ -29,7 +29,6 @@
     pcmanfm #file manager 
     haskellPackages.squeeze #file compression
     nix-tree #view packages
-    docker
-    ];
+  ];
 }
 

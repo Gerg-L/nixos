@@ -2,7 +2,7 @@
 {
   system.stateVersion = "23.05";
   environment = {
-    defaultPackages = [];
+    defaultPackages = [ ];
     binsh = "${pkgs.dash}/bin/dash";
     variables = {
       EDITOR = "nvim";
@@ -19,7 +19,7 @@
       keep-outputs = false
       keep-derivations = false
       experimental-features = nix-command flakes
-      '';
+    '';
   };
   networking = {
     firewall = {
@@ -41,20 +41,20 @@
       enable = true;
       servers = [
         "time.google.com"
-          "time2.google.com"
+        "time2.google.com"
       ];
     };
   };
-# Select internationalisation properties.
+  # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
     font = "Lat2-Terminus16";
     useXkbConfig = true;
   };
-#should be false
+  #should be false
   sound.enable = false;
 
-# rtkit is optional but recommended
+  # rtkit is optional but recommended
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -64,7 +64,7 @@
     pulse.enable = true;
     jack.enable = true;
   };
-#enable ssh
+  #enable ssh
   programs = {
     mtr.enable = true;
     gnupg.agent = {

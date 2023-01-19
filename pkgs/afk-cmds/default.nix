@@ -15,20 +15,20 @@
 }:
 rustPlatform.buildRustPackage rec {
   pname = "afk-cmds";
-  version= "1.0.0";
+  version = "1.0.0";
 
   src = ./afk-cmds;
-  
+
   buildInputs = [
-  libX11
-  libXScrnSaver
-  cairo
-  glib
-  gdk-pixbuf
-  gtkmm3
-  pango
-  libappindicator-gtk3
-  atk
+    libX11
+    libXScrnSaver
+    cairo
+    glib
+    gdk-pixbuf
+    gtkmm3
+    pango
+    libappindicator-gtk3
+    atk
   ];
 
   nativeBuildInputs = [

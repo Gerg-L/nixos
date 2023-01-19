@@ -7,7 +7,7 @@ let
       exit 1
     fi
      nix flake update /etc/nixos/#
-  ''; 
+  '';
 
   clean-store = pkgs.writeShellScriptBin "clean-store" ''
     if ! [ $(id -u) = 0 ]; then
@@ -16,7 +16,7 @@ let
     fi
     rm /nix/var/nix/gcroots/auto/*
     nix-collect-garbage -d
-  ''; 
+  '';
 
   apply-system = pkgs.writeShellScriptBin "apply-system" ''
     if ! [ $(id -u) = 0 ]; then
@@ -24,7 +24,7 @@ let
       exit 1
     fi
     nixos-rebuild switch --flake /etc/nixos/#
-  ''; 
+  '';
 
   full-upgrade = pkgs.writeShellScriptBin "full-upgrade" ''
     if ! [ $(id -u) = 0 ]; then
@@ -35,16 +35,10 @@ let
     apply-system
   '';
 
-  polybar-tray = pkgs.writeShellScriptBin "polybar-tray" ''
-    u=$(xprop -name "Polybar tray window" _NET_WM_PID | awk '{print $3}')
-    if [ $u -Z ]
-    then polybar tray &
-    else kill $u
-    fi
-  '';
   pastebin = pkgs.writeShellScriptBin "pastebin" ''
     curl -F 'clbin=<-' https://clbin.com
   '';
-in {
-  environment.systemPackages = [ update-system clean-store apply-system polybar-tray full-upgrade pastebin];
+in
+{
+  environment.systemPackages = [ update-system apply-system full-upgrade clean-store pastebin ];
 }

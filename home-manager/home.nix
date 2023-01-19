@@ -1,4 +1,4 @@
-{config, pkgs, username, ...}:
+{ config, pkgs, username, ... }:
 {
   imports = [
     ./librewolf.nix

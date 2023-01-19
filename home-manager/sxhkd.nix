@@ -7,7 +7,7 @@
       "XF86AudioPause" = "playerctl play-pause";
       "XF86AudioStop" = "playerctl stop";
       "XF86AudioNext" = "playerctl next";
-      "XF86AudioPrev" = "playerctl previous"; 
+      "XF86AudioPrev" = "playerctl previous";
       "XF86AudioRaiseVolume" = "amixer sset Master 40+";
       "XF86AudioLowerVolume" = "amixer sset Master 40-";
       "XF86AudioMute" = "amixer sset Master toggle ";

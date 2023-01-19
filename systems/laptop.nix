@@ -1,4 +1,4 @@
-{ config, pkgs, callPackage, lib, ... }:
+{ config, pkgs, callPackage, lib, username, ... }:
 {
   #important stuff first
   imports =
@@ -14,18 +14,18 @@
     ];
   networking.hostName = "gerg-laptop";
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  hardware.cpu.amd.updateMicrocode = true;  
-  
+  hardware.cpu.amd.updateMicrocode = true;
+
   # end important stuff
   environment.systemPackages = with pkgs; [
     xorg.xf86videoamdgpu
   ];
-# user managment
+  # user managment
   users = {
     defaultUserShell = pkgs.zsh;
-    users.gerg = {
+    users."${username}" = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "audio" "networkmanager"];
+      extraGroups = [ "wheel" "audio" "networkmanager" ];
     };
   };
   boot = {
@@ -33,7 +33,7 @@
     kernelModules = [ "kvm-amd" ];
   };
   fileSystems = {
-    "/" = { 
+    "/" = {
       device = "/dev/disk/by-uuid/c67796b3-d502-47db-8d0e-48f30bc91041";
       fsType = "ext4";
     };

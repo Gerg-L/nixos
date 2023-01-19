@@ -1,14 +1,13 @@
-
-{pkgs , ... }:
+{ pkgs, ... }:
 {
   services.polybar = {
-    enable =  true;
+    enable = true;
     package = pkgs.polybarFull;
     script = "polybar left & \n polybar middle & \n polybar right &";
     settings = {
       "settings" = {
         screenchange.reload = true;
-        pseudo.transparency =false;
+        pseudo.transparency = false;
       };
       "colors" = {
         background = "#000000";
@@ -37,7 +36,7 @@
         fixed.center = false;
         dpi = 96;
         offset.y = 10;
-        font = [ "Overpass Nerd Font:style=Regular:size=14;4"  "Material Design Icons:style=Regular:size=16;4" ];
+        font = [ "Overpass Nerd Font:style=Regular:size=14;4" "Material Design Icons:style=Regular:size=16;4" ];
         background = "\${colors.background}";
         foreground = "\${colors.foreground}";
         line.size = "3pt";
@@ -79,7 +78,7 @@
         fixed.center = false;
         dpi = 96;
         offset.y = 10;
-        font = [ "Overpass Nerd Font:style=Regular:size=14;4"  "Material Design Icons:style=Regular:size=16;4" ];
+        font = [ "Overpass Nerd Font:style=Regular:size=14;4" "Material Design Icons:style=Regular:size=16;4" ];
         background = "\${colors.background}";
         foreground = "\${colors.foreground}";
         line.size = "3pt";
@@ -134,7 +133,7 @@
             background = "\${colors.background}";
             padding = 2;
           };
-        }; 
+        };
       };
       "module/date" = {
         type = "internal/date";
@@ -167,14 +166,14 @@
         unknown.as.up = true;
         format = {
           connected = "\"%{A1:networkmanager_dmenu:}<ramp-signal>%{A}\"";
-          disconnected =  "\"%{A1:networkmanager_dmenu:}<label-disconnected>%{A}\"";
+          disconnected = "\"%{A1:networkmanager_dmenu:}<label-disconnected>%{A}\"";
         };
         label.disconnected = {
           text = "";
           padding = 0;
         };
         ramp.signal = {
-          text = ["󰤯" "󰤟" "󰤢" "󰤥" "󰤨"];
+          text = [ "󰤯" "󰤟" "󰤢" "󰤥" "󰤨" ];
           foreground = "\${colors.foreground}";
           background = "\${colors.background}";
           padding = 1;
@@ -189,7 +188,7 @@
         unknown.as.up = true;
         format = {
           connected = "\"%{A1:networkmanager_dmenu:}<label-connected>%{A}\"";
-          disconnected =  "\"%{A1:networkmanager_dmenu:}<label-disconnected>%{A}\"";
+          disconnected = "\"%{A1:networkmanager_dmenu:}<label-disconnected>%{A}\"";
         };
         label.connected = {
           text = "";
@@ -215,8 +214,8 @@
         type = "internal/battery";
         full.at = 100;
         low.at = 20;
-#        battery = "BAT0";
-#        adapter = "ACAD";
+        #        battery = "BAT0";
+        #        adapter = "ACAD";
         poll.interval = 5;
         format = {
           charging = "\"%{A1:xfce4-power-menu -c:}<animation-charging>%{A}\"";
@@ -249,13 +248,13 @@
           low = {
             text = [ "  " "  " ];
             framerate = 200;
-            foreground =  "\${colors.alert}";
+            foreground = "\${colors.alert}";
             background = "\${colors.background}";
           };
         };
         ramp.capacity = {
           text = [ "   " "   " "   " "   " "   " ];
-          background = "\${colors.background}"; 
+          background = "\${colors.background}";
         };
       };
       "module/pulseaudio" = {

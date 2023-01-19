@@ -1,10 +1,10 @@
-{config, pkgs, username, ... }:
+{ config, pkgs, username, ... }:
 {
   services.xserver = {
     enable = true;
-    videoDrivers = 
+    videoDrivers =
       if (config.networking.hostName == "gerg-laptop")
-        then ["modesetting"  "nvidia"] 
+      then [ "modesetting" "nvidia" ]
       else [ "amdgpu" ];
     layout = "us";
     libinput.enable = true;
@@ -18,47 +18,47 @@
         enable = true;
         greeters.mini = {
           enable = true;
-           extraConfig = ''
-[greeter]
-user = ${username}
-show-password-label = false
-password-label-text = 
-invalid-password-text = 
-show-input-cursor = false
-password-alignment = center
-password-input-width = 19
-show-image-on-all-monitors = true
+          extraConfig = ''
+            [greeter]
+            user = ${username}
+            show-password-label = false
+            password-label-text = 
+            invalid-password-text = 
+            show-input-cursor = false
+            password-alignment = center
+            password-input-width = 19
+            show-image-on-all-monitors = true
 
 
-[greeter-hotkeys]
-mod-key = meta
-shutdown-key = s
-restart-key = r
-hibernate-key = h
-suspend-key = u
+            [greeter-hotkeys]
+            mod-key = meta
+            shutdown-key = s
+            restart-key = r
+            hibernate-key = h
+            suspend-key = u
 
 
-[greeter-theme]
-font = "OverpassMono Nerd Font"
-font-size = 1.1em
-font-weight = bold
-font-style = normal
-text-color = "#7AA2F7"
-error-color = "#DB4B4B"
-background-image = "/etc/nixos/images/nix-stars.png"
-background-color = "#000000"
-window-color = "#000000"
-border-color = "#000000"
-border-width = 2px
-layout-space = 15
-password-character = -1
-password-color = "#7AA2F7"
-password-background-color = "#24283B"
-password-border-color = "#000000"
-password-border-width = 2px
-password-border-radius = 0.341125em
+            [greeter-theme]
+            font = "OverpassMono Nerd Font"
+            font-size = 1.1em
+            font-weight = bold
+            font-style = normal
+            text-color = "#7AA2F7"
+            error-color = "#DB4B4B"
+            background-image = "/etc/nixos/images/nix-stars.png"
+            background-color = "#000000"
+            window-color = "#000000"
+            border-color = "#000000"
+            border-width = 2px
+            layout-space = 15
+            password-character = -1
+            password-color = "#7AA2F7"
+            password-background-color = "#24283B"
+            password-border-color = "#000000"
+            password-border-width = 2px
+            password-border-radius = 0.341125em
 
-         '';
+          '';
         };
       };
     };

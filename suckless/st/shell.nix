@@ -1,5 +1,5 @@
-let 
-  pkgs = import <nixpkgs> {};
+let
+  pkgs = import <nixpkgs> { };
 in
 with pkgs;
 mkShell rec {
@@ -9,7 +9,7 @@ mkShell rec {
     xorg.libXft
     xorg.libXcursor
   ];
-    nativeBuildInputs = [
+  nativeBuildInputs = [
     pkg-config
     ncurses
     fontconfig
