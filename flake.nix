@@ -8,7 +8,7 @@
     spicetify-nix.url = "github:the-argus/spicetify-nix";
   };
 
-  outputs = {self, nixpkgs, home-manager, spicetify-nix, ... }@inputs:
+  outputs = {self, nixpkgs, home-manager, spicetify-nix}@inputs:
     let
     username = "gerg";
   system = "x86_64-linux";
@@ -24,47 +24,37 @@
     };
     overlays = [
       (final: prev: rec {
-        t-rex-miner = final.callPackage ./pkgs/t-rex-miner {};
-        afk-cmds = final.callPackage ./pkgs/afk-cmds {};
-        parrot = final.callPackage ./pkgs/parrot {};
-        discord = prev.discord.override {
-          withOpenASAR = true;
-          nss = prev.nss_latest;
-        };
-      })
-      (import ./suckless)
+       t-rex-miner = final.callPackage ./pkgs/t-rex-miner {};
+       afk-cmds = final.callPackage ./pkgs/afk-cmds {};
+       parrot = final.callPackage ./pkgs/parrot {};
+       discord = prev.discord.override {
+       withOpenASAR = true;
+       nss = prev.nss_latest;
+       };
+       })
+    (import ./suckless)
     ];
   };
   lib = nixpkgs.lib;
   in {
-    homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-      modules = [
-        ./home-manager/home.nix
-      ];
-      extraSpecialArgs = { inherit spicetify-nix; };
-    };
-    homeConfigurations.root = home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-      modules = [
-        ./home-manager/root.nix
-      ];
-    };
     nixosConfigurations = {
-      gerg-laptop = lib.nixosSystem { 
+      gerg-desktop = lib.nixosSystem {
         inherit system pkgs;
-        specialArgs = inputs;
-        modules = [
-          ./configuration.nix
-            ./systems/laptop.nix
-        ];
-      };
-      gerg-desktop = lib.nixosSystem { 
-        inherit system pkgs;
-        specialArgs = inputs;
+        specialArgs = {inherit inputs username;};
         modules = [
           ./configuration.nix
             ./systems/desktop.nix
+            home-manager.nixosModules.home-manager {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                extraSpecialArgs = { inherit spicetify-nix username; };
+                users = {
+                  ${username} = import ./home-manager/home.nix;
+                  root = import ./home-manager/root.nix;
+                };
+              };
+            }
         ];
       };
     };

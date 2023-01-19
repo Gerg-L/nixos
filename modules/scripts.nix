@@ -18,10 +18,6 @@ let
     nix-collect-garbage -d
   ''; 
 
-  apply-user = pkgs.writeShellScriptBin "apply-user" ''
-    home-manager switch --flake /etc/nixos/#$(whoami)
-  ''; 
-
   apply-system = pkgs.writeShellScriptBin "apply-system" ''
     if ! [ $(id -u) = 0 ]; then
       echo "RUN AS ROOT"
@@ -37,8 +33,6 @@ let
     fi
     update-system
     apply-system
-    apply-user
-    sudo -u gerg apply-user
   '';
 
   polybar-tray = pkgs.writeShellScriptBin "polybar-tray" ''
@@ -52,5 +46,5 @@ let
     curl -F 'clbin=<-' https://clbin.com
   '';
 in {
-  environment.systemPackages = [ update-system clean-store apply-user apply-system polybar-tray full-upgrade pastebin];
+  environment.systemPackages = [ update-system clean-store apply-system polybar-tray full-upgrade pastebin];
 }

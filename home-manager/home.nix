@@ -1,4 +1,4 @@
-{config, pkgs, ...}:
+{config, pkgs, username, ...}:
 {
   imports = [
     ./librewolf.nix
@@ -14,8 +14,8 @@
   xsession.numlock.enable = true;
   programs.home-manager.enable = true;
   home = {
-    username = "gerg";
-    homeDirectory = "/home/gerg";
+    inherit username;
+    homeDirectory = "/home/${username}";
     stateVersion = "23.05";
     file = {
       ".background-image".source = ../images/nix-stars.png;

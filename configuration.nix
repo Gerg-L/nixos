@@ -22,9 +22,10 @@
       '';
   };
   networking = {
-    firewall.enable = true;
-    firewall.allowPing = true;
-    useDHCP = lib.mkDefault true;
+    firewall = {
+      enable = true;
+      allowPing = true;
+    };
     networkmanager.enable = true;
   };
   services.gvfs.enable = true;

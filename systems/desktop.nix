@@ -1,4 +1,4 @@
-{ config, pkgs, callPackage, lib, ... }:
+{ config, pkgs, callPackage, lib, username, ... }:
 {
 #important stuff first
   imports =
@@ -27,7 +27,7 @@
 #user managment
   users = {
     defaultUserShell = pkgs.zsh;
-    users.gerg = {
+    users."${username}" = {
       isNormalUser = true;
       extraGroups = [ "wheel" "audio" "networkmanager" "kvm" "libvirtd" ];
     };
@@ -37,13 +37,14 @@
     kernelModules = [ "kvm-amd" "msr"];
     kernelParams = [ "iomem=relaxed" "msr.allow_writes=on" ];
   };
+
   fileSystems = {
     "/" ={
-      device = "/dev/disk/by-uuid/f0f46e34-874f-4052-855c-38c88bd7987a";
+      device = "/dev/disk/by-uuid/e5c9634f-0273-4fd3-b35f-49899984340f";
       fsType = "ext4";
     };
     "/boot" = {
-      device = "/dev/disk/by-uuid/5F00-1D91";
+      device = "/dev/disk/by-uuid/D3B9-197E";
       fsType = "vfat";
     };
   };
@@ -58,7 +59,7 @@
       '';
     environment = {
     #  PATH="/run/current-system/sw/bin"; missing something with dbus
-      XAUTHORITY="/home/gerg/.Xauthority";
+      XAUTHORITY="/home/${username}/.Xauthority";
       DISPLAY=":0";
       XDG_DATA_DIRS="/nix/var/nix/profiles/default/share:/run/current-system/sw/share";
       DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/1000/bus";

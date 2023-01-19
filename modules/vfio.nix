@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, username, ... }:
 {
   boot = {
     kernelParams = [ "amd_iommu=on" "iommu=pt" "vfio_iommu_type1.allow_unsafe_interrupts=1" "kvm.ignore_msrs=1" ];
@@ -15,7 +15,7 @@
         runAsRoot = true;
         ovmf.enable = true;
         verbatimConfig = ''
-        user = "gerg"
+        user = "${username}"
         group = "kvm"
         namespaces = []
         '';

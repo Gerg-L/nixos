@@ -1,4 +1,4 @@
-{config, pkgs, ... }:
+{config, pkgs, username, ... }:
 {
   services.xserver = {
     enable = true;
@@ -20,7 +20,7 @@
           enable = true;
            extraConfig = ''
 [greeter]
-user = gerg
+user = ${username}
 show-password-label = false
 password-label-text = 
 invalid-password-text = 
