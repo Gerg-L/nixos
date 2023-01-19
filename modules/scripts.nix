@@ -48,6 +48,9 @@ let
     else kill $u
     fi
   '';
+  pastebin = pkgs.writeShellScriptBin "pastebin" ''
+    curl -F 'clbin=<-' https://clbin.com
+  '';
 in {
-  environment.systemPackages = [ update-system clean-store apply-user apply-system polybar-tray full-upgrade];
+  environment.systemPackages = [ update-system clean-store apply-user apply-system polybar-tray full-upgrade pastebin];
 }

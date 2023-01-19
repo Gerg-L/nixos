@@ -16,7 +16,7 @@
   home = {
     username = "gerg";
     homeDirectory = "/home/gerg";
-    stateVersion = "22.11";
+    stateVersion = "23.05";
     file = {
       ".background-image".source = ../images/nix-stars.png;
       ".config" = {

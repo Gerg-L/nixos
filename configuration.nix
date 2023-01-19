@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 {
-  system.stateVersion = "22.11";
+  system.stateVersion = "23.05";
   environment = {
     defaultPackages = [];
     binsh = "${pkgs.dash}/bin/dash";

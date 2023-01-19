@@ -1,5 +1,4 @@
 {
-  description = "my personal configurations";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable"; 
     home-manager = {
