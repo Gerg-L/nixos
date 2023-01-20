@@ -12,7 +12,6 @@
     ./neovim
   ];
   xsession.numlock.enable = true;
-  programs.home-manager.enable = true;
   home = {
     inherit username;
     homeDirectory = "/home/${username}";

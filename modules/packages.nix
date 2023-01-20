@@ -29,6 +29,7 @@
     pcmanfm #file manager 
     haskellPackages.squeeze #file compression
     nix-tree #view packages
+    bc #terminal calculator
   ];
 }
 

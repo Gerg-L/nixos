@@ -1,24 +1,25 @@
 { lib
 , rustPlatform
 , fetchFromGitHub
-, yt-dlp
 , pkg-config
 , openssl
 , cmake
+, libopus
 }:
+# yt-dlp and ffmpeg required at runtime
+
 rustPlatform.buildRustPackage rec {
   pname = "parrot";
-  version = "1.4.2";
-  # buildFeatures = ["let_else"];
+  version = "1.5.1";
   src = fetchFromGitHub {
     owner = "aquelemiguel";
     repo = "parrot";
-    rev = "28d7db3c5b50c7ba01eec71a3177875feae44bcc";
-    sha256 = "sha256-G9SfaiR/KIt+Xm7vLs/EGaImZeSaUbpgAArfK6oVJeM=";
+    rev = "b2c5ad7774616f488e9fc556082da545c5461c21";
+    sha256 = "sha256-S73Ef4GjdHjkiQZnOqwFzuidWnSrMe92rc1qZ6rYdiY=";
   };
 
   buildInputs = [
-    yt-dlp
+    libopus
     openssl
   ];
 
@@ -26,7 +27,7 @@ rustPlatform.buildRustPackage rec {
     pkg-config
     cmake
   ];
-  cargoSha256 = "sha256-ScwyPTq9da0hst/b2FX89SP03OX3HrJT3oUKGsHEjgs=";
+  cargoSha256 = "sha256-qPyuj5OxHrWz0YbrquCTTKZM3j1poXuioNNvn9z+xDQ=";
 
   RUSTC_BOOTSTRAP = 1;
 

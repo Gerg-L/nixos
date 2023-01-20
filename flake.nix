@@ -40,6 +40,7 @@
     in
     {
       formatter.x86_64-linux = pkgs.nixpkgs-fmt;
+
       nixosConfigurations = {
         gerg-desktop = lib.nixosSystem {
           inherit system pkgs;

@@ -2,7 +2,7 @@
 {
   programs.git = {
     enable = true;
-    package = pkgs.git;
+    package = pkgs.gitMinimal;
     userName = "ISnortPennies";
     userEmail = "ISnortPennies@protonmail.com";
   };

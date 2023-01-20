@@ -5,7 +5,6 @@
     ./git.nix
     ./neovim
   ];
-  programs.home-manager.enable = true;
   home = {
     username = "root";
     homeDirectory = "/root";

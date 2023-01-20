@@ -48,12 +48,24 @@
       fsType = "vfat";
     };
   };
-  virtualisation.docker.enable = true;
+  #discord bot stuff
+  virtualisation.docker.enable = false;
+  systemd.services.parrot = {
+    enable = true;
+    path = with pkgs; [ parrot yt-dlp ffmpeg ];
+    wantedBy = [ "multi-user.target" ];
+    wants = [ "NetworkManager-wait-online.service" ];
+    after = [ "NetworkManager-wait-online.service" ];
+    script = "parrot";
+    serviceConfig = {
+      EnvironmentFile = "/home/${username}/parrot/.env";
+    };
+  };
   #mining stuff
   systemd.services.mining = {
     enable = false;
     path = with pkgs; [ t-rex-miner afk-cmds st zsh dbus xmrig ];
-    wantedBy = [ "graphical.target" ];
+    wants = [ "graphical.target" ];
     script = ''
       afk-cmds -c /home/${username}/afk-cmds.json
     '';
