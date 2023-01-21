@@ -3,8 +3,6 @@
   imports = [
     ./librewolf.nix
     ./sxhkd.nix
-    ./rofi.nix
-    ./polybar.nix
     ./theme.nix
     ./picom.nix
     ./git.nix

@@ -48,7 +48,7 @@
   };
   services.openssh = {
     enable = true;
-    permitRootLogin = "yes";
+    settings.permitRootLogin = "yes";
   };
 
 
