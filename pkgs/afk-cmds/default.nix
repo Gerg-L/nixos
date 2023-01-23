@@ -1,17 +1,18 @@
-{ lib
-, rustPlatform
-, fetchFromGitHub
-, wrapGAppsHook
-, libX11
-, libXScrnSaver
-, pkg-config
-, cairo
-, glib
-, gdk-pixbuf
-, gtkmm3
-, pango
-, libappindicator-gtk3
-, atk
+{
+  lib,
+  rustPlatform,
+  fetchFromGitHub,
+  wrapGAppsHook,
+  libX11,
+  libXScrnSaver,
+  pkg-config,
+  cairo,
+  glib,
+  gdk-pixbuf,
+  gtkmm3,
+  pango,
+  libappindicator-gtk3,
+  atk,
 }:
 rustPlatform.buildRustPackage rec {
   pname = "afk-cmds";
@@ -36,7 +37,7 @@ rustPlatform.buildRustPackage rec {
     wrapGAppsHook
   ];
 
-  postFixup = '' 
+  postFixup = ''
     wrapProgram $out/bin/afk-cmds \
       --prefix LD_LIBRARY_PATH : ${(lib.makeLibraryPath buildInputs)}
     mkdir -p $out/share/icons/hicolor/256x256/apps/
@@ -48,9 +49,7 @@ rustPlatform.buildRustPackage rec {
     homepage = "https://github.com/ISnortPennies/AFKCommands";
     description = "";
     license = licenses.unlicense;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [];
     platforms = platforms.linux;
   };
-
 }
-

@@ -9,9 +9,9 @@
         '';
       }
     ];
-    screenSection = '' 
+    screenSection = ''
       Option         "metamodes" "1920x1080_144 +0+0"
-      '';
+    '';
     monitorSection = ''
       Option "DPMS" "false"
     '';

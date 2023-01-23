@@ -1,17 +1,22 @@
-{ config, pkgs, callPackage, lib, username, ... }:
 {
+  config,
+  pkgs,
+  callPackage,
+  lib,
+  username,
+  ...
+}: {
   #important stuff first
-  imports =
-    [
-      ../modules/boot.nix
-      ../modules/prime.nix
-      ../modules/nvidia.nix
-      ../modules/packages.nix
-      ../modules/fonts.nix
-      ../modules/scripts.nix
-      ../modules/xserver.nix
-      ../modules/zsh.nix
-    ];
+  imports = [
+    ../modules/boot.nix
+    ../modules/prime.nix
+    ../modules/nvidia.nix
+    ../modules/packages.nix
+    ../modules/fonts.nix
+    ../modules/scripts.nix
+    ../modules/xserver.nix
+    ../modules/zsh.nix
+  ];
   networking.hostName = "gerg-laptop";
   boot.kernelPackages = pkgs.linuxPackages_latest;
   hardware.cpu.amd.updateMicrocode = true;
@@ -25,12 +30,12 @@
     defaultUserShell = pkgs.zsh;
     users."${username}" = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "audio" "networkmanager" ];
+      extraGroups = ["wheel" "audio" "networkmanager"];
     };
   };
   boot = {
-    initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" ];
-    kernelModules = [ "kvm-amd" ];
+    initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci"];
+    kernelModules = ["kvm-amd"];
   };
   fileSystems = {
     "/" = {
@@ -43,4 +48,3 @@
     };
   };
 }
-

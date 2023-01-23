@@ -1,13 +1,13 @@
-{ lib
-, rustPlatform
-, fetchFromGitHub
-, pkg-config
-, openssl
-, cmake
-, libopus
+{
+  lib,
+  rustPlatform,
+  fetchFromGitHub,
+  pkg-config,
+  openssl,
+  cmake,
+  libopus,
 }:
 # yt-dlp and ffmpeg required at runtime
-
 rustPlatform.buildRustPackage rec {
   pname = "parrot";
   version = "1.5.1";
@@ -35,8 +35,7 @@ rustPlatform.buildRustPackage rec {
     homepage = "https://github.com/aquelemiguel/parrot";
     description = "";
     license = licenses.mit;
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [];
     platforms = platforms.linux;
   };
-
 }

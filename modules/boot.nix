@@ -1,8 +1,8 @@
 {
   hardware.enableRedistributableFirmware = true;
   boot = {
-    blacklistedKernelModules = [ "nouveau" "lbm-nouveau" "pcspkr" ];
-    kernelParams = [ "fbcon=nodefer" "bgrt_disable" "quiet" "splash" ];
+    blacklistedKernelModules = ["nouveau" "lbm-nouveau" "pcspkr"];
+    kernelParams = ["fbcon=nodefer" "bgrt_disable" "quiet" "splash"];
     plymouth = {
       enable = true;
       theme = "breeze";

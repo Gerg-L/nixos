@@ -1,19 +1,24 @@
-{ config, pkgs, callPackage, lib, username, ... }:
 {
+  config,
+  pkgs,
+  callPackage,
+  lib,
+  username,
+  ...
+}: {
   #important stuff first
-  imports =
-    [
-      ../modules/amd.nix
-      ../modules/packages.nix
-      ../modules/boot.nix
-      ../modules/fonts.nix
-      ../modules/scripts.nix
-      ../modules/vfio.nix
-      ../modules/refreshrate.nix
-      ../modules/xserver.nix
-      ../modules/smb.nix
-      ../modules/zsh.nix
-    ];
+  imports = [
+    ../modules/amd.nix
+    ../modules/packages.nix
+    ../modules/boot.nix
+    ../modules/fonts.nix
+    ../modules/scripts.nix
+    ../modules/vfio.nix
+    ../modules/refreshrate.nix
+    ../modules/xserver.nix
+    ../modules/smb.nix
+    ../modules/zsh.nix
+  ];
   networking.hostName = "gerg-desktop";
   boot.kernelPackages = pkgs.linuxPackages_latest;
   hardware.cpu.amd.updateMicrocode = true;
@@ -29,13 +34,13 @@
     defaultUserShell = pkgs.zsh;
     users."${username}" = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "audio" "networkmanager" "kvm" "libvirtd" ];
+      extraGroups = ["wheel" "audio" "networkmanager" "kvm" "libvirtd"];
     };
   };
   boot = {
-    initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "uas" "sd_mod" ];
-    kernelModules = [ "kvm-amd" "msr" ];
-    kernelParams = [ "iomem=relaxed" "msr.allow_writes=on" ];
+    initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "usbhid" "uas" "sd_mod"];
+    kernelModules = ["kvm-amd" "msr"];
+    kernelParams = ["iomem=relaxed" "msr.allow_writes=on"];
   };
 
   fileSystems = {
@@ -52,10 +57,10 @@
   virtualisation.docker.enable = false;
   systemd.services.parrot = {
     enable = true;
-    path = with pkgs; [ parrot yt-dlp ffmpeg ];
-    wantedBy = [ "multi-user.target" ];
-    wants = [ "NetworkManager-wait-online.service" ];
-    after = [ "NetworkManager-wait-online.service" ];
+    path = with pkgs; [parrot yt-dlp ffmpeg];
+    wantedBy = ["multi-user.target"];
+    wants = ["NetworkManager-wait-online.service"];
+    after = ["NetworkManager-wait-online.service"];
     script = "parrot";
     serviceConfig = {
       EnvironmentFile = "/home/${username}/parrot/.env";
@@ -64,8 +69,8 @@
   #mining stuff
   systemd.services.mining = {
     enable = false;
-    path = with pkgs; [ t-rex-miner afk-cmds st zsh dbus xmrig ];
-    wants = [ "graphical.target" ];
+    path = with pkgs; [t-rex-miner afk-cmds st zsh dbus xmrig];
+    wants = ["graphical.target"];
     script = ''
       afk-cmds -c /home/${username}/afk-cmds.json
     '';
@@ -79,4 +84,3 @@
     };
   };
 }
-

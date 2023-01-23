@@ -1,6 +1,8 @@
-{ pkgs, config, ... }:
-
-let
+{
+  pkgs,
+  config,
+  ...
+}: let
   update-system = pkgs.writeShellScriptBin "update-system" ''
     if ! [ $(id -u) = 0 ]; then
       echo "RUN AS ROOT"
@@ -37,7 +39,6 @@ let
   pastebin = pkgs.writeShellScriptBin "pastebin" ''
     curl -F 'clbin=<-' https://clbin.com
   '';
-in
-{
-  environment.systemPackages = [ update-system apply-system full-upgrade clean-store pastebin ];
+in {
+  environment.systemPackages = [update-system apply-system full-upgrade clean-store pastebin];
 }

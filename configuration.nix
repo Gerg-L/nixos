@@ -1,9 +1,12 @@
-{ config, pkgs, lib, ... }:
 {
-
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   system.stateVersion = "23.05";
   environment = {
-    defaultPackages = [ ]; #don't install anything by default
+    defaultPackages = []; #don't install anything by default
     binsh = "${pkgs.dash}/bin/dash"; #use dash for speed
     variables = {
       EDITOR = "vi";
@@ -54,7 +57,6 @@
       KbdInteractiveAuthentication = false;
     };
   };
-
 
   #themeing
   qt = {

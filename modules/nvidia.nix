@@ -1,5 +1,4 @@
-{ config, ... }:
-{
+{config, ...}: {
   hardware = {
     nvidia = {
       nvidiaPersistenced = false;
@@ -13,4 +12,3 @@
     };
   };
 }
-

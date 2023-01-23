@@ -1,16 +1,20 @@
-{ config, pkgs, username, ... }:
 {
+  config,
+  pkgs,
+  username,
+  ...
+}: {
   services.xserver = {
     enable = true;
     videoDrivers =
       if (config.networking.hostName == "gerg-laptop")
-      then [ "modesetting" "nvidia" ]
-      else [ "amdgpu" ];
+      then ["modesetting" "nvidia"]
+      else ["amdgpu"];
     layout = "us";
     libinput.enable = true;
     xautolock.enable = false;
     desktopManager.xterm.enable = false;
-    excludePackages = [ pkgs.xterm ];
+    excludePackages = [pkgs.xterm];
     windowManager.dwm.enable = true;
     displayManager = {
       defaultSession = "none+dwm";
@@ -22,8 +26,8 @@
             [greeter]
             user = ${username}
             show-password-label = false
-            password-label-text = 
-            invalid-password-text = 
+            password-label-text =
+            invalid-password-text =
             show-input-cursor = false
             password-alignment = center
             password-input-width = 19
@@ -64,4 +68,3 @@
     };
   };
 }
-

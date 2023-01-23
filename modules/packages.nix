@@ -1,5 +1,8 @@
-{ config, pkgs, callPackage, ... }:
 {
+  config,
+  pkgs,
+  ...
+}: {
   environment.systemPackages = with pkgs; [
     bottom #view tasks
     efibootmgr #efi editor
@@ -9,8 +12,8 @@
     btrfs-progs #for external harddrive
     vlc #play stuff
     bitwarden #store stuff
-    gimp #edit stuff 
-    qbittorrent #steal stuff 
+    gimp #edit stuff
+    qbittorrent #steal stuff
     discord # talk to people (gross)
     feh #for wallpaper
     xfce.mousepad
@@ -26,10 +29,9 @@
     neofetch # cus yes
     st #suckless terminal
     pipes-rs # more fun things
-    pcmanfm #file manager 
+    pcmanfm #file manager
     haskellPackages.squeeze #file compression
     nix-tree #view packages
     bc #terminal calculator
   ];
 }
-

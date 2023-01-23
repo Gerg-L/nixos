@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-let
+{pkgs, ...}: let
   vim-moonfly = pkgs.vimUtils.buildVimPlugin {
     pname = "vim-moonfly";
     version = "1.0.0";
@@ -11,15 +9,14 @@ let
       sha256 = "sha256-TEYN8G/VNxitpPJPM7+O9AGLm6V7bPkiTlFG5op55pI=";
     };
   };
-in
-{
+in {
   # home.packages = with pkgs; [rustc cargo rust-analyzer clang-tools];
   programs.neovim = {
     enable = true;
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
-    extraPackages = with pkgs; [ gcc ripgrep fd ];
+    extraPackages = with pkgs; [gcc ripgrep fd];
     plugins = with pkgs.vimPlugins; [
       nvim-treesitter.withAllGrammars
       rainbow
@@ -49,25 +46,21 @@ in
       vim-moonfly #color scheme
       lightline-vim #bottom bar
     ];
-    extraConfig =
-      let
-        luaRequire = module:
-          builtins.readFile (builtins.toString
-            ./config
+    extraConfig = let
+      luaRequire = module:
+        builtins.readFile (builtins.toString
+          ./config
           + "/${module}.lua");
-        luaConfig = builtins.concatStringsSep "\n" (map luaRequire [
-          "init"
-          "lspconfig"
-          "nvim-cmp"
-        ]);
-      in
-      ''
-          lua << EOF
-          ${luaConfig}
-        EOF
+      luaConfig = builtins.concatStringsSep "\n" (map luaRequire [
+        "init"
+        "lspconfig"
+        "nvim-cmp"
+      ]);
+    in ''
+        lua << EOF
+        ${luaConfig}
+      EOF
 
-      '';
+    '';
   };
 }
-
-
