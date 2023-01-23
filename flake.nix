@@ -63,11 +63,27 @@
         modules = [
           ./configuration.nix
           ./systems/desktop.nix
+          {
+            environment.etc = {
+              "nix/inputs/nixpkgs".source = inputs.nixpkgs.outPath;
+              "nix/inputs/home-manager".source = inputs.home-manager.outPath;
+            };
+            nix = {
+              nixPath = [
+                "nixpkgs=/etc/nix/inputs/nixpkgs"
+                "home-manager=/etc/nix/inputs/home-manager"
+              ];
+              registry = {
+                nixpkgs.flake = nixpkgs;
+                suckless.flake = suckless;
+              };
+            };
+          }
           home-manager.nixosModules.home-manager
           {
             home-manager = {
               useGlobalPkgs = true;
-              useUserPackages = true;
+              useUserPackages = false;
               extraSpecialArgs = {inherit spicetify-nix username;};
               users = {
                 ${username} = import ./home-manager/home.nix;

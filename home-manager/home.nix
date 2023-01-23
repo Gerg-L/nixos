@@ -15,7 +15,6 @@
   ];
   xsession.numlock.enable = true;
   home = {
-    inherit username;
     homeDirectory = "/home/${username}";
     stateVersion = "23.05";
     file = {

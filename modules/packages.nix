@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  inputs,
   ...
 }: {
   environment.systemPackages = with pkgs; [
@@ -19,18 +20,16 @@
     xfce.mousepad
     brightnessctl #brightness control for laptop
     playerctl #music control
-    networkmanager_dmenu #pretty gui connection control
     networkmanagerapplet #gui connection control
-    dmenu #for networkmanager_dmenu
     pavucontrol #gui volume control
     xclip #commandline clipboard access
     exa #ls replacement
     cava #pretty audio
     neofetch # cus yes
+    dmenu #suckless launcher
     st #suckless terminal
     pipes-rs # more fun things
     pcmanfm #file manager
-    haskellPackages.squeeze #file compression
     nix-tree #view packages
     bc #terminal calculator
   ];

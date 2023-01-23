@@ -16,6 +16,7 @@
       echo "RUN AS ROOT"
       exit 1
     fi
+    rm /nix/var/nix/gcroots/auto/*
     nix-collect-garbage -d
   '';
 

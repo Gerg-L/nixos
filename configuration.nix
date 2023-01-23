@@ -11,6 +11,7 @@
     variables = {
       EDITOR = "vi";
       VISUAL = "vi";
+      TERMINAL = "st";
     };
   };
   #nix stuff
