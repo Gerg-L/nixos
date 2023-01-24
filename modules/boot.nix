@@ -1,7 +1,19 @@
-{
+{pkgs, ...}: {
+  systemd = {
+    targets.network-online.wantedBy = pkgs.lib.mkForce []; # Normally ["multi-user.target"]
+    services.NetworkManager-wait-online.wantedBy = pkgs.lib.mkForce []; # Normally ["network-online.target"]
+  };
+  environment.etc = {
+    "issue" = {
+      text = "[?12l[?25h";
+      mode = "0444";
+    };
+  };
   boot = {
     blacklistedKernelModules = ["nouveau" "lbm-nouveau" "pcspkr"];
-    kernelParams = ["fbcon=nodefer" "bgrt_disable" "quiet" "splash"];
+    kernelParams = ["fbcon=nodefer" "bgrt_disable" "quiet" "splash" "systemd.show_status=false" "rd.udev.log_level=3" "vt.global_cursor_default=0"];
+    consoleLogLevel = 0;
+    initrd.verbose = false;
     plymouth = {
       enable = true;
       theme = "breeze";

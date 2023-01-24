@@ -12,7 +12,6 @@
     ../modules/vfio.nix
     ../modules/refreshrate.nix
     ../modules/xserver.nix
-    ../modules/smb.nix
     ../modules/zsh.nix
     ../modules/git.nix
     #../modules/mining.nix

@@ -5,7 +5,7 @@
 }: {
   boot = {
     kernelParams = ["amd_iommu=on" "iommu=pt" "vfio_iommu_type1.allow_unsafe_interrupts=1" "kvm.ignore_msrs=1"];
-    kernelModules = ["amd-kvm" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio"];
+    kernelModules = ["kvm-amd" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio"];
     initrd.kernelModules = ["vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio"];
     extraModprobeConfig = ''
       options vfio-pci ids=10de:228e,10de:2504
