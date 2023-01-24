@@ -1,18 +1,15 @@
 {
-  config,
   pkgs,
-  callPackage,
-  lib,
-  username,
+  settings,
   ...
 }: {
   #important stuff first
   imports = [
     ../modules/boot.nix
-    ../modules/prime.nix
-    ../modules/nvidia.nix
-    ../modules/packages.nix
     ../modules/fonts.nix
+    ../modules/git.nix
+    ../modules/packages.nix
+    ../modules/prime.nix
     ../modules/scripts.nix
     ../modules/xserver.nix
     ../modules/zsh.nix
@@ -22,13 +19,14 @@
   hardware.cpu.amd.updateMicrocode = true;
 
   # end important stuff
-  environment.systemPackages = with pkgs; [
-    xorg.xf86videoamdgpu
-  ];
+  #environment.systemPackages = with pkgs; [
+  #  xorg.xf86videoamdgpu
+  #];
+  #don't think i need this^
   # user managment
   users = {
     defaultUserShell = pkgs.zsh;
-    users."${username}" = {
+    users."${settings.username}" = {
       isNormalUser = true;
       extraGroups = ["wheel" "audio" "networkmanager"];
     };

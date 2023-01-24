@@ -1,16 +1,11 @@
 {
-  config,
   pkgs,
-  username,
-  inputs,
+  settings,
   ...
 }: {
   services.xserver = {
     enable = true;
-    videoDrivers =
-      if (config.networking.hostName == "gerg-laptop")
-      then ["modesetting" "nvidia"]
-      else ["amdgpu"];
+    exportConfiguration = true; #make config debuggable
     layout = "us";
     libinput.enable = true;
     xautolock.enable = false;
@@ -25,7 +20,7 @@
           enable = true;
           extraConfig = ''
             [greeter]
-            user = ${username}
+            user = ${settings.username}
             show-password-label = false
             password-label-text =
             invalid-password-text =
@@ -62,7 +57,6 @@
             password-border-color = "#000000"
             password-border-width = 2px
             password-border-radius = 0.341125em
-
           '';
         };
       };

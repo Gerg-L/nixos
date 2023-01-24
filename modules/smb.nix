@@ -1,4 +1,4 @@
-{username, ...}: {
+{settings, ...}: {
   services.samba-wsdd.enable = true; # make shares visible for windows 10 clients
   networking.firewall = {
     allowedTCPPorts = [139 445];
@@ -10,11 +10,11 @@
     openFirewall = true;
     shares = {
       Share = {
-        path = "/home/${username}/Share";
+        path = "/home/${settings.username}/Share";
         browseable = "no";
         "read only" = "no";
         "guest ok" = "no";
-        "force user" = "${username}";
+        "force user" = "${settings.username}";
         "force group" = "users";
       };
     };

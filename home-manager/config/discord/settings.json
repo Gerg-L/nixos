@@ -11,5 +11,6 @@
   "MIN_WIDTH": 0,
   "MIN_HEIGHT": 0,
   "OPEN_ON_STARTUP": false,
-  "MINIMIZE_TO_TRAY": false
+  "MINIMIZE_TO_TRAY": false,
+  "SKIP_HOST_UPDATE": true
 }

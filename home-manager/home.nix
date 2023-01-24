@@ -1,7 +1,6 @@
 {
-  config,
   pkgs,
-  username,
+  settings,
   ...
 }: {
   imports = [
@@ -9,14 +8,13 @@
     ./sxhkd.nix
     ./theme.nix
     ./picom.nix
-    ./git.nix
     ./spicetify.nix
     ./neovim
   ];
   xsession.numlock.enable = true;
   home = {
-    homeDirectory = "/home/${username}";
-    stateVersion = "23.05";
+    homeDirectory = "/home/${settings.username}";
+    stateVersion = settings.version;
     file = {
       ".background-image".source = ../images/nix-stars.png;
       ".config" = {

@@ -1,17 +1,12 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{settings, ...}: {
   imports = [
     ./theme.nix
-    ./git.nix
     ./neovim
   ];
   home = {
     username = "root";
     homeDirectory = "/root";
-    stateVersion = "23.05";
+    stateVersion = settings.version;
     file = {
       ".config/neofetch/config.conf" = {
         source = ./config/neofetch/config.conf;

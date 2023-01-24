@@ -1,8 +1,4 @@
-{
-  pkgs,
-  config,
-  ...
-}: let
+{pkgs, ...}: let
   update-system = pkgs.writeShellScriptBin "update-system" ''
     if ! [ $(id -u) = 0 ]; then
       echo "RUN AS ROOT"

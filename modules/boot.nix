@@ -1,5 +1,4 @@
 {
-  hardware.enableRedistributableFirmware = true;
   boot = {
     blacklistedKernelModules = ["nouveau" "lbm-nouveau" "pcspkr"];
     kernelParams = ["fbcon=nodefer" "bgrt_disable" "quiet" "splash"];

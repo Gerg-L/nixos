@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  inputs,
   ...
 }: {
   environment.systemPackages = with pkgs; [
@@ -13,7 +12,6 @@
     btrfs-progs #for external harddrive
     vlc #play stuff
     bitwarden #store stuff
-    gimp #edit stuff
     qbittorrent #steal stuff
     discord # talk to people (gross)
     feh #for wallpaper
@@ -32,5 +30,6 @@
     pcmanfm #file manager
     nix-tree #view packages
     bc #terminal calculator
+    page #use nvim as a pager
   ];
 }

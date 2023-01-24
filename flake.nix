@@ -25,25 +25,22 @@
     suckless,
     ...
   } @ inputs: let
-    username = "gerg";
+    settings = {
+      username = "gerg";
+      version = "23.05";
+    };
     system = "x86_64-linux";
     pkgs = import nixpkgs {
       inherit system;
-      config = {
-        allowUnfree = true;
-        packageOverrides = super: let
-          self = super.pkgs;
-        in {
-          nerdfonts-overpass = self.nerdfonts.override {
-            fonts = ["Overpass"];
-          };
-        };
-      };
+      config.allowUnfree = true;
       overlays = [
         (final: prev: rec {
           t-rex-miner = final.callPackage ./pkgs/t-rex-miner {};
           afk-cmds = final.callPackage ./pkgs/afk-cmds {};
           parrot = final.callPackage ./pkgs/parrot {};
+          nerdfonts-overpass = prev.nerdfonts.override {
+            fonts = ["Overpass"];
+          };
           discord = prev.discord.override {
             withOpenASAR = true;
             nss = prev.nss_latest;
@@ -59,7 +56,7 @@
     nixosConfigurations = {
       gerg-desktop = lib.nixosSystem {
         inherit system pkgs;
-        specialArgs = {inherit inputs username;};
+        specialArgs = {inherit inputs settings;};
         modules = [
           ./configuration.nix
           ./systems/desktop.nix
@@ -77,6 +74,11 @@
                 nixpkgs.flake = nixpkgs;
                 suckless.flake = suckless;
               };
+              settings = {
+                experimental-features = ["nix-command" "flakes"];
+                auto-optimise-store = true;
+                warn-dirty = false;
+              };
             };
           }
           home-manager.nixosModules.home-manager
@@ -84,9 +86,9 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = false;
-              extraSpecialArgs = {inherit spicetify-nix username;};
+              extraSpecialArgs = {inherit spicetify-nix settings;};
               users = {
-                ${username} = import ./home-manager/home.nix;
+                ${settings.username} = import ./home-manager/home.nix;
                 root = import ./home-manager/root.nix;
               };
             };

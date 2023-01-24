@@ -31,7 +31,7 @@ vim.g.indentLine_setConceal = 0
 vim.g.loaded = 1
 vim.g.loaded_netrwPlugin = 1
 require("nvim-tree").setup {
-  open_on_setup = true,
+  open_on_setup = false,
   sort_by = "case_sensitive",
   view = {
     adaptive_size = true,
@@ -63,7 +63,9 @@ vim.cmd[[colorscheme moonfly]]
 -- pretty colors
 require("colorizer").setup()
 require("telescope").load_extension("fzy_native")
-require("gitsigns").setup()
+require("gitsigns").setup {
+  current_line_blame = true,
+}
 require("nvim-autopairs").setup()
 
 -- telescope keybinds

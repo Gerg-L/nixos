@@ -1,27 +1,27 @@
 {
-  config,
   pkgs,
-  lib,
+  settings,
   ...
 }: {
-  system.stateVersion = "23.05";
+  system.stateVersion = settings.version;
   environment = {
     defaultPackages = []; #don't install anything by default
     binsh = "${pkgs.dash}/bin/dash"; #use dash for speed
     variables = {
       EDITOR = "vi";
       VISUAL = "vi";
+      PAGER = "page";
+      SYSTEMD_PAGERSECURE = "true";
       TERMINAL = "st";
     };
   };
-  #nix stuff
-  nix = {
-    settings = {
-      auto-optimise-store = true; #save space
-      cores = 0; # use all cores
-      keep-outputs = false; #don't make ./results files
-      keep-derivations = false; #^
-      experimental-features = "nix-command flakes";
+  #hardware stuff
+  hardware = {
+    enableRedistributableFirmware = true;
+    opengl = {
+      enable = true;
+      driSupport = true;
+      driSupport32Bit = true;
     };
   };
   #sound settings

@@ -1,8 +1,4 @@
-{
-  pkgs,
-  home-manager,
-  ...
-}: {
+{pkgs, ...}: {
   gtk = {
     enable = true;
     theme = {
