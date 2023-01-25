@@ -14,6 +14,7 @@
     bitwarden #store stuff
     qbittorrent #steal stuff
     discord # talk to people (gross)
+#    armcord
     feh #for wallpaper
     xfce.mousepad
     brightnessctl #brightness control for laptop

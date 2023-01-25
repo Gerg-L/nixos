@@ -1,8 +1,4 @@
 {pkgs, ...}: {
-  systemd = {
-    targets.network-online.wantedBy = pkgs.lib.mkForce []; # Normally ["multi-user.target"]
-    services.NetworkManager-wait-online.wantedBy = pkgs.lib.mkForce []; # Normally ["network-online.target"]
-  };
   environment.etc = {
     "issue" = {
       text = "[?12l[?25h";

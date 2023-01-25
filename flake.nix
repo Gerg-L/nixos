@@ -10,7 +10,6 @@
       url = "github:the-argus/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     suckless = {
       url = "github:ISnortPennies/suckless";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -43,6 +42,9 @@
           };
           discord = prev.discord.override {
             withOpenASAR = true;
+            nss = prev.nss_latest;
+          };
+          armcord = prev.armcord.override {
             nss = prev.nss_latest;
           };
         })
