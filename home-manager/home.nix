@@ -1,16 +1,25 @@
 {
   pkgs,
   settings,
+  lib,
   ...
 }: {
-  imports = [
-    ./librewolf.nix
-    ./sxhkd.nix
-    ./theme.nix
-    ./picom.nix
-    ./spicetify.nix
-    ./neovim
-  ];
+  imports = let
+    modules = [
+      "librewolf"
+      "sxhkd"
+      "theme"
+      "picom"
+      "spicetify"
+    ];
+  in
+    lib.lists.forEach modules (
+      m:
+        ./. + ("/" + m + ".nix")
+    )
+    ++ [
+      ./neovim
+    ];
   xsession.numlock.enable = true;
   home = {
     homeDirectory = "/home/${settings.username}";

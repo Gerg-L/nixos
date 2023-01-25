@@ -1,11 +1,19 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager";
-    spicetify-nix.url = "github:the-argus/spicetify-nix";
-    suckless.url = "github:ISnortPennies/suckless";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    spicetify-nix = {
+      url = "github:the-argus/spicetify-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    suckless = {
+      url = "github:ISnortPennies/suckless";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
-
   outputs = {
     self,
     nixpkgs,
@@ -51,17 +59,23 @@
           ./systems/desktop.nix
           {
             environment.etc = {
-              "nix/inputs/nixpkgs".source = inputs.nixpkgs.outPath;
-              "nix/inputs/home-manager".source = inputs.home-manager.outPath;
+              "nix/flake-channels/system".source = inputs.self;
+              "nix/flake-channels/nixpkgs".source = inputs.nixpkgs.outPath;
+              "nix/flake-channels/home-manager".source = inputs.home-manager.outPath;
             };
             nix = {
               nixPath = [
-                "nixpkgs=/etc/nix/inputs/nixpkgs"
-                "home-manager=/etc/nix/inputs/home-manager"
+                "repl=/etc/nix/flake-channels/system/repl.nix"
+                "nixpkgs=/etc/nix/flake-channels/nixpkgs"
+                "home-manager=/etc/nix/flake-channels/home-manager"
               ];
               #automatically get registry from input flakes
               registry =
-                lib.attrsets.mapAttrs (
+                {
+                  system.flake = self;
+                  default.flake = nixpkgs;
+                }
+                // lib.attrsets.mapAttrs (
                   _: source: {
                     flake = source;
                   }

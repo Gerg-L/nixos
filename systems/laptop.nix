@@ -1,24 +1,29 @@
 {
   pkgs,
   settings,
+  lib,
   ...
 }: {
-  #important stuff first
-  imports = [
-    ../modules/boot.nix
-    ../modules/fonts.nix
-    ../modules/git.nix
-    ../modules/packages.nix
-    ../modules/prime.nix
-    ../modules/scripts.nix
-    ../modules/xserver.nix
-    ../modules/zsh.nix
-  ];
+  imports = let
+    modules = [
+      "boot"
+      "fonts"
+      "git"
+      "packages"
+      "prime"
+      "scripts"
+      "xserver"
+      "zsh"
+    ];
+  in
+    lib.lists.forEach modules (
+      m:
+        ../modules + ("/" + m + ".nix")
+    );
   networking.hostName = "gerg-laptop";
   boot.kernelPackages = pkgs.linuxPackages_latest;
   hardware.cpu.amd.updateMicrocode = true;
 
-  # end important stuff
   #environment.systemPackages = with pkgs; [
   #  xorg.xf86videoamdgpu
   #];

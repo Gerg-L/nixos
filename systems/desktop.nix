@@ -1,26 +1,31 @@
 {
   pkgs,
   settings,
+  lib,
   ...
 }: {
-  #important stuff first
-  imports = [
-    ../modules/packages.nix
-    ../modules/boot.nix
-    ../modules/fonts.nix
-    ../modules/scripts.nix
-    ../modules/vfio.nix
-    ../modules/refreshrate.nix
-    ../modules/xserver.nix
-    ../modules/zsh.nix
-    ../modules/git.nix
-    #../modules/mining.nix
-    ../modules/parrot.nix
-  ];
+  imports = let
+    modules = [
+      "boot"
+      "fonts"
+      "git"
+      #"mining"
+      "packages"
+      "parrot"
+      "refreshrate"
+      "scripts"
+      "vfio"
+      "xserver"
+      "zsh"
+    ];
+  in
+    lib.lists.forEach modules (
+      m:
+        ../modules + ("/" + m + ".nix")
+    );
   networking.hostName = "gerg-desktop";
   boot.kernelPackages = pkgs.linuxPackages_latest;
   hardware.cpu.amd.updateMicrocode = true;
-  #end important stuff
   environment.systemPackages = with pkgs; [
     vscodium
     gimp

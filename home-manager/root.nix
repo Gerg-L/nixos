@@ -1,8 +1,20 @@
-{settings, ...}: {
-  imports = [
-    ./theme.nix
-    ./neovim
-  ];
+{
+  settings,
+  lib,
+  ...
+}: {
+  imports = let
+    modules = [
+      "theme"
+    ];
+  in
+    lib.lists.forEach modules (
+      m:
+        ./. + ("/" + m + ".nix")
+    )
+    ++ [
+      ./neovim
+    ];
   home = {
     username = "root";
     homeDirectory = "/root";
