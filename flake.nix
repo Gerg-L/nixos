@@ -1,19 +1,9 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    spicetify-nix = {
-      url = "github:the-argus/spicetify-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    suckless = {
-      url = "github:ISnortPennies/suckless";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    home-manager.url = "github:nix-community/home-manager";
+    spicetify-nix.url = "github:the-argus/spicetify-nix";
+    suckless.url = "github:ISnortPennies/suckless";
   };
 
   outputs = {
@@ -44,9 +34,6 @@
             withOpenASAR = true;
             nss = prev.nss_latest;
           };
-          armcord = prev.armcord.override {
-            nss = prev.nss_latest;
-          };
         })
         suckless.overlays.all
       ];
@@ -72,10 +59,20 @@
                 "nixpkgs=/etc/nix/inputs/nixpkgs"
                 "home-manager=/etc/nix/inputs/home-manager"
               ];
-              registry = {
-                nixpkgs.flake = nixpkgs;
-                suckless.flake = suckless;
-              };
+              #automatically get registry from input flakes
+              registry =
+                lib.attrsets.mapAttrs (
+                  _: source: {
+                    flake = source;
+                  }
+                ) (
+                  lib.attrsets.filterAttrs (
+                    _: source: (
+                      !(lib.attrsets.hasAttrByPath ["flake"] source) || source.flake == false
+                    )
+                  )
+                  inputs
+                );
               settings = {
                 experimental-features = ["nix-command" "flakes"];
                 auto-optimise-store = true;
