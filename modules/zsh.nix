@@ -17,7 +17,7 @@
       enable = true;
       settings = {
         add_newline = false;
-        format = "$sudo \n $directory$git_branch$character";
+        format = "$sudo$cmd_duration \n $directory$git_branch$character";
         character = {
           success_symbol = "[ ](#9ece6a bold)";
           error_symbol = "[ ](#db4b4b bold)";
@@ -31,6 +31,10 @@
         sudo = {
           format = "[ ](#7aa2f7)";
           disabled = false;
+        };
+        cmd_duration = {
+          min_time = 5000;
+          style = "bold #9ece6a";
         };
       };
     };
