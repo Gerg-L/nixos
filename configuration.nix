@@ -15,6 +15,13 @@
       TERMINAL = "st";
     };
   };
+  security.sudo = {
+    enable = true;
+    execWheelOnly = true;
+    extraConfig = ''
+    Defaults env_keep += "EDITOR VISUAL PAGER SYSTEMD_PAGERSECURE TERMINAL"
+    '';
+  };
   #hardware stuff
   hardware = {
     enableRedistributableFirmware = true;
