@@ -14,12 +14,18 @@
       SYSTEMD_PAGERSECURE = "true";
       TERMINAL = "st";
     };
+    shellAliases = {
+      ls = "exa --long --icons";
+    };
+    interactiveShellInit = ''
+      neofetch
+    '';
   };
   security.sudo = {
     enable = true;
     execWheelOnly = true;
     extraConfig = ''
-    Defaults env_keep += "EDITOR VISUAL PAGER SYSTEMD_PAGERSECURE TERMINAL"
+      Defaults env_keep += "EDITOR VISUAL PAGER SYSTEMD_PAGERSECURE TERMINAL"
     '';
   };
   #hardware stuff

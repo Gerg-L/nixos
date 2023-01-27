@@ -65,7 +65,6 @@
             };
             nix = {
               nixPath = [
-                "repl=/etc/nix/flake-channels/system/repl.nix"
                 "nixpkgs=/etc/nix/flake-channels/nixpkgs"
                 "home-manager=/etc/nix/flake-channels/home-manager"
               ];
