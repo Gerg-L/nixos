@@ -14,7 +14,7 @@
     vlc #play stuff
     bitwarden #store stuff
     qbittorrent #steal stuff
-    discord # talk to people (gross)
+    webcord # talk to people (gross)
     feh #for wallpaper
     xfce.mousepad
     brightnessctl #brightness control for laptop

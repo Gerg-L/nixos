@@ -1,6 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nixpkgs-master.url = "github:nixos/nixpkgs";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -21,6 +22,7 @@
   outputs = {
     self,
     nixpkgs,
+    nixpkgs-master,
     home-manager,
     spicetify-nix,
     suckless,
@@ -39,12 +41,9 @@
           t-rex-miner = final.callPackage ./pkgs/t-rex-miner {};
           afk-cmds = final.callPackage ./pkgs/afk-cmds {};
           parrot = final.callPackage ./pkgs/parrot {};
+          webcord = inputs.nixpkgs-master.legacyPackages.${system}.webcord;
           nerdfonts-overpass = prev.nerdfonts.override {
             fonts = ["Overpass"];
-          };
-          discord = prev.discord.override {
-            withOpenASAR = true;
-            nss = prev.nss_latest;
           };
         })
         suckless.overlays.all
