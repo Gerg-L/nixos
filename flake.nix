@@ -13,6 +13,10 @@
       url = "github:ISnortPennies/suckless";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nvim-config = {
+      url = "github:ISnortPennies/nvim-config";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs = {
     self,

@@ -16,10 +16,7 @@
     lib.lists.forEach modules (
       m:
         ./. + ("/" + m + ".nix")
-    )
-    ++ [
-      ./neovim
-    ];
+    );
   xsession.numlock.enable = true;
   home = {
     homeDirectory = "/home/${settings.username}";

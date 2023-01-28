@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  inputs,
   ...
 }: {
   environment.systemPackages = with pkgs; [
@@ -31,5 +32,6 @@
     nix-tree #view packages
     bc #terminal calculator
     page #use nvim as a pager
+    inputs.nvim-config.packages.${pkgs.system}.default #my custom nvim flake
   ];
 }

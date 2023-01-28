@@ -11,10 +11,7 @@
     lib.lists.forEach modules (
       m:
         ./. + ("/" + m + ".nix")
-    )
-    ++ [
-      ./neovim
-    ];
+    );
   home = {
     username = "root";
     homeDirectory = "/root";

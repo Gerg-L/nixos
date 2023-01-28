@@ -41,7 +41,8 @@
   boot = {
     initrd = {
       kernelModules = ["amdgpu"];
-      availableKernelModules = ["nvme" "ext4" "vfat" "xhci_pci" "ahci" "usbhid" "sd_mod"];
+      availableKernelModules = ["nvme" "xhci_pci" "ahci" "usbhid" "sd_mod"];
+      supportedFilesystems = ["ext4" "vfat"];
       includeDefaultModules = false;
     };
   };
@@ -51,11 +52,17 @@
       device = "/dev/disk/by-id/nvme-Samsung_SSD_980_500GB_S64ENJ0R607785J-part2";
       fsType = "ext4";
       label = "nixos";
+      noCheck = false;
+      mountPoint = "/";
+      neededForBoot = true;
     };
     "/boot" = {
       device = "/dev/disk/by-id/nvme-Samsung_SSD_980_500GB_S64ENJ0R607785J-part1";
       fsType = "vfat";
       label = "BOOT";
+      noCheck = false;
+      mountPoint = "/boot";
+      neededForBoot = true;
     };
   };
 }
