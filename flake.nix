@@ -18,6 +18,10 @@
       url = "github:ISnortPennies/nvim-config";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sxhkd-flake = {
+      url = "github:ISnortPennies/sxhkd-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs = {
     self,
@@ -58,6 +62,7 @@
         inherit system pkgs;
         specialArgs = {inherit inputs settings;};
         modules = [
+          (import ./modules/sxhkd.nix inputs)
           ./configuration.nix
           ./systems/desktop.nix
           {

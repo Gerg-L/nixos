@@ -7,7 +7,6 @@
   imports = let
     modules = [
       "librewolf"
-      "sxhkd"
       "theme"
       "picom"
       "spicetify"

@@ -14,11 +14,6 @@
     windowManager.dwm.enable = true;
     displayManager = {
       defaultSession = "none+dwm";
-      sessionCommands = ''
-        if ! pidof sxhkd > /dev/null;then
-          sxhkd &
-        fi
-      '';
       lightdm = {
         enable = true;
         greeters.mini = {
