@@ -10,6 +10,7 @@
       "fonts"
       "git"
       "packages"
+      "picom"
       "prime"
       "scripts"
       "xserver"

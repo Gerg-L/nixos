@@ -8,7 +8,6 @@
     modules = [
       "librewolf"
       "theme"
-      "picom"
       "spicetify"
     ];
   in

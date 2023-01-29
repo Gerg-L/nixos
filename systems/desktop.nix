@@ -12,6 +12,7 @@
       #"mining"
       "packages"
       "parrot"
+      "picom"
       "refreshrate"
       "scripts"
       "vfio"
