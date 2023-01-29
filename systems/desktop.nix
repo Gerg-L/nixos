@@ -27,10 +27,6 @@
   networking.hostName = "gerg-desktop";
   boot.kernelPackages = pkgs.linuxPackages_latest;
   hardware.cpu.amd.updateMicrocode = true;
-  environment.systemPackages = with pkgs; [
-    vscodium
-    gimp
-  ];
   #user managment
   users = {
     defaultUserShell = pkgs.zsh;
