@@ -26,10 +26,7 @@
   outputs = {
     self,
     nixpkgs,
-    nixpkgs-master,
-    home-manager,
     spicetify-nix,
-    suckless,
     ...
   } @ inputs: let
     settings = {
@@ -37,6 +34,7 @@
       version = "23.05";
     };
     system = "x86_64-linux";
+    lib = nixpkgs.lib;
     pkgs = import nixpkgs {
       inherit system;
       config.allowUnfree = true;
@@ -50,10 +48,9 @@
             fonts = ["Overpass"];
           };
         })
-        suckless.overlays.all
+        inputs.suckless.overlay
       ];
     };
-    lib = nixpkgs.lib;
   in {
     formatter.x86_64-linux = pkgs.alejandra;
 
@@ -101,7 +98,7 @@
               };
             };
           }
-          home-manager.nixosModules.home-manager
+          inputs.home-manager.nixosModules.home-manager
           {
             home-manager = {
               useGlobalPkgs = true;
