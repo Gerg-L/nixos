@@ -15,6 +15,7 @@
       "picom"
       "refreshrate"
       "scripts"
+      "sxhkd"
       "vfio"
       "xserver"
       "zsh"

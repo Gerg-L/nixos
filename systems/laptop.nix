@@ -13,6 +13,7 @@
       "picom"
       "prime"
       "scripts"
+      "sxhkd"
       "xserver"
       "zsh"
     ];

@@ -1,11 +1,4 @@
-{sxhkd-flake, ...}: {
-  config,
-  lib,
-  options,
-  pkgs,
-  ...
-}: (sxhkd-flake.nixosModules.sxhkd {
-  inherit lib config options pkgs;
+{
   services.sxhkd = {
     enable = true;
     keybindings = {
@@ -27,4 +20,4 @@
       "super + Print + shift" = "maim -s | xclip -selection clipboard -t image/png";
     };
   };
-})
+}

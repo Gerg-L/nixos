@@ -27,6 +27,7 @@
     self,
     nixpkgs,
     spicetify-nix,
+    sxhkd-flake,
     ...
   } @ inputs: let
     settings = {
@@ -59,7 +60,7 @@
         inherit system pkgs;
         specialArgs = {inherit inputs settings;};
         modules = [
-          (import ./modules/sxhkd.nix inputs)
+          sxhkd-flake.nixosModules.sxhkd
           ./configuration.nix
           ./systems/desktop.nix
           {
