@@ -1,7 +1,7 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-    nixpkgs-master.url = "github:nixos/nixpkgs";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-master.url = "github:NixOS/nixpkgs";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -26,8 +26,6 @@
   outputs = {
     self,
     nixpkgs,
-    spicetify-nix,
-    sxhkd-flake,
     ...
   } @ inputs: let
     settings = {
@@ -45,72 +43,23 @@
           afk-cmds = final.callPackage ./pkgs/afk-cmds {};
           parrot = final.callPackage ./pkgs/parrot {};
           webcord = inputs.nixpkgs-master.legacyPackages.${system}.webcord;
-          nerdfonts-overpass = prev.nerdfonts.override {
-            fonts = ["Overpass"];
-          };
         })
         inputs.suckless.overlay
       ];
     };
   in {
     formatter.x86_64-linux = pkgs.alejandra;
-
     nixosConfigurations = {
       gerg-desktop = lib.nixosSystem {
         inherit system pkgs;
         specialArgs = {inherit inputs settings;};
         modules = [
-          sxhkd-flake.nixosModules.sxhkd
+          inputs.sxhkd-flake.nixosModules.sxhkd
+          inputs.home-manager.nixosModules.home-manager
+          ./home-manager
           ./configuration.nix
           ./systems/desktop.nix
-          {
-            environment.etc = {
-              "nix/flake-channels/system".source = inputs.self;
-              "nix/flake-channels/nixpkgs".source = inputs.nixpkgs.outPath;
-              "nix/flake-channels/home-manager".source = inputs.home-manager.outPath;
-            };
-            nix = {
-              nixPath = [
-                "nixpkgs=/etc/nix/flake-channels/nixpkgs"
-                "home-manager=/etc/nix/flake-channels/home-manager"
-              ];
-              #automatically get registry from input flakes
-              registry =
-                {
-                  system.flake = self;
-                  default.flake = nixpkgs;
-                }
-                // lib.attrsets.mapAttrs (
-                  _: source: {
-                    flake = source;
-                  }
-                ) (
-                  lib.attrsets.filterAttrs (
-                    _: source: (
-                      !(lib.attrsets.hasAttrByPath ["flake"] source) || source.flake == false
-                    )
-                  )
-                  inputs
-                );
-              settings = {
-                experimental-features = ["nix-command" "flakes" "repl-flake"];
-                auto-optimise-store = true;
-                warn-dirty = false;
-              };
-            };
-          }
-          inputs.home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = false;
-              extraSpecialArgs = {inherit spicetify-nix settings;};
-              users = {
-                ${settings.username} = import ./home-manager/home.nix;
-                root = import ./home-manager/root.nix;
-              };
-            };
-          }
+          ./nix.nix
         ];
       };
     };

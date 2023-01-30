@@ -13,6 +13,9 @@
     excludePackages = [pkgs.xterm];
     windowManager.dwm.enable = true;
     displayManager = {
+      sessionCommands = ''
+      feh --bg-scale ${../images/recursion.png}
+      '';
       defaultSession = "none+dwm";
       lightdm = {
         enable = true;
@@ -45,7 +48,7 @@
             font-style = normal
             text-color = "#7AA2F7"
             error-color = "#DB4B4B"
-            background-image = "/etc/nixos/images/nix-stars.png"
+            background-image = "${../images/recursion.png}"
             background-color = "#000000"
             window-color = "#000000"
             border-color = "#000000"

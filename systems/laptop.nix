@@ -15,7 +15,7 @@
       "scripts"
       "sxhkd"
       "xserver"
-      "zsh"
+      "shells"
     ];
   in
     lib.lists.forEach modules (

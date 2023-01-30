@@ -18,7 +18,7 @@
       "sxhkd"
       "vfio"
       "xserver"
-      "zsh"
+      "shells"
     ];
   in
     lib.lists.forEach modules (

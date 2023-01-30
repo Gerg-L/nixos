@@ -1,6 +1,13 @@
 {pkgs, ...}: {
   fonts = {
-    fonts = with pkgs; [overpass nerdfonts-overpass material-design-icons];
+    fonts = with pkgs; [
+      overpass
+      material-design-icons
+      (nerdfonts.override
+      {
+        fonts = ["Overpass"];
+      })
+    ];
     fontDir.enable = true;
     fontconfig = {
       enable = true;

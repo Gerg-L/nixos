@@ -4,23 +4,6 @@
   ...
 }: {
   system.stateVersion = settings.version;
-  environment = {
-    defaultPackages = []; #don't install anything by default
-    binsh = "${pkgs.dash}/bin/dash"; #use dash for speed
-    variables = {
-      EDITOR = "vi";
-      VISUAL = "vi";
-      PAGER = "page";
-      SYSTEMD_PAGERSECURE = "true";
-      TERMINAL = "st";
-    };
-    shellAliases = {
-      ls = "exa --long --icons";
-    };
-    interactiveShellInit = ''
-      neofetch
-    '';
-  };
   security.sudo = {
     enable = true;
     execWheelOnly = true;
