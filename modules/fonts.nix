@@ -4,9 +4,9 @@
       overpass
       material-design-icons
       (nerdfonts.override
-      {
-        fonts = ["Overpass"];
-      })
+        {
+          fonts = ["Overpass"];
+        })
     ];
     fontDir.enable = true;
     fontconfig = {

@@ -25,12 +25,6 @@
   networking.hostName = "gerg-laptop";
   boot.kernelPackages = pkgs.linuxPackages_latest;
   hardware.cpu.amd.updateMicrocode = true;
-
-  #environment.systemPackages = with pkgs; [
-  #  xorg.xf86videoamdgpu
-  #];
-  #don't think i need this^
-  # user managment
   users = {
     defaultUserShell = pkgs.zsh;
     users."${settings.username}" = {

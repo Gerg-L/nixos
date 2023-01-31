@@ -14,7 +14,7 @@
     windowManager.dwm.enable = true;
     displayManager = {
       sessionCommands = ''
-      feh --bg-scale ${../images/recursion.png}
+        feh --bg-scale ${../images/recursion.png}
       '';
       defaultSession = "none+dwm";
       lightdm = {

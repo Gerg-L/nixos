@@ -62,6 +62,18 @@
           ./nix.nix
         ];
       };
+      gerg-laptop = lib.nixosSystem {
+        inherit system pkgs;
+        specialArgs = {inherit inputs settings;};
+        modules = [
+          inputs.sxhkd-flake.nixosModules.sxhkd
+          inputs.home-manager.nixosModules.home-manager
+          ./home-manager
+          ./configuration.nix
+          ./systems/laptop.nix
+          ./nix.nix
+        ];
+      };
     };
   };
 }

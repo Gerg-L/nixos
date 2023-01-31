@@ -14,8 +14,6 @@
       alsa-utils #volume control
       btrfs-progs #for external harddrive
       vlc #play stuff
-      bitwarden #store stuff
-      qbittorrent #steal stuff
       webcord # talk to people (gross)
       feh #for wallpaper
       xfce.mousepad

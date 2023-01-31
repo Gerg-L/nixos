@@ -25,6 +25,10 @@
       m:
         ../modules + ("/" + m + ".nix")
     );
+  environment.systemPackages = with pkgs; [
+    bitwarden #store stuff
+    qbittorrent #steal stuff
+  ];
   networking.hostName = "gerg-desktop";
   boot.kernelPackages = pkgs.linuxPackages_latest;
   hardware.cpu.amd.updateMicrocode = true;
