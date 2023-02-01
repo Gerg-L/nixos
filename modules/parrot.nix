@@ -4,7 +4,6 @@
   ...
 }: {
   #discord bot stuff
-  virtualisation.docker.enable = false;
   systemd.services.parrot = {
     enable = true;
     path = with pkgs; [parrot yt-dlp ffmpeg];

@@ -22,6 +22,10 @@
       url = "github:ISnortPennies/sxhkd-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    fetch-rs = {
+      url = "github:ISnortPennies/fetch-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs = {
     self,
@@ -45,6 +49,7 @@
           webcord = inputs.nixpkgs-master.legacyPackages.${system}.webcord;
         })
         inputs.suckless.overlay
+        inputs.fetch-rs.overlays.${system}.default
       ];
     };
   in {

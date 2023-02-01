@@ -11,7 +11,7 @@
     shellAliases = {
       ls = "exa --long --icons";
     };
-    interactiveShellInit = "nitch";
+    interactiveShellInit = "fetch-rs";
   };
   programs = {
     zsh = {

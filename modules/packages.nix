@@ -34,6 +34,7 @@
       page #use nvim as a pager
       librewolf #best browser
       inputs.nvim-config.packages.${pkgs.system}.default #my custom nvim flake
+      fetch-rs
     ];
   };
 }
