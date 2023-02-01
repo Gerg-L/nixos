@@ -29,7 +29,7 @@
     bitwarden #store stuff
     qbittorrent #steal stuff
   ];
-  networking.hostName = "gerg-desktop";
+  networking.hostName = settings.hostname;
   boot.kernelPackages = pkgs.linuxPackages_latest;
   hardware.cpu.amd.updateMicrocode = true;
   #user managment

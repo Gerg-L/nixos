@@ -1,17 +1,17 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-master.url = "github:NixOS/nixpkgs";
+    nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable;
+    nixpkgs-master.url = github:NixOS/nixpkgs;
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = github:nix-community/home-manager;
       inputs.nixpkgs.follows = "nixpkgs";
     };
     spicetify-nix = {
-      url = "github:the-argus/spicetify-nix";
+      url = github:the-argus/spicetify-nix;
       inputs.nixpkgs.follows = "nixpkgs";
     };
     suckless = {
-      url = "github:ISnortPennies/suckless";
+      url = github:ISnortPennies/suckless;
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nvim-config = {
@@ -36,10 +36,6 @@
     nixpkgs,
     ...
   } @ inputs: let
-    settings = {
-      username = "gerg";
-      version = "23.05";
-    };
     system = "x86_64-linux";
     lib = nixpkgs.lib;
     pkgs = import nixpkgs {
@@ -61,7 +57,14 @@
     nixosConfigurations = {
       gerg-desktop = lib.nixosSystem {
         inherit system pkgs;
-        specialArgs = {inherit inputs settings;};
+        specialArgs = {
+          inherit inputs;
+          settings = {
+            username = "gerg";
+            version = "23.05";
+            hostname = "gerg-desktop";
+          };
+        };
         modules = [
           inputs.sxhkd-flake.nixosModules.sxhkd
           inputs.home-manager.nixosModules.home-manager
@@ -71,9 +74,16 @@
           ./nix.nix
         ];
       };
-      gerg-laptop = lib.nixosSystem {
+      game-laptop = lib.nixosSystem {
         inherit system pkgs;
-        specialArgs = {inherit inputs settings;};
+        specialArgs = {
+          inherit inputs;
+          settings = {
+            username = "games";
+            version = "23.05";
+            hostname = "game-laptop";
+          };
+        };
         modules = [
           inputs.sxhkd-flake.nixosModules.sxhkd
           inputs.home-manager.nixosModules.home-manager

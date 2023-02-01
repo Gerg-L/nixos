@@ -23,7 +23,7 @@
       m:
         ../modules + ("/" + m + ".nix")
     );
-  networking.hostName = "gerg-laptop";
+  networking.hostName = settings.hostname;
   boot.kernelPackages = pkgs.linuxPackages_latest;
   hardware.cpu.amd.updateMicrocode = true;
   users = {

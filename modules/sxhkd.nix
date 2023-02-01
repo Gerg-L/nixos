@@ -1,4 +1,10 @@
-{
+{lib, settings, ...}:
+with lib; let
+  volInc =
+    if (settings.hostname == "gerg-desktop")
+    then "40"
+    else "400";
+in {
   services.sxhkd = {
     enable = true;
     keybindings = {
@@ -8,8 +14,8 @@
       "XF86AudioStop" = "playerctl stop";
       "XF86AudioNext" = "playerctl next";
       "XF86AudioPrev" = "playerctl previous";
-      "XF86AudioRaiseVolume" = "amixer sset Master 40+";
-      "XF86AudioLowerVolume" = "amixer sset Master 40-";
+      "XF86AudioRaiseVolume" = "amixer sset Master ${volInc}+";
+      "XF86AudioLowerVolume" = "amixer sset Master ${volInc}-";
       "XF86AudioMute" = "amixer sset Master toggle ";
       "XF86MonBrightnessUp" = "brightnessctl s 20+";
       "XF86MonBrightnessDown" = "brightnessctl s 20-";
