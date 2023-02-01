@@ -29,6 +29,7 @@
   users = {
     defaultUserShell = pkgs.zsh;
     users."${settings.username}" = {
+      uid = 1000;
       isNormalUser = true;
       extraGroups = ["wheel" "audio" "networkmanager"];
     };
