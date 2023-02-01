@@ -31,8 +31,12 @@
     users."${settings.username}" = {
       uid = 1000;
       isNormalUser = true;
-      extraGroups = ["wheel" "audio" "networkmanager"];
+      extraGroups = ["audio" "networkmanager"];
     };
+  };
+  services.xserver.displayManager.autoLogin = {
+    enable = true;
+    user = settings.username;
   };
   boot = {
     initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci"];

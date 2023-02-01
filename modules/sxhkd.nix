@@ -1,4 +1,8 @@
-{lib, settings, ...}:
+{
+  lib,
+  settings,
+  ...
+}:
 with lib; let
   volInc =
     if (settings.hostname == "gerg-desktop")
