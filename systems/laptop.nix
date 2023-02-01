@@ -16,6 +16,7 @@
       "sxhkd"
       "xserver"
       "shells"
+      "gaming"
     ];
   in
     lib.lists.forEach modules (

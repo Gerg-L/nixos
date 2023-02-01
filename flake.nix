@@ -15,15 +15,19 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nvim-config = {
-      url = "github:ISnortPennies/nvim-config";
+      url = github:ISnortPennies/nvim-config;
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sxhkd-flake = {
-      url = "github:ISnortPennies/sxhkd-flake";
+      url = github:ISnortPennies/sxhkd-flake;
       inputs.nixpkgs.follows = "nixpkgs";
     };
     fetch-rs = {
-      url = "github:ISnortPennies/fetch-rs";
+      url = github:ISnortPennies/fetch-rs;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nix-gaming = {
+      url = github:fufexan/nix-gaming;
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
