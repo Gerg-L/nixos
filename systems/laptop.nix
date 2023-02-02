@@ -38,6 +38,8 @@
     enable = true;
     user = settings.username;
   };
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
   boot = {
     initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci"];
     kernelModules = ["kvm-amd"];
