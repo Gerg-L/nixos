@@ -13,7 +13,6 @@
       "picom"
       "prime"
       "scripts"
-      "sxhkd"
       "gnome"
       "shells"
       "gaming"
