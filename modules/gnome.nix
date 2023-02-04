@@ -7,11 +7,23 @@
     (with pkgs; [
       gnome-photos
       gnome-tour
+      gnome-console
+      gnome-text-editor
+      gnome-online-accounts
     ])
     ++ (with pkgs.gnome; [
-      cheese # webcam tool
-      gnome-music
       gnome-terminal
+      gnome-weather
+      gnome-shell
+      gnome-calculator
+      gnome-disk-utility
+      gnome-maps
+      gnome-clocks
+      gnome-remote-desktop
+      gnome-calendar
+      gnome-music
+      simple-scan
+      cheese # webcam tool
       gedit # text editor
       epiphany # web browser
       geary # email reader
@@ -23,14 +35,6 @@
       hitori # sudoku game
       atomix # puzzle game
     ]);
-  dconf.settings = {
-    "org/gnome/desktop/background" = {
-      "picture-uri" = "${../images/recursion.png}";
-    };
-    "org/gnome/desktop/screensaver" = {
-      "picture-uri" = "${../images/recursion.png}";
-    };
-  };
   services.xserver = {
     enable = true;
     exportConfiguration = true; #make config debuggable
