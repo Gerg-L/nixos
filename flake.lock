@@ -59,46 +59,26 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1675247113,
-        "narHash": "sha256-+YcXjfCP4hNu8A68b/UoXFCTDwKLuLV+x/7dQnM5U/o=",
+        "lastModified": 1675462931,
+        "narHash": "sha256-JiOUSERBtA1lN/s9YTKGZoZ3XUicHDwr+C8swaPSh3M=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "782cb855b2f23c485011a196c593e2d7e4fce746",
+        "rev": "e2c1756e3ae001ca8696912016dd31cb1503ccf3",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
         "repo": "home-manager",
-        "type": "github"
-      }
-    },
-    "nix-gaming": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1675100158,
-        "narHash": "sha256-B8Nhm28gfhjKQQJC3Za34pNrrgG0wCdrSwMwXq4W95k=",
-        "owner": "fufexan",
-        "repo": "nix-gaming",
-        "rev": "60c20c3c8682aaf55022e168b5b91f4dbd69849a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "fufexan",
-        "repo": "nix-gaming",
         "type": "github"
       }
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1675183161,
-        "narHash": "sha256-Zq8sNgAxDckpn7tJo7V1afRSk2eoVbu3OjI1QklGLNg=",
+        "lastModified": 1675362331,
+        "narHash": "sha256-VmcnKPj5gJLxWK7Bxlhg2LoQvhKRss7Ax+uoFjd3qKY=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "e1e1b192c1a5aab2960bf0a0bd53a2e8124fa18e",
+        "rev": "a100acd7bbf105915b0004427802286c37738fef",
         "type": "github"
       },
       "original": {
@@ -110,11 +90,11 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1675294487,
-        "narHash": "sha256-0fnsREH0Zw/t/jJ8ENPOyzwvlQ8qwTV1EpmpdIuz8go=",
+        "lastModified": 1675485332,
+        "narHash": "sha256-fFxXsBC+0wpxVzcUMDFsghG+oWrsf5/yCzusfDcRhqg=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "a8d5afe9120947d47a304990045f49b5ade7a7c9",
+        "rev": "ce310d1e4a614d7d0b24c9cc1ef172214a637d37",
         "type": "github"
       },
       "original": {
@@ -148,7 +128,6 @@
       "inputs": {
         "fetch-rs": "fetch-rs",
         "home-manager": "home-manager",
-        "nix-gaming": "nix-gaming",
         "nixpkgs": "nixpkgs",
         "nixpkgs-master": "nixpkgs-master",
         "nvim-config": "nvim-config",

@@ -14,7 +14,7 @@
       "prime"
       "scripts"
       "sxhkd"
-      "xserver"
+      "gnome"
       "shells"
       "gaming"
     ];

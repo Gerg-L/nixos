@@ -17,7 +17,7 @@
       "scripts"
       "sxhkd"
       "vfio"
-      "xserver"
+      "dwm"
       "shells"
     ];
   in

@@ -1,6 +1,7 @@
 {
   pkgs,
   settings,
+  lib,
   ...
 }: {
   system.stateVersion = settings.version;
@@ -22,7 +23,8 @@
   };
   #sound settings
   security.rtkit.enable = true;
-  sound.enable = false; #disable alsa
+  sound.enable = lib.mkForce false; #disable alsa
+  hardware.pulseaudio.enable = lib.mkForce false; #disable pulseAudio
   services.pipewire = {
     enable = true;
     wireplumber.enable = true;
