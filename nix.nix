@@ -36,5 +36,9 @@
       auto-optimise-store = true;
       warn-dirty = false;
     };
+    extraOptions = ''
+      keep-outputs = false
+      keep-derivations = false
+    '';
   };
 }

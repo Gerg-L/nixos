@@ -1,4 +1,29 @@
 {pkgs, ...}: {
+  services.kmscon = {
+    enable = true;
+    hwRender = true;
+    extraConfig = ''
+      font-size=12
+    '';
+    fonts = [
+      {
+        name = "Overpass Mono";
+        package = pkgs.overpass;
+      }
+      {
+        name = "OverpassMono Nerd Font";
+        package =
+          pkgs.nerdfonts.override
+          {
+            fonts = ["Overpass"];
+          };
+      }
+      {
+        name = "Material Design Icons";
+        package = pkgs.material-design-icons;
+      }
+    ];
+  };
   fonts = {
     fonts = with pkgs; [
       overpass
@@ -8,6 +33,7 @@
           fonts = ["Overpass"];
         })
     ];
+    enableDefaultFonts = false;
     fontDir.enable = true;
     fontconfig = {
       enable = true;

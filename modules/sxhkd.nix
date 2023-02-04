@@ -1,4 +1,9 @@
-{
+{pkgs, ...}: {
+  environment.systemPackages = with pkgs; [
+    maim #screenshooter
+    brightnessctl #brightness control for laptop
+    playerctl #music control
+  ];
   services.sxhkd = {
     enable = true;
     keybindings = {

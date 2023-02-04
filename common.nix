@@ -5,13 +5,6 @@
   ...
 }: {
   system.stateVersion = settings.version;
-  security.sudo = {
-    enable = true;
-    execWheelOnly = true;
-    extraConfig = ''
-      Defaults env_keep += "EDITOR VISUAL PAGER SYSTEMD_PAGERSECURE TERMINAL"
-    '';
-  };
   #hardware stuff
   hardware = {
     enableRedistributableFirmware = true;
@@ -77,10 +70,6 @@
   };
   #terminal stuff
   i18n.defaultLocale = "en_US.UTF-8";
-  console = {
-    font = "Lat2-Terminus16";
-    useXkbConfig = true;
-  };
   programs.dconf.enable = true;
   services.gvfs.enable = true; #gvfs for pcmanfm
 }

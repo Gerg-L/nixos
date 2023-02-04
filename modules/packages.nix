@@ -1,40 +1,28 @@
-{
-  config,
-  pkgs,
-  inputs,
-  ...
-}: {
+{pkgs, ...}: {
   environment = {
     defaultPackages = []; #don't install anything by default
     systemPackages = with pkgs; [
-      bottom #view tasks
       efibootmgr #efi editor
-      maim #screenshooter
       pciutils #lspci
       alsa-utils #volume control
-      btrfs-progs #for external harddrive
-      vlc #play stuff
-      webcord # talk to people (gross)
-      feh #for wallpaper
-      xfce.mousepad
-      brightnessctl #brightness control for laptop
-      playerctl #music control
-      networkmanagerapplet #gui connection control
-      pavucontrol #gui volume control
       xclip #commandline clipboard access
-      exa #ls replacement
-      cava #pretty audio
-      nitch # cus yes
-      dmenu #suckless launcher
-      st #suckless terminal
-      pipes-rs # more fun things
-      pcmanfm #file manager
-      nix-tree #view packages
+      btrfs-progs #for external harddrive
+      feh #for wallpaper
+
+      #directly used tui apps
+      bottom #view tasks
       bc #terminal calculator
-      page #use nvim as a pager
+      nix-tree #view packages
+      #pointless stuff
+      cava #pretty audio
+      pipes-rs # more fun things
+
+      #gui apps
+      pavucontrol #gui volume control
+      pcmanfm #file manager
+      #big gui apps
+      webcord # talk to people (gross)
       librewolf #best browser
-      inputs.nvim-config.packages.${pkgs.system}.default #my custom nvim flake
-      fetch-rs
     ];
   };
 }

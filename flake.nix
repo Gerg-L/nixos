@@ -1,7 +1,6 @@
 {
   inputs = {
     nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable;
-    nixpkgs-master.url = github:NixOS/nixpkgs;
     home-manager = {
       url = github:nix-community/home-manager;
       inputs.nixpkgs.follows = "nixpkgs";
@@ -42,9 +41,9 @@
           t-rex-miner = final.callPackage ./pkgs/t-rex-miner {};
           afk-cmds = final.callPackage ./pkgs/afk-cmds {};
           parrot = final.callPackage ./pkgs/parrot {};
-          webcord = inputs.nixpkgs-master.legacyPackages.${system}.webcord;
         })
         inputs.suckless.overlay
+        inputs.nvim-config.overlays.${system}.default
         inputs.fetch-rs.overlays.${system}.default
       ];
     };
@@ -65,7 +64,7 @@
           inputs.sxhkd-flake.nixosModules.sxhkd
           inputs.home-manager.nixosModules.home-manager
           ./home-manager
-          ./configuration.nix
+          ./common.nix
           ./systems/desktop.nix
           ./nix.nix
         ];
@@ -81,10 +80,9 @@
           };
         };
         modules = [
-          inputs.sxhkd-flake.nixosModules.sxhkd
           inputs.home-manager.nixosModules.home-manager
           ./home-manager
-          ./configuration.nix
+          ./common.nix
           ./systems/laptop.nix
           ./nix.nix
         ];

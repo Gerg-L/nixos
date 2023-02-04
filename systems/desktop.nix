@@ -14,7 +14,6 @@
       "parrot"
       "picom"
       "refreshrate"
-      "scripts"
       "sxhkd"
       "vfio"
       "dwm"
@@ -28,6 +27,9 @@
   environment.systemPackages = with pkgs; [
     bitwarden #store stuff
     qbittorrent #steal stuff
+    networkmanagerapplet #gui connection control
+    vlc #play stuff
+    dmenu #suckless launcher
   ];
   networking.hostName = settings.hostname;
   boot.kernelPackages = pkgs.linuxPackages_latest;
