@@ -14,6 +14,7 @@
       "gnome"
       "shells"
       "gaming"
+      "theme"
     ];
   in
     lib.lists.forEach modules (

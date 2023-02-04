@@ -50,13 +50,6 @@
     };
   };
 
-  #themeing
-  qt = {
-    enable = true;
-    style = "gtk2";
-    platformTheme = "gtk2";
-  };
-
   #time settings
   time.timeZone = "America/New_York";
   services = {

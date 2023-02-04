@@ -7,17 +7,18 @@
   imports = let
     modules = [
       "boot"
+      "dwm"
       "fonts"
       "git"
-      #"mining"
       "packages"
       "parrot"
       "picom"
       "refreshrate"
-      "sxhkd"
-      "vfio"
-      "dwm"
       "shells"
+      "sxhkd"
+      "theme"
+      "vfio"
+      #"mining"
     ];
   in
     lib.lists.forEach modules (
