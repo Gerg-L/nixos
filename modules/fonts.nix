@@ -3,7 +3,7 @@
     enable = true;
     hwRender = true;
     extraConfig = ''
-      font-size=12
+      font-size=10
     '';
     fonts = [
       {
