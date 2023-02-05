@@ -50,6 +50,7 @@
         user = settings.username;
       };
       gdm.enable = true;
+      defaultSession = "gnome";
     };
   };
 }

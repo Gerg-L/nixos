@@ -21,7 +21,6 @@
       pavucontrol #gui volume control
       pcmanfm #file manager
       #big gui apps
-      webcord # talk to people (gross)
       librewolf #best browser
     ];
   };

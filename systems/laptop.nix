@@ -21,6 +21,9 @@
       m:
         ../modules + ("/" + m + ".nix")
     );
+  environment.systemPackages = with pkgs; [
+    webcord
+  ];
   networking.hostName = settings.hostname;
   boot.kernelPackages = pkgs.linuxPackages_latest;
   hardware.cpu.amd.updateMicrocode = true;

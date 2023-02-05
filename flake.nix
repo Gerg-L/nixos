@@ -79,6 +79,22 @@
           ./nix.nix
         ];
       };
+      moms-laptop = lib.nixosSystem {
+        inherit system pkgs;
+        specialArgs = {
+          inherit inputs;
+          settings = {
+            username = "jo";
+            version = "23.05";
+            hostname = "moms-laptop";
+          };
+        };
+        modules = [
+          ./common.nix
+          ./systems/mom.nix
+          ./nix.nix
+        ];
+      };
     };
   };
 }

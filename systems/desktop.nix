@@ -27,6 +27,7 @@
         ../modules + ("/" + m + ".nix")
     );
   environment.systemPackages = with pkgs; [
+    webcord # talk to people (gross)
     bitwarden #store stuff
     qbittorrent #steal stuff
     networkmanagerapplet #gui connection control
