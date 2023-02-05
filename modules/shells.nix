@@ -43,7 +43,7 @@
       #exa is 1 too many letters
       ls = "exa";
       l = "exa -lbF --git";
-      ll = "$exa -lbGF --git";
+      ll = "exa -lbGF --git";
       llm = "exa -lbGd --git --sort=modified";
       la = "exa -lbhHigUmuSa --time-style=long-iso --git --color-scale";
       lx = "exa -lbhHigUmuSa@ --time-style=long-iso --git --color-scale";
