@@ -23,8 +23,6 @@
       NIX_BUILD_SHELL = "zsh";
     };
     shellAliases = {
-      vm-start = "virsh start Windows";
-      vm-stop = "virsh shutdown Windows";
       #make sudo use aliases
       sudo = "sudo ";
       #paste link trick

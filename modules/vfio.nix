@@ -25,7 +25,13 @@
       };
     };
   };
-  environment.systemPackages = with pkgs; [virt-manager];
+  environment = {
+    systemPackages = with pkgs; [virt-manager];
+    shellAliases = {
+      vm-start = "virsh start Windows";
+      vm-stop = "virsh shutdown Windows";
+    };
+  };
   systemd.services.libvirtd.preStart = let
     qemuHook = pkgs.writeScript "qemu-hook" ''
       #!${pkgs.stdenv.shell}
