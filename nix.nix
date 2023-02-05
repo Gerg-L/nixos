@@ -1,25 +1,19 @@
 {
   inputs,
   lib,
+  config,
   ...
 }: {
   environment.etc = {
     "nix/flake-channels/system".source = inputs.self;
     "nix/flake-channels/nixpkgs".source = inputs.nixpkgs.outPath;
-    "nix/flake-channels/home-manager".source = inputs.home-manager.outPath;
   };
   nix = {
-    nixPath = [
-      "nixpkgs=/etc/nix/flake-channels/nixpkgs"
-      "home-manager=/etc/nix/flake-channels/home-manager"
-    ];
+    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
+
     #automatically get registry from input flakes
     registry =
-      {
-        system.flake = inputs.self;
-        default.flake = inputs.nixpkgs;
-      }
-      // lib.attrsets.mapAttrs (
+      lib.attrsets.mapAttrs (
         _: source: {
           flake = source;
         }

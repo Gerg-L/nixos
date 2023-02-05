@@ -8,15 +8,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1675282109,
+        "lastModified": 1675550670,
         "narHash": "sha256-0XuyVuT3OowRiQyzuvFl6PvxLMqmIjtInBzu7Oxmrk8=",
-        "owner": "ISnortPennies",
+        "owner": "Gerg-L",
         "repo": "fetch-rs",
-        "rev": "764f96781597de3130c54624340b9ee26d19aca3",
+        "rev": "aca3e2db71a9b11b0201fd609d0be6b8eeac86ed",
         "type": "github"
       },
       "original": {
-        "owner": "ISnortPennies",
+        "owner": "Gerg-L",
         "repo": "fetch-rs",
         "type": "github"
       }
@@ -51,27 +51,6 @@
         "type": "github"
       }
     },
-    "home-manager": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "utils": "utils"
-      },
-      "locked": {
-        "lastModified": 1675462931,
-        "narHash": "sha256-JiOUSERBtA1lN/s9YTKGZoZ3XUicHDwr+C8swaPSh3M=",
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "rev": "e2c1756e3ae001ca8696912016dd31cb1503ccf3",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1675454231,
@@ -98,13 +77,13 @@
       "locked": {
         "lastModified": 1675536108,
         "narHash": "sha256-HjWJ7HF77U32QLsRWZGrrZXW3lnq7iYPZ6as+Je5dwQ=",
-        "owner": "ISnortPennies",
+        "owner": "Gerg-L",
         "repo": "nvim-config",
         "rev": "cda439a36bf6677fe4c8ebddf7e59e2df2742059",
         "type": "github"
       },
       "original": {
-        "owner": "ISnortPennies",
+        "owner": "Gerg-L",
         "repo": "nvim-config",
         "type": "github"
       }
@@ -112,7 +91,6 @@
     "root": {
       "inputs": {
         "fetch-rs": "fetch-rs",
-        "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "nvim-config": "nvim-config",
         "spicetify-nix": "spicetify-nix",
@@ -127,15 +105,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1674530093,
-        "narHash": "sha256-iOV4gzi/ZXU1wNjsCmwAgi2ziqGWGTXQjJUiWVEkb44=",
-        "owner": "the-argus",
+        "lastModified": 1675557167,
+        "narHash": "sha256-L1PZV1sYymzyklrluQ39J0yJQDPIv6W7eMogwv4hoOY=",
+        "owner": "Gerg-L",
         "repo": "spicetify-nix",
-        "rev": "f551a7485fc4d6021583fd274f7f040b23799a7e",
+        "rev": "b32952b5928c9ea74882c6e7889d6393e9336b9d",
         "type": "github"
       },
       "original": {
-        "owner": "the-argus",
+        "owner": "Gerg-L",
         "repo": "spicetify-nix",
         "type": "github"
       }
@@ -149,13 +127,13 @@
       "locked": {
         "lastModified": 1674960943,
         "narHash": "sha256-BotT9GZYgOxXUJwkL4bDmqhjESlpx7Q2BTS2iWMK+Z4=",
-        "owner": "ISnortPennies",
+        "owner": "Gerg-L",
         "repo": "suckless",
         "rev": "efe8a86ab187163c83cb2a7833e5558b2f41ca4e",
         "type": "github"
       },
       "original": {
-        "owner": "ISnortPennies",
+        "owner": "Gerg-L",
         "repo": "suckless",
         "type": "github"
       }
@@ -169,29 +147,14 @@
       "locked": {
         "lastModified": 1674954890,
         "narHash": "sha256-KRgIRX66funp1WdPeiKvHLZeMPoV7+0rkkzTC2MiGFk=",
-        "owner": "ISnortPennies",
+        "owner": "Gerg-L",
         "repo": "sxhkd-flake",
         "rev": "0c4fd3eb98f8ac5b4e5168c529c0c6d0e70de690",
         "type": "github"
       },
       "original": {
-        "owner": "ISnortPennies",
+        "owner": "Gerg-L",
         "repo": "sxhkd-flake",
-        "type": "github"
-      }
-    },
-    "utils": {
-      "locked": {
-        "lastModified": 1667395993,
-        "narHash": "sha256-nuEHfE/LcWyuSWnS8t12N1wc105Qtau+/OdUAjtQ0rA=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "5aed5285a952e0b949eb3ba02c12fa4fcfef535f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
         "type": "github"
       }
     }

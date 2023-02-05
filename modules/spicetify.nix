@@ -6,7 +6,7 @@
   sp-nix = inputs.spicetify-nix;
   spicePkgs = sp-nix.packages.${pkgs.system}.default;
 in {
-  imports = [sp-nix.homeManagerModule];
+  imports = [sp-nix.nixosModule];
   programs.spicetify = {
     spotifyPackage = pkgs.spotify-unwrapped;
     spicetifyPackage = pkgs.spicetify-cli;

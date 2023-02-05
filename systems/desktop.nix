@@ -18,6 +18,7 @@
       "sxhkd"
       "theme"
       "vfio"
+      "spicetify"
       #"mining"
     ];
   in

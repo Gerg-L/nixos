@@ -1,28 +1,24 @@
 {
   inputs = {
     nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable;
-    home-manager = {
-      url = github:nix-community/home-manager;
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     spicetify-nix = {
-      url = github:the-argus/spicetify-nix;
+      url = github:Gerg-L/spicetify-nix;
       inputs.nixpkgs.follows = "nixpkgs";
     };
     suckless = {
-      url = github:ISnortPennies/suckless;
+      url = github:Gerg-L/suckless;
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nvim-config = {
-      url = github:ISnortPennies/nvim-config;
+      url = github:Gerg-L/nvim-config;
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sxhkd-flake = {
-      url = github:ISnortPennies/sxhkd-flake;
+      url = github:Gerg-L/sxhkd-flake;
       inputs.nixpkgs.follows = "nixpkgs";
     };
     fetch-rs = {
-      url = github:ISnortPennies/fetch-rs;
+      url = github:Gerg-L/fetch-rs;
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -62,8 +58,6 @@
         };
         modules = [
           inputs.sxhkd-flake.nixosModules.sxhkd
-          inputs.home-manager.nixosModules.home-manager
-          ./home-manager
           ./common.nix
           ./systems/desktop.nix
           ./nix.nix
@@ -80,8 +74,6 @@
           };
         };
         modules = [
-          inputs.home-manager.nixosModules.home-manager
-          ./home-manager
           ./common.nix
           ./systems/laptop.nix
           ./nix.nix
