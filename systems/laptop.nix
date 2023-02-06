@@ -47,12 +47,20 @@
   };
   fileSystems = {
     "/" = {
-      device = "/dev/nvme0n1p2";
+      device = "/dev/disk/by-uuid/0822f37a-e55b-4b56-aeae-b6f4a11306c3";
       fsType = "ext4";
+      label = "nixos";
+      noCheck = false;
+      mountPoint = "/";
+      neededForBoot = true;
     };
     "/boot" = {
-      device = "/dev/nvme0n1p1";
+      device = "/dev/disk/by-uuid/EA2C-E488";
       fsType = "vfat";
+      label = "BOOT";
+      noCheck = false;
+      mountPoint = "/boot";
+      neededForBoot = true;
     };
   };
 }

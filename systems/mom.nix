@@ -68,10 +68,18 @@
     "/" = {
       device = "/dev/disk/by-uuid/518885c4-2d43-46a5-bf17-c734b7b85c2e";
       fsType = "ext4";
+      label = "nixos";
+      noCheck = false;
+      mountPoint = "/";
+      neededForBoot = true;
     };
     "/boot" = {
       device = "/dev/disk/by-uuid/5BCE-813C";
       fsType = "vfat";
+      label = "BOOT";
+      noCheck = false;
+      mountPoint = "/boot";
+      neededForBoot = true;
     };
   };
 }
