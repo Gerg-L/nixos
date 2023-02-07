@@ -2,7 +2,7 @@
   inputs = {
     nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable;
     spicetify-nix = {
-      url = github:Gerg-L/spicetify-nix;
+      url = github:the-argus/spicetify-nix;
       inputs.nixpkgs.follows = "nixpkgs";
     };
     suckless = {
