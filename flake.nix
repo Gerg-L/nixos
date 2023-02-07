@@ -49,7 +49,7 @@
       gerg-desktop = lib.nixosSystem {
         inherit system pkgs;
         specialArgs = {
-          inherit inputs;
+          inherit inputs self;
           settings = {
             username = "gerg";
             version = "23.05";
@@ -66,7 +66,7 @@
       game-laptop = lib.nixosSystem {
         inherit system pkgs;
         specialArgs = {
-          inherit inputs;
+          inherit inputs self;
           settings = {
             username = "games";
             version = "23.05";
@@ -82,7 +82,7 @@
       moms-laptop = lib.nixosSystem {
         inherit system pkgs;
         specialArgs = {
-          inherit inputs;
+          inherit inputs self;
           settings = {
             username = "jo";
             version = "23.05";

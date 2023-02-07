@@ -2,25 +2,29 @@
   inputs,
   lib,
   config,
+  self,
   ...
 }: {
   nix = {
-    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
-
     #automatically get registry from input flakes
     registry =
-      lib.attrsets.mapAttrs (
-        _: source: {
-          flake = source;
-        }
-      ) (
-        lib.attrsets.filterAttrs (
-          _: source: (
-            !(lib.attrsets.hasAttrByPath ["flake"] source) || source.flake == false
+      (
+        lib.attrsets.mapAttrs (
+          _: value: {
+            flake = value;
+          }
+        ) (
+          lib.attrsets.filterAttrs (
+            _: value: (
+              !(lib.attrsets.hasAttrByPath ["flake"] value) || value.flake == false
+            )
           )
+          inputs
         )
-        inputs
-      );
+      )
+      // {system = {flake = self;};};
+    #automatically add registry entries to nixPath
+    nixPath = (lib.mapAttrsToList (name: value: name + "=" + value) inputs) ++ [("system=" + ./.)];
     settings = {
       experimental-features = ["nix-command" "flakes" "repl-flake"];
       auto-optimise-store = true;
@@ -31,4 +35,5 @@
       keep-derivations = false
     '';
   };
+  environment.etc."booted-system".source = self;
 }
