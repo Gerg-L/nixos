@@ -57,7 +57,7 @@
 
   fileSystems = {
     "/" = {
-      device = "/dev/disk/by-id/9e5c0a74-753a-4ebe-b8f1-5c7bdde21deb";
+      device = "/dev/disk/by-uuid/9e5c0a74-753a-4ebe-b8f1-5c7bdde21deb";
       fsType = "ext4";
       label = "nixos";
       noCheck = false;
@@ -65,7 +65,7 @@
       neededForBoot = true;
     };
     "/boot" = {
-      device = "/dev/disk/by-id/79C3-9AB6";
+      device = "/dev/disk/by-uuid/79C3-9AB6";
       fsType = "vfat";
       label = "BOOT";
       noCheck = false;
