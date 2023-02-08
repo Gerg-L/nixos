@@ -1,8 +1,4 @@
-{
-  pkgs,
-  lib,
-  ...
-}: rec {
+{pkgs, ...}: rec {
   environment = {
     systemPackages = with pkgs; [
       dash

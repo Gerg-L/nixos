@@ -1,7 +1,6 @@
 {
   lib,
   rustPlatform,
-  fetchFromGitHub,
   wrapGAppsHook,
   libX11,
   libXScrnSaver,
@@ -44,12 +43,4 @@ rustPlatform.buildRustPackage rec {
     cp $src/afk-icon.png $out/share/icons/hicolor/256x256/apps/afk-icon.png
   '';
   cargoSha256 = "sha256-CPpFUdgb0zTZAVlv4uhJ0Y7eocCjuEZNgQJdNwV1FI4=";
-
-  meta = with lib; {
-    homepage = "https://github.com/ISnortPennies/AFKCommands";
-    description = "";
-    license = licenses.unlicense;
-    maintainers = with maintainers; [];
-    platforms = platforms.linux;
-  };
 }

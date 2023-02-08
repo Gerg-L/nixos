@@ -1,5 +1,4 @@
 {
-  lib,
   rustPlatform,
   fetchFromGitHub,
   pkg-config,
@@ -8,7 +7,7 @@
   libopus,
 }:
 # yt-dlp and ffmpeg required at runtime
-rustPlatform.buildRustPackage rec {
+rustPlatform.buildRustPackage {
   pname = "parrot";
   version = "1.5.1";
   src = fetchFromGitHub {
@@ -30,12 +29,4 @@ rustPlatform.buildRustPackage rec {
   cargoSha256 = "sha256-qPyuj5OxHrWz0YbrquCTTKZM3j1poXuioNNvn9z+xDQ=";
 
   RUSTC_BOOTSTRAP = 1;
-
-  meta = with lib; {
-    homepage = "https://github.com/aquelemiguel/parrot";
-    description = "";
-    license = licenses.mit;
-    maintainers = with maintainers; [];
-    platforms = platforms.linux;
-  };
 }

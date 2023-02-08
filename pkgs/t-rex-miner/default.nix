@@ -26,12 +26,4 @@ in
       echo "${wrapper}" > $out/bin/t-rex
       chmod +x $out/bin/t-rex
     '';
-
-    meta = with lib; {
-      homepage = "https://github.com/ISnortPennies/AFKCommands";
-      description = "";
-      license = licenses.unlicense;
-      maintainers = with maintainers; [];
-      platforms = platforms.linux;
-    };
   }
