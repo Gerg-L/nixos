@@ -5,7 +5,7 @@
   ...
 }: {
   imports = let
-    modules = [
+    files = [
       "boot"
       "fonts"
       "git"
@@ -15,9 +15,9 @@
       "theme"
     ];
   in
-    lib.lists.forEach modules (
-      m:
-        ../modules + ("/" + m + ".nix")
+    lib.lists.forEach files (
+      f:
+        ../imports + ("/" + f + ".nix")
     );
   environment.systemPackages = with pkgs; [
     gimp

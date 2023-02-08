@@ -5,7 +5,7 @@
   ...
 }: {
   imports = let
-    modules = [
+    files = [
       "boot"
       "dwm"
       "fonts"
@@ -22,9 +22,9 @@
       #"mining"
     ];
   in
-    lib.lists.forEach modules (
-      m:
-        ../modules + ("/" + m + ".nix")
+    lib.lists.forEach files (
+      f:
+        ../imports + ("/" + f + ".nix")
     );
   environment.systemPackages = with pkgs; [
     webcord # talk to people (gross)
