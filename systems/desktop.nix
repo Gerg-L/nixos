@@ -43,7 +43,7 @@
     users."${settings.username}" = {
       uid = 1000;
       isNormalUser = true;
-      extraGroups = ["wheel" "audio" "networkmanager" "kvm" "libvirtd"];
+      extraGroups = ["wheel" "audio" "networkmanager"];
     };
   };
   boot = {

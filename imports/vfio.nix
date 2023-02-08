@@ -32,6 +32,9 @@
       vm-stop = "virsh shutdown Windows";
     };
   };
+
+  users.users."${settings.username}".extraGroups = ["kvm" "libvirtd"];
+
   systemd.services.libvirtd.preStart = let
     qemuHook = pkgs.writeScript "qemu-hook" ''
       #!${pkgs.stdenv.shell}
