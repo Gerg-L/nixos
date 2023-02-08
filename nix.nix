@@ -29,11 +29,10 @@
       experimental-features = ["nix-command" "flakes" "repl-flake"];
       auto-optimise-store = true;
       warn-dirty = false;
+      flake-registry = builtins.toFile "empty-flake-registry.json" ''{"flakes":[],"version":2}'';
+      keep-outputs = false;
+      keep-derivations = false;
     };
-    extraOptions = ''
-      keep-outputs = false
-      keep-derivations = false
-    '';
   };
   environment.etc."booted-system".source = self;
 }

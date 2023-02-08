@@ -57,13 +57,10 @@
     timesyncd = {
       enable = true;
       servers = [
-        "time.google.com"
-        "time2.google.com"
+        "time.cloudflare.com"
       ];
     };
   };
-  #terminal stuff
   i18n.defaultLocale = "en_US.UTF-8";
-  programs.dconf.enable = true;
   services.gvfs.enable = true; #gvfs for pcmanfm
 }
