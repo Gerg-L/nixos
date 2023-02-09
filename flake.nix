@@ -45,13 +45,14 @@
     };
   in {
     formatter.${system} = pkgs.alejandra;
-    devShells.${system} = {
+    devShells.${system} = rec {
       nix = pkgs.mkShell {
         packages = with pkgs; [nil alejandra deadnix statix];
       };
       rust = pkgs.mkShell {
         packages = with pkgs; [rust-analyzer rustc cargo rustfmt clippy];
       };
+      default = nix;
     };
     nixosConfigurations = {
       gerg-desktop = lib.nixosSystem {

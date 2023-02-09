@@ -4,11 +4,14 @@
     package = pkgs.gitMinimal;
     config = {
       user = {
-        name = "ISnortPennies";
-        email = "ISnortPennies@protonmail.com";
+        name = "Gerg-L";
+        email = "GregLeyda@proton.me";
       };
       init = {
         defaultBranch = "master";
+      };
+      push = {
+        autoSetupRemote = true;
       };
     };
   };

@@ -1,4 +1,7 @@
 {pkgs, ...}: rec {
+  #put:
+  #source /run/current-system/sw/share/nix-direnv/direnvrc
+  #in ~/.direnvrc
   environment = {
     systemPackages = with pkgs; [
       dash
@@ -8,6 +11,8 @@
       st
       exa
       fetch-rs
+      direnv
+      (pkgs.nix-direnv.override {enableFlakes = true;})
     ];
     binsh = "${pkgs.dash}/bin/dash"; #use dash for speed
     variables = {
@@ -17,6 +22,7 @@
       SYSTEMD_PAGERSECURE = "true";
       TERMINAL = "st";
       NIX_BUILD_SHELL = "zsh";
+      DIRENV_LOG_FORMAT = "";
     };
     shellAliases = {
       #make sudo use aliases
@@ -45,6 +51,9 @@
       lt = "exa --tree --level=2";
     };
     interactiveShellInit = "fetch-rs";
+    pathsToLink = [
+      "/share/nix-direnv"
+    ];
   };
   security.sudo = {
     enable = true;
@@ -66,13 +75,16 @@
       syntaxHighlighting = {
         enable = true;
       };
+      shellInit = ''
+        eval "$(direnv hook zsh)"
+      '';
     };
     #starship
     starship = {
       enable = true;
       settings = {
         add_newline = false;
-        format = "$sudo$cmd_duration \n $directory$git_branch$character";
+        format = "$sudo\${custom.direnv} $cmd_duration \n $directory$git_branch$character";
         character = {
           success_symbol = "[ ](#9ece6a bold)";
           error_symbol = "[ ](#db4b4b bold)";
@@ -90,6 +102,11 @@
         cmd_duration = {
           min_time = 5000;
           style = "bold #9ece6a";
+        };
+        custom.direnv = {
+          format = "[\\[direnv\\]]($style)";
+          style = "#36c692";
+          detect_folders = [".direnv"];
         };
       };
     };

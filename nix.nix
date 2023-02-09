@@ -29,8 +29,8 @@
       auto-optimise-store = true;
       warn-dirty = false;
       flake-registry = builtins.toFile "empty-flake-registry.json" ''{"flakes":[],"version":2}'';
-      keep-outputs = false;
-      keep-derivations = false;
+      keep-outputs = true;
+      keep-derivations = true;
     };
   };
   environment.etc."booted-system".source = self;
