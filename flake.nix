@@ -44,7 +44,15 @@
       ];
     };
   in {
-    formatter.x86_64-linux = pkgs.alejandra;
+    formatter.${system} = pkgs.alejandra;
+    devShells.${system} = {
+      nix = pkgs.mkShell {
+        packages = with pkgs; [nil alejandra deadnix statix];
+      };
+      rust = pkgs.mkShell {
+        packages = with pkgs; [rust-analyzer rustc cargo rustfmt clippy];
+      };
+    };
     nixosConfigurations = {
       gerg-desktop = lib.nixosSystem {
         inherit system pkgs;
