@@ -9,8 +9,8 @@
       url = "github:Gerg-L/suckless";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nvim-config = {
-      url = "github:Gerg-L/nvim-config";
+    nvim-flake = {
+      url = "github:Gerg-L/nvim-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sxhkd-flake = {
@@ -39,7 +39,7 @@
           parrot = final.callPackage ./pkgs/parrot {};
         })
         inputs.suckless.overlay
-        inputs.nvim-config.overlays.${system}.default
+        inputs.nvim-flake.overlays.${system}.default
         inputs.fetch-rs.overlays.${system}.default
       ];
     };
