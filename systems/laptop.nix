@@ -21,14 +21,15 @@
       f:
         ../imports + ("/" + f + ".nix")
     );
-  environment.systemPackages = with pkgs; [
-    webcord
+
+  system.stateVersion = "23.05";
+  environment.systemPackages = [
+    pkgs.webcord
   ];
   networking.hostName = settings.hostname;
   boot.kernelPackages = pkgs.linuxPackages_latest;
   hardware.cpu.amd.updateMicrocode = true;
   users = {
-    defaultUserShell = pkgs.zsh;
     users."${settings.username}" = {
       uid = 1000;
       isNormalUser = true;

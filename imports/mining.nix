@@ -1,4 +1,4 @@
-{
+_: {
   pkgs,
   settings,
   ...
@@ -13,7 +13,7 @@
     wantedBy = ["multi-user.target"];
     wants = ["graphical.target"];
     script = ''
-      afk-cmds -c /home/${settings.username}/afk-cmds.json
+      afk-cmds -c /home/${settings.username}/saveme/afk-cmds.json
     '';
     environment = {
       #  PATH="/run/current-system/sw/bin"; missing something with dbus

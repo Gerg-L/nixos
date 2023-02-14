@@ -1,4 +1,4 @@
-{
+_: {
   services.xserver = {
     #set drivers for igpu
     videoDrivers = ["amdgpu"];

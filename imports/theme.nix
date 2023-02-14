@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+_: {pkgs, ...}: {
   environment = {
     systemPackages = with pkgs; [
       flat-remix-gtk

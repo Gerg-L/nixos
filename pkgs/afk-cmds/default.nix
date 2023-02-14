@@ -12,12 +12,17 @@
   pango,
   libappindicator-gtk3,
   atk,
+  fetchFromGitHub,
 }:
 rustPlatform.buildRustPackage rec {
-  pname = "afk-cmds";
-  version = "1.0.0";
+  name = "afk-cmds";
 
-  src = ./afk-cmds;
+  src = fetchFromGitHub {
+    owner = "Gerg-L";
+    repo = "afk-cmds";
+    rev = "b345d5a038a86c6ca31d3bd8800ac759da912a22";
+    sha256 = "sha256-yleq8bg3ZnilbYTNXRteBALiJ/fIXOxXxqf966OokqQ=";
+  };
 
   buildInputs = [
     libX11

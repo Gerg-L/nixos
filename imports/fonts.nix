@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+_: {pkgs, ...}: {
   services.kmscon = {
     enable = true;
     hwRender = true;

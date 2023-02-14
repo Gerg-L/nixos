@@ -1,10 +1,12 @@
-{
+{nix, ...}: {
   inputs,
   lib,
+  pkgs,
   self,
   ...
 }: {
   nix = {
+    package = lib.mkDefault nix.packages.${pkgs.system}.nix;
     #automatically get registry from input flakes
     registry =
       (

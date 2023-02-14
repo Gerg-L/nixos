@@ -1,18 +1,22 @@
-{pkgs, ...}: rec {
+{
+  nvim-flake,
+  fetch-rs,
+  suckless,
+  ...
+}: {pkgs, ...}: rec {
   #put:
   #source /run/current-system/sw/share/nix-direnv/direnvrc
   #in ~/.direnvrc
   environment = {
-    systemPackages = with pkgs; [
-      dash
-      neovim
-      page
-      zsh
-      st
-      exa
-      fetch-rs
-      direnv
-      (pkgs.nix-direnv.override {enableFlakes = true;})
+    systemPackages = [
+      pkgs.dash
+      pkgs.page
+      pkgs.exa
+      pkgs.direnv
+      pkgs.nix-direnv
+      nvim-flake.packages.${pkgs.system}.default
+      fetch-rs.packages.${pkgs.system}.default
+      suckless.packages.${pkgs.system}.st
     ];
     binsh = "${pkgs.dash}/bin/dash"; #use dash for speed
     variables = {
@@ -34,7 +38,7 @@
       switch = "nixos-rebuild switch";
       boot = "nixos-rebuild boot";
       clean = "nix-collect-garbage -d";
-      gc-force = "rm /nix/var/gcroots/auto/*";
+      gc-force = "rm /nix/var/nix/gcroots/auto/*";
       gc-check = "find -H /nix/var/nix/gcroots/auto -type l | xargs -I {} sh -c 'readlink {}; realpath {}; echo' | page";
       #vim stuff
       vi = "nvim";

@@ -19,16 +19,17 @@
       f:
         ../imports + ("/" + f + ".nix")
     );
-  environment.systemPackages = with pkgs; [
-    gimp
+
+  system.stateVersion = "22.11";
+  environment.systemPackages = [
+    pkgs.gimp
     (pkgs.xsane.override {gimpSupport = true;})
-    vlc
-    libreoffice
-    nomacs
-    #    foxitreader
-    gnome.gnome-calculator
-    xfce.xfce4-whiskermenu-plugin
-    rsync
+    pkgs.vlc
+    pkgs.libreoffice
+    pkgs.nomacs
+    pkgs.gnome.gnome-calculator
+    pkgs.xfce.xfce4-whiskermenu-plugin
+    pkgs.rsync
   ];
   services.xserver.videoDrivers = ["intel"];
   networking.hostName = settings.hostname;

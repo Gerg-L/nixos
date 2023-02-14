@@ -1,8 +1,9 @@
-{
+{suckless, ...}: {
   pkgs,
   settings,
   ...
 }: {
+  environment.systemPackages = [suckless.packages.${pkgs.system}.dmenu];
   services.xserver = {
     enable = true;
     exportConfiguration = true; #make config debuggable
@@ -11,7 +12,10 @@
     xautolock.enable = false;
     desktopManager.xterm.enable = false;
     excludePackages = [pkgs.xterm];
-    windowManager.dwm.enable = true;
+    windowManager.dwm = {
+      enable = true;
+      package = suckless.packages.${pkgs.system}.dwm;
+    };
     displayManager = {
       sessionCommands = ''
         feh --bg-scale ${../images/recursion.png}

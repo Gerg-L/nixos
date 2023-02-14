@@ -1,10 +1,4 @@
-{
-  pkgs,
-  settings,
-  lib,
-  ...
-}: {
-  system.stateVersion = settings.version;
+_: {lib, ...}: {
   #hardware stuff
   hardware = {
     enableRedistributableFirmware = true;

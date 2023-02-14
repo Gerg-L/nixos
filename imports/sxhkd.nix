@@ -1,9 +1,20 @@
-{pkgs, ...}: {
-  environment.systemPackages = with pkgs; [
-    maim #screenshooter
-    brightnessctl #brightness control for laptop
-    playerctl #music control
+{master, ...}: {
+  pkgs,
+  settings,
+  ...
+}: let
+  mpkgs = import master {
+    inherit (pkgs) system;
+  };
+in {
+  environment.systemPackages = [
+    mpkgs.maim #screenshooter
+    pkgs.brightnessctl #brightness control for laptop
+    pkgs.playerctl #music control
+    pkgs.xclip
+    pkgs.coreutils
   ];
+
   services.sxhkd = {
     enable = true;
     keybindings = {
@@ -13,15 +24,15 @@
       "XF86AudioStop" = "playerctl stop";
       "XF86AudioNext" = "playerctl next";
       "XF86AudioPrev" = "playerctl previous";
-      "XF86AudioRaiseVolume" = "amixer sset Master +40";
-      "XF86AudioLowerVolume" = "amixer sset Master -40";
+      "XF86AudioRaiseVolume" = "amixer sset Master 40+";
+      "XF86AudioLowerVolume" = "amixer sset Master 40-";
       "XF86AudioMute" = "amixer sset Master toggle ";
       "XF86MonBrightnessUp" = "brightnessctl s 20+";
       "XF86MonBrightnessDown" = "brightnessctl s 20-";
       #screenshot stuff
-      "Print" = "maim $HOME/Screenshots/$(date +%Y-%m-%d_%H-%m-%s).jpg";
+      "Print" = "maim /home/${settings.username}/Screenshots/$(date +%Y-%m-%d_%H-%m-%s).jpg";
       "Print + shift" = "maim | xclip -selection clipboard -t image/png";
-      "super + Print" = "maim -s $HOME/Screenshots/$(date +%Y-%m-%d_%H-%m-%s).jpg";
+      "super + Print" = "maim -s /home/${settings.username}/Screenshots/$(date +%Y-%m-%d_%H-%m-%s).jpg";
       "super + Print + shift" = "maim -s | xclip -selection clipboard -t image/png";
     };
   };

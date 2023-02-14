@@ -1,45 +1,37 @@
-{
+inputs: {
   pkgs,
   settings,
-  lib,
   ...
 }: {
-  imports = let
-    files = [
-      "boot"
-      "dwm"
-      "fonts"
-      "git"
-      "packages"
-      "parrot"
-      "picom"
-      "refreshrate"
-      "shells"
-      "sxhkd"
-      "theme"
-      "vfio"
-      "spicetify"
-      #"mining"
-    ];
-  in
-    lib.lists.forEach files (
-      f:
-        ../imports + ("/" + f + ".nix")
-    );
+  imports = [
+    (import ../imports/boot.nix inputs)
+    (import ../imports/dwm.nix inputs)
+    (import ../imports/fonts.nix inputs)
+    (import ../imports/git.nix inputs)
+    (import ../imports/packages.nix inputs)
+    (import ../imports/parrot.nix inputs)
+    (import ../imports/picom.nix inputs)
+    (import ../imports/refreshrate.nix inputs)
+    (import ../imports/shells.nix inputs)
+    (import ../imports/sxhkd.nix inputs)
+    (import ../imports/theme.nix inputs)
+    (import ../imports/vfio.nix inputs)
+ #   (import ../imports/mining.nix inputs)
+    (import ../imports/spicetify.nix inputs)
+  ];
+  system.stateVersion = "23.05";
   environment.systemPackages = with pkgs; [
     webcord # talk to people (gross)
     bitwarden #store stuff
     qbittorrent #steal stuff
     networkmanagerapplet #gui connection control
     vlc #play stuff
-    dmenu #suckless launcher
   ];
   networking.hostName = settings.hostname;
   boot.kernelPackages = pkgs.linuxPackages_latest;
   hardware.cpu.amd.updateMicrocode = true;
   #user managment
   users = {
-    defaultUserShell = pkgs.zsh;
     users."${settings.username}" = {
       uid = 1000;
       isNormalUser = true;

@@ -1,4 +1,4 @@
-{
+_: {
   pkgs,
   settings,
   ...
@@ -12,7 +12,7 @@
     after = ["NetworkManager-wait-online.service"];
     script = "parrot";
     serviceConfig = {
-      EnvironmentFile = "/home/${settings.username}/parrot/.env";
+      EnvironmentFile = "/home/${settings.username}/saveme/.env";
     };
   };
 }
