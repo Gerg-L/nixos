@@ -1,5 +1,5 @@
 {
-  inputs = {
+  inputs = rec {
     #channels
     master.url = "github:NixOS/nixpkgs";
     unstable.url = "github:NixOS/nixpkgs/nixos-unstable";

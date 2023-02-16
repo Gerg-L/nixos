@@ -2,13 +2,9 @@
   pkgs,
   settings,
   ...
-}: let
-  mpkgs = import master {
-    inherit (pkgs) system;
-  };
-in {
+}:{
   environment.systemPackages = [
-    mpkgs.maim #screenshooter
+    master.legacyPackages.${pkgs.system}.maim #screenshooter
     pkgs.brightnessctl #brightness control for laptop
     pkgs.playerctl #music control
     pkgs.xclip

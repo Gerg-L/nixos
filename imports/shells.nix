@@ -34,12 +34,12 @@
       #paste link trick
       pastebin = "curl -F 'clbin=<-' https://clbin.com";
       #nix stuff
-      update = "nix flake update /etc/nixos/#";
-      switch = "nixos-rebuild switch";
-      boot = "nixos-rebuild boot";
-      clean = "nix-collect-garbage -d";
-      gc-force = "rm /nix/var/nix/gcroots/auto/*";
-      gc-check = "find -H /nix/var/nix/gcroots/auto -type l | xargs -I {} sh -c 'readlink {}; realpath {}; echo' | page";
+      nix-update = "nix flake update /etc/nixos/# ";
+      nix-switch = "nixos-rebuild switch --use-remote-sudo";
+      nix-boot = "nixos-rebuild boot --use-remote-sudo";
+      nix-clean = "nix-collect-garbage -d";
+      nix-gc-force = "rm /nix/var/nix/gcroots/auto/*";
+      nix-gc-check = "sudo nix-store --gc --print-roots | egrep -v \"^(/nix/var|/run/\w+-system|\{memory|/proc)\"";
       #vim stuff
       vi = "nvim";
       vim = "nvim";

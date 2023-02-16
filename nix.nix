@@ -1,4 +1,8 @@
-{nix, ...}: {
+{
+  nix,
+  unstable,
+  ...
+}: {
   inputs,
   lib,
   pkgs,
@@ -6,7 +10,7 @@
   ...
 }: {
   nix = {
-    package = lib.mkDefault nix.packages.${pkgs.system}.nix;
+    package = nix.packages.${pkgs.system}.nix;
     #automatically get registry from input flakes
     registry =
       (
@@ -25,7 +29,7 @@
       )
       // {system = {flake = self;};};
     #automatically add registry entries to nixPath
-    nixPath = (lib.mapAttrsToList (name: value: name + "=" + value) inputs) ++ [("system=" + ./.)];
+    nixPath = (lib.mapAttrsToList (name: value: name + "=" + value) inputs) ++ ["system=${self}" "nixpkgs=${unstable}"];
     settings = {
       experimental-features = ["nix-command" "flakes" "repl-flake"];
       auto-optimise-store = true;
@@ -33,6 +37,12 @@
       flake-registry = builtins.toFile "empty-flake-registry.json" ''{"flakes":[],"version":2}'';
       keep-outputs = true;
       keep-derivations = true;
+       trusted-users = [
+        "root"
+        "@wheel"
+      ];
+      allowed-users = [
+      ];
     };
   };
   environment.etc."booted-system".source = self;

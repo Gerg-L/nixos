@@ -26,7 +26,7 @@ _: {
     };
   };
   environment = {
-    systemPackages = with pkgs; [virt-manager];
+    systemPackages = [pkgs.virt-manager];
     shellAliases = {
       vm-start = "virsh start Windows";
       vm-stop = "virsh shutdown Windows";
