@@ -1,19 +1,15 @@
 {
   spicetify-nix,
-  master,
   ...
 }: {pkgs, ...}: let
   sp-nix = spicetify-nix;
   spicePkgs = sp-nix.packages.${pkgs.system}.default;
-  unfree = import master {
-    inherit (pkgs) system;
-    config.allowUnfree = true;
-  };
+
 in {
   nixpkgs.allowedUnfree = ["spotify"];
   imports = [sp-nix.nixosModule];
   programs.spicetify = {
-    spotifyPackage = unfree.spotify-unwrapped;
+    spotifyPackage = pkgs.spotify-unwrapped;
     spicetifyPackage = pkgs.spicetify-cli;
     enable = true;
     enabledExtensions = with spicePkgs.extensions; [
