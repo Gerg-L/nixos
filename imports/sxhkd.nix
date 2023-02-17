@@ -1,10 +1,9 @@
-{master, ...}: {
+_: {
   pkgs,
-  settings,
   ...
-}:{
+}: {
   environment.systemPackages = [
-    master.legacyPackages.${pkgs.system}.maim #screenshooter
+    pkgs.maim #screenshooter
     pkgs.brightnessctl #brightness control for laptop
     pkgs.playerctl #music control
     pkgs.xclip
@@ -26,9 +25,9 @@
       "XF86MonBrightnessUp" = "brightnessctl s 20+";
       "XF86MonBrightnessDown" = "brightnessctl s 20-";
       #screenshot stuff
-      "Print" = "maim /home/${settings.username}/Screenshots/$(date +%Y-%m-%d_%H-%m-%s).jpg";
+      "Print" = "maim $HOME/Screenshots/$(date +%Y-%m-%d_%H-%m-%s).jpg";
       "Print + shift" = "maim | xclip -selection clipboard -t image/png";
-      "super + Print" = "maim -s /home/${settings.username}/Screenshots/$(date +%Y-%m-%d_%H-%m-%s).jpg";
+      "super + Print" = "maim -s $HOME/Screenshots/$(date +%Y-%m-%d_%H-%m-%s).jpg";
       "super + Print + shift" = "maim -s | xclip -selection clipboard -t image/png";
     };
   };
