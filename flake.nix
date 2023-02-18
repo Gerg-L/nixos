@@ -35,6 +35,7 @@
     unstable,
     stable,
     flake-utils,
+    nvim-flake,
     ...
   } @ inputs:
     {
@@ -57,6 +58,7 @@
             {
               nixpkgs.overlays = [
                 (import ./pkgs)
+                nvim-flake.overlays.default
               ];
             }
           ];
@@ -77,7 +79,7 @@
             (import ./systems/laptop.nix inputs)
           ];
         };
-        moms-laptop = stable.lib.nixosSystem {
+        moms-laptop = unstable.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {
             inherit inputs self;

@@ -5,7 +5,6 @@ _: {
 }: {
   services.xserver = {
     enable = true;
-    tty = 1;
     exportConfiguration = true; #make config debuggable
     layout = "us";
     libinput.enable = true;
@@ -21,6 +20,7 @@ _: {
       defaultSession = "xfce";
       lightdm = {
         enable = true;
+        extraConfig =  "minimum-vt=1";
         background = ../images/recursion.png;
         greeters.mini = {
           enable = true;

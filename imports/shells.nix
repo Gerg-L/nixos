@@ -14,7 +14,7 @@
       pkgs.exa
       pkgs.direnv
       pkgs.nix-direnv
-      nvim-flake.packages.${pkgs.system}.default
+      pkgs.neovim
       fetch-rs.packages.${pkgs.system}.default
       suckless.packages.${pkgs.system}.st
     ];
