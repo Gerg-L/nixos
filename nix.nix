@@ -5,12 +5,12 @@
 }: {
   inputs,
   lib,
-  pkgs,
   self,
+  settings,
   ...
 }: {
   nix = {
-    package = nix.packages.${pkgs.system}.nix;
+    #   package = nix.packages.${pkgs.system}.nix;
     #automatically get registry from input flakes
     registry =
       (
@@ -26,6 +26,10 @@
           )
           inputs
         )
+        // {
+          nixpkgs.flake = unstable;
+          system.flake = self;
+        }
       )
       // {system = {flake = self;};};
     #automatically add registry entries to nixPath
@@ -37,7 +41,7 @@
       flake-registry = builtins.toFile "empty-flake-registry.json" ''{"flakes":[],"version":2}'';
       keep-outputs = true;
       keep-derivations = true;
-       trusted-users = [
+      trusted-users = [
         "root"
         "@wheel"
       ];

@@ -1,4 +1,39 @@
-_: {lib, ...}: {
+_: {
+  lib,
+  pkgs,
+  ...
+}: {
+  #use a better tty
+  services.kmscon = {
+    enable = true;
+    hwRender = true;
+    extraConfig = ''
+      font-size=10
+    '';
+    fonts = [
+      {
+        name = "Overpass Mono";
+        package = pkgs.overpass;
+      }
+      {
+        name = "OverpassMono Nerd Font";
+        package =
+          pkgs.nerdfonts.override
+          {
+            fonts = ["Overpass"];
+          };
+      }
+      {
+        name = "Material Design Icons";
+        package = pkgs.material-design-icons;
+      }
+    ];
+  };
+  systemd.services = {
+    "autovt@tty1".enable = false;
+    "kmsconvt@tty1".enable = false;
+  };
+
   #hardware stuff
   hardware = {
     enableRedistributableFirmware = true;

@@ -1,5 +1,5 @@
 {
-  inputs = rec {
+  inputs = {
     #channels
     master.url = "github:NixOS/nixpkgs";
     unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -23,7 +23,7 @@
     };
     nvim-flake = {
       url = "github:Gerg-L/nvim-flake";
-      inputs.nixpkgs.follows = "master";
+      inputs.nixpkgs.follows = "unstable";
     };
     fetch-rs = {
       url = "github:Gerg-L/fetch-rs";

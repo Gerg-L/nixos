@@ -16,7 +16,7 @@ inputs: {
     (import ../imports/sxhkd.nix inputs)
     (import ../imports/theme.nix inputs)
     (import ../imports/vfio.nix inputs)
- #   (import ../imports/mining.nix inputs)
+    #   (import ../imports/mining.nix inputs)
     (import ../imports/spicetify.nix inputs)
   ];
   system.stateVersion = "23.05";

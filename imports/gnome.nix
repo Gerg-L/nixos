@@ -37,6 +37,7 @@ _: {
     ]);
   services.xserver = {
     enable = true;
+    tty = 1;
     exportConfiguration = true; #make config debuggable
     layout = "us";
     libinput.enable = true;
