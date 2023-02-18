@@ -20,7 +20,7 @@ _: {
       defaultSession = "xfce";
       lightdm = {
         enable = true;
-        extraConfig =  "minimum-vt=1";
+        extraConfig = "minimum-vt=1";
         background = ../images/recursion.png;
         greeters.mini = {
           enable = true;

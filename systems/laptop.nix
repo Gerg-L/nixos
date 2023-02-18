@@ -1,27 +1,27 @@
-{
+inputs: {
   pkgs,
   settings,
   lib,
   ...
 }: {
-  imports = let
-    files = [
-      "boot"
-      "fonts"
-      "git"
-      "packages"
-      "prime"
-      "gnome"
-      "shells"
-      "gaming"
-      "theme"
-    ];
-  in
-    lib.lists.forEach files (
-      f:
-        ../imports + ("/" + f + ".nix")
-    );
-
+  imports = [
+    (import ../imports/boot.nix inputs)
+    (import ../imports/fonts.nix inputs)
+    (import ../imports/git.nix inputs)
+    (import ../imports/packages.nix inputs)
+    (import ../imports/prime.nix inputs)
+    (import ../imports/gnome.nix inputs)
+    (import ../imports/shells.nix inputs)
+    (import ../imports/gaming.nix inputs)
+    (import ../imports/theme.nix inputs)
+  ];
+  nixpkgs.allowedUnfree = [
+    "nvidia-x11"
+    "nvidia-persistenced"
+    "steam"
+    "steam-original"
+    "steam-run"
+  ];
   system.stateVersion = "23.05";
   environment.systemPackages = [
     pkgs.webcord

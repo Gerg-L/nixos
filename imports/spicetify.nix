@@ -1,10 +1,6 @@
-{
-  spicetify-nix,
-  ...
-}: {pkgs, ...}: let
+{spicetify-nix, ...}: {pkgs, ...}: let
   sp-nix = spicetify-nix;
   spicePkgs = sp-nix.packages.${pkgs.system}.default;
-
 in {
   nixpkgs.allowedUnfree = ["spotify"];
   imports = [sp-nix.nixosModule];

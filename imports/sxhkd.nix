@@ -1,7 +1,4 @@
-_: {
-  pkgs,
-  ...
-}: {
+_: {pkgs, ...}: {
   environment.systemPackages = [
     pkgs.maim #screenshooter
     pkgs.brightnessctl #brightness control for laptop

@@ -1,18 +1,18 @@
-inputs:{
+inputs: {
   pkgs,
   settings,
   lib,
   ...
 }: {
   imports = [
-      (import ../imports/boot.nix inputs)
-      (import ../imports/fonts.nix inputs)
-      (import ../imports/git.nix inputs)
-      (import ../imports/packages.nix inputs)
-      (import ../imports/xfce.nix inputs)
-      (import ../imports/shells.nix inputs)
-      (import ../imports/theme.nix inputs)
-    ];
+    (import ../imports/boot.nix inputs)
+    (import ../imports/fonts.nix inputs)
+    (import ../imports/git.nix inputs)
+    (import ../imports/packages.nix inputs)
+    (import ../imports/xfce.nix inputs)
+    (import ../imports/shells.nix inputs)
+    (import ../imports/theme.nix inputs)
+  ];
   nixpkgs.allowedUnfree = ["hplip"];
   system.stateVersion = "22.11";
   environment.systemPackages = [
