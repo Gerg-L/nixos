@@ -13,7 +13,7 @@ _: {lib, ...}: {
     plymouth = {
       enable = true;
       theme = "breeze";
-      logo = ../images/nixos.png;
+      logo = ../misc/nixos.png;
     };
     loader = {
       systemd-boot = {

@@ -53,7 +53,7 @@ _: {
       lightdm = {
         enable = true;
         extraConfig = "minimum-vt=1";
-        background = ../images/recursion.png;
+        background = ../misc/recursion.png;
         greeters.mini = {
           enable = true;
           user = settings.username;

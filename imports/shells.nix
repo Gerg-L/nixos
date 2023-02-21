@@ -1,5 +1,4 @@
 {
-  nvim-flake,
   fetch-rs,
   suckless,
   ...

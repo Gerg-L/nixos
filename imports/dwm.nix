@@ -18,12 +18,12 @@
     };
     displayManager = {
       sessionCommands = ''
-        feh --bg-scale ${../images/recursion.png}
+        feh --bg-scale ${../misc/recursion.png}
       '';
       defaultSession = "none+dwm";
       lightdm = {
         enable = true;
-        background = ../images/recursion.png;
+        background = ../misc/recursion.png;
         extraConfig = "minimum-vt=1";
         greeters.mini = {
           enable = true;

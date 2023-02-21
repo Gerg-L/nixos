@@ -6,21 +6,25 @@ inputs: {
 }: {
   imports = [
     #	(import ../imports/boot.nix inputs)
-    (import ../imports/dwm.nix inputs)
-    (import ../imports/fonts.nix inputs)
-    (import ../imports/git.nix inputs)
-    (import ../imports/packages.nix inputs)
-    (import ../imports/parrot.nix inputs)
-    (import ../imports/picom.nix inputs)
-    (import ../imports/refreshrate.nix inputs)
-    (import ../imports/shells.nix inputs)
-    (import ../imports/sxhkd.nix inputs)
-    (import ../imports/theme.nix inputs)
-    (import ../imports/vfio.nix inputs)
-    #   (import ../imports/mining.nix inputs)
-    (import ../imports/spicetify.nix inputs)
+    (import ../../imports/dwm.nix inputs)
+    (import ../../imports/fonts.nix inputs)
+    (import ../../imports/git.nix inputs)
+    (import ../../imports/packages.nix inputs)
+    (import ../../imports/parrot.nix inputs)
+    (import ../../imports/picom.nix inputs)
+    (import ../../imports/refreshrate.nix inputs)
+    (import ../../imports/shells.nix inputs)
+    (import ../../imports/theme.nix inputs)
+    (import ../../imports/vfio.nix inputs)
+    #   (import ../../imports/mining.nix inputs)
+    (import ../../imports/spicetify.nix inputs)
   ];
   system.stateVersion = "23.05";
+
+  localModules = {
+    sxhkd.enable = true;
+  };
+
   environment.systemPackages = with pkgs; [
     webcord # talk to people (gross)
     bitwarden #store stuff

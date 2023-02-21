@@ -59,7 +59,7 @@
             (import ./modules inputs)
             (import ./common.nix inputs)
             (import ./nix.nix inputs)
-            (import ./systems/desktop.nix inputs)
+            (import ./systems/gerg-desktop inputs)
             {
               nixpkgs.overlays = [
                 (import ./pkgs)
@@ -81,7 +81,7 @@
             (import ./modules inputs)
             (import ./common.nix inputs)
             (import ./nix.nix inputs)
-            (import ./systems/laptop.nix inputs)
+            (import ./systems/game-laptop inputs)
           ];
         };
         moms-laptop = unstable.lib.nixosSystem {
@@ -97,7 +97,7 @@
             (import ./modules inputs)
             (import ./common.nix inputs)
             (import ./nix.nix inputs)
-            (import ./systems/mom.nix inputs)
+            (import ./systems/mom-laptop inputs)
           ];
         };
       };
