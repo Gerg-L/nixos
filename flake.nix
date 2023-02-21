@@ -7,6 +7,11 @@
     #utilites --maybe flake-parts soon?
     flake-utils.url = "github:numtide/flake-utils";
 
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "unstable";
+    };
+
     #master branch of nix
     nix.url = "github:NixOS/nix";
 
@@ -33,9 +38,9 @@
   outputs = {
     self,
     unstable,
-    stable,
     flake-utils,
     nvim-flake,
+    nixos-generators,
     ...
   } @ inputs:
     {
@@ -110,6 +115,15 @@
             packages = with pkgs; [rust-analyzer rustc cargo rustfmt clippy];
           };
           default = nix;
+        };
+        packages = {
+          nixos-iso = nixos-generators.nixosGenerate {
+            inherit system;
+            format = "install-iso";
+            modules = [
+              (import ./iso inputs)
+            ];
+          };
         };
       }
     );
