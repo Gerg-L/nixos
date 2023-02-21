@@ -1,4 +1,4 @@
-_: {
+_: {lib, ...}: {
   environment.etc = {
     "issue" = {
       text = "[?12l[?25h";
@@ -17,11 +17,11 @@ _: {
     };
     loader = {
       systemd-boot = {
-        enable = true;
+        enable = lib.mkDefault true;
         consoleMode = "max";
         editor = false;
       };
-      efi.canTouchEfiVariables = true;
+      efi.canTouchEfiVariables = lib.mkDefault true;
       timeout = 0;
     };
   };
