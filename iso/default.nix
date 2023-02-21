@@ -1,6 +1,7 @@
 _: {
   lib,
   modulesPath,
+  pkgs,
   ...
 }: {
   imports = [
@@ -8,14 +9,18 @@ _: {
     "${toString modulesPath}/installer/cd-dvd/installation-cd-base.nix"
   ];
 
-  # Causes a lot of uncached builds for a negligible decrease in size.
-  environment.noXlibs = lib.mkOverride 500 false;
-
-  documentation.man.enable = lib.mkOverride 500 true;
-
-  # Although we don't really need HTML documentation in the minimal installer,
-  # not including it may cause annoying cache misses in the case of the NixOS manual.
-  documentation.doc.enable = lib.mkOverride 500 true;
+  environment = {
+    noXlibs = lib.mkOverride 500 false;
+    defaultPackages = [];
+    systemPackages = with pkgs; [gitMinimal neovim];
+    variables = {
+      EDITOR = "nvim";
+    };
+  };
+  documentation = {
+    man.enable = lib.mkOverride 500 false;
+    doc.enable = lib.mkOverride 500 false;
+  };
 
   fonts.fontconfig.enable = lib.mkForce false;
 
@@ -24,5 +29,10 @@ _: {
 
     isoName = lib.mkForce "NixOS.iso";
   };
-
+  nix = {
+    settings = {
+      experimental-features = ["nix-command" "flakes" "repl-flake"];
+      auto-optimise-store = true;
+    };
+  };
 }

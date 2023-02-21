@@ -118,7 +118,7 @@ inputs: {
     options = ["X-mount.mkdir"];
   };
 
-  fileSystems."/boot/efis/nvme-SHPP41-500GM_SSSB4N6719101A4N0E" = {
+  fileSystems."/boot/efis/nvme-SHPP41-500GM_SSB4N6719101A4N0E" = {
     device = "/dev/disk/by-id/nvme-SHPP41-500GM_SSB4N6719101A4N0E-part2";
     fsType = "vfat";
     options = [
