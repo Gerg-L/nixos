@@ -6,7 +6,7 @@ inputs: {
 }: {
   imports = [
     #	(import ../imports/boot.nix inputs)
-    (import ../../imports/dwm.nix inputs)
+    #(import ../../imports/dwm.nix inputs)
     (import ../../imports/fonts.nix inputs)
     (import ../../imports/git.nix inputs)
     (import ../../imports/packages.nix inputs)
@@ -23,7 +23,12 @@ inputs: {
 
   localModules = {
     sxhkd.enable = true;
+    dwm.enable = true;
+    lightdm.enable = true;
+    autoLogin.enable = true;
   };
+
+  services.gvfs.enable = true; #gvfs for pcmanfm
 
   environment.systemPackages = with pkgs; [
     webcord # talk to people (gross)

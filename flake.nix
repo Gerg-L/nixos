@@ -58,7 +58,6 @@
           modules = [
             (import ./modules inputs)
             (import ./common.nix inputs)
-            (import ./nix.nix inputs)
             (import ./systems/gerg-desktop inputs)
             {
               nixpkgs.overlays = [
@@ -80,7 +79,6 @@
           modules = [
             (import ./modules inputs)
             (import ./common.nix inputs)
-            (import ./nix.nix inputs)
             (import ./systems/game-laptop inputs)
           ];
         };
@@ -96,7 +94,6 @@
           modules = [
             (import ./modules inputs)
             (import ./common.nix inputs)
-            (import ./nix.nix inputs)
             (import ./systems/mom-laptop inputs)
           ];
         };
