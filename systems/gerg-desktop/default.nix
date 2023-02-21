@@ -56,7 +56,7 @@ inputs: {
     kernelParams = ["nohibernate" "zfs.zfs_arc_max=17179869184"];
     supportedFilesystems = ["zfs" "vfat"];
     initrd = {
-      kernelModules = ["amdgpu"];
+      kernelModules = ["amdgpu" "dm_mod"];
       availableKernelModules = ["nvme" "xhci_pci" "ahci" "usbhid" "sd_mod" "hid_generic"];
       includeDefaultModules = false;
     };
