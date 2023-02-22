@@ -35,7 +35,6 @@ inputs: {
     pkgs.webcord # talk to people (gross)
     pkgs.bitwarden #store stuff
     pkgs.qbittorrent #steal stuff
-    pkgs.networkmanagerapplet #gui connection control
     pkgs.pavucontrol #gui volume control
     pkgs.pcmanfm #file manager
     pkgs.librewolf #best browser
