@@ -8,10 +8,6 @@ _: {pkgs, ...}: {
     '';
     fonts = [
       {
-        name = "Overpass Mono";
-        package = pkgs.overpass;
-      }
-      {
         name = "OverpassMono Nerd Font";
         package =
           pkgs.nerdfonts.override
@@ -31,10 +27,9 @@ _: {pkgs, ...}: {
   };
 
   fonts = {
-    fonts = with pkgs; [
-      overpass
-      material-design-icons
-      (nerdfonts.override
+    fonts = [
+      pkgs.material-design-icons
+      (pkgs.nerdfonts.override
         {
           fonts = ["Overpass"];
         })
@@ -44,9 +39,9 @@ _: {pkgs, ...}: {
     fontconfig = {
       enable = true;
       defaultFonts = {
-        serif = ["Overpass" "Overpass Nerd Font" "Material Design Icons"];
-        sansSerif = ["Overpass" "Overpass Nerd Font" "Material Design Icons"];
-        monospace = ["Overpass Mono" "OverpassMono Nerd Font" "Material Design Icons"];
+        serif = ["Overpass Nerd Font" "Material Design Icons"];
+        sansSerif = ["Overpass Nerd Font" "Material Design Icons"];
+        monospace = ["OverpassMono Nerd Font" "Material Design Icons"];
       };
       hinting.enable = true;
       antialias = true;
