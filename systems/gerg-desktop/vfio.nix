@@ -36,7 +36,7 @@ _: {
 
   users.users."${settings.username}".extraGroups = ["kvm" "libvirtd"];
 
-  systemd.services.libvirtd.preStart = let
+  systemd.tmpfiles.rules = let
     xml = pkgs.writeText "Windows.xml" (builtins.readFile "${self}/misc/Windows.xml");
     qemuHook = pkgs.writeScript "qemu-hook" ''
       #!${pkgs.stdenv.shell}
@@ -58,14 +58,8 @@ _: {
         fi
       fi
     '';
-  in ''
-    mkdir -p /var/lib/libvirt/hooks
-    chmod 755 /var/lib/libvirt/hooks
-
-    # Copy hook files
-    ln -sf ${qemuHook} /var/lib/libvirt/hooks/qemu
-
-    mkdir -p /var/lib/libvirt/qemu/
-    ln -sf ${xml} /var/lib/libvirt/qemu/Windows.xml
-  '';
+  in [
+    "L+ /var/lib/libvirt/hooks/ - - - - ${qemuHook}"
+    "L+ /var/lib/libvirt/qemu/Windows.xml - - - - ${xml}"
+  ];
 }

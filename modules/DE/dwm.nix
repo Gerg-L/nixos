@@ -25,6 +25,7 @@ in {
       displayManager = {
         sessionCommands = ''
           ${pkgs.feh}/bin/feh --bg-scale ${self + /misc/recursion.png}
+          ${pkgs.numlockx}/bin/numlockx
         '';
         defaultSession = "none+dwm";
       };
