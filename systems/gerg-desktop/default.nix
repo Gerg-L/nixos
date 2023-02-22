@@ -1,6 +1,7 @@
 inputs: {
   pkgs,
   settings,
+  self,
   ...
 }: {
   imports = [
@@ -43,6 +44,8 @@ inputs: {
     pkgs.pipes-rs # more fun things
     pkgs.vlc #play stuff
   ];
+
+  systemd.tmpfiles.rules = ["L+ /home/gerg/.config/WebCord/Themes/black - - - - ${self}/misc/black.theme.css"];
   networking = {
     hostName = settings.hostname;
     hostId = "288b56db";
