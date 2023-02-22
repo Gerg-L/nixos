@@ -6,6 +6,7 @@
   #put:
   #source /run/current-system/sw/share/nix-direnv/direnvrc
   #in ~/.direnvrc
+  #do i need to do this^?
   environment = {
     systemPackages = [
       pkgs.dash
@@ -38,7 +39,7 @@
       nix-boot = "nixos-rebuild boot --use-remote-sudo";
       nix-clean = "nix-collect-garbage -d";
       nix-gc-force = "rm /nix/var/nix/gcroots/auto/*";
-      nix-gc-check = "sudo nix-store --gc --print-roots | egrep -v \"^(/nix/var|/run/\w+-system|\{memory|/proc)\"";
+      nix-gc-check = "nix-store --gc --print-roots | egrep -v \"^(/nix/var|/run/\w+-system|\{memory|/proc)\"";
       #vim stuff
       vi = "nvim";
       vim = "nvim";

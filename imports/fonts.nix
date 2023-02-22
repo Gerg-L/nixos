@@ -1,4 +1,5 @@
 _: {pkgs, ...}: {
+  #use a better tty
   services.kmscon = {
     enable = true;
     hwRender = true;
@@ -24,6 +25,11 @@ _: {pkgs, ...}: {
       }
     ];
   };
+  systemd.services = {
+    "autovt@tty1".enable = false;
+    "kmsconvt@tty1".enable = false;
+  };
+
   fonts = {
     fonts = with pkgs; [
       overpass

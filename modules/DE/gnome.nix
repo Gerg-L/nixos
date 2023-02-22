@@ -6,9 +6,9 @@ _: {
   ...
 }:
 with lib; let
-  cfg = config.localModules.gnome;
+  cfg = config.localModules.DE.gnome;
 in {
-  options.localModules.gnome = {
+  options.localModules.DE.gnome = {
     enable = mkEnableOption "";
   };
   config = mkIf cfg.enable {

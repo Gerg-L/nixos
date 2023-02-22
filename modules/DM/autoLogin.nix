@@ -6,12 +6,10 @@ _: {
   ...
 }:
 with lib; let
-  cfg = config.localModules.autoLogin;
+  cfg = config.localModules.DM.autoLogin;
 in {
-  options.localModules.autoLogin = {
-    enable = mkEnableOption "";
-  };
-  config = mkIf cfg.enable {
+  options.localModules.DM.autoLogin = mkEnableOption "";
+  config = mkIf cfg {
     services.xserver.displayManager = {
       autoLogin = {
         enable = true;

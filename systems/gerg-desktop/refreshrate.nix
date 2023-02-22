@@ -1,7 +1,5 @@
 _: {
   services.xserver = {
-    #set drivers for igpu
-    videoDrivers = ["amdgpu"];
     #fix nasty screen tearing
     screenSection = ''
       Option "TearFree" "true"

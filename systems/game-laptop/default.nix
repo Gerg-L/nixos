@@ -4,16 +4,22 @@ inputs: {
   ...
 }: {
   imports = [
-    (import ../imports/boot.nix inputs)
+    (import ./prime.nix inputs)
+    (import ./gaming.nix inputs)
+
     (import ../imports/fonts.nix inputs)
     (import ../imports/git.nix inputs)
-    (import ../imports/packages.nix inputs)
-    (import ../imports/prime.nix inputs)
-    (import ../imports/gnome.nix inputs)
     (import ../imports/shells.nix inputs)
-    (import ../imports/gaming.nix inputs)
     (import ../imports/theme.nix inputs)
   ];
+
+  localModules = {
+    DE.gnome.enable = true;
+    DM = {
+      lightdm.enable = true;
+      autoLogin = true;
+    };
+  };
   nixpkgs.allowedUnfree = [
     "nvidia-x11"
     "nvidia-persistenced"
@@ -23,9 +29,15 @@ inputs: {
   ];
   system.stateVersion = "23.05";
   environment.systemPackages = [
+    pkgs.pavucontrol #gui volume control
+    pkgs.pcmanfm #file manager
+    pkgs.librewolf #best browser
     pkgs.webcord
   ];
-  networking.hostName = settings.hostname;
+  networking = {
+    hostName = settings.hostname;
+    networkmanager.enable = true;
+  };
   boot.kernelPackages = pkgs.linuxPackages_latest;
   hardware.cpu.amd.updateMicrocode = true;
   users = {
@@ -34,10 +46,6 @@ inputs: {
       isNormalUser = true;
       extraGroups = ["audio" "networkmanager"];
     };
-  };
-  services.xserver.displayManager.autoLogin = {
-    enable = true;
-    user = settings.username;
   };
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;

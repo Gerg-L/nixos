@@ -1,6 +1,7 @@
 _: {
   pkgs,
   settings,
+  self,
   ...
 }: {
   boot = {
@@ -36,9 +37,9 @@ _: {
   users.users."${settings.username}".extraGroups = ["kvm" "libvirtd"];
 
   systemd.services.libvirtd.preStart = let
+    xml = pkgs.writeText "Windows.xml" (builtins.readFile "${self}/misc/Windows.xml");
     qemuHook = pkgs.writeScript "qemu-hook" ''
       #!${pkgs.stdenv.shell}
-
       GUEST_NAME="$1"
       OPERATION="$2"
       SUB_OPERATION="$3"
@@ -63,5 +64,8 @@ _: {
 
     # Copy hook files
     ln -sf ${qemuHook} /var/lib/libvirt/hooks/qemu
+
+    mkdir -p /var/lib/libvirt/qemu/
+    ln -sf ${xml} /var/lib/libvirt/qemu/Windows.xml
   '';
 }

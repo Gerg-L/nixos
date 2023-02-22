@@ -11,7 +11,7 @@ _: {lib, ...}: {
     consoleLogLevel = 0;
     initrd.verbose = false;
     plymouth = {
-      enable = true;
+      enable = lib.mkDefault true;
       theme = "breeze";
       logo = ../misc/nixos.png;
     };

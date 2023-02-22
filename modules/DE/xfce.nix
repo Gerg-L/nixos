@@ -5,9 +5,9 @@ _: {
   ...
 }:
 with lib; let
-  cfg = config.localModules.xfce;
+  cfg = config.localModules.DE.xfce;
 in {
-  options.localModules.xfce = {
+  options.localModules.DE.xfce = {
     enable = mkEnableOption "";
   };
   config = mkIf cfg.enable {

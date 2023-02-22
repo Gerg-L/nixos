@@ -13,6 +13,8 @@ _: {
     script = "parrot";
     serviceConfig = {
       EnvironmentFile = "/home/${settings.username}/saveme/.env";
+      Restart = "on-failure";
+      RestartSec = "30s";
     };
   };
 }

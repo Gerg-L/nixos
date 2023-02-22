@@ -7,9 +7,9 @@ _: {
   ...
 }:
 with lib; let
-  cfg = config.localModules.lightdm;
+  cfg = config.localModules.DM.lightdm;
 in {
-  options.localModules.lightdm = {
+  options.localModules.DM.lightdm = {
     enable = mkEnableOption "";
   };
   config = mkIf cfg.enable {

@@ -1,59 +1,43 @@
 inputs: {
   pkgs,
   settings,
-  lib,
   ...
 }: {
   imports = [
-    (import ../imports/boot.nix inputs)
+    (import ./printing.nix inputs)
     (import ../imports/fonts.nix inputs)
     (import ../imports/git.nix inputs)
-    (import ../imports/packages.nix inputs)
-    (import ../imports/xfce.nix inputs)
     (import ../imports/shells.nix inputs)
     (import ../imports/theme.nix inputs)
   ];
-  nixpkgs.allowedUnfree = ["hplip"];
+  localModules = {
+    DM = {
+      lightdm.enable = true;
+      autoLogin = true;
+    };
+    DE.xfce.enable = true;
+  };
+
   system.stateVersion = "22.11";
   environment.systemPackages = [
-    pkgs.gimp
-    (pkgs.xsane.override {gimpSupport = true;})
     pkgs.vlc
-    pkgs.libreoffice
     pkgs.nomacs
     pkgs.gnome.gnome-calculator
     pkgs.xfce.xfce4-whiskermenu-plugin
     pkgs.rsync
+    pkgs.pavucontrol #gui volume control
+    pkgs.librewolf #best browser
   ];
   services.xserver.videoDrivers = ["intel"];
-  networking.hostName = settings.hostname;
+  networking = {
+    hostName = settings.hostname;
+    networkmanager.enable = true;
+  };
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  hardware.cpu.intel.updateMicrocode = true;
-  #printing stuff
-  hardware.sane = {
-    enable = true;
-    extraBackends = [pkgs.hplipWithPlugin];
-    #run this to setup gimp plugin
-    #ln -s /run/current-system/sw/bin/xsane ~/.config/GIMP/2.10/plug-ins/xsane
-  };
-  services = {
-    printing = {
-      enable = true;
-      drivers = [pkgs.hplipWithPlugin];
-    };
-  };
-
-  users = {
-    defaultUserShell = pkgs.zsh;
-    users."${settings.username}" = {
-      uid = 1000;
-      isNormalUser = true;
-      extraGroups = ["audio" "networkmanager" "scanner" "lp" "cups"];
-    };
-  };
-  services.xserver.displayManager.autoLogin = {
-    enable = true;
-    user = settings.username;
+  users.users."${settings.username}" = {
+    uid = 1000;
+    isNormalUser = true;
+    extraGroups = ["audio" "networkmanager"];
   };
   boot = {
     initrd.availableKernelModules = ["xhci-pci" "ehci-pci" "ahci" "usbhid" "sd_mod" "sr_mod" "rtsx_usb_sdmmc"];
