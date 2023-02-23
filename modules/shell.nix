@@ -1,22 +1,16 @@
-{
-  fetch-rs,
-  suckless,
-  ...
-}: {pkgs, ...}: rec {
+{fetch-rs, ...}: {pkgs, ...}: rec {
   #put:
   #source /run/current-system/sw/share/nix-direnv/direnvrc
   #in ~/.direnvrc
   #do i need to do this^?
   environment = {
     systemPackages = [
-      pkgs.dash
       pkgs.page
       pkgs.exa
       pkgs.direnv
       pkgs.nix-direnv
       pkgs.neovim
       fetch-rs.packages.${pkgs.system}.default
-      suckless.packages.${pkgs.system}.st
     ];
     binsh = "${pkgs.dash}/bin/dash"; #use dash for speed
     variables = {

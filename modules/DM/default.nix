@@ -1,6 +1,6 @@
 inputs: {
   imports = [
-    (import ./lightDM.nix inputs)
     (import ./autoLogin.nix inputs)
+    (import ./lightDM.nix inputs)
   ];
 }

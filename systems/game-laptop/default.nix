@@ -6,11 +6,6 @@ inputs: {
   imports = [
     (import ./prime.nix inputs)
     (import ./gaming.nix inputs)
-
-    (import ../imports/fonts.nix inputs)
-    (import ../imports/git.nix inputs)
-    (import ../imports/shells.nix inputs)
-    (import ../imports/theme.nix inputs)
   ];
 
   localModules = {
@@ -18,6 +13,10 @@ inputs: {
     DM = {
       lightdm.enable = true;
       autoLogin = true;
+    };
+    theming = {
+      enable = true;
+      kmscon.enable = true;
     };
   };
   nixpkgs.allowedUnfree = [

@@ -11,11 +11,6 @@ inputs: {
     (import ./spicetify.nix inputs)
     #(import ./mining.nix inputs)
     (import ./zfs inputs)
-
-    (import ../../imports/fonts.nix inputs)
-    (import ../../imports/git.nix inputs)
-    (import ../../imports/shells.nix inputs)
-    (import ../../imports/theme.nix inputs)
   ];
   system.stateVersion = "23.05";
 
@@ -28,6 +23,10 @@ inputs: {
     DM = {
       lightdm.enable = true;
       autoLogin = true;
+    };
+    theming = {
+      enable = true;
+      kmscon.enable = true;
     };
   };
   services.xserver.videoDrivers = ["amdgpu"];
@@ -43,9 +42,11 @@ inputs: {
     pkgs.cava #pretty audio
     pkgs.pipes-rs # more fun things
     pkgs.vlc #play stuff
+    inputs.suckless.packages.${pkgs.system}.st
   ];
-
+  #set webcord theme
   systemd.tmpfiles.rules = ["L+ /home/gerg/.config/WebCord/Themes/black - - - - ${self}/misc/black.theme.css"];
+
   networking = {
     hostName = settings.hostname;
     hostId = "288b56db";
