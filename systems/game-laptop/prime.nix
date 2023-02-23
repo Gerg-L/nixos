@@ -1,5 +1,6 @@
-_: {
+_: {config, ...}: {
   hardware.nvidia = {
+    package = config.boot.kernelPackages.nvidiaPackages.latest;
     prime = {
       offload.enable = true;
       amdgpuBusId = "PCI:5:0:0";

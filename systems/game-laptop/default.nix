@@ -32,13 +32,12 @@ inputs: {
     pkgs.pcmanfm #file manager
     pkgs.librewolf #best browser
     pkgs.webcord
+    inputs.suckless.packages.${pkgs.system}.st
   ];
   networking = {
     hostName = settings.hostname;
     networkmanager.enable = true;
   };
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-  hardware.cpu.amd.updateMicrocode = true;
   users = {
     users."${settings.username}" = {
       uid = 1000;
@@ -51,6 +50,7 @@ inputs: {
   boot = {
     initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci"];
     kernelModules = ["kvm-amd"];
+    kernelPackages = pkgs.linuxPackages_zen;
   };
   fileSystems = {
     "/" = {
