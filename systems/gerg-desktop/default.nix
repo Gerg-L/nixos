@@ -61,6 +61,7 @@ inputs: {
       };
       "bridge0" = {
         name = "bridge0";
+        macAddress = "D8:5E:D3:E5:47:90";
         ipv4.addresses = [
           {
             address = "192.168.1.4";
