@@ -12,26 +12,24 @@
   nix = {
     #   package = nix.packages.${pkgs.system}.nix;
     #automatically get registry from input flakes
-    registry =
-      (
-        lib.attrsets.mapAttrs (
-          _: value: {
-            flake = value;
-          }
-        ) (
-          lib.attrsets.filterAttrs (
-            _: value: (
-              !(lib.attrsets.hasAttrByPath ["flake"] value) || value.flake == false
-            )
-          )
-          inputs
-        )
-        // {
-          nixpkgs.flake = unstable;
-          system.flake = self;
+    registry = (
+      lib.attrsets.mapAttrs (
+        _: value: {
+          flake = value;
         }
+      ) (
+        lib.attrsets.filterAttrs (
+          _: value: (
+            !(lib.attrsets.hasAttrByPath ["flake"] value) || value.flake == false
+          )
+        )
+        inputs
       )
-      // {system = {flake = self;};};
+      // {
+        nixpkgs.flake = unstable;
+        system.flake = self;
+      }
+    );
     #automatically add registry entries to nixPath
     nixPath = (lib.mapAttrsToList (name: value: name + "=" + value) inputs) ++ ["system=${self}" "nixpkgs=${unstable}"];
     settings = {
