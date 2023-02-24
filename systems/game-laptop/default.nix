@@ -35,7 +35,7 @@ inputs: {
     inputs.suckless.packages.${pkgs.system}.st
   ];
   networking = {
-    hostName = settings.hostname;
+    hostName = "game-laptop";
     networkmanager.enable = true;
   };
   users = {

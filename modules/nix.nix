@@ -1,9 +1,4 @@
-{
-  nix,
-  unstable,
-  ...
-}: {
-  inputs,
+inputs: {
   lib,
   self,
   settings,
@@ -26,12 +21,12 @@
         inputs
       )
       // {
-        nixpkgs.flake = unstable;
+        nixpkgs.flake = inputs.unstable;
         system.flake = self;
       }
     );
     #automatically add registry entries to nixPath
-    nixPath = (lib.mapAttrsToList (name: value: name + "=" + value) inputs) ++ ["system=${self}" "nixpkgs=${unstable}"];
+    nixPath = (lib.mapAttrsToList (name: value: name + "=" + value) inputs) ++ ["system=${self}" "nixpkgs=${inputs.unstable}"];
     settings = {
       experimental-features = ["nix-command" "flakes" "repl-flake"];
       auto-optimise-store = true;

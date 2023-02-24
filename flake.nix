@@ -48,10 +48,9 @@
         gerg-desktop = unstable.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {
-            inherit inputs self;
+            inherit self;
             settings = {
               username = "gerg";
-              hostname = "gerg-desktop";
             };
           };
 
@@ -69,10 +68,9 @@
         game-laptop = unstable.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {
-            inherit inputs self;
+            inherit self;
             settings = {
               username = "games";
-              hostname = "game-laptop";
             };
           };
           modules = [
@@ -83,10 +81,9 @@
         moms-laptop = unstable.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {
-            inherit inputs self;
+            inherit self;
             settings = {
               username = "jo";
-              hostname = "moms-laptop";
             };
           };
           modules = [

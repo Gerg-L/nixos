@@ -30,7 +30,7 @@ inputs: {
   ];
   services.xserver.videoDrivers = ["intel"];
   networking = {
-    hostName = settings.hostname;
+    hostName = "mom-laptop";
     networkmanager.enable = true;
   };
   boot.kernelPackages = pkgs.linuxPackages_latest;

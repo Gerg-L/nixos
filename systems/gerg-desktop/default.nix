@@ -48,7 +48,7 @@ inputs: {
   systemd.tmpfiles.rules = ["L+ /home/gerg/.config/WebCord/Themes/black - - - - ${self}/misc/black.theme.css"];
 
   networking = {
-    hostName = settings.hostname;
+    hostName = "gerg-desktop";
     hostId = "288b56db";
     useDHCP = false;
     dhcpcd.enable = false;
