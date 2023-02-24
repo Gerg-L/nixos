@@ -73,10 +73,22 @@ inputs: {
     bridges."bridge0".interfaces = ["eth0"];
   };
   #user managment
-  users.users."${settings.username}" = {
-    uid = 1000;
-    isNormalUser = true;
-    extraGroups = ["wheel" "audio"];
+  users = {
+    mutableUsers = false;
+    users = {
+      "${settings.username}" = {
+        useDefaultShell = true;
+        uid = 1000;
+        isNormalUser = true;
+        extraGroups = ["wheel" "audio"];
+        initialHashedPassword = "$6$hgiDFHEMVEA39Snj$Huxf2a/yd/gSO2ZwntxI5Z65c1kCf35lvbkA61knP5i5NLPuIy4cybBBv9lnd24LVR9sfi9Tss96VQdsGCQhq1";
+      };
+      "root" = {
+        uid = 0;
+        home = "/root";
+        initialHashedPassword = "$6$KV00qSRKyx1hpZjX$kwzWN4UuQxHSFwA4vYtRTcYecQyR.Qelvvcr90ZfZ4y.LISUcx2PDHH9/7REwsoAHD./KlAnwlsm1hxeLoGpl/";
+      };
+    };
   };
   boot = {
     initrd = {

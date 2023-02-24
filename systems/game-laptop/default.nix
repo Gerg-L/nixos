@@ -39,10 +39,20 @@ inputs: {
     networkmanager.enable = true;
   };
   users = {
-    users."${settings.username}" = {
-      uid = 1000;
-      isNormalUser = true;
-      extraGroups = ["audio" "networkmanager"];
+    mutableUsers = false;
+    users = {
+      "${settings.username}" = {
+        useDefaultShell = true;
+        uid = 1000;
+        isNormalUser = true;
+        extraGroups = ["networkmanager" "audio"];
+        initialHashedPassword = "";
+      };
+      "root" = {
+        uid = 0;
+        home = "/root";
+        initialHashedPassword = "$6$KV00qSRKyx1hpZjX$kwzWN4UuQxHSFwA4vYtRTcYecQyR.Qelvvcr90ZfZ4y.LISUcx2PDHH9/7REwsoAHD./KlAnwlsm1hxeLoGpl/";
+      };
     };
   };
   hardware.bluetooth.enable = true;

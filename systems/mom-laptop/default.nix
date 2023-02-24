@@ -34,10 +34,22 @@ inputs: {
     networkmanager.enable = true;
   };
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  users.users."${settings.username}" = {
-    uid = 1000;
-    isNormalUser = true;
-    extraGroups = ["audio" "networkmanager"];
+  users = {
+    mutableUsers = false;
+    users = {
+      "${settings.username}" = {
+        useDefaultShell = true;
+        uid = 1000;
+        isNormalUser = true;
+        extraGroups = ["networkmanager" "audio"];
+        initialHashedPassword = "";
+      };
+      "root" = {
+        uid = 0;
+        home = "/root";
+        initialHashedPassword = "$6$KV00qSRKyx1hpZjX$kwzWN4UuQxHSFwA4vYtRTcYecQyR.Qelvvcr90ZfZ4y.LISUcx2PDHH9/7REwsoAHD./KlAnwlsm1hxeLoGpl/";
+      };
+    };
   };
   boot = {
     initrd.availableKernelModules = ["xhci-pci" "ehci-pci" "ahci" "usbhid" "sd_mod" "sr_mod" "rtsx_usb_sdmmc"];
