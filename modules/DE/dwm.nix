@@ -8,6 +8,7 @@
 }:
 with lib; let
   cfg = config.localModules.DE.dwm;
+  sp = suckless.packages.${pkgs.system};
 in {
   options.localModules.DE.dwm = {
     enable = mkEnableOption "";
@@ -15,13 +16,8 @@ in {
 
   config = mkIf cfg.enable {
     services.gvfs.enable = true;
-    environment.systemPackages = [suckless.packages.${pkgs.system}.dmenu];
     services.xserver = {
       enable = true;
-      windowManager.dwm = {
-        enable = true;
-        package = suckless.packages.${pkgs.system}.dwm;
-      };
       displayManager = {
         sessionCommands = ''
           ${pkgs.feh}/bin/feh --bg-scale ${self + /misc/recursion.png}
@@ -29,6 +25,19 @@ in {
         '';
         defaultSession = "none+dwm";
       };
+      windowManager.session =
+        singleton
+        {
+          name = "dwm";
+          start = ''
+            dwm &
+            waitPID=$!
+          '';
+        };
     };
+    environment.systemPackages = [
+      sp.dmenu
+      sp.dwm
+    ];
   };
 }
