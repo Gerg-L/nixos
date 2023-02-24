@@ -39,10 +39,9 @@ inputs: {
     pkgs.pcmanfm #file manager
     pkgs.librewolf #best browser
     #pointless stuff
-    pkgs.cava #pretty audio
-    pkgs.pipes-rs # more fun things
     pkgs.vlc #play stuff
     pkgs.neovide #gui neovim
+    pkgs.ripgrep
     inputs.suckless.packages.${pkgs.system}.st
   ];
   #set webcord theme
