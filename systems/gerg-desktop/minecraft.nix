@@ -9,7 +9,6 @@ _: {...}: {
       hostPath = "/mnt/minecraft";
       isReadOnly = false;
     };
-
     config = {pkgs, ...}: let
       stopScript = pkgs.writeShellScript "minecraft-server-stop" ''
         echo stop > /run/minecraft-server.stdin
