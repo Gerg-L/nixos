@@ -1,7 +1,7 @@
 This is my personal nixos configuration
 it currently has 2 hosts:
 
-  "gerg-desktop" my main computer [specs](https://pcpartpicker.com/list/Mhyrfv)
+  "gerg-desktop" my main computer [specs](https://pcpartpicker.com/list/DVkMk9)
   which I run a windows KVM VFIO virtual machine on
   
   "game-laptop" a HP Pavilion Laptop [15-ec2121nr](https://support.hp.com/us-en/document/c07918617#AbT0)
