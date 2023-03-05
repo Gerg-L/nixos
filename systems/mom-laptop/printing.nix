@@ -15,6 +15,7 @@ _: {
     extraBackends = [pkgs.hplipWithPlugin];
     #run this to setup gimp plugin
     #ln -s /run/current-system/sw/bin/xsane ~/.config/GIMP/2.10/plug-ins/xsane
+    systemd.tmpfiles.rules = ["L /home/jo/.config/GIMP/2.10/plug-ins/xsane - - - - /run/current-system/sw/bin/xsane"];
   };
   services = {
     printing = {

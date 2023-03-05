@@ -1,4 +1,8 @@
-{fetch-rs, ...}: {pkgs, ...}: rec {
+{fetch-rs, ...}: {
+  pkgs,
+  config,
+  ...
+}: rec {
   #put:
   #source /run/current-system/sw/share/nix-direnv/direnvrc
   #in ~/.direnvrc
@@ -28,9 +32,9 @@
       #paste link trick
       pastebin = "curl -F 'clbin=<-' https://clbin.com";
       #nix stuff
-      nix-update = "nix flake update /etc/nixos/# ";
-      nix-switch = "nixos-rebuild switch --use-remote-sudo";
-      nix-boot = "nixos-rebuild boot --use-remote-sudo";
+      nix-update = "nix flake update /etc/nixos/";
+      nix-switch = "nixos-rebuild switch --flake /etc/nixos/#${config.networking.hostName} --use-remote-sudo";
+      nix-boot = "nixos-rebuild boot --flake /etc/nixos/#${config.networking.hostName} --use-remote-sudo";
       nix-clean = "nix-collect-garbage -d";
       nix-gc-force = "rm /nix/var/nix/gcroots/auto/*";
       nix-gc-check = "nix-store --gc --print-roots | egrep -v \"^(/nix/var|/run/\w+-system|\{memory|/proc)\"";
@@ -67,12 +71,10 @@
   programs = {
     zsh = {
       enable = true;
-      autosuggestions = {
-        enable = true;
-      };
-      syntaxHighlighting = {
-        enable = true;
-      };
+      autosuggestions.enable = true;
+      syntaxHighlighting.enable = true;
+      histSize = 1000;
+      histFile = "$HOME/.cache/zsh_history";
       shellInit = ''
         eval "$(direnv hook zsh)"
       '';
