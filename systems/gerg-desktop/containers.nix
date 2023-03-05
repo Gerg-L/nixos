@@ -3,7 +3,7 @@ _: {...}: {
     privateNetwork = true;
     hostBridge = "bridge0";
     localAddress = "192.168.1.10/24";
-    localAddress6 = "2605:59c8:2500:5394::ffff/64";
+    localAddress6 = "2605:59c8:252e:500:200:ff:fe00:10/64";
     bindMounts."/mnt/minecraft" = {
       mountPoint = "/minecraft";
       hostPath = "/mnt/minecraft";
@@ -30,7 +30,16 @@ _: {...}: {
           allowedTCPPorts = [25565];
         };
       };
-
+      systemd.services.setmacaddr = {
+        script = ''
+          /run/current-system/sw/bin/ip link set dev eth0 address 00:00:00:00:00:10
+          /run/current-system/sw/bin/systemctl stop dhcpcd.service
+          /run/current-system/sw/bin/ip addr flush eth0
+          /run/current-system/sw/bin/systemctl start dhcpcd.service
+        '';
+        wantedBy = ["basic.target"];
+        after = ["dhcpcd.service"];
+      };
       system.stateVersion = "23.05";
       users.users.minecraft = {
         description = "Minecraft server service user";
