@@ -1,11 +1,4 @@
 _: {...}: {
-  networking = {
-    firewall = {
-      #     allowedUDPPorts = [25565];
-      #     allowedTCPPorts = [25565];
-    };
-  };
-
   containers."minecraft" = {
     privateNetwork = true;
     hostBridge = "bridge0";

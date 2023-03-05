@@ -91,6 +91,15 @@
             (import ./systems/mom-laptop inputs)
           ];
         };
+        notbuntu = unstable.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {inherit self;};
+          modules = [
+            (import ./systems/notbuntu inputs)
+            (import ./modules/nix.nix inputs)
+            (import ./modules/unfree.nix inputs)
+          ];
+        };
       };
     }
     // flake-utils.lib.eachDefaultSystem (
