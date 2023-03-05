@@ -88,7 +88,7 @@
           };
           modules = [
             (import ./modules inputs)
-            (import ./systems/mom-laptop inputs)
+            (import ./systems/moms-laptop inputs)
           ];
         };
         notbuntu = unstable.lib.nixosSystem {
