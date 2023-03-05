@@ -11,6 +11,7 @@ inputs: {
     (import ./spicetify.nix inputs)
     #(import ./mining.nix inputs)
     (import ./zfs inputs)
+    (import ./containers.nix inputs)
   ];
   system.stateVersion = "23.05";
 
@@ -50,9 +51,6 @@ inputs: {
   networking = {
     hostName = "gerg-desktop";
     hostId = "288b56db";
-    useDHCP = false;
-    dhcpcd.enable = false;
-    networkmanager.enable = false;
     nameservers = ["1.1.1.1" "1.0.0.1"];
     defaultGateway = "192.168.1.1";
     interfaces = {
@@ -68,9 +66,15 @@ inputs: {
             prefixLength = 24;
           }
         ];
+        ipv6.addresses = [
+          #         {
+          #           prefixLength = 64;
+          #         }
+        ];
       };
     };
     bridges."bridge0".interfaces = ["eth0"];
+    firewall.enable = true;
   };
   #user managment
   users = {
