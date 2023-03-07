@@ -2,6 +2,7 @@ inputs: {
   pkgs,
   settings,
   self,
+  config,
   ...
 }: {
   imports = [
@@ -13,8 +14,8 @@ inputs: {
     (import ./zfs inputs)
     (import ./minecraft.nix inputs)
   ];
-  system.stateVersion = "23.05";
 
+  system.stateVersion = "23.05";
   localModules = {
     X11Programs = {
       sxhkd.enable = true;
@@ -80,6 +81,10 @@ inputs: {
     firewall.enable = true;
   };
   #user managment
+  sops.secrets = {
+    root.neededForUsers = true;
+    gerg.neededForUsers = true;
+  };
   users = {
     mutableUsers = false;
     users = {
@@ -92,7 +97,7 @@ inputs: {
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAuO/3IF+AjH8QjW4DAUV7mjlp2Mryd+1UnpAUofS2yA gerg@gerg-phone"
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILpYY2uw0OH1Re+3BkYFlxn0O/D8ryqByJB/ljefooNc gerg@gerg-windows"
         ];
-        initialHashedPassword = "$6$hgiDFHEMVEA39Snj$Huxf2a/yd/gSO2ZwntxI5Z65c1kCf35lvbkA61knP5i5NLPuIy4cybBBv9lnd24LVR9sfi9Tss96VQdsGCQhq1";
+        passwordFile = config.sops.secrets.gerg.path;
       };
       "root" = {
         uid = 0;
@@ -101,7 +106,7 @@ inputs: {
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAuO/3IF+AjH8QjW4DAUV7mjlp2Mryd+1UnpAUofS2yA gerg@gerg-phone"
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILpYY2uw0OH1Re+3BkYFlxn0O/D8ryqByJB/ljefooNc gerg@gerg-windows"
         ];
-        initialHashedPassword = "$6$KV00qSRKyx1hpZjX$kwzWN4UuQxHSFwA4vYtRTcYecQyR.Qelvvcr90ZfZ4y.LISUcx2PDHH9/7REwsoAHD./KlAnwlsm1hxeLoGpl/";
+        passwordFile = config.sops.secrets.root.path;
       };
     };
   };

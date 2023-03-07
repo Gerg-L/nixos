@@ -1,6 +1,7 @@
 inputs: {
   pkgs,
   settings,
+  config,
   ...
 }: {
   imports = [
@@ -38,6 +39,8 @@ inputs: {
     hostName = "game-laptop";
     networkmanager.enable = true;
   };
+  #user managment
+  sops.secrets.root.neededForUsers = true;
   users = {
     mutableUsers = false;
     users = {
@@ -56,7 +59,7 @@ inputs: {
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILpYY2uw0OH1Re+3BkYFlxn0O/D8ryqByJB/ljefooNc gerg@gerg-windows"
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJWbwkFJmRBgyWyWU+w3ksZ+KuFw9uXJN3PwqqE7Z/i8 gerg@gerg-desktop"
         ];
-        initialHashedPassword = "$6$hgiDFHEMVEA39Snj$Huxf2a/yd/gSO2ZwntxI5Z65c1kCf35lvbkA61knP5i5NLPuIy4cybBBv9lnd24LVR9sfi9Tss96VQdsGCQhq1";
+        passwordFile = config.sops.secrets.root.path;
       };
     };
   };

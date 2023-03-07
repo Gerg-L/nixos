@@ -10,6 +10,7 @@ inputs: {
     (import ./nix.nix inputs)
     (import ./packages.nix inputs)
     (import ./shell.nix inputs)
+    (import ./sops.nix inputs)
     (import ./theming.nix inputs)
     (import ./unfree.nix inputs)
     (import ./X11.nix inputs)

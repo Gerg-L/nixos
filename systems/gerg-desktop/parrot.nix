@@ -1,6 +1,6 @@
 _: {
   pkgs,
-  settings,
+  config,
   ...
 }: {
   #discord bot stuff
@@ -12,9 +12,10 @@ _: {
     after = ["NetworkManager-wait-online.service"];
     script = "parrot";
     serviceConfig = {
-      EnvironmentFile = "/home/${settings.username}/saveme/.env";
+      EnvironmentFile = config.sops.secrets.discordenv.path;
       Restart = "on-failure";
       RestartSec = "30s";
     };
   };
+  sops.secrets.discordenv = {};
 }

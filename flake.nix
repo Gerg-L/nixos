@@ -11,6 +11,10 @@
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "unstable";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "unstable";
+    };
 
     #master branch of nix
     nix.url = "github:NixOS/nix";
@@ -109,7 +113,7 @@
         formatter = pkgs.alejandra;
         devShells = rec {
           nix = pkgs.mkShell {
-            packages = with pkgs; [nil alejandra deadnix statix];
+            packages = with pkgs; [sops nil alejandra deadnix statix];
           };
           rust = pkgs.mkShell {
             packages = with pkgs; [rust-analyzer rustc cargo rustfmt clippy];

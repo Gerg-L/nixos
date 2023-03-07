@@ -4,9 +4,9 @@ _: {...}: {
     hostBridge = "bridge0";
     localAddress = "192.168.1.10/24";
     localAddress6 = "2605:59c8:252e:500:200:ff:fe00:10/64";
-    bindMounts."/mnt/minecraft" = {
+    bindMounts."/persist/minecraft" = {
       mountPoint = "/minecraft";
-      hostPath = "/mnt/minecraft";
+      hostPath = "/persist/minecraft";
       isReadOnly = false;
     };
     config = {pkgs, ...}: let
