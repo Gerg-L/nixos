@@ -6,6 +6,7 @@ inputs: {
 }: {
   imports = [
     (import ./printing.nix inputs)
+    (import ./disko.nix inputs)
   ];
   localModules = {
     DM = {
@@ -31,7 +32,7 @@ inputs: {
   ];
   services.xserver.videoDrivers = ["intel"];
   networking = {
-    hostName = "mom-laptop";
+    hostName = "moms-laptop";
     networkmanager.enable = true;
   };
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -61,23 +62,5 @@ inputs: {
   boot = {
     initrd.availableKernelModules = ["xhci-pci" "ehci-pci" "ahci" "usbhid" "sd_mod" "sr_mod" "rtsx_usb_sdmmc"];
     kernelModules = ["kvm-intel"];
-  };
-  fileSystems = {
-    "/" = {
-      device = "/dev/disk/by-uuid/518885c4-2d43-46a5-bf17-c734b7b85c2e";
-      fsType = "ext4";
-      label = "nixos";
-      noCheck = false;
-      mountPoint = "/";
-      neededForBoot = true;
-    };
-    "/boot" = {
-      device = "/dev/disk/by-uuid/5BCE-813C";
-      fsType = "vfat";
-      label = "BOOT";
-      noCheck = false;
-      mountPoint = "/boot";
-      neededForBoot = true;
-    };
   };
 }
