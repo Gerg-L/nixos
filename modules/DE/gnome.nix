@@ -21,7 +21,6 @@ in {
         gnome-online-accounts
       ])
       ++ (with pkgs.gnome; [
-        gnome-terminal
         gnome-weather
         gnome-shell
         gnome-calculator
@@ -49,5 +48,6 @@ in {
       desktopManager.gnome.enable = true;
       displayManager.defaultSession = "gnome";
     };
+    environment.systemPackages = [pkgs.gnome.gnome-terminal];
   };
 }

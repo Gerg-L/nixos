@@ -20,6 +20,7 @@ in {
         libinput.enable = true;
         xautolock.enable = false;
         excludePackages = [pkgs.xterm];
+        desktopManager.xterm.enable = false;
       };
     }
 

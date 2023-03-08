@@ -1,5 +1,6 @@
 inputs: {
   pkgs,
+  lib,
   settings,
   config,
   ...
@@ -33,7 +34,7 @@ inputs: {
     pkgs.pcmanfm #file manager
     pkgs.librewolf #best browser
     pkgs.webcord
-    inputs.suckless.packages.${pkgs.system}.st
+    #   inputs.suckless.packages.${pkgs.system}.st
   ];
   networking = {
     hostName = "game-laptop";
@@ -63,6 +64,10 @@ inputs: {
       };
     };
   };
+  environment.interactiveShellInit = lib.mkForce ''
+    export TERMINAL=gnome-terminal
+    fetch-rs
+  '';
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
   boot = {
