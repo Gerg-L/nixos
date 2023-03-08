@@ -19,7 +19,7 @@ inputs: {
     };
   };
 
-  system.stateVersion = "23.05";
+  system.stateVersion = "unstable";
   environment.systemPackages = [
     pkgs.vlc
     pkgs.nomacs

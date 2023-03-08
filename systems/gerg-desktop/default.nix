@@ -15,7 +15,7 @@ inputs: {
     (import ./minecraft.nix inputs)
   ];
 
-  system.stateVersion = "23.05";
+  system.stateVersion = "unstable";
   localModules = {
     X11Programs = {
       sxhkd.enable = true;

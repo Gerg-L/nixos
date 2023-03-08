@@ -39,7 +39,7 @@ _: {...}: {
         wantedBy = ["basic.target"];
         after = ["dhcpcd.service"];
       };
-      system.stateVersion = "23.05";
+      system.stateVersion = "unstable";
       users.users.minecraft = {
         description = "Minecraft server service user";
         home = "/minecraft";

@@ -27,7 +27,7 @@ inputs: {
     "steam-original"
     "steam-run"
   ];
-  system.stateVersion = "23.05";
+  system.stateVersion = "unstable";
   environment.systemPackages = [
     pkgs.pavucontrol #gui volume control
     pkgs.pcmanfm #file manager
