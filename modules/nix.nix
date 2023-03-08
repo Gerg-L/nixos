@@ -42,5 +42,6 @@ inputs: {
       ];
     };
   };
-  environment.etc."booted-system".source = self;
+  #make gcroots for each flake input
+  systemd.tmpfiles.rules = lib.attrsets.mapAttrsToList (name: value: "L+ /nix/var/nix/gcroots/${name} - - - - ${value}") inputs;
 }
