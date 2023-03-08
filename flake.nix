@@ -15,7 +15,10 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "unstable";
     };
-
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "unstable";
+    };
     #the-argus is awesome
     spicetify-nix = {
       url = "github:the-argus/spicetify-nix";
@@ -42,6 +45,7 @@
     flake-utils,
     nvim-flake,
     nixos-generators,
+    disko,
     ...
   } @ inputs:
     {
@@ -56,6 +60,7 @@
           };
 
           modules = [
+            disko.nixosModules.disko
             (import ./modules inputs)
             (import ./systems/gerg-desktop inputs)
             {
@@ -75,6 +80,7 @@
             };
           };
           modules = [
+            disko.nixosModules.disko
             (import ./modules inputs)
             (import ./systems/game-laptop inputs)
           ];
@@ -88,6 +94,7 @@
             };
           };
           modules = [
+            disko.nixosModules.disko
             (import ./modules inputs)
             (import ./systems/moms-laptop inputs)
           ];
@@ -96,6 +103,7 @@
           system = "x86_64-linux";
           specialArgs = {inherit self;};
           modules = [
+            disko.nixosModules.disko
             (import ./systems/notbuntu inputs)
             (import ./modules/nix.nix inputs)
             (import ./modules/unfree.nix inputs)

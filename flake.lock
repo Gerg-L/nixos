@@ -1,5 +1,25 @@
 {
   "nodes": {
+    "disko": {
+      "inputs": {
+        "nixpkgs": [
+          "unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1678067051,
+        "narHash": "sha256-0QN2lO6dp4OlEysqufuXEgW1QywANKCuF+6EsNXcZ7o=",
+        "owner": "nix-community",
+        "repo": "disko",
+        "rev": "cf705ee16161b29b0e18983ecd8df3cb50f66142",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "disko",
+        "type": "github"
+      }
+    },
     "fetch-rs": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -249,6 +269,7 @@
     },
     "root": {
       "inputs": {
+        "disko": "disko",
         "fetch-rs": "fetch-rs",
         "flake-utils": "flake-utils_2",
         "master": "master",
