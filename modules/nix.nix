@@ -1,11 +1,12 @@
 inputs: {
   lib,
+  pkgs,
   self,
   settings,
   ...
 }: {
   nix = {
-    #   package = nix.packages.${pkgs.system}.nix;
+    package = pkgs.nixVersions.unstable;
     #automatically get registry from input flakes
     registry = (
       lib.attrsets.mapAttrs (

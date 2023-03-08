@@ -16,9 +16,6 @@
       inputs.nixpkgs.follows = "unstable";
     };
 
-    #master branch of nix
-    nix.url = "github:NixOS/nix";
-
     #the-argus is awesome
     spicetify-nix = {
       url = "github:the-argus/spicetify-nix";
