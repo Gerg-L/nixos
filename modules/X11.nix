@@ -108,16 +108,7 @@ in {
             pkgs.xclip
             pkgs.coreutils
           ];
-          systemd.user.services.sxhkd = {
-            description = "sxhkd hotkey daemon";
-            wantedBy = ["graphical-session.target"];
-            partOf = ["graphical-session.target"];
-            serviceConfig = {
-              ExecStart = "${pkgs.sxhkd}/bin/sxhkd -c ${configFile}";
-              RestartSec = 3;
-              Restart = "always";
-            };
-          };
+          services.xserver.displayManager.sessionCommands = "${pkgs.sxhkd}/bin/sxhkd -c ${configFile} &";
         }
     )
   ];
