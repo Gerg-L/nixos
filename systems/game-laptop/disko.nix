@@ -10,8 +10,8 @@ _: {
           {
             type = "partition";
             name = "ESP";
-            start = "1049KB";
-            end = "538MB";
+            start = "1MiB";
+            end = "1GiB";
             bootable = true;
             content = {
               type = "filesystem";
@@ -22,7 +22,7 @@ _: {
           {
             name = "root";
             type = "partition";
-            start = "538MB";
+            start = "1GiB";
             end = "100%";
             part-type = "primary";
             bootable = true;
