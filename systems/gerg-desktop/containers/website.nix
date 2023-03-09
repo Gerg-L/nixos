@@ -41,7 +41,7 @@ _: {...}: {
             server = {
               LANDING_PAGE = "/explore/repos";
             };
-            UI = {
+            ui = {
               DEFAULT_THEME = "arc-green";
             };
             service = {
