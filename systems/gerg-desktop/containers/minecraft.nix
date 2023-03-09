@@ -32,9 +32,6 @@ _: {...}: {
       systemd.services.setmacaddr = {
         script = ''
           /run/current-system/sw/bin/ip link set dev eth0 address 00:00:00:00:00:10
-          /run/current-system/sw/bin/systemctl stop dhcpcd.service
-          /run/current-system/sw/bin/ip addr flush eth0
-          /run/current-system/sw/bin/systemctl start dhcpcd.service
         '';
         wantedBy = ["basic.target"];
         after = ["dhcpcd.service"];
