@@ -65,7 +65,6 @@
             (import ./systems/gerg-desktop inputs)
             {
               nixpkgs.overlays = [
-                (import ./pkgs)
                 nvim-flake.overlays.default
               ];
             }
@@ -115,15 +114,17 @@
           };
           default = nix;
         };
-        packages = {
-          nixos-iso = nixos-generators.nixosGenerate {
-            inherit system;
-            format = "install-iso";
-            modules = [
-              (import ./iso inputs)
-            ];
-          };
-        };
+        packages =
+          {
+            nixos-iso = nixos-generators.nixosGenerate {
+              inherit system;
+              format = "install-iso";
+              modules = [
+                (import ./iso inputs)
+              ];
+            };
+          }
+          // (import ./pkgs pkgs);
       }
     );
 }

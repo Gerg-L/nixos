@@ -1,6 +1,7 @@
 _: {
   pkgs,
   config,
+  self,
   ...
 }: {
   #discord bot stuff
@@ -9,7 +10,7 @@ _: {
     wantedBy = ["multi-user.target"];
     wants = ["network-online.target"];
     after = ["network-online.target"];
-    script = "${pkgs.parrot}/bin/parrot";
+    script = "${self.packages.${pkgs.system}.parrot}/bin/parrot";
     serviceConfig = {
       EnvironmentFile = config.sops.secrets.discordenv.path;
       Restart = "on-failure";

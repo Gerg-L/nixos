@@ -1,5 +1,5 @@
-(final: _: {
-  t-rex-miner = final.callPackage ./t-rex-miner {};
-  afk-cmds = final.callPackage ./afk-cmds {};
-  parrot = final.callPackage ./parrot {};
-})
+pkgs: {
+  t-rex-miner = pkgs.callPackage ./t-rex-miner {};
+  afk-cmds = pkgs.callPackage ./afk-cmds {};
+  parrot = pkgs.callPackage ./parrot {};
+}
