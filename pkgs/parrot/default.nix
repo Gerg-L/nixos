@@ -1,10 +1,14 @@
 {
+  lib,
   rustPlatform,
   fetchFromGitHub,
   pkg-config,
   openssl,
   cmake,
   libopus,
+  yt-dlp,
+  ffmpeg,
+  makeWrapper,
 }:
 # yt-dlp and ffmpeg required at runtime
 rustPlatform.buildRustPackage {
@@ -25,7 +29,14 @@ rustPlatform.buildRustPackage {
   nativeBuildInputs = [
     pkg-config
     cmake
+    makeWrapper
   ];
+  postInstall = ''
+    wrapProgram $out/bin/parrot \
+      --set PATH ${lib.makeBinPath [
+      yt-dlp
+      ffmpeg
+    ]}'';
   cargoSha256 = "sha256-qPyuj5OxHrWz0YbrquCTTKZM3j1poXuioNNvn9z+xDQ=";
 
   RUSTC_BOOTSTRAP = 1;

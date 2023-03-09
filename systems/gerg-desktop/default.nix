@@ -10,7 +10,6 @@ inputs: {
     (import ./vfio.nix inputs)
     (import ./parrot.nix inputs)
     (import ./spicetify.nix inputs)
-    #(import ./mining.nix inputs)
     (import ./zfs inputs)
     (import ./containers inputs)
   ];
