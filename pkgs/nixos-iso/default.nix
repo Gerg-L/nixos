@@ -25,8 +25,7 @@ _: {
   fonts.fontconfig.enable = lib.mkForce false;
 
   isoImage = {
-    edition = lib.mkForce "gerg-minimal";
-
+    edition = lib.mkForce "custom-minimal";
     isoName = lib.mkForce "NixOS.iso";
   };
   nix = {
