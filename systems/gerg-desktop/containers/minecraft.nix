@@ -1,5 +1,6 @@
 _: {...}: {
   containers."minecraft" = {
+    ephemeral = true;
     privateNetwork = true;
     hostBridge = "bridge0";
     localAddress = "192.168.1.10/24";
@@ -36,6 +37,8 @@ _: {...}: {
         wantedBy = ["basic.target"];
         after = ["dhcpcd.service"];
       };
+      boot.initrd.postDeviceCommands = "mkdir -p /minecraft";
+
       system.stateVersion = "unstable";
       users.users.minecraft = {
         description = "Minecraft server service user";

@@ -1,10 +1,16 @@
 _: {...}: {
   containers."website" = {
+    ephemeral = true;
     autoStart = true;
     privateNetwork = true;
     hostBridge = "bridge0";
     localAddress = "192.168.1.11/24";
     localAddress6 = "2605:59c8:252e:500:200:ff:fe00:11/64";
+    bindMounts."/persist/website" = {
+      mountPoint = "/var";
+      hostPath = "/persist/website";
+      isReadOnly = false;
+    };
     config = {
       pkgs,
       config,
