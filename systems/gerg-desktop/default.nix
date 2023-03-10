@@ -10,8 +10,9 @@ inputs: {
     (import ./vfio.nix inputs)
     (import ./parrot.nix inputs)
     (import ./spicetify.nix inputs)
-    (import ./zfs inputs)
+    (import ./zfs.nix inputs)
     (import ./containers inputs)
+    (import ./disko.nix inputs)
   ];
 
   system.stateVersion = "unstable";
