@@ -120,7 +120,7 @@
               inherit system;
               format = "install-iso";
               modules = [
-                (import ./iso inputs)
+                (import ./pkgs/nixos-iso inputs)
               ];
             };
           }
