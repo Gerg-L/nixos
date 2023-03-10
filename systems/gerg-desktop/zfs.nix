@@ -1,8 +1,4 @@
-_: {
-  config,
-  lib,
-  ...
-}: {
+_: {config, ...}: {
   boot = {
     zfs = {
       devNodes = "/dev/disk/by-id/";
@@ -17,7 +13,6 @@ _: {
     };
     plymouth.enable = false;
     loader = {
-      timeout = lib.mkForce 10;
       generationsDir.copyKernels = true;
 
       #override defaults
