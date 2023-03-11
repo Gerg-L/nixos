@@ -10,16 +10,5 @@ _: {lib, ...}: {
       KbdInteractiveAuthentication = false;
     };
   };
-
-  #time settings
-  time.timeZone = "America/New_York";
-  services = {
-    timesyncd = {
-      enable = true;
-      servers = [
-        "time.cloudflare.com"
-      ];
-    };
-  };
   i18n.defaultLocale = "en_US.UTF-8";
 }
