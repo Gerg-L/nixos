@@ -54,7 +54,7 @@ inputs: {
   networking = {
     hostName = "gerg-desktop";
     hostId = "288b56db";
-    nameservers = ["1.1.1.1" "1.0.0.1"];
+    nameservers = ["192.168.1.1"];
     defaultGateway = "192.168.1.1";
     interfaces = {
       "enp11s0" = {
