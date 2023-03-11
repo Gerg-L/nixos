@@ -2,6 +2,7 @@
   pkgs,
   self,
   config,
+  lib,
   ...
 }: {
   imports = [
@@ -12,6 +13,6 @@
   ];
   sops = {
     defaultSopsFile = "${self}/systems/${config.networking.hostName}/secrets.yaml";
-    age.keyFile = "/persist/sops/age/keys.txt";
+    age.sshKeyPaths = lib.mkForce ["/etc/ssh/ssh_host_ed25519_key"];
   };
 }
