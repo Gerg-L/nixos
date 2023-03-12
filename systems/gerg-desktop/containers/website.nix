@@ -1,5 +1,15 @@
 _: {...}: {
-  sops.secrets."website/sql" = {};
+  sops.secrets = {
+    "website/sql_gitea" = {
+      mode = "0444";
+    };
+    "website/sql_nextcloud" = {
+      mode = "0444";
+    };
+    "website/nextcloud" = {
+      mode = "0444";
+    };
+  };
   containers."website" = {
     ephemeral = true;
     autoStart = true;
@@ -31,7 +41,6 @@ _: {...}: {
         defaultGateway = "192.168.1.1";
         nameservers = ["1.1.1.1" "1.0.0.1"];
         firewall = {
-          #allowedUDPPorts = [giteaPort 80 443];
           allowedTCPPorts = [giteaPort 80 443 22];
         };
       };
@@ -46,7 +55,7 @@ _: {...}: {
       services = {
         gitea = {
           enable = true;
-          appName = "WEEEWOOOO";
+          appName = "Powered by NixOS";
           domain = "git.gerg-l.com";
           rootUrl = "https://git.gerg-l.com/";
           httpPort = giteaPort;
@@ -61,9 +70,52 @@ _: {...}: {
               DISABLE_REGISTRATION = true;
             };
           };
+          database = {
+            type = "postgres";
+            passwordFile = "/secrets/sql_gitea";
+          };
+        };
+        nextcloud = {
+          enable = true;
+          package = pkgs.nextcloud25;
+          hostName = "next.gerg-l.com";
+          nginx.recommendedHttpHeaders = true;
+          enableBrokenCiphersForSSE = false;
+          https = true;
+          autoUpdateApps.enable = true;
+          config = {
+            dbtype = "pgsql";
+            dbhost = "/run/postgresql";
+            dbpassFile = "/secrets/sql_nextcloud";
+            adminpassFile = "/secrets/nextcloud";
+            adminuser = "admin-root";
+            defaultPhoneRegion = "IL";
+            extraTrustedDomains = ["[2605:59c8:252e:500:200:ff:fe00:11]"];
+          };
+        };
+        postgresql = {
+          enable = true;
+          package = pkgs.postgresql_13;
+          ensureDatabases = [config.services.nextcloud.config.dbname];
+          ensureUsers = [
+            {
+              name = config.services.nextcloud.config.dbuser;
+              ensurePermissions."DATABASE ${config.services.nextcloud.config.dbname}" = "ALL PRIVILEGES";
+            }
+          ];
+          authentication = ''
+            local gitea all ident map=gitea-users
+          '';
+          identMap = ''
+            gitea-users gitea gitea
+          '';
         };
         nginx = {
           enable = true;
+          recommendedGzipSettings = true;
+          recommendedOptimisation = true;
+          recommendedProxySettings = true;
+          recommendedTlsSettings = true;
           virtualHosts = {
             "git.gerg-l.com" = {
               forceSSL = true;
@@ -71,6 +123,10 @@ _: {...}: {
               locations."/" = {
                 proxyPass = "http://localhost:${toString giteaPort}";
               };
+            };
+            "next.gerg-l.com" = {
+              forceSSL = true;
+              enableACME = true;
             };
           };
         };
@@ -82,6 +138,10 @@ _: {...}: {
             KbdInteractiveAuthentication = false;
           };
         };
+      };
+      systemd.services."nextcloud-setup" = {
+        requires = ["postgresql.service"];
+        after = ["postgresql.service"];
       };
       security.acme = {
         acceptTerms = true;
