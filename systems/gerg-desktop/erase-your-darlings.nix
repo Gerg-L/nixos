@@ -6,13 +6,10 @@ _: {lib, ...}: {
     "L+ /etc/nixos - - - - /persist/nixos"
   ];
   boot.initrd.postDeviceCommands = lib.mkAfter ''
-    zfs snapshot destroy rpool/root@prev
-    zfs snapshot destroy rpool/var@prev
-
-    zfs snapshot create rpool/root@prev
-    zfs snapshot create rpool/var@prev
-
     zfs rollback -r rpool/root@empty
     zfs rollback -r rpool/var@empty
   '';
+  #make sure the sopskey is found
+  sops.age.sshKeyPaths = lib.mkForce ["/persist/ssh/ssh_host_ed25519_key"];
+  fileSystems."/persist".neededForBoot = true;
 }
