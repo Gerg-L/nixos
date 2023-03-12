@@ -12,8 +12,9 @@ inputs: {
     (import ./spicetify.nix inputs)
     (import ./zfs.nix inputs)
     (import ./containers inputs)
-    (import ./disko.nix inputs)
   ];
+
+  disko.devices = import ./disko.nix;
 
   system.stateVersion = "unstable";
   localModules = {

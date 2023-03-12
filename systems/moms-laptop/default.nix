@@ -6,8 +6,10 @@ inputs: {
 }: {
   imports = [
     (import ./printing.nix inputs)
-    (import ./disko.nix inputs)
   ];
+
+  disko.devices = import ./disko.nix;
+
   localModules = {
     DM = {
       lightdm.enable = true;
