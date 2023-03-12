@@ -36,6 +36,10 @@ _: {config, ...}: {
             devices = ["/dev/disk/by-id/nvme-SHPP41-500GM_SSB4N6719101A4N22"];
           }
         ];
+        splashImage = null;
+        extraConfig = ''
+          GRUB_TIMEOUT_STYLE=hidden
+        '';
       };
     };
   };

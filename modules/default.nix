@@ -2,8 +2,8 @@ inputs: {
   imports = [
     (import ./DE inputs)
     (import ./DM inputs)
+    (import ./boot inputs)
 
-    (import ./boot.nix inputs)
     (import ./git.nix inputs)
     (import ./hardware.nix inputs)
     (import ./misc.nix inputs)
