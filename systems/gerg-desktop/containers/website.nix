@@ -1,4 +1,5 @@
 _: {...}: {
+  sops.secrets."website/sql" = {};
   containers."website" = {
     ephemeral = true;
     autoStart = true;
@@ -15,6 +16,7 @@ _: {...}: {
         hostPath = "/persist/website/etc/ssh/";
         isReadOnly = false;
       };
+      "/secrets".hostPath = "/run/secrets/website";
     };
     config = {
       pkgs,
