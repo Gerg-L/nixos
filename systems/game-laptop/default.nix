@@ -32,11 +32,9 @@ inputs: {
   ];
   system.stateVersion = "unstable";
   environment.systemPackages = [
-    pkgs.pavucontrol #gui volume control
     pkgs.pcmanfm #file manager
     pkgs.librewolf #best browser
     pkgs.webcord
-    #   inputs.suckless.packages.${pkgs.system}.st
   ];
   networking = {
     hostName = "game-laptop";
@@ -75,6 +73,12 @@ inputs: {
   boot = {
     initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci"];
     kernelModules = ["kvm-amd"];
-    kernelPackages = pkgs.linuxPackages_zen;
+    kernelPackages = pkgs.linuxPackages_latest;
   };
+  swapDevices = [
+    {
+      device = "/swapfile";
+      size = 16 * 1024;
+    }
+  ];
 }
