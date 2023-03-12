@@ -1,12 +1,5 @@
-_: {
-  lib,
-  modulesPath,
-  ...
-}: {
-  disabledModules = ["${modulesPath}/system/boot/stage-2.nix"];
-  imports = [
-    ./stage-2.nix
-  ];
+inputs: {lib, ...}: {
+  imports = [(import ./stage2patch.nix inputs)];
   environment.etc = {
     "issue" = {
       text = "[?12l[?25h";
