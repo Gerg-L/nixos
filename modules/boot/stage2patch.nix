@@ -30,5 +30,5 @@
       '';
   };
 in {
-  system.build.bootStage2.src = lib.mkForce bootStage2;
+  system.build.bootStage2 = lib.mkForce bootStage2;
 }
