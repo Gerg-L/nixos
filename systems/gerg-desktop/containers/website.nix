@@ -6,10 +6,15 @@ _: {...}: {
     hostBridge = "bridge0";
     localAddress = "192.168.1.11/24";
     localAddress6 = "2605:59c8:252e:500:200:ff:fe00:11/64";
-    bindMounts."/persist/website" = {
-      mountPoint = "/var";
-      hostPath = "/persist/website";
-      isReadOnly = false;
+    bindMounts = {
+      "/var" = {
+        hostPath = "/persist/website/var";
+        isReadOnly = false;
+      };
+      "/etc/ssh" = {
+        hostPath = "/persist/website/etc/ssh/";
+        isReadOnly = false;
+      };
     };
     config = {
       pkgs,
