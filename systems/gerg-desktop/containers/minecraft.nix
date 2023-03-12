@@ -1,6 +1,7 @@
 _: {...}: {
   containers."minecraft" = {
     ephemeral = true;
+    autoStart = true;
     privateNetwork = true;
     hostBridge = "bridge0";
     localAddress = "192.168.1.10/24";
