@@ -132,7 +132,6 @@ _: {
         normalization = "formD";
         relatime = "on";
         xattr = "sa";
-        canmount = "off";
         encryption = "on";
         keyformat = "passphrase";
         keylocation = "prompt";
@@ -141,32 +140,30 @@ _: {
         ashift = "12";
         autotrim = "on";
       };
+
       datasets = {
         "root" = {
           zfs_type = "filesystem";
           options.mountpoint = "legacy";
           mountpoint = "/";
         };
-        "root/nix" = {
+        "nix" = {
           zfs_type = "filesystem";
           options.mountpoint = "legacy";
           mountpoint = "/nix";
         };
-        "root/var" = {
+        "var" = {
           zfs_type = "filesystem";
-
           options.mountpoint = "legacy";
           mountpoint = "/var";
         };
-        "root/persist" = {
+        "persist" = {
           zfs_type = "filesystem";
-
           options.mountpoint = "legacy";
           mountpoint = "/persist";
         };
-        "root/home" = {
+        "home" = {
           zfs_type = "filesystem";
-
           options.mountpoint = "legacy";
           mountpoint = "/home";
         };
