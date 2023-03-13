@@ -19,7 +19,6 @@
       PAGER = "page";
       SYSTEMD_PAGERSECURE = "true";
       TERMINAL = "st";
-      NIX_BUILD_SHELL = "zsh";
       DIRENV_LOG_FORMAT = "";
     };
     shellAliases = {
