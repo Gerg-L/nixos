@@ -40,7 +40,8 @@ in {
       flake-registry = builtins.toFile "empty-flake-registry.json" ''{"flakes":[],"version":2}'';
       keep-outputs = true;
       keep-derivations = true;
-      use-xdg-base-directories = true;
+      #become stable faster stupid
+      #use-xdg-base-directories = true;
       trusted-users = [
         "root"
         "@wheel"
