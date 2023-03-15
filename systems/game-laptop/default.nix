@@ -35,15 +35,7 @@ inputs: {
     pkgs.pcmanfm #file manager
     pkgs.librewolf #best browser
     pkgs.webcord
-    (pkgs.obs-studio.overrideAttrs (old: rec {
-      preFixup =
-        old.preFixup
-        + ''
-          qtWrapperArgs+=(
-            --prefix LD_LIBRARY_PATH : "/run/opengl-driver/lib"
-          )
-        '';
-    }))
+    inputs.master.legacyPackages.${pkgs.system}.obs-studio
     pkgs.vlc
   ];
   networking = {
