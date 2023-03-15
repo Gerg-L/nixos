@@ -3,5 +3,6 @@ _: {pkgs, ...}: {
     heroic
     legendary-gl
     prismlauncher
+    lutris
   ];
 }
