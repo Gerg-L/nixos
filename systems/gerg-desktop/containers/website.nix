@@ -9,6 +9,14 @@ _: {...}: {
     "website/nextcloud" = {
       mode = "0444";
     };
+
+    "website/ssl_key" = {
+      mode = "0444";
+    };
+
+    "website/ssl_cert" = {
+      mode = "0444";
+    };
   };
   containers."website" = {
     ephemeral = true;
@@ -79,10 +87,8 @@ _: {...}: {
           enable = true;
           package = pkgs.nextcloud25;
           hostName = "next.gerg-l.com";
-          nginx.recommendedHttpHeaders = true;
-          enableBrokenCiphersForSSE = false;
-          https = true;
           autoUpdateApps.enable = true;
+          enableBrokenCiphersForSSE = false;
           config = {
             dbtype = "pgsql";
             dbhost = "/run/postgresql";
@@ -90,7 +96,6 @@ _: {...}: {
             adminpassFile = "/secrets/nextcloud";
             adminuser = "admin-root";
             defaultPhoneRegion = "IL";
-            extraTrustedDomains = ["[2605:59c8:252e:500:200:ff:fe00:11]"];
           };
         };
         postgresql = {
@@ -116,18 +121,21 @@ _: {...}: {
           recommendedOptimisation = true;
           recommendedProxySettings = true;
           recommendedTlsSettings = true;
-          virtualHosts = {
-            "git.gerg-l.com" = {
+          virtualHosts = let
+            template = {
               forceSSL = true;
-              enableACME = true;
-              locations."/" = {
-                proxyPass = "http://localhost:${toString giteaPort}";
+              sslCertificate = "/secrets/ssl_cert";
+              sslCertificateKey = "/secrets/ssl_key";
+            };
+          in {
+            "git.gerg-l.com" =
+              template
+              // {
+                locations."/" = {
+                  proxyPass = "http://localhost:${toString giteaPort}";
+                };
               };
-            };
-            "next.gerg-l.com" = {
-              forceSSL = true;
-              enableACME = true;
-            };
+            "next.gerg-l.com" = template;
           };
         };
         openssh = {
@@ -142,10 +150,6 @@ _: {...}: {
       systemd.services."nextcloud-setup" = {
         requires = ["postgresql.service"];
         after = ["postgresql.service"];
-      };
-      security.acme = {
-        acceptTerms = true;
-        defaults.email = "gregleyda@proton.me";
       };
     };
   };

@@ -54,9 +54,13 @@ inputs: {
   in ["L+ /home/gerg/.config/WebCord/Themes/black - - - - ${theme}"];
 
   networking = {
+    useDHCP = false;
     hostName = "gerg-desktop";
     hostId = "288b56db";
-    nameservers = ["192.168.1.1"];
+    nameservers = [
+      "192.168.1.1"
+      "2605:59c8:252e:500::1"
+    ];
     defaultGateway = "192.168.1.1";
     interfaces = {
       "enp11s0" = {
