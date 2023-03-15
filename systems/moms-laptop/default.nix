@@ -65,4 +65,15 @@ inputs: {
     initrd.availableKernelModules = ["xhci-pci" "ehci-pci" "ahci" "usbhid" "sd_mod" "sr_mod" "rtsx_usb_sdmmc"];
     kernelModules = ["kvm-intel"];
   };
+  systemd.tmpfiles.rules = [
+    "L+ /home/jo/Desktop/gimp.desktop - - - - ${pkgs.gimp}/share/applications/gimp.desktop"
+    "L+ /home/jo/Desktop/org.gnome.Calculator.desktop - - - - ${pkgs.gnome.gnome-calculator}/share/applications/org.gnome.Calculator.desktop"
+    "L+ /home/jo/Desktop/org.nomacs.ImageLounge.desktop - - - - ${pkgs.nomacs}/share/applications/org.nomacs.ImageLounge.desktop"
+    "L+ /home/jo/Desktop/thunar.desktop - - - - ${pkgs.xfce.thunar}/share/applications/thunar.desktop"
+    "L+ /home/jo/Desktop/librewolf.desktop - - - - ${pkgs.librewolf}/share/applications/librewolf.desktop"
+    "L+ /home/jo/Desktop/vlc.desktop - - - - ${pkgs.vlc}/share/applications/vlc.desktop"
+    "L /home/jo/Desktop/Downloads - - - - /home/jo/Downloads"
+    "L /home/jo/Desktop/Documents - - - - /home/jo/Documents"
+    "L /home/jo/Desktop/Pictures - - - - /home/jo/Pictures"
+  ];
 }
