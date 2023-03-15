@@ -35,6 +35,16 @@ inputs: {
     pkgs.pcmanfm #file manager
     pkgs.librewolf #best browser
     pkgs.webcord
+    (pkgs.obs-studio.overrideAttrs (old: rec {
+      preFixup =
+        old.preFixup
+        + ''
+          qtWrapperArgs+=(
+            --prefix LD_LIBRARY_PATH : "/run/opengl-driver/lib"
+          )
+        '';
+    }))
+    pkgs.vlc
   ];
   networking = {
     hostName = "game-laptop";
@@ -49,7 +59,7 @@ inputs: {
         useDefaultShell = true;
         uid = 1000;
         isNormalUser = true;
-        extraGroups = ["networkmanager" "audio"];
+        extraGroups = ["audio"];
         initialHashedPassword = "";
       };
       "root" = {
