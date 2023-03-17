@@ -6,7 +6,6 @@ inputs: {
   ...
 }: {
   imports = [
-    (import ./refreshrate.nix inputs)
     (import ./vfio.nix inputs)
     (import ./parrot.nix inputs)
     (import ./spicetify.nix inputs)
@@ -33,7 +32,17 @@ inputs: {
       kmscon.enable = true;
     };
   };
-  services.xserver.videoDrivers = ["amdgpu"];
+  hardware.nvidia = {
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    nvidiaPersistenced = false;
+    nvidiaSettings = false;
+    modesetting.enable = true;
+    open = true;
+  };
+  services.xserver = {
+    videoDrivers = ["nvidia" "amdgpu"];
+  };
+  nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = [
     pkgs.webcord # talk to people (gross)
@@ -47,12 +56,10 @@ inputs: {
     pkgs.neovide #gui neovim
     pkgs.ripgrep
     inputs.suckless.packages.${pkgs.system}.st
+    pkgs.alacritty
   ];
-  #set webcord theme
-  systemd.tmpfiles.rules = let
-    theme = pkgs.writeText "black" (builtins.readFile "${self}/misc/black.theme.css");
-  in ["L+ /home/gerg/.config/WebCord/Themes/black - - - - ${theme}"];
 
+  environment.etc."xdg/alacritty/alacritty.yml".source = "${self}/misc/alacritty.yml";
   networking = {
     useDHCP = false;
     hostName = "gerg-desktop";
@@ -117,8 +124,8 @@ inputs: {
     };
   };
   boot = {
+    kernelModules = ["amdgpu"];
     initrd = {
-      kernelModules = ["amdgpu"];
       availableKernelModules = ["nvme" "xhci_pci" "ahci" "usbhid" "sd_mod"];
       includeDefaultModules = false;
     };

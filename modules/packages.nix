@@ -6,10 +6,10 @@ _: {pkgs, ...}: {
       pkgs.pciutils #lspci
       pkgs.alsa-utils #volume control
       pkgs.xclip #commandline clipboard access
-      pkgs.btrfs-progs #for external harddrive
       pkgs.bottom #view tasks
       pkgs.bc #terminal calculator
       pkgs.nix-tree #view packages
+      pkgs.nix-output-monitor
     ];
   };
 }

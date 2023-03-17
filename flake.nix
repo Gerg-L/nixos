@@ -6,7 +6,6 @@
     stable.url = "github:NixOS/nixpkgs/nixos-22.11";
     #utilites --maybe flake-parts soon?
     flake-utils.url = "github:numtide/flake-utils";
-
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "unstable";

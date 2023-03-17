@@ -59,12 +59,32 @@ in {
         services.xserver.displayManager.sessionCommands = ''
           xrdb -load /etc/xdg/Xresources
         '';
+        fonts = {
+          fonts = [
+            (pkgs.nerdfonts.override
+              {
+                fonts = ["Overpass"];
+              })
+          ];
+          enableDefaultFonts = false;
+          fontDir.enable = true;
+          fontconfig = {
+            enable = true;
+            defaultFonts = {
+              serif = ["Overpass Nerd Font"];
+              sansSerif = ["Overpass Nerd Font"];
+              monospace = ["OverpassMono Nerd Font"];
+            };
+            hinting.enable = true;
+            antialias = true;
+          };
+        };
       }
     )
     (mkIf cfg.kmscon.enable {
       services.kmscon = {
         enable = true;
-        hwRender = true;
+        hwRender = false;
         extraConfig = ''
           font-size=10
         '';
@@ -82,27 +102,6 @@ in {
       systemd.services = {
         "autovt@tty1".enable = false;
         "kmsconvt@tty1".enable = false;
-      };
-
-      fonts = {
-        fonts = [
-          (pkgs.nerdfonts.override
-            {
-              fonts = ["Overpass"];
-            })
-        ];
-        enableDefaultFonts = false;
-        fontDir.enable = true;
-        fontconfig = {
-          enable = true;
-          defaultFonts = {
-            serif = ["Overpass Nerd Font"];
-            sansSerif = ["Overpass Nerd Font"];
-            monospace = ["OverpassMono Nerd Font"];
-          };
-          hinting.enable = true;
-          antialias = true;
-        };
       };
     })
   ];

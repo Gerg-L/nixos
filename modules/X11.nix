@@ -15,6 +15,7 @@ in {
   config = mkMerge [
     {
       services.xserver = {
+        tty = lib.mkDefault 1;
         exportConfiguration = true;
         layout = "us";
         libinput.enable = true;
