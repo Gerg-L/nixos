@@ -30,7 +30,6 @@ inputs: {
     "steam-original"
     "steam-run"
   ];
-  system.stateVersion = "unstable";
   environment.systemPackages = [
     pkgs.pcmanfm #file manager
     pkgs.librewolf #best browser
@@ -83,4 +82,6 @@ inputs: {
       size = 16 * 1024;
     }
   ];
+
+  system.stateVersion = "23.05";
 }

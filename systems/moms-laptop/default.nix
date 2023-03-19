@@ -22,7 +22,6 @@ inputs: {
     };
   };
 
-  system.stateVersion = "unstable";
   environment.systemPackages = [
     pkgs.vlc
     pkgs.nomacs
@@ -76,4 +75,6 @@ inputs: {
     "L /home/jo/Desktop/Documents - - - - /home/jo/Documents"
     "L /home/jo/Desktop/Pictures - - - - /home/jo/Pictures"
   ];
+
+  system.stateVersion = "23.05";
 }

@@ -16,7 +16,6 @@ inputs: {
 
   disko.devices = import ./disko.nix;
 
-  system.stateVersion = "unstable";
   localModules = {
     X11Programs = {
       sxhkd.enable = true;
@@ -130,4 +129,6 @@ inputs: {
       includeDefaultModules = false;
     };
   };
+
+  system.stateVersion = "23.05";
 }
