@@ -35,7 +35,7 @@ inputs: {
     pkgs.pcmanfm #file manager
     pkgs.librewolf #best browser
     pkgs.webcord
-    inputs.master.legacyPackages.${pkgs.system}.obs-studio
+    pkgs.obs-studio
     pkgs.vlc
   ];
   networking = {
