@@ -18,7 +18,6 @@
       VISUAL = "nvim";
       PAGER = "page";
       SYSTEMD_PAGERSECURE = "true";
-      TERMINAL = "st";
       DIRENV_LOG_FORMAT = "";
     };
     shellAliases = {
@@ -57,7 +56,7 @@
     execWheelOnly = true;
     extraConfig = ''
       Defaults env_keep += "${builtins.concatStringsSep " " (builtins.attrNames environment.variables)}"
-      Defaults        lecture = never
+      Defaults lecture = never
     '';
   };
 

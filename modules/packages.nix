@@ -7,7 +7,6 @@ _: {pkgs, ...}: {
       pkgs.alsa-utils #volume control
       pkgs.xclip #commandline clipboard access
       pkgs.bottom #view tasks
-      pkgs.bc #terminal calculator
       pkgs.nix-tree #view packages
       pkgs.nix-output-monitor
     ];
