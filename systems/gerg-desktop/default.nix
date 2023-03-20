@@ -44,7 +44,6 @@ inputs: {
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = [
-    pkgs.webcord # talk to people (gross)
     pkgs.bitwarden #store stuff
     pkgs.qbittorrent #steal stuff
     pkgs.pavucontrol #gui volume control
@@ -58,6 +57,17 @@ inputs: {
     pkgs.alacritty
     pkgs.lutris
     pkgs.prismlauncher
+    # wrap webcord to remove state file https://github.com/SpacingBat3/WebCord/issues/360
+    (pkgs.symlinkJoin {
+      name = "webcord-wrapper";
+      nativeBuildInputs = [pkgs.makeWrapper];
+      paths = [
+        pkgs.webcord
+      ];
+      postBuild = ''
+        wrapProgram "$out/bin/webcord" --run 'rm $HOME/.config/WebCord/windowState.json'
+      '';
+    })
   ];
 
   environment.etc."xdg/alacritty/alacritty.yml".source = "${self}/misc/alacritty.yml";
