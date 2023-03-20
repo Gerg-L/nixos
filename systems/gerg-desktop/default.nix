@@ -56,6 +56,8 @@ inputs: {
     pkgs.ripgrep
     inputs.suckless.packages.${pkgs.system}.st
     pkgs.alacritty
+    pkgs.lutris
+    pkgs.prismlauncher
   ];
 
   environment.etc."xdg/alacritty/alacritty.yml".source = "${self}/misc/alacritty.yml";

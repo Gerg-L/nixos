@@ -78,10 +78,9 @@ in {
   services.xserver.displayManager.sessionCommands = lib.mkBefore ''
     if ! (test -e "/tmp/ONE_MONITOR"); then
         xrandr --setprovideroutputsource "AMD Radeon Graphics @ pci:0000:0f:00.0" NVIDIA-0
-        xrandr --auto
-        xrandr --output DP-0 --mode 3440x1440 --rate 120 --primary --left-of HDMI-A-1-0
-        xrandr --output HDMI-A-1-0 --mode 1920x1080 --rate 120 --set TearFree on
-        xset s off -dpms
+        xrandr --output DP-0 --mode 3440x1440 --rate 120 --primary --pos 0x0
+        xrandr --output HDMI-A-1-0 --mode 1920x1080 --rate 144 --set TearFree on --pos 3440x360
+        xset -dpms
     fi
   '';
 
