@@ -22,6 +22,7 @@ in {
         sessionCommands = ''
           ${pkgs.feh}/bin/feh --bg-center ${self + /misc/recursion.png}
           ${pkgs.numlockx}/bin/numlockx
+          ${pkgs.picom}/bin/picom &
         '';
         defaultSession = "none+dwm";
       };
@@ -30,7 +31,20 @@ in {
         {
           name = "dwm";
           start = ''
-            dwm &
+            update_time () {
+              while :
+              do
+                sleep 1
+                xsetroot -name "$(date +"%I:%M %p")"
+              done
+            }
+
+            dont_stop() {
+              while type dwm >/dev/null ; do dwm && continue || break ; done
+            }
+
+            update_time &
+            dont_stop &
             waitPID=$!
           '';
         };

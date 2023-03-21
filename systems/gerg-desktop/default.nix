@@ -19,7 +19,6 @@ inputs: {
   localModules = {
     X11Programs = {
       sxhkd.enable = true;
-      picom.enable = true;
     };
     DE.dwm.enable = true;
     DM = {
