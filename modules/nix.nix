@@ -31,7 +31,7 @@ in {
 
   #other nix settings
   nix = {
-    package = pkgs.nixVersions.unstable;
+    package = inputs.nix.packages.${pkgs.system}.default;
     settings = {
       experimental-features = ["nix-command" "flakes" "repl-flake"];
       auto-optimise-store = true;
