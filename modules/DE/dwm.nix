@@ -52,6 +52,7 @@ in {
     environment.systemPackages = [
       sp.dmenu
       sp.dwm
+      sp.st
     ];
   };
 }

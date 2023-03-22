@@ -52,8 +52,6 @@ inputs: {
     pkgs.vlc #play stuff
     pkgs.neovide #gui neovim
     pkgs.ripgrep
-    inputs.suckless.packages.${pkgs.system}.st
-    pkgs.alacritty
     pkgs.lutris
     pkgs.prismlauncher
     # wrap webcord to remove state file https://github.com/SpacingBat3/WebCord/issues/360
