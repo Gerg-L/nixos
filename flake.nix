@@ -4,8 +4,8 @@
     master.url = "github:NixOS/nixpkgs";
     unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     stable.url = "github:NixOS/nixpkgs/nixos-22.11";
-    #nix
-    nix.url = "github:NixOS/nix/latest-release";
+    #nix 2.14
+    nix.url = "github:NixOS/nix/70d01bdec1f9e2d9deba8198e99f2ad0a663d08c";
     #utilites --maybe flake-parts soon?
     flake-utils.url = "github:numtide/flake-utils";
     nixos-generators = {

@@ -40,6 +40,7 @@ inputs: {
   services.xserver = {
     videoDrivers = ["nvidia" "amdgpu"];
   };
+
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = [
@@ -65,6 +66,13 @@ inputs: {
         wrapProgram "$out/bin/webcord" --run 'rm $HOME/.config/WebCord/windowState.json'
       '';
     })
+    (pkgs.writeShellScriptBin "nvidia-offload" ''
+      export __NV_PRIME_RENDER_OFFLOAD=1
+      export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
+      export __GLX_VENDOR_LIBRARY_NAME=nvidia
+      export __VK_LAYER_NV_optimus=NVIDIA_only
+      exec "$@"
+    '')
   ];
 
   environment.etc."xdg/alacritty/alacritty.yml".source = "${self}/misc/alacritty.yml";
