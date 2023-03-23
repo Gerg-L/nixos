@@ -5,8 +5,8 @@ _: {
   ...
 }: {
   imports = [
-    "${toString modulesPath}/profiles/minimal.nix"
-    "${toString modulesPath}/installer/cd-dvd/installation-cd-base.nix"
+    "${modulesPath}/profiles/minimal.nix"
+    "${modulesPath}/installer/cd-dvd/installation-cd-base.nix"
   ];
 
   environment = {
@@ -25,7 +25,7 @@ _: {
   fonts.fontconfig.enable = lib.mkForce false;
 
   isoImage = {
-    edition = lib.mkForce "custom-minimal";
+    edition = lib.mkForce "gerg-minimal";
     isoName = lib.mkForce "NixOS.iso";
   };
   nix = {
