@@ -63,7 +63,7 @@ inputs: {
         pkgs.webcord
       ];
       postBuild = ''
-        wrapProgram "$out/bin/webcord" --run 'rm $HOME/.config/WebCord/windowState.json'
+        wrapProgram "$out/bin/webcord" --run  'if ( test -e $HOME/.config/WebCord/windowState.json ); then rm $HOME/.config/WebCord/windowState.json; fi'
       '';
     })
     (pkgs.writeShellScriptBin "nvidia-offload" ''
