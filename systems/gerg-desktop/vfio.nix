@@ -82,9 +82,9 @@ in {
   services.xserver.displayManager.xserverArgs = lib.mkAfter ["-config /tmp/xorg.conf"];
   services.xserver.displayManager.sessionCommands = lib.mkBefore ''
     if ! (test -e "/tmp/ONE_MONITOR"); then
-        xrandr --output DP-1-0 --auto --mode 3440x1440 --rate 120 --primary --pos 0x0
-        xrandr --output HDMI-A-0 --auto --mode 1920x1080 --rate 144 --set TearFree on --pos 3440x360
-        xset -dpms
+          xrandr --output DP-0 --auto --mode 3440x1440 --rate 120 --primary --pos 0x0
+          xrandr --output HDMI-A-1-0 --auto --mode 1920x1080 --rate 144 --set TearFree on --pos 3440x360
+          xset -dpms
     fi
   '';
 
