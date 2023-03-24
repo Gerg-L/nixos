@@ -43,7 +43,7 @@ inputs: {
         pkgs.webcord
       ];
       postBuild = ''
-        wrapProgram "$out/bin/webcord" --run  'if ( test -e $HOME/.config/WebCord/windowState.json ); then rm $HOME/.config/WebCord/windowState.json; fi'
+        wrapProgram "$out/bin/webcord" --run  'rm -f $HOME/.config/WebCord/windowState.json'
       '';
     })
   ];
