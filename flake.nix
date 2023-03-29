@@ -6,7 +6,7 @@
     stable.url = "github:NixOS/nixpkgs/nixos-22.11";
     #nix 2.14
     nix.url = "github:NixOS/nix/70d01bdec1f9e2d9deba8198e99f2ad0a663d08c";
-    #utilites --maybe flake-parts soon?
+    #utilites
     flake-utils.url = "github:numtide/flake-utils";
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
@@ -25,7 +25,6 @@
       url = "github:the-argus/spicetify-nix";
       inputs.nixpkgs.follows = "unstable";
     };
-
     #my own packages
     suckless = {
       url = "github:Gerg-L/suckless";
@@ -40,7 +39,7 @@
       inputs.nixpkgs.follows = "unstable";
     };
   };
-  outputs = {
+  outputs = inputs @ {
     self,
     unstable,
     flake-utils,
@@ -48,7 +47,7 @@
     nixos-generators,
     disko,
     ...
-  } @ inputs:
+  }:
     {
       nixosConfigurations = {
         gerg-desktop = unstable.lib.nixosSystem {
@@ -59,7 +58,6 @@
               username = "gerg";
             };
           };
-
           modules = [
             disko.nixosModules.disko
             (import ./modules inputs)
@@ -108,10 +106,13 @@
         formatter = pkgs.alejandra;
         devShells = rec {
           nix = pkgs.mkShell {
-            packages = with pkgs; [sops nil alejandra deadnix statix];
-          };
-          rust = pkgs.mkShell {
-            packages = with pkgs; [rust-analyzer rustc cargo rustfmt clippy];
+            packages = [
+              pkgs.sops
+              pkgs.nil
+              pkgs.alejandra
+              pkgs.deadnix
+              pkgs.statix
+            ];
           };
           default = nix;
         };

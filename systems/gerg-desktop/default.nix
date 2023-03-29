@@ -40,7 +40,11 @@ inputs: {
     videoDrivers = ["nvidia" "amdgpu"];
   };
 
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.allowedUnfree = [
+    "nvidia-x11"
+    "steam"
+    "steam-original"
+  ];
 
   environment.systemPackages = [
     pkgs.bitwarden #store stuff
@@ -54,6 +58,7 @@ inputs: {
     pkgs.ripgrep
     pkgs.lutris
     pkgs.prismlauncher
+    pkgs.xautoclick
     # wrap webcord to remove state file https://github.com/SpacingBat3/WebCord/issues/360
     (pkgs.symlinkJoin {
       name = "webcord-wrapper";

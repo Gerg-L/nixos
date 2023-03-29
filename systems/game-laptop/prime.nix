@@ -1,8 +1,4 @@
-_: {
-  config,
-  pkgs,
-  ...
-}: {
+_: {config, ...}: {
   hardware.nvidia = {
     package = config.boot.kernelPackages.nvidiaPackages.latest;
     prime = {
@@ -10,7 +6,6 @@ _: {
         enable = true;
         enableOffloadCmd = true;
       };
-      #      sync.enable = true;
       amdgpuBusId = "PCI:5:0:0";
       nvidiaBusId = "PCI:1:0:0";
     };
@@ -23,7 +18,6 @@ _: {
     modesetting.enable = true;
   };
   services.xserver = {
-    videoDrivers = ["nvidia"];
     #disable DPMS
     monitorSection = ''
       Option "DPMS" "false"

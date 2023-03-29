@@ -7,7 +7,6 @@ inputs: {
 }: {
   imports = [
     (import ./prime.nix inputs)
-    (import ./gaming.nix inputs)
   ];
 
   disko.devices = import ./disko.nix;
@@ -28,9 +27,12 @@ inputs: {
     "nvidia-persistenced"
     "steam"
     "steam-original"
-    "steam-run"
   ];
   environment.systemPackages = [
+    pkgs.heroic
+    pkgs.legendary-gl
+    pkgs.prismlauncher
+    pkgs.lutris
     pkgs.pcmanfm #file manager
     pkgs.librewolf #best browser
     pkgs.obs-studio

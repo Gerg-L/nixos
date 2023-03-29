@@ -16,7 +16,6 @@ in {
       (with pkgs; [
         gnome-photos
         gnome-tour
-        gnome-console
         gnome-text-editor
         gnome-online-accounts
       ])
@@ -48,6 +47,5 @@ in {
       desktopManager.gnome.enable = true;
       displayManager.defaultSession = "gnome";
     };
-    environment.systemPackages = [pkgs.gnome.gnome-terminal];
   };
 }
