@@ -24,7 +24,7 @@ _: {...}: {
     privateNetwork = true;
     hostBridge = "bridge0";
     localAddress = "192.168.1.11/24";
-    localAddress6 = "2605:59c8:252e:500:200:ff:fe00:11/64";
+    localAddress6 = "2605:59c8:204b:bf00:200:ff:fe00:11/64";
     bindMounts = {
       "/var" = {
         hostPath = "/persist/website/var";

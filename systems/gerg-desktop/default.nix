@@ -96,7 +96,7 @@ inputs: {
         ];
         ipv6.addresses = [
           {
-            address = "2605:59c8:252e:500:da5e:d3ff:fee5:4790";
+            address = "2605:59c8:204b:bf00:da5e:d3ff:fee5:4790";
             prefixLength = 64;
           }
         ];
