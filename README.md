@@ -1,5 +1,5 @@
 This is my personal nixos configuration
-it currently has 2 hosts:
+it currently has 3 hosts:
 
   "gerg-desktop" my main computer [specs](https://pcpartpicker.com/list/DVkMk9)
   which I run a windows KVM VFIO virtual machine on
