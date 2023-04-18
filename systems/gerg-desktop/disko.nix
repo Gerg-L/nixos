@@ -9,7 +9,6 @@ _: {
         partitions = [
           {
             name = "boot";
-            type = "partition";
             start = "0";
             end = "1M";
             part-type = "primary";
@@ -17,7 +16,6 @@ _: {
           }
           {
             name = "ESP";
-            type = "partition";
             start = "1M";
             end = "1G";
             bootable = true;
@@ -29,7 +27,6 @@ _: {
           }
           {
             name = "zfsboot";
-            type = "partition";
             start = "1G";
             end = "5G";
             content = {
@@ -39,7 +36,6 @@ _: {
           }
           {
             name = "swap";
-            type = "partition";
             start = "5G";
             end = "21G";
             content = {
@@ -49,7 +45,6 @@ _: {
           }
           {
             name = "zfsroot";
-            type = "partition";
             start = "21G";
             end = "100%";
             content = {
@@ -69,7 +64,6 @@ _: {
         partitions = [
           {
             name = "BIOS";
-            type = "partition";
             start = "0";
             end = "1M";
             part-type = "primary";
@@ -77,7 +71,6 @@ _: {
           }
           {
             name = "ESP";
-            type = "partition";
             start = "1M";
             end = "1G";
             bootable = true;
@@ -89,7 +82,6 @@ _: {
           }
           {
             name = "zfsboot";
-            type = "partition";
             start = "1G";
             end = "5G";
             content = {
@@ -99,7 +91,6 @@ _: {
           }
           {
             name = "swap";
-            type = "partition";
             start = "5G";
             end = "21G";
             content = {
@@ -109,7 +100,6 @@ _: {
           }
           {
             name = "zfsroot";
-            type = "partition";
             start = "21G";
             end = "100%";
             content = {
@@ -143,27 +133,27 @@ _: {
 
       datasets = {
         "root" = {
-          zfs_type = "filesystem";
+          type = "zfs_fs";
           options.mountpoint = "legacy";
           mountpoint = "/";
         };
         "nix" = {
-          zfs_type = "filesystem";
+          type = "zfs_fs";
           options.mountpoint = "legacy";
           mountpoint = "/nix";
         };
         "var" = {
-          zfs_type = "filesystem";
+          type = "zfs_fs";
           options.mountpoint = "legacy";
           mountpoint = "/var";
         };
         "persist" = {
-          zfs_type = "filesystem";
+          type = "zfs_fs";
           options.mountpoint = "legacy";
           mountpoint = "/persist";
         };
         "home" = {
-          zfs_type = "filesystem";
+          type = "zfs_fs";
           options.mountpoint = "legacy";
           mountpoint = "/home";
         };
@@ -189,7 +179,7 @@ _: {
       };
       datasets = {
         "boot" = {
-          zfs_type = "filesystem";
+          type = "zfs_fs";
           options.mountpoint = "legacy";
           mountpoint = "/boot";
         };

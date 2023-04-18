@@ -17,8 +17,8 @@ rustPlatform.buildRustPackage {
   src = fetchFromGitHub {
     owner = "aquelemiguel";
     repo = "parrot";
-    rev = "b2c5ad7774616f488e9fc556082da545c5461c21";
-    sha256 = "sha256-S73Ef4GjdHjkiQZnOqwFzuidWnSrMe92rc1qZ6rYdiY=";
+    rev = "6b1df01bd9cce1c0d8446dea720c4a32ff935514";
+    hash = "sha256-f6YAdsq2ecsOCvk+A8wsUu+ywQnW//gCAkVLF0HTn8c=";
   };
 
   buildInputs = [
@@ -37,7 +37,7 @@ rustPlatform.buildRustPackage {
       yt-dlp
       ffmpeg
     ]}'';
-  cargoSha256 = "sha256-qPyuj5OxHrWz0YbrquCTTKZM3j1poXuioNNvn9z+xDQ=";
+  cargoSha256 = "sha256-RueYf+SzDwhqEb40iR0hViEuMinH72T480fuqJWJ+uk=";
 
   RUSTC_BOOTSTRAP = 1;
 }

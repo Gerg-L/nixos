@@ -5,7 +5,6 @@ _: {...}: {
     privateNetwork = true;
     hostBridge = "bridge0";
     localAddress = "192.168.1.10/24";
-    localAddress6 = "2605:59c8:204b:bf00:200:ff:fe00:10/64";
     bindMounts."/minecraft" = {
       hostPath = "/persist/minecraft";
       isReadOnly = false;

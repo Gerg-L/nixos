@@ -8,9 +8,9 @@ inputs: {
   combined_flakes =
     (
       #filter non-flakes from inputs
-      lib.attrsets.filterAttrs (
+      lib.filterAttrs (
         _: value: (
-          !(lib.attrsets.hasAttrByPath ["flake"] value) || value.flake == false
+          !(lib.hasAttrByPath ["flake"] value) || value.flake == false
         )
       )
       inputs
@@ -23,7 +23,7 @@ inputs: {
     };
 in {
   #create registry from input flakes
-  nix.registry = lib.attrsets.mapAttrs (_: value: {flake = value;}) combined_flakes;
+  nix.registry = lib.mapAttrs (_: value: {flake = value;}) combined_flakes;
   #add all inputs to etc
   environment.etc = lib.mapAttrs' (name: value: lib.attrsets.nameValuePair "/nixpath/${name}" {source = value;}) combined_flakes;
   #source the etc paths to nixPath
@@ -41,7 +41,7 @@ in {
       keep-outputs = true;
       keep-derivations = true;
       #become stable faster stupid
-      #use-xdg-base-directories = true;
+      use-xdg-base-directories = true;
       trusted-users = [
         "root"
         "@wheel"
