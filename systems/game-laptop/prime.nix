@@ -18,6 +18,7 @@ _: {config, ...}: {
     modesetting.enable = true;
   };
   services.xserver = {
+    videoDrivers = ["nvidia"];
     #disable DPMS
     monitorSection = ''
       Option "DPMS" "false"

@@ -32,7 +32,6 @@ inputs: {
     pkgs.heroic
     pkgs.legendary-gl
     pkgs.prismlauncher
-    pkgs.lutris
     pkgs.pcmanfm #file manager
     pkgs.librewolf #best browser
     pkgs.obs-studio
@@ -77,10 +76,6 @@ inputs: {
       };
     };
   };
-  environment.interactiveShellInit = lib.mkForce ''
-    export TERMINAL=gnome-terminal
-    fetch-rs
-  '';
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
   boot = {

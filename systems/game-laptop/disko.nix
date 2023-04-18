@@ -7,7 +7,6 @@ _: {
       format = "gpt";
       partitions = [
         {
-          type = "partition";
           name = "ESP";
           start = "1MiB";
           end = "1GiB";
@@ -20,7 +19,6 @@ _: {
         }
         {
           name = "root";
-          type = "partition";
           start = "1GiB";
           end = "100%";
           part-type = "primary";

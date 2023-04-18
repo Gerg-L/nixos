@@ -22,7 +22,6 @@ in {
       ++ (with pkgs.gnome; [
         gnome-weather
         gnome-shell
-        gnome-calculator
         gnome-disk-utility
         gnome-maps
         gnome-clocks
