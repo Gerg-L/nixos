@@ -15,6 +15,7 @@ _: {
         pkgs.xorg.fontadobe75dpi
       ];
   in
+    ###TAKEN FROM HERE:https://github.com/NixOS/nixpkgs/blob/4787ebf7ae2ab071389be7ff86cf38edeee7e9f8/nixos/modules/services/x11/xserver.nix#L106-L136
     pkgs.runCommand "xserverbase"
     {
       fontpath =
@@ -52,6 +53,33 @@ in {
     libvirtd = {
       enable = true;
       qemu = {
+        #don't hook evdev at vm start
+        package = pkgs.qemu.overrideAttrs (old: {
+          patches =
+            old.patches
+            ++ [
+              #  "${self}/misc/qemu.diff"
+              (pkgs.writeText "qemu.diff" ''
+                diff --git a/ui/input-linux.c b/ui/input-linux.c
+                index e572a2e..a9d76ba 100644
+                --- a/ui/input-linux.c
+                +++ b/ui/input-linux.c
+                @@ -397,12 +397,6 @@ static void input_linux_complete(UserCreatable *uc, Error **errp)
+                     }
+
+                     qemu_set_fd_handler(il->fd, input_linux_event, NULL, il);
+                -    if (il->keycount) {
+                -        /* delay grab until all keys are released */
+                -        il->grab_request = true;
+                -    } else {
+                -        input_linux_toggle_grab(il);
+                -    }
+                     QTAILQ_INSERT_TAIL(&inputs, il, next);
+                     il->initialized = true;
+                     return;
+              '')
+            ];
+        });
         runAsRoot = true;
         ovmf.enable = true;
         verbatimConfig = ''

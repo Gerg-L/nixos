@@ -52,13 +52,13 @@ inputs: {
     pkgs.pavucontrol #gui volume control
     pkgs.pcmanfm #file manager
     pkgs.librewolf #best browser
-    #pointless stuff
     pkgs.vlc #play stuff
     pkgs.neovide #gui neovim
     pkgs.ripgrep
     pkgs.lutris
     pkgs.prismlauncher
     pkgs.xautoclick
+    inputs.master.legacyPackages.${pkgs.system}.mullvad-browser
     # wrap webcord to remove state file https://github.com/SpacingBat3/WebCord/issues/360
     (pkgs.symlinkJoin {
       name = "webcord-wrapper";
