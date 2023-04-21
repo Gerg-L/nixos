@@ -57,7 +57,7 @@
             };
             modules = [
               (import ./modules inputs)
-              (import ./systems + name inputs)
+              (import "${self}/systems/${name}" inputs)
             ];
           }
       );
