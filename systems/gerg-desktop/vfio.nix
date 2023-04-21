@@ -1,6 +1,5 @@
 _: {
   pkgs,
-  settings,
   self,
   config,
   lib,
@@ -83,7 +82,7 @@ in {
         runAsRoot = true;
         ovmf.enable = true;
         verbatimConfig = ''
-          user = "${settings.username}"
+          user = "gerg"
           group = "kvm"
           namespaces = []
         '';
@@ -100,7 +99,7 @@ in {
     };
   };
 
-  users.users."${settings.username}".extraGroups = ["kvm" "libvirtd"];
+  users.users.gerg.extraGroups = ["kvm" "libvirtd"];
 
   services.xserver.displayManager.xserverArgs = lib.mkAfter ["-config /tmp/xorg.conf"];
   services.xserver.displayManager.sessionCommands = lib.mkBefore ''

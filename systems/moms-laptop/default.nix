@@ -1,6 +1,5 @@
 inputs: {
   pkgs,
-  settings,
   config,
   ...
 }: {
@@ -13,6 +12,7 @@ inputs: {
     DM = {
       lightdm.enable = true;
       autoLogin = true;
+      loginUser = "jo";
     };
     DE.xfce.enable = true;
     theming = {
@@ -40,7 +40,7 @@ inputs: {
   users = {
     mutableUsers = false;
     users = {
-      "${settings.username}" = {
+      jo = {
         useDefaultShell = true;
         uid = 1000;
         isNormalUser = true;

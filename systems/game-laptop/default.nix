@@ -1,6 +1,5 @@
 inputs: {
   pkgs,
-  settings,
   config,
   ...
 }: {
@@ -14,6 +13,7 @@ inputs: {
     DM = {
       lightdm.enable = true;
       autoLogin = true;
+      loginUser = "games";
     };
     theming = {
       enable = true;
@@ -55,7 +55,7 @@ inputs: {
   users = {
     mutableUsers = false;
     users = {
-      "${settings.username}" = {
+      games = {
         useDefaultShell = true;
         uid = 1000;
         isNormalUser = true;

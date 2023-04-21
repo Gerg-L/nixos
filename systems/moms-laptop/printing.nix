@@ -1,15 +1,11 @@
-_: {
-  pkgs,
-  settings,
-  ...
-}: {
+_: {pkgs, ...}: {
   nixpkgs.allowedUnfree = ["hplip"];
   environment.systemPackages = [
     pkgs.gimp
     (pkgs.xsane.override {gimpSupport = true;})
     pkgs.libreoffice
   ];
-  users.users."${settings.username}".extraGroups = ["scanner" "lp" "cups"];
+  users.users.jo.extraGroups = ["scanner" "lp" "cups"];
   hardware.sane = {
     enable = true;
     extraBackends = [pkgs.hplipWithPlugin];

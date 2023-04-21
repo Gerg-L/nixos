@@ -1,6 +1,5 @@
 inputs: {
   pkgs,
-  settings,
   config,
   ...
 }: {
@@ -22,6 +21,7 @@ inputs: {
     DM = {
       lightdm.enable = true;
       autoLogin = true;
+      loginUser = "gerg";
     };
     theming = {
       enable = true;
@@ -106,7 +106,7 @@ inputs: {
   users = {
     mutableUsers = false;
     users = {
-      "${settings.username}" = {
+      gerg = {
         useDefaultShell = true;
         uid = 1000;
         isNormalUser = true;

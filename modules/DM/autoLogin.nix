@@ -2,7 +2,6 @@ _: {
   config,
   lib,
   options,
-  settings,
   ...
 }:
 with lib; let
@@ -13,7 +12,7 @@ in {
     services.xserver.displayManager = {
       autoLogin = {
         enable = true;
-        user = settings.username;
+        user = config.localModules.DM.loginUser;
       };
     };
   };

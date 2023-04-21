@@ -53,9 +53,6 @@
           system = "x86_64-linux";
           specialArgs = {
             inherit self;
-            settings = {
-              username = "gerg";
-            };
           };
           modules = [
             (import ./modules inputs)
@@ -71,9 +68,6 @@
           system = "x86_64-linux";
           specialArgs = {
             inherit self;
-            settings = {
-              username = "games";
-            };
           };
           modules = [
             (import ./modules inputs)
@@ -84,9 +78,6 @@
           system = "x86_64-linux";
           specialArgs = {
             inherit self;
-            settings = {
-              username = "jo";
-            };
           };
           modules = [
             (import ./modules inputs)

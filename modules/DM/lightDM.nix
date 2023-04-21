@@ -2,7 +2,6 @@ _: {
   config,
   lib,
   options,
-  settings,
   self,
   ...
 }:
@@ -21,7 +20,7 @@ in {
           extraConfig = "minimum-vt=1";
           greeters.mini = {
             enable = true;
-            user = settings.username;
+            user = config.localModules.DM.loginUser;
             extraConfig = ''
               [greeter]
               show-password-label = false
