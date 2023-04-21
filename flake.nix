@@ -45,7 +45,6 @@
     flake-utils,
     nvim-flake,
     nixos-generators,
-    disko,
     ...
   }:
     {
@@ -59,7 +58,6 @@
             };
           };
           modules = [
-            disko.nixosModules.disko
             (import ./modules inputs)
             (import ./systems/gerg-desktop inputs)
             {
@@ -78,7 +76,6 @@
             };
           };
           modules = [
-            disko.nixosModules.disko
             (import ./modules inputs)
             (import ./systems/game-laptop inputs)
           ];
@@ -92,7 +89,6 @@
             };
           };
           modules = [
-            disko.nixosModules.disko
             (import ./modules inputs)
             (import ./systems/moms-laptop inputs)
           ];

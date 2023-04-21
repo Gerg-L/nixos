@@ -11,9 +11,8 @@ inputs: {
     (import ./zfs.nix inputs)
     (import ./containers inputs)
     (import ./erase-your-darlings.nix inputs)
+    (import ./disko.nix inputs)
   ];
-
-  disko.devices = import ./disko.nix;
 
   localModules = {
     X11Programs = {
