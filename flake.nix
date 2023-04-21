@@ -43,56 +43,42 @@
     self,
     unstable,
     flake-utils,
-    nvim-flake,
     nixos-generators,
     ...
-  }:
+  }: let
+    lib = unstable.lib;
+    mkSystems = system: names:
+      lib.genAttrs names (
+        name:
+          lib.nixosSystem {
+            inherit system;
+            specialArgs = {
+              inherit self;
+            };
+            modules = [
+              (import ./modules inputs)
+              (import ./systems + name inputs)
+            ];
+          }
+      );
+  in
     {
-      nixosConfigurations = {
-        gerg-desktop = unstable.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = {
-            inherit self;
-          };
-          modules = [
-            (import ./modules inputs)
-            (import ./systems/gerg-desktop inputs)
-            {
-              nixpkgs.overlays = [
-                nvim-flake.overlays.default
-              ];
-            }
-          ];
-        };
-        game-laptop = unstable.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = {
-            inherit self;
-          };
-          modules = [
-            (import ./modules inputs)
-            (import ./systems/game-laptop inputs)
-          ];
-        };
-        moms-laptop = unstable.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = {
-            inherit self;
-          };
-          modules = [
-            (import ./modules inputs)
-            (import ./systems/moms-laptop inputs)
-          ];
-        };
-      };
+      nixosConfigurations =
+        mkSystems
+        "x86_64-linux"
+        [
+          "gerg-desktop"
+          "game-laptop"
+          "moms-laptop"
+        ];
     }
     // flake-utils.lib.eachDefaultSystem (
       system: let
         pkgs = import unstable {inherit system;};
       in {
         formatter = pkgs.alejandra;
-        devShells = rec {
-          nix = pkgs.mkShell {
+        devShells = {
+          default = pkgs.mkShell {
             packages = [
               pkgs.sops
               pkgs.nil
@@ -101,7 +87,6 @@
               pkgs.statix
             ];
           };
-          default = nix;
         };
         packages =
           {

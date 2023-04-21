@@ -45,6 +45,10 @@ inputs: {
     "steam-original"
   ];
 
+  nixpkgs.overlays = [
+    inputs.nvim-flake.overlays.default
+  ];
+
   environment.systemPackages = [
     pkgs.bitwarden #store stuff
     pkgs.qbittorrent #steal stuff
