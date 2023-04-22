@@ -1,5 +1,4 @@
 {
-  lib,
   stdenv,
   fetchzip,
   glibc,

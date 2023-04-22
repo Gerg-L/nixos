@@ -1,13 +1,8 @@
-inputs: {
+_: {
   pkgs,
   config,
   ...
 }: {
-  imports = [
-    (import ./prime.nix inputs)
-    (import ./disko.nix inputs)
-  ];
-
   localModules = {
     DE.gnome.enable = true;
     DM = {

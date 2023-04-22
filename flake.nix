@@ -47,18 +47,23 @@
     ...
   }: let
     lib = unstable.lib;
+
+    importAll = path:
+      lib.forEach (
+        builtins.filter (file: lib.hasSuffix ".nix" file)
+        (lib.filesystem.listFilesRecursive path)
+      )
+      (module: (import module inputs));
+
     mkSystems = system: names:
       lib.genAttrs names (
         name:
           lib.nixosSystem {
             inherit system;
-            specialArgs = {
-              inherit self;
-            };
-            modules = [
-              (import ./modules inputs)
-              (import "${self}/systems/${name}" inputs)
-            ];
+            specialArgs = {inherit self;};
+            modules =
+              importAll ./modules
+              ++ importAll "${self}/systems/${name}";
           }
       );
   in
@@ -94,11 +99,20 @@
               inherit system;
               format = "install-iso";
               modules = [
-                (import ./pkgs/nixos-iso inputs)
+                (import ./installer inputs)
               ];
             };
           }
-          // (import ./pkgs pkgs);
+          // builtins.listToAttrs (
+            lib.forEach (
+              builtins.filter (file: lib.hasSuffix ".nix" file)
+              (lib.filesystem.listFilesRecursive ./pkgs)
+            )
+            (module: {
+              name = lib.removeSuffix ".nix" (builtins.baseNameOf module);
+              value = pkgs.callPackage module {};
+            })
+          );
       }
     );
 }

@@ -1,13 +1,8 @@
-inputs: {
+_: {
   pkgs,
   config,
   ...
 }: {
-  imports = [
-    (import ./printing.nix inputs)
-    (import ./disko.nix inputs)
-  ];
-
   localModules = {
     DM = {
       lightdm.enable = true;

@@ -1,4 +1,4 @@
-_: {...}: {
+_: {
   containers."minecraft" = {
     ephemeral = true;
     autoStart = true;

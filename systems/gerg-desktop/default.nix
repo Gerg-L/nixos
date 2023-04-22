@@ -3,16 +3,6 @@ inputs: {
   config,
   ...
 }: {
-  imports = [
-    (import ./vfio.nix inputs)
-    (import ./parrot.nix inputs)
-    (import ./spicetify.nix inputs)
-    (import ./zfs.nix inputs)
-    (import ./containers inputs)
-    (import ./erase-your-darlings.nix inputs)
-    (import ./disko.nix inputs)
-  ];
-
   localModules = {
     X11Programs = {
       sxhkd.enable = true;
