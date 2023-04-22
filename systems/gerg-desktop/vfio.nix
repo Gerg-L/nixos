@@ -42,8 +42,8 @@ _: {
       echo 'EndSection' >> $out
       echo >> $out
     '';
-  oneMonitor = pkgs.writeText "1-monitor.conf" (lib.strings.concatStrings [(builtins.readFile xserverbase) (builtins.readFile "${self}/misc/1-monitor.conf")]);
-  twoMonitor = pkgs.writeText "2-monitor.conf" (lib.strings.concatStrings [(builtins.readFile xserverbase) (builtins.readFile "${self}/misc/2-monitor.conf")]);
+  oneMonitor = pkgs.writeText "1-monitor.conf" (lib.strings.concatStrings [(builtins.readFile xserverbase) (builtins.readFile (self + /misc/1-monitor.conf))]);
+  twoMonitor = pkgs.writeText "2-monitor.conf" (lib.strings.concatStrings [(builtins.readFile xserverbase) (builtins.readFile (self + /misc/2-monitor.conf))]);
 in {
   boot = {
     kernelParams = ["amd_iommu=on" "iommu=pt" "vfio_iommu_type1.allow_unsafe_interrupts=1" "kvm.ignore_msrs=1"];
@@ -57,7 +57,6 @@ in {
           patches =
             old.patches
             ++ [
-              #  "${self}/misc/qemu.diff"
               (pkgs.writeText "qemu.diff" ''
                 diff --git a/ui/input-linux.c b/ui/input-linux.c
                 index e572a2e..a9d76ba 100644
@@ -111,7 +110,7 @@ in {
   '';
 
   systemd.tmpfiles.rules = let
-    xml = pkgs.writeText "Windows.xml" (builtins.readFile "${self}/misc/Windows.xml");
+    xml = pkgs.writeText "Windows.xml" (builtins.readFile (self + /misc/Windows.xml));
     qemuHook = pkgs.writeShellScript "qemu-hook" ''
       GUEST_NAME="$1"
       OPERATION="$2"

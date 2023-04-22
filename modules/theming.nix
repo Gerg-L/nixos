@@ -4,17 +4,16 @@ _: {
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.localModules.theming;
 in {
   options.localModules.theming = {
-    enable = mkEnableOption "";
-    kmscon.enable = mkEnableOption "";
+    enable = lib.mkEnableOption "";
+    kmscon.enable = lib.mkEnableOption "";
   };
-  config = mkMerge [
+  config = lib.mkMerge [
     (
-      mkIf cfg.enable {
+      lib.mkIf cfg.enable {
         environment = {
           systemPackages = [
             pkgs.flat-remix-gtk
@@ -81,7 +80,7 @@ in {
         };
       }
     )
-    (mkIf cfg.kmscon.enable {
+    (lib.mkIf cfg.kmscon.enable {
       services.kmscon = {
         enable = true;
         hwRender = false;

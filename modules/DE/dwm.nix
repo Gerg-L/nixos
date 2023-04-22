@@ -5,16 +5,15 @@
   lib,
   self,
   ...
-}:
-with lib; let
+}: let
   cfg = config.localModules.DE.dwm;
   sp = suckless.packages.${pkgs.system};
 in {
   options.localModules.DE.dwm = {
-    enable = mkEnableOption "";
+    enable = lib.mkEnableOption "";
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     services.gvfs.enable = true;
     services.xserver = {
       enable = true;
@@ -27,7 +26,7 @@ in {
         defaultSession = "none+dwm";
       };
       windowManager.session =
-        singleton
+        lib.singleton
         {
           name = "dwm";
           start = ''

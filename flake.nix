@@ -63,7 +63,7 @@
             specialArgs = {inherit self;};
             modules =
               importAll ./modules
-              ++ importAll "${self}/systems/${name}";
+              ++ importAll (self + "/systems/" + name);
           }
       );
   in

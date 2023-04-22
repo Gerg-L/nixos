@@ -3,27 +3,26 @@ _: {
   options,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.localModules.hardware;
 in {
   options.localModules.hardware = {
     gpuAcceleration = {
-      disable = mkOption {
-        type = types.bool;
+      disable = lib.mkOption {
+        type = lib.types.bool;
         default = false;
       };
     };
     sound = {
-      disable = mkOption {
-        type = types.bool;
+      disable = lib.mkOption {
+        type = lib.types.bool;
         default = false;
       };
     };
   };
-  config = mkMerge [
+  config = lib.mkMerge [
     (
-      mkIf (! cfg.gpuAcceleration.disable) {
+      lib.mkIf (! cfg.gpuAcceleration.disable) {
         hardware.opengl = {
           enable = true;
           driSupport = true;
@@ -31,7 +30,7 @@ in {
         };
       }
     )
-    (mkIf (! cfg.sound.disable) {
+    (lib.mkIf (! cfg.sound.disable) {
       security.rtkit.enable = true;
       sound.enable = lib.mkForce false; #disable alsa
       hardware.pulseaudio.enable = lib.mkForce false; #disable pulseAudio

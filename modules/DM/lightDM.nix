@@ -4,14 +4,13 @@ _: {
   options,
   self,
   ...
-}:
-with lib; let
+}: let
   cfg = config.localModules.DM.lightdm;
 in {
   options.localModules.DM.lightdm = {
-    enable = mkEnableOption "";
+    enable = lib.mkEnableOption "";
   };
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     services.xserver = {
       displayManager = {
         lightdm = {

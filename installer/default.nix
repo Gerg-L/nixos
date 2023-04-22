@@ -12,7 +12,7 @@ _: {
   environment = {
     noXlibs = lib.mkOverride 500 false;
     defaultPackages = [];
-    systemPackages = with pkgs; [gitMinimal neovim];
+    systemPackages = [pkgs.gitMinimal pkgs.neovim];
     variables = {
       EDITOR = "nvim";
     };

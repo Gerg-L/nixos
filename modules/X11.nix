@@ -4,14 +4,13 @@ _: {
   options,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.localModules.X11Programs;
 in {
   options.localModules.X11Programs = {
-    sxhkd.enable = mkEnableOption "";
+    sxhkd.enable = lib.mkEnableOption "";
   };
-  config = mkMerge [
+  config = lib.mkMerge [
     {
       services.xserver = {
         tty = lib.mkDefault 1;
@@ -56,7 +55,7 @@ in {
             maim -s | xclip -selection clipboard -t image/png
         '';
       in
-        mkIf cfg.sxhkd.enable
+        lib.mkIf cfg.sxhkd.enable
         {
           environment.systemPackages = [
             pkgs.maim #screenshooter

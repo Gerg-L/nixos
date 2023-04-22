@@ -7,7 +7,7 @@ _: {
     plymouth = {
       enable = lib.mkDefault true;
       theme = "breeze";
-      logo = "${self}/misc/nixos.png";
+      logo = self + /misc/nixos.png;
     };
     loader = {
       systemd-boot = {

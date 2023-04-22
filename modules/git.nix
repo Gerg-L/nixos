@@ -4,17 +4,16 @@ _: {
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.localModules.git;
 in {
   options.localModules.git = {
-    disable = mkOption {
-      type = types.bool;
+    disable = lib.mkOption {
+      type = lib.types.bool;
       default = false;
     };
   };
-  config = mkIf (! cfg.disable) {
+  config = lib.mkIf (! cfg.disable) {
     programs.git = {
       enable = true;
       package = pkgs.gitMinimal;

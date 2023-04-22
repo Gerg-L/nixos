@@ -3,14 +3,13 @@ _: {
   lib,
   options,
   ...
-}:
-with lib; let
+}: let
   cfg = config.localModules.DE.xfce;
 in {
   options.localModules.DE.xfce = {
-    enable = mkEnableOption "";
+    enable = lib.mkEnableOption "";
   };
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     services.xserver = {
       enable = true;
       desktopManager.xfce = {

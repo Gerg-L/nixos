@@ -1,4 +1,8 @@
-{fetch-rs, ...}: {pkgs, ...}: rec {
+{fetch-rs, ...}: {
+  pkgs,
+  config,
+  ...
+}: {
   #put:
   #source /run/current-system/sw/share/nix-direnv/direnvrc
   #in ~/.direnvrc
@@ -55,7 +59,7 @@
     enable = true;
     execWheelOnly = true;
     extraConfig = ''
-      Defaults env_keep += "${builtins.concatStringsSep " " (builtins.attrNames environment.variables)}"
+      Defaults env_keep += "${builtins.concatStringsSep " " (builtins.attrNames config.environment.variables)}"
       Defaults lecture = never
     '';
   };

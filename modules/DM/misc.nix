@@ -2,10 +2,9 @@ _: {
   options,
   lib,
   ...
-}:
-with lib; {
-  options.localModules.DM.loginUser = mkOption {
-    type = types.nullOr types.str;
+}: {
+  options.localModules.DM.loginUser = lib.mkOption {
+    type = lib.types.nullOr lib.types.str;
     default = null;
   };
 }
