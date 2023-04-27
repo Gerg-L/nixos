@@ -22,7 +22,7 @@ _: {
               hostName = "gerg-desktop";
               protocol = "ssh-ng";
               maxJobs = 32;
-              systems = ["x86_64-linux"];
+              systems = ["x86_64-linux" "i686-linux"];
               supportedFeatures = ["big-parallel" "nixos-test" "kvm" "benchmark"];
               sshUser = "builder";
               sshKey = "/etc/ssh/ssh_host_ed25519_key";
