@@ -4,6 +4,7 @@ _: {
   ...
 }: {
   localModules = {
+    remoteBuild.enable = true;
     DM = {
       lightdm.enable = true;
       autoLogin = true;

@@ -4,6 +4,7 @@ _: {
   ...
 }: {
   localModules = {
+    remoteBuild.enable = true;
     DE.gnome.enable = true;
     DM = {
       lightdm.enable = true;

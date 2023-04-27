@@ -4,6 +4,7 @@ inputs: {
   ...
 }: {
   localModules = {
+    remoteBuild.isBuilder = true;
     X11Programs = {
       sxhkd.enable = true;
     };
@@ -38,6 +39,7 @@ inputs: {
   nixpkgs.overlays = [
     inputs.nvim-flake.overlays.default
   ];
+  nix.settings.system-features = ["kvm" "big-parallel" "nixos-test" "benchmark"];
 
   environment.systemPackages = [
     pkgs.bitwarden #store stuff
