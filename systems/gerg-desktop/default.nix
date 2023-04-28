@@ -65,7 +65,7 @@ inputs: {
           wrapProgram "$out/bin/webcord" --run  'rm -f $HOME/.config/WebCord/windowState.json'
         '';
       })
-      (pkgs.prismlauncher.override {jdks = [];})
+      pkgs.prismlauncher
     ];
     etc = {
       "jdks/17".source = pkgs.openjdk17;

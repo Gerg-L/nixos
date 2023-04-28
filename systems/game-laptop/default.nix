@@ -26,7 +26,7 @@ _: {
     systemPackages = [
       pkgs.heroic
       pkgs.legendary-gl
-      (pkgs.prismlauncher.override {jdks = [];})
+      pkgs.prismlauncher
       pkgs.pcmanfm #file manager
       pkgs.librewolf #best browser
       pkgs.obs-studio
