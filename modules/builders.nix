@@ -13,6 +13,8 @@ _: {
       lib.mkIf config.localModules.remoteBuild.enable {
         nix = {
           settings = {
+            keep-outputs = false;
+            keep-derivations = false;
             builders-use-substitutes = true;
             max-jobs = 0;
           };
@@ -53,7 +55,11 @@ _: {
         };
       };
 
-      nix.settings.trusted-users = ["builder"];
+      nix.settings = {
+        trusted-users = ["builder"];
+        keep-outputs = true;
+        keep-derivations = true;
+      };
     })
   ];
 }

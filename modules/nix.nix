@@ -37,8 +37,6 @@ in {
       warn-dirty = false;
       #ignore global registry
       flake-registry = builtins.toFile "empty-flake-registry.json" ''{"flakes":[],"version":2}'';
-      keep-outputs = true;
-      keep-derivations = true;
       #become stable faster stupid
       use-xdg-base-directories = true;
       trusted-users = [
