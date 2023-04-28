@@ -30,42 +30,48 @@ inputs: {
     videoDrivers = ["nvidia" "amdgpu"];
   };
 
-  nixpkgs.allowedUnfree = [
-    "nvidia-x11"
-    "steam"
-    "steam-original"
-  ];
+  nixpkgs = {
+    allowedUnfree = [
+      "nvidia-x11"
+      "steam"
+      "steam-original"
+    ];
 
-  nixpkgs.overlays = [
-    inputs.nvim-flake.overlays.default
-  ];
+    overlays = [
+      inputs.nvim-flake.overlays.default
+    ];
+  };
   nix.settings.system-features = ["kvm" "big-parallel" "nixos-test" "benchmark"];
 
-  environment.systemPackages = [
-    pkgs.bitwarden #store stuff
-    pkgs.qbittorrent #steal stuff
-    pkgs.pavucontrol #gui volume control
-    pkgs.pcmanfm #file manager
-    pkgs.librewolf #best browser
-    pkgs.vlc #play stuff
-    pkgs.neovide #gui neovim
-    pkgs.ripgrep
-    pkgs.lutris
-    pkgs.prismlauncher
-    pkgs.xautoclick
-    inputs.master.legacyPackages.${pkgs.system}.mullvad-browser
-    # wrap webcord to remove state file https://github.com/SpacingBat3/WebCord/issues/360
-    (pkgs.symlinkJoin {
-      name = "webcord-wrapper";
-      nativeBuildInputs = [pkgs.makeWrapper];
-      paths = [
-        pkgs.webcord
-      ];
-      postBuild = ''
-        wrapProgram "$out/bin/webcord" --run  'rm -f $HOME/.config/WebCord/windowState.json'
-      '';
-    })
-  ];
+  environment = {
+    systemPackages = [
+      pkgs.bitwarden #store stuff
+      pkgs.qbittorrent #steal stuff
+      pkgs.pavucontrol #gui volume control
+      pkgs.pcmanfm #file manager
+      pkgs.librewolf #best browser
+      pkgs.vlc #play stuff
+      pkgs.ripgrep
+      pkgs.lutris
+      pkgs.xautoclick
+      # wrap webcord to remove state file https://github.com/SpacingBat3/WebCord/issues/360
+      (pkgs.symlinkJoin {
+        name = "webcord-wrapper";
+        nativeBuildInputs = [pkgs.makeWrapper];
+        paths = [
+          pkgs.webcord
+        ];
+        postBuild = ''
+          wrapProgram "$out/bin/webcord" --run  'rm -f $HOME/.config/WebCord/windowState.json'
+        '';
+      })
+      (pkgs.prismlauncher.override {jdks = [];})
+    ];
+    etc = {
+      "jdks/17".source = pkgs.openjdk17;
+      "jdks/8".source = pkgs.openjdk8;
+    };
+  };
 
   networking = {
     useDHCP = false;

@@ -22,26 +22,32 @@ _: {
     "steam"
     "steam-original"
   ];
-  environment.systemPackages = [
-    pkgs.heroic
-    pkgs.legendary-gl
-    pkgs.prismlauncher
-    pkgs.pcmanfm #file manager
-    pkgs.librewolf #best browser
-    pkgs.obs-studio
-    pkgs.vlc
-    # wrap webcord to remove state file https://github.com/SpacingBat3/WebCord/issues/360
-    (pkgs.symlinkJoin {
-      name = "webcord-wrapper";
-      nativeBuildInputs = [pkgs.makeWrapper];
-      paths = [
-        pkgs.webcord
-      ];
-      postBuild = ''
-        wrapProgram "$out/bin/webcord" --run  'rm -f $HOME/.config/WebCord/windowState.json'
-      '';
-    })
-  ];
+  environment = {
+    systemPackages = [
+      pkgs.heroic
+      pkgs.legendary-gl
+      (pkgs.prismlauncher.override {jdks = [];})
+      pkgs.pcmanfm #file manager
+      pkgs.librewolf #best browser
+      pkgs.obs-studio
+      pkgs.vlc
+      # wrap webcord to remove state file https://github.com/SpacingBat3/WebCord/issues/360
+      (pkgs.symlinkJoin {
+        name = "webcord-wrapper";
+        nativeBuildInputs = [pkgs.makeWrapper];
+        paths = [
+          pkgs.webcord
+        ];
+        postBuild = ''
+          wrapProgram "$out/bin/webcord" --run  'rm -f $HOME/.config/WebCord/windowState.json'
+        '';
+      })
+    ];
+    etc = {
+      "jdks/17".source = pkgs.openjdk17;
+      "jdks/8".source = pkgs.openjdk8;
+    };
+  };
   networking = {
     hostName = "game-laptop";
     networkmanager.enable = true;
