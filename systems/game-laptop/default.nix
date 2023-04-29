@@ -44,8 +44,8 @@ _: {
       })
     ];
     etc = {
-      "jdks/17".source = pkgs.openjdk17;
-      "jdks/8".source = pkgs.openjdk8;
+      "jdks/17".source = pkgs.openjdk17 + /bin;
+      "jdks/8".source = pkgs.openjdk8 + /bin;
     };
   };
   networking = {
