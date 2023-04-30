@@ -49,11 +49,12 @@
     lib = unstable.lib;
 
     importAll = path:
-      lib.forEach (
+      map
+      (module: (import module inputs))
+      (
         builtins.filter (file: lib.hasSuffix ".nix" file)
         (lib.filesystem.listFilesRecursive path)
-      )
-      (module: (import module inputs));
+      );
 
     mkSystems = system: names:
       lib.genAttrs names (
@@ -104,14 +105,14 @@
             };
           }
           // builtins.listToAttrs (
-            lib.forEach (
-              builtins.filter (file: lib.hasSuffix ".nix" file)
-              (lib.filesystem.listFilesRecursive ./pkgs)
-            )
-            (module: {
+            map (module: {
               name = lib.removeSuffix ".nix" (builtins.baseNameOf module);
               value = pkgs.callPackage module {};
             })
+            (
+              builtins.filter (file: lib.hasSuffix ".nix" file)
+              (lib.filesystem.listFilesRecursive ./pkgs)
+            )
           );
       }
     );
