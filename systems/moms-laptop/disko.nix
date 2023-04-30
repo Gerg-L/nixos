@@ -1,4 +1,4 @@
-{disko, ...}: {
+{disko, ...}: {disks ? [], ...}: {
   imports = [disko.nixosModules.disko];
   disko.devices = {
     disk.sda = {

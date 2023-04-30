@@ -1,4 +1,4 @@
-_: {
+{disko, ...}: {
   lib,
   modulesPath,
   pkgs,
@@ -12,7 +12,11 @@ _: {
   environment = {
     noXlibs = lib.mkOverride 500 false;
     defaultPackages = [];
-    systemPackages = [pkgs.gitMinimal pkgs.neovim];
+    systemPackages = [
+      pkgs.gitMinimal
+      pkgs.neovim
+      disko.packages.${pkgs.system}.default
+    ];
     variables = {
       EDITOR = "nvim";
     };
@@ -34,4 +38,5 @@ _: {
       auto-optimise-store = true;
     };
   };
+  sound.enable = false;
 }

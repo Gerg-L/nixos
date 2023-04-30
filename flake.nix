@@ -67,11 +67,22 @@
               ++ importAll (self + "/systems/" + name);
           }
       );
+    mkDisko = names:
+      lib.genAttrs names (
+        name: (import (self + "/systems/" + name + "/disko.nix") inputs)
+      );
   in
     {
       nixosConfigurations =
         mkSystems
         "x86_64-linux"
+        [
+          "gerg-desktop"
+          "game-laptop"
+          "moms-laptop"
+        ];
+      diskoConfigurations =
+        mkDisko
         [
           "gerg-desktop"
           "game-laptop"
