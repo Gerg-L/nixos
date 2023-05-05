@@ -1,4 +1,4 @@
-_: {
+inputs: {
   pkgs,
   config,
   ...
@@ -27,6 +27,7 @@ _: {
       pkgs.heroic
       pkgs.legendary-gl
       pkgs.prismlauncher
+      inputs.master.legacyPackages.${pkgs.system}.prismlauncher
       pkgs.pcmanfm #file manager
       pkgs.librewolf #best browser
       pkgs.obs-studio

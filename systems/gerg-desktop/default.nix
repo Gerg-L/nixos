@@ -35,6 +35,7 @@ inputs: {
       "nvidia-x11"
       "steam"
       "steam-original"
+      "discord"
     ];
 
     overlays = [
@@ -65,7 +66,12 @@ inputs: {
           wrapProgram "$out/bin/webcord" --run  'rm -f $HOME/.config/WebCord/windowState.json'
         '';
       })
-      pkgs.prismlauncher
+      inputs.master.legacyPackages.${pkgs.system}.prismlauncher
+      #pkgs.prismlauncher
+      (pkgs.discord.override {
+        withOpenASAR = true;
+        nss = pkgs.nss_latest;
+      })
     ];
     etc = {
       "jdks/17".source = pkgs.openjdk17 + /bin;
