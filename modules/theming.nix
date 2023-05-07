@@ -1,4 +1,4 @@
-_: {
+{stable, ...}: {
   pkgs,
   options,
   config,
@@ -60,7 +60,7 @@ in {
         '';
         fonts = {
           fonts = [
-            (pkgs.nerdfonts.override
+            (stable.legacyPackages.${pkgs.system}.nerdfonts.override
               {
                 fonts = ["Overpass"];
               })

@@ -35,7 +35,6 @@ inputs: {
       "nvidia-x11"
       "steam"
       "steam-original"
-      "discord"
     ];
 
     overlays = [
@@ -53,7 +52,6 @@ inputs: {
       pkgs.librewolf #best browser
       pkgs.vlc #play stuff
       pkgs.ripgrep
-      pkgs.lutris
       pkgs.xautoclick
       # wrap webcord to remove state file https://github.com/SpacingBat3/WebCord/issues/360
       (pkgs.symlinkJoin {
@@ -66,12 +64,7 @@ inputs: {
           wrapProgram "$out/bin/webcord" --run  'rm -f $HOME/.config/WebCord/windowState.json'
         '';
       })
-      inputs.master.legacyPackages.${pkgs.system}.prismlauncher
-      #pkgs.prismlauncher
-      (pkgs.discord.override {
-        withOpenASAR = true;
-        nss = pkgs.nss_latest;
-      })
+      pkgs.prismlauncher
     ];
     etc = {
       "jdks/17".source = pkgs.openjdk17 + /bin;
