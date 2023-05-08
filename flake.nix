@@ -5,9 +5,8 @@
     unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     stable.url = "github:NixOS/nixpkgs/nixos-22.11";
     #nix 2.16
-    nix.url = "github:NixOS/nix/946fd29422361e8478425d6aaf9ccae23d7ddffb";
-    #utilites
-    flake-utils.url = "github:numtide/flake-utils";
+    nix.url = "github:NixOS/nix/latest-release";
+
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "unstable";
@@ -42,7 +41,6 @@
   outputs = inputs @ {
     self,
     unstable,
-    flake-utils,
     nixos-generators,
     ...
   }: let
@@ -71,6 +69,21 @@
       lib.genAttrs names (
         name: (import (self + "/systems/" + name + "/disko.nix") inputs)
       );
+
+    withSystem = attrSet: let
+      f = attrPath:
+        lib.zipAttrsWith (
+          n: values:
+            if lib.tail values == []
+            then lib.head values
+            else if lib.all lib.isList values
+            then lib.unique (lib.concatLists values)
+            else if lib.all lib.isAttrs values
+            then f (attrPath ++ [n]) values
+            else lib.last values
+        );
+    in
+      f [] (map (system: attrSet system) ["x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin"]);
   in
     {
       nixosConfigurations =
@@ -89,23 +102,23 @@
           "moms-laptop"
         ];
     }
-    // flake-utils.lib.eachDefaultSystem (
+    // withSystem (
       system: let
-        pkgs = import unstable {inherit system;};
+        pkgs = unstable.legacyPackages.${system};
       in {
-        formatter = pkgs.alejandra;
-        devShells = {
-          default = pkgs.mkShell {
-            packages = [
-              pkgs.sops
-              pkgs.nil
-              pkgs.alejandra
-              pkgs.deadnix
-              pkgs.statix
-            ];
-          };
+        formatter.${system} = pkgs.alejandra;
+
+        devShells.${system}.default = pkgs.mkShell {
+          packages = [
+            pkgs.sops
+            pkgs.nil
+            pkgs.alejandra
+            pkgs.deadnix
+            pkgs.statix
+          ];
         };
-        packages =
+
+        packages.${system} =
           {
             nixos-iso = nixos-generators.nixosGenerate {
               inherit system;

@@ -38,7 +38,7 @@ inputs: {
     ];
 
     overlays = [
-      inputs.nvim-flake.overlays.default
+      inputs.nvim-flake.overlay
     ];
   };
   nix.settings.system-features = ["kvm" "big-parallel" "nixos-test" "benchmark"];

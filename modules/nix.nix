@@ -30,7 +30,7 @@ in {
 
   #other nix settings
   nix = {
-    package = inputs.nix.packages.${pkgs.system}.default;
+    #package = inputs.nix.packages.${pkgs.system}.default;
     settings = {
       experimental-features = ["nix-command" "flakes" "repl-flake"];
       auto-optimise-store = true;
@@ -38,7 +38,7 @@ in {
       #ignore global registry
       flake-registry = builtins.toFile "empty-flake-registry.json" ''{"flakes":[],"version":2}'';
       #become stable faster stupid
-      use-xdg-base-directories = true;
+      #use-xdg-base-directories = true;
       trusted-users = [
         "root"
         "@wheel"
