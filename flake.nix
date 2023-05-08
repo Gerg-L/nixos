@@ -70,20 +70,10 @@
         name: (import (self + "/systems/" + name + "/disko.nix") inputs)
       );
 
-    withSystem = attrSet: let
-      f = attrPath:
-        lib.zipAttrsWith (
-          n: values:
-            if lib.tail values == []
-            then lib.head values
-            else if lib.all lib.isList values
-            then lib.unique (lib.concatLists values)
-            else if lib.all lib.isAttrs values
-            then f (attrPath ++ [n]) values
-            else lib.last values
-        );
-    in
-      f [] (map (system: attrSet system) ["x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin"]);
+    withSystem = f:
+      lib.foldAttrs lib.mergeAttrs {}
+      (map (s: lib.mapAttrs (_: v: {${s} = v;}) (f s))
+        ["x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin"]);
   in
     {
       nixosConfigurations =
@@ -106,9 +96,9 @@
       system: let
         pkgs = unstable.legacyPackages.${system};
       in {
-        formatter.${system} = pkgs.alejandra;
+        formatter = pkgs.alejandra;
 
-        devShells.${system}.default = pkgs.mkShell {
+        devShells.default = pkgs.mkShell {
           packages = [
             pkgs.sops
             pkgs.nil
@@ -118,7 +108,7 @@
           ];
         };
 
-        packages.${system} =
+        packages =
           {
             nixos-iso = nixos-generators.nixosGenerate {
               inherit system;
