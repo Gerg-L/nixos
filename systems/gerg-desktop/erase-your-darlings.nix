@@ -1,4 +1,4 @@
-_: {lib, ...}: {
+{lib, ...}: {
   systemd.tmpfiles.rules = [
     "d /mnt - - - - -"
     "L+ /etc/ssh/ssh_host_ed25519_key  - - - - /persist/ssh/ssh_host_ed25519_key"

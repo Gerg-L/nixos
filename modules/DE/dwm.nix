@@ -1,13 +1,13 @@
-{suckless, ...}: {
+{
+  inputs,
   pkgs,
   config,
-  options,
   lib,
   self,
   ...
 }: let
   cfg = config.localModules.DE.dwm;
-  sp = suckless.packages.${pkgs.system};
+  sp = inputs.suckless.packages.${pkgs.system};
 in {
   options.localModules.DE.dwm = {
     enable = lib.mkEnableOption "";

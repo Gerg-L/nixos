@@ -29,10 +29,7 @@
       url = "github:Gerg-L/suckless";
       inputs.nixpkgs.follows = "unstable";
     };
-    nvim-flake = {
-      url = "github:Gerg-L/nvim-flake";
-      inputs.nixpkgs.follows = "unstable";
-    };
+    nvim-flake.url = "github:Gerg-L/nvim-flake";
     fetch-rs = {
       url = "github:Gerg-L/fetch-rs";
       inputs.nixpkgs.follows = "unstable";
@@ -44,22 +41,18 @@
     nixos-generators,
     ...
   }: let
-    lib = unstable.lib;
+    inherit (unstable) lib;
 
     importAll = path:
-      map
-      (module: (import module inputs))
-      (
-        builtins.filter (file: lib.hasSuffix ".nix" file)
-        (lib.filesystem.listFilesRecursive path)
-      );
+      builtins.filter (lib.hasSuffix ".nix")
+      (lib.filesystem.listFilesRecursive path);
 
     mkSystems = system: names:
       lib.genAttrs names (
         name:
           lib.nixosSystem {
             inherit system;
-            specialArgs = {inherit self;};
+            specialArgs = {inherit inputs self;};
             modules =
               importAll ./modules
               ++ importAll (self + "/systems/" + name);
@@ -124,7 +117,7 @@
               value = pkgs.callPackage module {};
             })
             (
-              builtins.filter (file: lib.hasSuffix ".nix" file)
+              builtins.filter (lib.hasSuffix ".nix")
               (lib.filesystem.listFilesRecursive ./pkgs)
             )
           );

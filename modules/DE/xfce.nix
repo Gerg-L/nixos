@@ -1,7 +1,6 @@
-_: {
+{
   config,
   lib,
-  options,
   ...
 }: let
   cfg = config.localModules.DE.xfce;

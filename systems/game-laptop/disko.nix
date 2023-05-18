@@ -1,5 +1,10 @@
-{disko, ...}: {disks ? [], ...}: {
-  imports = [disko.nixosModules.disko];
+{
+  inputs,
+  disks ? [],
+  ...
+}: {
+  dummyvalue = {inherit disks;};
+  imports = [inputs.disko.nixosModules.disko];
   disko.devices = {
     disk.nvme0n1 = {
       device = "/dev/disk/by-id/nvme-WDC_PC_SN530_SDBPNPZ-512G-1006_21311N802456";

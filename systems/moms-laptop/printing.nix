@@ -1,4 +1,4 @@
-_: {pkgs, ...}: {
+{pkgs, ...}: {
   nixpkgs.allowedUnfree = ["hplip"];
   environment.systemPackages = [
     pkgs.gimp

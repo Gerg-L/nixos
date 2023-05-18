@@ -1,5 +1,10 @@
-{disko, ...}: {disks ? [], ...}: {
-  imports = [disko.nixosModules.disko];
+{
+  inputs,
+  disks ? [],
+  ...
+}: {
+  dummyvalue = {inherit disks;};
+  imports = [inputs.disko.nixosModules.disko];
   disko.devices = {
     disk = {
       nvme0 = {

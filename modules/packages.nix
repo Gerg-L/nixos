@@ -1,4 +1,4 @@
-_: {pkgs, ...}: {
+{pkgs, ...}: {
   environment = {
     defaultPackages = []; #don't install anything by default
     systemPackages = [

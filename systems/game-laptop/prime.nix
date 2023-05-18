@@ -1,4 +1,4 @@
-_: {config, ...}: {
+{config, ...}: {
   hardware.nvidia = {
     package = config.boot.kernelPackages.nvidiaPackages.latest;
     prime = {

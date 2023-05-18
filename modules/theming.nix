@@ -1,6 +1,5 @@
-{stable, ...}: {
+{
   pkgs,
-  options,
   config,
   lib,
   ...
@@ -25,7 +24,7 @@ in {
               [Settings]
               gtk-cursor-theme-name=Quintom_Ink
               gtk-cursor-theme-size=16
-              gtk-font-name = "Overpass Nerd Font 10"
+              gtk-font-name = "Overpass 10"
               gtk-icon-theme-name=Flat-Remix-Blue-Dark
               gtk-theme-name=Flat-Remix-GTK-Blue-Darkest
             '';
@@ -33,14 +32,14 @@ in {
               [Settings]
               gtk-cursor-theme-name=Quintom_Ink
               gtk-cursor-theme-size=16
-              gtk-font-name = "Overpass Nerd Font 10"
+              gtk-font-name = "Overpass 10"
               gtk-icon-theme-name=Flat-Remix-Blue-Dark
               gtk-theme-name=Flat-Remix-GTK-Blue-Darkest
             '';
             "xdg/gtk-2.0/gtkrc".text = ''
               gtk-cursor-theme-name = "Quintom_Ink"
               gtk-cursor-theme-size = 16
-              gtk-font-name = "Overpass Nerd Font 10"
+              gtk-font-name = "Overpass 10"
               gtk-icon-theme-name = "Flat-Remix-Blue-Dark"
               gtk-theme-name = "Flat-Remix-GTK-Blue-Darkest"
             '';
@@ -59,20 +58,15 @@ in {
           xrdb -load /etc/xdg/Xresources
         '';
         fonts = {
-          fonts = [
-            (stable.legacyPackages.${pkgs.system}.nerdfonts.override
-              {
-                fonts = ["Overpass"];
-              })
-          ];
+          fonts = [pkgs.overpass];
           enableDefaultFonts = false;
           fontDir.enable = true;
           fontconfig = {
             enable = true;
             defaultFonts = {
-              serif = ["Overpass Nerd Font"];
-              sansSerif = ["Overpass Nerd Font"];
-              monospace = ["OverpassMono Nerd Font"];
+              serif = ["Overpass"];
+              sansSerif = ["Overpass"];
+              monospace = ["Overpass Mono"];
             };
             hinting.enable = true;
             antialias = true;
@@ -89,7 +83,7 @@ in {
         '';
         fonts = [
           {
-            name = "OverpassMono Nerd Font";
+            name = "OverpassMono";
             package =
               pkgs.nerdfonts.override
               {

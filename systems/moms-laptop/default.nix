@@ -1,4 +1,4 @@
-_: {
+{
   pkgs,
   config,
   ...
@@ -18,6 +18,7 @@ _: {
   };
 
   environment.systemPackages = [
+    pkgs.neovim
     pkgs.vlc
     pkgs.nomacs
     pkgs.gnome.gnome-calculator

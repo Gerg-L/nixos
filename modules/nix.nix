@@ -1,6 +1,6 @@
-inputs: {
+{
+  inputs,
   lib,
-  pkgs,
   self,
   ...
 }: let
@@ -9,7 +9,7 @@ inputs: {
       #filter non-flakes from inputs
       lib.filterAttrs (
         _: value: (
-          !(lib.hasAttrByPath ["flake"] value) || value.flake == false
+          !(lib.hasAttrByPath ["flake"] value) || !value.flake
         )
       )
       inputs

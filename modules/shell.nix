@@ -1,4 +1,5 @@
-{fetch-rs, ...}: {
+{
+  inputs,
   pkgs,
   config,
   ...
@@ -13,8 +14,7 @@
       pkgs.exa
       pkgs.direnv
       pkgs.nix-direnv
-      pkgs.neovim
-      fetch-rs.packages.${pkgs.system}.default
+      inputs.fetch-rs.packages.${pkgs.system}.default
     ];
     binsh = "${pkgs.dash}/bin/dash"; #use dash for speed
     variables = {

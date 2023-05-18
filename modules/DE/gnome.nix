@@ -1,7 +1,6 @@
-_: {
+{
   config,
   lib,
-  options,
   pkgs,
   ...
 }: let

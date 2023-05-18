@@ -1,5 +1,10 @@
-{disko, ...}: {disks ? [], ...}: {
-  imports = [disko.nixosModules.disko];
+{
+  inputs,
+  disks ? [],
+  ...
+}: {
+  dummyvalue = {inherit disks;};
+  imports = [inputs.disko.nixosModules.disko];
   disko.devices = {
     disk.sda = {
       device = "/dev/disk/by-id/ata-WDC_WDS240G2G0A-00JH30_180936803144";

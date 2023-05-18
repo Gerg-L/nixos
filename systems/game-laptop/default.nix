@@ -1,4 +1,4 @@
-inputs: {
+{
   pkgs,
   config,
   ...
@@ -24,6 +24,7 @@ inputs: {
   ];
   environment = {
     systemPackages = [
+      pkgs.neovim
       pkgs.heroic
       pkgs.legendary-gl
       pkgs.prismlauncher

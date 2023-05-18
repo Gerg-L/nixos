@@ -1,4 +1,5 @@
-inputs: {
+{
+  inputs,
   pkgs,
   config,
   ...
@@ -30,21 +31,17 @@ inputs: {
     videoDrivers = ["nvidia" "amdgpu"];
   };
 
-  nixpkgs = {
-    allowedUnfree = [
-      "nvidia-x11"
-      "steam"
-      "steam-original"
-    ];
+  nixpkgs.allowedUnfree = [
+    "nvidia-x11"
+    "steam"
+    "steam-original"
+  ];
 
-    overlays = [
-      inputs.nvim-flake.overlay
-    ];
-  };
   nix.settings.system-features = ["kvm" "big-parallel" "nixos-test" "benchmark"];
 
   environment = {
     systemPackages = [
+      inputs.nvim-flake.packages.${pkgs.system}.default
       pkgs.bitwarden #store stuff
       pkgs.qbittorrent #steal stuff
       pkgs.pavucontrol #gui volume control

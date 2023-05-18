@@ -1,4 +1,4 @@
-_: {config, ...}: {
+{config, ...}: {
   boot = {
     zfs = {
       devNodes = "/dev/disk/by-id/";
@@ -22,7 +22,6 @@ _: {config, ...}: {
       grub = {
         enable = true;
         efiInstallAsRemovable = true;
-        version = 2;
         copyKernels = true;
         efiSupport = true;
         zfsSupport = true;

@@ -1,4 +1,5 @@
-{unstable, ...}: {
+{
+  inputs,
   lib,
   config,
   pkgs,
@@ -8,7 +9,7 @@
 
   bootStage2 = pkgs.substituteAll {
     src = pkgs.runCommand "stage-2-init.sh" {} ''
-      sed '2i exec 1<>/dev/null' ${unstable}/nixos/modules/system/boot/stage-2-init.sh > $out
+      sed '2i exec 1<>/dev/null' ${inputs.unstable}/nixos/modules/system/boot/stage-2-init.sh > $out
     '';
     shellDebug = "${pkgs.bashInteractive}/bin/bash";
     shell = "${pkgs.bash}/bin/bash";

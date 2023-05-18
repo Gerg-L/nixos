@@ -1,11 +1,12 @@
-{sops-nix, ...}: {
+{
+  inputs,
   pkgs,
   self,
   config,
   ...
 }: {
   imports = [
-    sops-nix.nixosModules.sops
+    inputs.sops-nix.nixosModules.sops
   ];
   environment.systemPackages = [
     pkgs.sops
