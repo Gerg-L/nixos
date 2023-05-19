@@ -118,7 +118,7 @@
       "root" = {
         uid = 0;
         home = "/root";
-        hashPassword = "!";
+        hashedPassword = "!";
       };
     };
   };
