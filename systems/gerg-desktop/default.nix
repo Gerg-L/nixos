@@ -98,7 +98,6 @@
   };
   #user managment
   sops.secrets = {
-    root.neededForUsers = true;
     gerg.neededForUsers = true;
   };
   users = {

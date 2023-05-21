@@ -19,7 +19,7 @@ in {
       enable = true;
       displayManager = {
         sessionCommands = ''
-          ${pkgs.feh}/bin/feh --bg-center ${self + /misc/recursion.png}
+          ${pkgs.feh}/bin/feh --bg-center ${self.packages.${pkgs.system}.images + /recursion.png}
           ${pkgs.numlockx}/bin/numlockx
           ${pkgs.picom}/bin/picom &
         '';

@@ -2,6 +2,7 @@
   config,
   lib,
   self,
+  pkgs,
   ...
 }: let
   cfg = config.localModules.DM.lightdm;
@@ -14,7 +15,7 @@ in {
       displayManager = {
         lightdm = {
           enable = true;
-          background = self + /misc/recursion.png;
+          background = self.packages.${pkgs.system}.images + /recursion.png;
           extraConfig = "minimum-vt=1";
           greeters.mini = {
             enable = true;
