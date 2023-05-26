@@ -2,21 +2,24 @@
   inputs,
   pkgs,
   config,
+  lib,
   ...
 }: {
-  #put:
-  #source /run/current-system/sw/share/nix-direnv/direnvrc
-  #in ~/.direnvrc
-  #do i need to do this^?
   environment = {
-    systemPackages = [
-      pkgs.page
-      pkgs.exa
-      pkgs.direnv
-      pkgs.nix-direnv
-      inputs.fetch-rs.packages.${pkgs.system}.default
-    ];
-    binsh = "${pkgs.dash}/bin/dash"; #use dash for speed
+    systemPackages = builtins.attrValues {
+      inherit
+        (pkgs)
+        page
+        exa
+        direnv
+        nix-direnv
+        ;
+      inherit
+        (inputs.fetch-rs.packages.${pkgs.system})
+        default
+        ;
+    };
+    binsh = lib.getExe pkgs.dash; #use dash for speed
     variables = {
       EDITOR = "nvim";
       VISUAL = "nvim";

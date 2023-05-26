@@ -17,16 +17,17 @@
     };
   };
 
-  environment.systemPackages = [
-    pkgs.neovim
-    pkgs.vlc
-    pkgs.nomacs
-    pkgs.gnome.gnome-calculator
-    pkgs.xfce.xfce4-whiskermenu-plugin
-    pkgs.rsync
-    pkgs.pavucontrol #gui volume control
-    pkgs.librewolf #best browser
-  ];
+  environment.systemPackages = builtins.attrValues {
+    inherit
+      (pkgs)
+      neovim
+      vlc
+      nomacs
+      rsync
+      pavucontrol #gui volume control
+      librewolf #best browser
+      ;
+  };
   services.xserver.videoDrivers = ["intel"];
   networking = {
     hostName = "moms-laptop";

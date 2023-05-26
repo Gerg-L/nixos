@@ -40,29 +40,22 @@
   nix.settings.system-features = ["kvm" "big-parallel" "nixos-test" "benchmark"];
 
   environment = {
-    systemPackages = [
-      inputs.nvim-flake.packages.${pkgs.system}.default
-      pkgs.bitwarden #store stuff
-      pkgs.qbittorrent #steal stuff
-      pkgs.pavucontrol #gui volume control
-      pkgs.pcmanfm #file manager
-      pkgs.librewolf #best browser
-      pkgs.vlc #play stuff
-      pkgs.ripgrep
-      pkgs.xautoclick
-      # wrap webcord to remove state file https://github.com/SpacingBat3/WebCord/issues/360
-      (pkgs.symlinkJoin {
-        name = "webcord-wrapper";
-        nativeBuildInputs = [pkgs.makeWrapper];
-        paths = [
-          pkgs.webcord
-        ];
-        postBuild = ''
-          wrapProgram "$out/bin/webcord" --run  'rm -f $HOME/.config/WebCord/windowState.json'
-        '';
-      })
-      pkgs.prismlauncher
-    ];
+    systemPackages = builtins.attrValues {
+      inherit
+        (pkgs)
+        bitwarden #store stuff
+        qbittorrent #steal stuff
+        pavucontrol #gui volume control
+        pcmanfm #file manager
+        librewolf #best browser
+        vlc #play stuff
+        ripgrep
+        xautoclick
+        webcord
+        prismlauncher
+        ;
+      inherit (inputs.nvim-flake.packages.${pkgs.system}) default;
+    };
     etc = {
       "jdks/17".source = pkgs.openjdk17 + /bin;
       "jdks/8".source = pkgs.openjdk8 + /bin;

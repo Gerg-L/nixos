@@ -3,7 +3,7 @@
   runCommand,
   imagemagick,
 }:
-runCommand "my-example" {
+runCommand "images" {
   recursion = fetchurl {
     url = "https://github.com/NixOS/nixos-artwork/raw/bcdd2770f5f4839fddc9b503e68db2bc3a87ca4d/wallpapers/nix-wallpaper-recursive.png";
     sha256 = "sha256-YvFrlysNGMwJ7eMFOoz0KI8AjoPN3ao+AVOgnVZzkFE=";

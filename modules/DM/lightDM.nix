@@ -4,13 +4,10 @@
   self,
   pkgs,
   ...
-}: let
-  cfg = config.localModules.DM.lightdm;
-in {
-  options.localModules.DM.lightdm = {
-    enable = lib.mkEnableOption "";
-  };
-  config = lib.mkIf cfg.enable {
+}: {
+  options.localModules.DM.lightdm.enable = lib.mkEnableOption "";
+
+  config = lib.mkIf config.localModules.DM.lightdm.enable {
     services.xserver = {
       displayManager = {
         lightdm = {

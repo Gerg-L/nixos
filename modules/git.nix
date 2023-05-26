@@ -3,16 +3,13 @@
   config,
   lib,
   ...
-}: let
-  cfg = config.localModules.git;
-in {
-  options.localModules.git = {
-    disable = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-    };
+}: {
+  options.localModules.git.disable = lib.mkOption {
+    type = lib.types.bool;
+    default = false;
   };
-  config = lib.mkIf (! cfg.disable) {
+
+  config = lib.mkIf (! config.localModules.git.disable) {
     programs.git = {
       enable = true;
       package = pkgs.gitMinimal;

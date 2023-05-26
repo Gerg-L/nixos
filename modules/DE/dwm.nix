@@ -5,23 +5,18 @@
   lib,
   self,
   ...
-}: let
-  cfg = config.localModules.DE.dwm;
-  sp = inputs.suckless.packages.${pkgs.system};
-in {
-  options.localModules.DE.dwm = {
-    enable = lib.mkEnableOption "";
-  };
+}: {
+  options.localModules.DE.dwm.enable = lib.mkEnableOption "";
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf config.localModules.DE.dwm.enable {
     services.gvfs.enable = true;
     services.xserver = {
       enable = true;
       displayManager = {
         sessionCommands = ''
-          ${pkgs.feh}/bin/feh --bg-center ${self.packages.${pkgs.system}.images + /recursion.png}
-          ${pkgs.numlockx}/bin/numlockx
-          ${pkgs.picom}/bin/picom &
+          ${lib.getExe pkgs.feh} --bg-center ${self.packages.${pkgs.system}.images + /recursion.png}
+          ${lib.getExe pkgs.numlockx}
+          ${lib.getExe pkgs.picom} &
         '';
         defaultSession = "none+dwm";
       };
@@ -48,10 +43,13 @@ in {
           '';
         };
     };
-    environment.systemPackages = [
-      sp.dmenu
-      sp.dwm
-      sp.st
-    ];
+    environment.systemPackages = builtins.attrValues {
+      inherit
+        (inputs.suckless.packages.${pkgs.system})
+        dmenu
+        dwm
+        st
+        ;
+    };
   };
 }

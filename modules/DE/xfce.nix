@@ -1,14 +1,13 @@
 {
   config,
   lib,
+  pkgs,
   ...
-}: let
-  cfg = config.localModules.DE.xfce;
-in {
-  options.localModules.DE.xfce = {
-    enable = lib.mkEnableOption "";
-  };
-  config = lib.mkIf cfg.enable {
+}: {
+  options.localModules.DE.xfce.enable = lib.mkEnableOption "";
+
+  config = lib.mkIf config.localModules.DE.xfce.enable {
+    environment.systemPackages = [pkgs.xfce.xfce4-whiskermenu-plugin];
     services.xserver = {
       enable = true;
       desktopManager.xfce = {
