@@ -16,7 +16,7 @@
         ;
       inherit
         (inputs.fetch-rs.packages.${pkgs.system})
-        default
+        fetch-rs
         ;
     };
     binsh = lib.getExe pkgs.dash; #use dash for speed

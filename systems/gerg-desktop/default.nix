@@ -54,7 +54,7 @@
         webcord
         prismlauncher
         ;
-      inherit (inputs.nvim-flake.packages.${pkgs.system}) default;
+      inherit (inputs.nvim-flake.packages.${pkgs.system}) neovim;
     };
     etc = {
       "jdks/17".source = pkgs.openjdk17 + /bin;
