@@ -4,6 +4,7 @@
     master.url = "github:NixOS/nixpkgs";
     unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     stable.url = "github:NixOS/nixpkgs/nixos-22.11";
+    pipewire_fix.url = "github:NixOS/nixpkgs/45a55711fe12d0aada3aa04746082cf1b83dfbf3";
     #nix 2.16
     nix.url = "github:NixOS/nix/684e9be8b9356f92b7882d74cba9d146fb71f850";
 
@@ -29,7 +30,10 @@
       url = "github:Gerg-L/suckless";
       inputs.nixpkgs.follows = "unstable";
     };
-    nvim-flake.url = "github:Gerg-L/nvim-flake";
+    nvim-flake = {
+      url = "github:Gerg-L/nvim-flake";
+      inputs.nixpkgs.follows = "unstable";
+    };
     fetch-rs = {
       url = "github:Gerg-L/fetch-rs";
       inputs.nixpkgs.follows = "unstable";
