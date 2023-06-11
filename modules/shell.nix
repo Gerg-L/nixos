@@ -33,12 +33,7 @@
       #paste link trick
       pastebin = "curl -F 'clbin=<-' https://clbin.com";
       #nix stuff
-      nix-update = "nix flake update /etc/nixos/";
-      nix-switch = "nixos-rebuild switch --use-remote-sudo";
-      nix-boot = "nixos-rebuild boot --use-remote-sudo";
-      nix-clean = "nix-collect-garbage -d";
-      nix-gc-force = "rm /nix/var/nix/gcroots/auto/*";
-      nix-gc-check = "nix-store --gc --print-roots | egrep -v \"^(/nix/var|/run/\w+-system|\{memory|/proc)\"";
+      gc-check = "nix-store --gc --print-roots | egrep -v \"^(/nix/var|/run/\w+-system|\{memory|/proc)\"";
       #vim stuff
       vi = "nvim";
       vim = "nvim";
@@ -75,7 +70,7 @@
       enable = true;
       autosuggestions.enable = true;
       syntaxHighlighting.enable = true;
-      histSize = 1000;
+      histSize = 10000;
       histFile = "$HOME/.cache/zsh_history";
       shellInit = ''
         eval "$(direnv hook zsh)"

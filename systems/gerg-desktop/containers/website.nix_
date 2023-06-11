@@ -1,4 +1,4 @@
-_: {...}: {
+{
   sops.secrets = {
     "website/sql_gitea" = {
       mode = "0444";

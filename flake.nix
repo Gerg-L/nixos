@@ -1,19 +1,19 @@
 {
   inputs = {
     #channels
-    master.url = "github:NixOS/nixpkgs";
-    unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    stable.url = "github:NixOS/nixpkgs/nixos-22.11";
-    pipewire_fix.url = "github:NixOS/nixpkgs/45a55711fe12d0aada3aa04746082cf1b83dfbf3";
+    master.url = "github:nixos/nixpkgs";
+    unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    stable.url = "github:nixos/nixpkgs/nixos-22.11";
+    pipewire_fix.url = "github:nixos/nixpkgs/45a55711fe12d0aada3aa04746082cf1b83dfbf3";
     #nix 2.16
-    nix.url = "github:NixOS/nix/684e9be8b9356f92b7882d74cba9d146fb71f850";
+    nix.url = "github:nixos/nix/03f9ff6ea59d21c6d7b29c64a03d5041bd621261";
 
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "unstable";
     };
     sops-nix = {
-      url = "github:Mic92/sops-nix";
+      url = "github:mic92/sops-nix";
       inputs.nixpkgs.follows = "unstable";
     };
     disko = {
@@ -27,15 +27,15 @@
     };
     #my own packages
     suckless = {
-      url = "github:Gerg-L/suckless";
+      url = "github:gerg-L/suckless";
       inputs.nixpkgs.follows = "unstable";
     };
     nvim-flake = {
-      url = "github:Gerg-L/nvim-flake";
+      url = "github:gerg-L/nvim-flake";
       inputs.nixpkgs.follows = "unstable";
     };
     fetch-rs = {
-      url = "github:Gerg-L/fetch-rs";
+      url = "github:gerg-L/fetch-rs";
       inputs.nixpkgs.follows = "unstable";
     };
   };
@@ -64,48 +64,41 @@
       );
     mkDisko = names:
       lib.genAttrs names (
-        name: (import (self + "/systems/" + name + "/disko.nix") inputs)
+        name: (import (self + "/systems/" + name + "/disko.nix") {inherit inputs;})
       );
 
     withSystem = f:
-      lib.foldAttrs lib.mergeAttrs {}
-      (map (s: lib.mapAttrs (_: v: {${s} = v;}) (f s))
-        ["x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin"]);
+      lib.fold lib.recursiveUpdate {}
+      (map (s: f s) ["x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin"]);
   in
-    {
-      nixosConfigurations =
-        mkSystems
-        "x86_64-linux"
-        [
-          "gerg-desktop"
-          "game-laptop"
-          "moms-laptop"
-        ];
-      diskoConfigurations =
-        mkDisko
-        [
-          "gerg-desktop"
-          "game-laptop"
-          "moms-laptop"
-        ];
-    }
-    // withSystem (
+    withSystem (
       system: let
         pkgs = unstable.legacyPackages.${system};
       in {
-        formatter = pkgs.alejandra;
+        nixosConfigurations =
+          mkSystems
+          "x86_64-linux"
+          [
+            "gerg-desktop"
+            "game-laptop"
+            "moms-laptop"
+          ];
+        diskoConfigurations =
+          mkDisko
+          [
+            "gerg-desktop"
+            "game-laptop"
+            "moms-laptop"
+          ];
+        formatter.${system} = pkgs.alejandra;
 
-        devShells.default = pkgs.mkShell {
+        devShells.${system}.default = pkgs.mkShell {
           packages = [
             pkgs.sops
-            pkgs.nil
-            pkgs.alejandra
-            pkgs.deadnix
-            pkgs.statix
           ];
         };
 
-        packages =
+        packages.${system} =
           {
             nixos-iso = nixos-generators.nixosGenerate {
               inherit system;
