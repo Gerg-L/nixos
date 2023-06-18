@@ -9,8 +9,6 @@ in {
   nixpkgs.allowedUnfree = ["spotify"];
   imports = [inputs.spicetify-nix.nixosModule];
   programs.spicetify = {
-    spotifyPackage = pkgs.spotify-unwrapped;
-    spicetifyPackage = pkgs.spicetify-cli;
     enable = true;
     enabledExtensions = [
       ex.adblock

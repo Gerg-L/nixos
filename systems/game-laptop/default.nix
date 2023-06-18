@@ -23,27 +23,20 @@
     "steam-original"
   ];
   environment = {
-    systemPackages = [
-      pkgs.neovim
-      pkgs.heroic
-      pkgs.legendary-gl
-      pkgs.prismlauncher
-      pkgs.pcmanfm #file manager
-      pkgs.librewolf #best browser
-      pkgs.obs-studio
-      pkgs.vlc
-      # wrap webcord to remove state file https://github.com/SpacingBat3/WebCord/issues/360
-      (pkgs.symlinkJoin {
-        name = "webcord-wrapper";
-        nativeBuildInputs = [pkgs.makeWrapper];
-        paths = [
-          pkgs.webcord
-        ];
-        postBuild = ''
-          wrapProgram "$out/bin/webcord" --run  'rm -f $HOME/.config/WebCord/windowState.json'
-        '';
-      })
-    ];
+    systemPackages = builtins.attrValues {
+      inherit
+        (pkgs)
+        neovim
+        heroic
+        legendary-gl
+        prismlauncher
+        pcmanfm #file manager
+        librewolf #best browser
+        obs-studio
+        vlc
+        webcord
+        ;
+    };
     etc = {
       "jdks/17".source = pkgs.openjdk17 + /bin;
       "jdks/8".source = pkgs.openjdk8 + /bin;

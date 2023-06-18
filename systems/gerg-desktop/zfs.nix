@@ -7,7 +7,6 @@
   systemd.tmpfiles.rules = [
     "L+ /etc/ssh/ssh_host_ed25519_key  - - - - /persist/ssh/ssh_host_ed25519_key"
     "L+ /etc/ssh/ssh_host_ed25519_key.pub  - - - - /persist/ssh/ssh_host_ed25519_key.pub"
-    "L+ /etc/nixos - - - - /persist/nixos"
   ];
   #create machine-id for spotify
   environment.etc = {

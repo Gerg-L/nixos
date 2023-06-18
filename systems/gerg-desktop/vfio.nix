@@ -44,8 +44,8 @@ let
       echo 'EndSection' >> $out
       echo >> $out
     '';
-  oneMonitor = pkgs.writeText "1-monitor.conf" (lib.strings.concatStrings [(builtins.readFile xserverbase) (builtins.readFile (self + /misc/1-monitor.conf))]);
-  twoMonitor = pkgs.writeText "2-monitor.conf" (lib.strings.concatStrings [(builtins.readFile xserverbase) (builtins.readFile (self + /misc/2-monitor.conf))]);
+  oneMonitor = pkgs.writeText "1-monitor.conf" (lib.concatStrings [(builtins.readFile xserverbase) (builtins.readFile (self + /misc/1-monitor.conf))]);
+  twoMonitor = pkgs.writeText "2-monitor.conf" (lib.concatStrings [(builtins.readFile xserverbase) (builtins.readFile (self + /misc/2-monitor.conf))]);
 in {
   ####VM SOUND BORKED
   services.pipewire.package = inputs.pipewire_fix.legacyPackages.${pkgs.system}.pipewire;
@@ -114,7 +114,6 @@ in {
   '';
 
   systemd.tmpfiles.rules = let
-    xml = pkgs.writeText "Windows.xml" (builtins.readFile (self + /misc/Windows.xml));
     qemuHook = pkgs.writeShellScript "qemu-hook" ''
       GUEST_NAME="$1"
       OPERATION="$2"
@@ -150,6 +149,6 @@ in {
   in [
     "L  /tmp/xorg.conf - - - - ${twoMonitor}"
     "L+ /var/lib/libvirt/hooks/qemu - - - - ${qemuHook}"
-    "L+ /var/lib/libvirt/qemu/Windows.xml - - - - ${xml}"
+    "L+ /var/lib/libvirt/qemu/Windows.xml - - - - ${self + /misc/Windows.xml}"
   ];
 }

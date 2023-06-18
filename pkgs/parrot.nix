@@ -41,7 +41,7 @@ in
         ffmpeg
       ]}'';
 
-    cargoLock.lockFile = src + "/Cargo.lock";
+    cargoLock.lockFile = src + /Cargo.lock;
 
     RUSTC_BOOTSTRAP = 1;
   }
