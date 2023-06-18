@@ -74,4 +74,11 @@
   ];
 
   system.stateVersion = "23.05";
+
+  swapDevices = [
+    {
+      device = "/swapfile";
+      size = 8 * 1024;
+    }
+  ];
 }
