@@ -8,7 +8,6 @@
   imagemagick_light,
   libglvnd,
   libxcb,
-  makeWrapper,
   ocl-icd,
   opencl-headers,
   pciutils,
@@ -31,7 +30,7 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-sSQaXXKH/ZELdhbUKuvAj0gZ0fSO/Xjxsv/TU0Xq47k=";
   };
 
-  nativeBuildInputs = [cmake makeWrapper pkg-config];
+  nativeBuildInputs = [cmake pkg-config];
 
   buildInputs = [
     dbus

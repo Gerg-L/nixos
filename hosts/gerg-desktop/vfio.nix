@@ -1,9 +1,11 @@
 {
-  pkgs,
   self,
+  pipewire_fix,
+  ...
+}: {
+  pkgs,
   config,
   lib,
-  inputs,
   ...
 }:
 ###TAKEN FROM HERE:https://github.com/NixOS/nixpkgs/blob/4787ebf7ae2ab071389be7ff86cf38edeee7e9f8/nixos/modules/services/x11/xserver.nix#L106-L136
@@ -48,7 +50,7 @@ let
   twoMonitor = pkgs.writeText "2-monitor.conf" (lib.concatStrings [(builtins.readFile xserverbase) (builtins.readFile (self + /misc/2-monitor.conf))]);
 in {
   ####VM SOUND BORKED
-  services.pipewire.package = inputs.pipewire_fix.legacyPackages.${pkgs.system}.pipewire;
+  services.pipewire.package = pipewire_fix.legacyPackages.${pkgs.system}.pipewire;
   boot = {
     kernelParams = ["amd_iommu=on" "iommu=pt" "vfio_iommu_type1.allow_unsafe_interrupts=1" "kvm.ignore_msrs=1"];
   };

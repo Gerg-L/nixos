@@ -9,13 +9,12 @@
     exec ${glibc}/lib64/ld-linux-x86-64.so.2 \
     $out/t-rex --no-watchdog \$@
   '';
-  version = "0.26.5";
 in
-  stdenv.mkDerivation {
-    inherit version;
+  stdenv.mkDerivation (finalAttrs: {
+    version = "0.26.5";
     pname = "t-rex-miner";
     src = fetchzip {
-      url = "https://github.com/trexminer/T-Rex/releases/download/${version}/t-rex-${version}-linux.tar.gz";
+      url = "https://github.com/trexminer/T-Rex/releases/download/${finalAttrs.version}/t-rex-${finalAttrs.version}-linux.tar.gz";
       sha256 = "sha256-eGOTfb03R2ck/6GMY6tPmTifYT9aVv3dNDQ5jRVlz58=";
       stripRoot = false;
     };
@@ -26,4 +25,4 @@ in
       echo "${wrapper}" > $out/bin/t-rex
       chmod +x $out/bin/t-rex
     '';
-  }
+  })

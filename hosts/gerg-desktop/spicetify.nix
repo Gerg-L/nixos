@@ -1,15 +1,13 @@
-{
-  inputs,
-  pkgs,
-  ...
-}: let
-  spicePkgs = inputs.spicetify-nix.packages.${pkgs.system}.default;
+{spicetify-nix, ...}: {pkgs, ...}: let
+  spicePkgs = spicetify-nix.legacyPackages.${pkgs.system};
   ex = spicePkgs.extensions;
 in {
+  imports = [spicetify-nix.nixosModule];
   nixpkgs.allowedUnfree = ["spotify"];
-  imports = [inputs.spicetify-nix.nixosModule];
   programs.spicetify = {
     enable = true;
+    spotifyPackage = spicePkgs.spotify;
+    spicetifyPackage = spicePkgs.spicetify-cli;
     enabledExtensions = [
       ex.adblock
       ex.hidePodcasts

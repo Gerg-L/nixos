@@ -1,5 +1,4 @@
-{
-  inputs,
+{fetch-rs, ...}: {
   pkgs,
   config,
   lib,
@@ -11,11 +10,9 @@
         (pkgs)
         page
         exa
-        direnv
-        nix-direnv
         ;
       inherit
-        (inputs.fetch-rs.packages.${pkgs.system})
+        (fetch-rs.packages.${pkgs.system})
         fetch-rs
         ;
     };
@@ -25,13 +22,13 @@
       VISUAL = "nvim";
       PAGER = "page";
       SYSTEMD_PAGERSECURE = "true";
-      DIRENV_LOG_FORMAT = "";
     };
     shellAliases = {
       #make sudo use aliases
       sudo = "sudo ";
       #paste link trick
       pastebin = "curl -F 'clbin=<-' https://clbin.com";
+      termbin = "nc termbin.com 9999";
       #nix stuff
       gc-check = "nix-store --gc --print-roots | egrep -v \"^(/nix/var|/run/\w+-system|\{memory|/proc)\"";
       #vim stuff
@@ -49,9 +46,6 @@
       lt = "exa --tree --level=2";
     };
     interactiveShellInit = "fetch-rs";
-    pathsToLink = [
-      "/share/nix-direnv"
-    ];
   };
   security.sudo = {
     enable = true;
@@ -72,24 +66,29 @@
       syntaxHighlighting.enable = true;
       histSize = 10000;
       histFile = "$HOME/.cache/zsh_history";
-      shellInit = ''
-        eval "$(direnv hook zsh)"
-      '';
     };
     #starship
     starship = {
       enable = true;
       settings = {
         add_newline = false;
-        format = "$sudo\${custom.direnv} $cmd_duration \n $directory$git_branch$character";
+        format = "$sudo$nix_shell\${custom.direnv}$cmd_duration\n$git_metrics$git_state$git_branch\n$directory$character";
         character = {
-          success_symbol = "[ ](#9ece6a bold)";
-          error_symbol = "[ ](#db4b4b bold)";
+          success_symbol = "[\\$](#9ece6a bold)";
+          error_symbol = "[\\$](#db4b4b bold)";
+        };
+        nix_shell = {
+          format = "[󱄅 ](#74b2ff)";
+          heuristic = true;
         };
         directory = {
           read_only = " ";
         };
+        git_metrics = {
+          disabled = false;
+        };
         git_branch = {
+          format = "[$symbol$branch(:$remote_branch)]($style)";
           style = "bold red";
         };
         sudo = {
@@ -103,7 +102,7 @@
         custom.direnv = {
           format = "[\\[direnv\\]]($style)";
           style = "#36c692";
-          detect_folders = [".direnv"];
+          when = "printenv DIRENV_FILE";
         };
       };
     };

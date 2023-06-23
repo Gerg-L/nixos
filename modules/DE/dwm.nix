@@ -1,9 +1,11 @@
 {
-  inputs,
+  suckless,
+  self,
+  ...
+}: {
   pkgs,
   config,
   lib,
-  self,
   ...
 }: {
   options.localModules.DE.dwm.enable = lib.mkEnableOption "";
@@ -45,7 +47,7 @@
     };
     environment.systemPackages = builtins.attrValues {
       inherit
-        (inputs.suckless.packages.${pkgs.system})
+        (suckless.packages.${pkgs.system})
         dmenu
         dwm
         st

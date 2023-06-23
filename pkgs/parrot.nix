@@ -24,19 +24,21 @@ in
     pname = "parrot";
     version = "1.6.0";
     inherit src;
-    buildInputs = [
-      libopus
-      openssl
-    ];
 
     nativeBuildInputs = [
       pkg-config
       cmake
       makeWrapper
     ];
+
+    buildInputs = [
+      libopus
+      openssl
+    ];
+
     postInstall = ''
       wrapProgram $out/bin/parrot \
-        --set PATH ${lib.makeBinPath [
+        --prefix PATH ${lib.makeBinPath [
         yt-dlp
         ffmpeg
       ]}'';
