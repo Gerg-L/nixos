@@ -8,7 +8,6 @@ inputs: {pkgs, ...}: {
       warn-dirty = false;
       #ignore global registry
       flake-registry = builtins.toFile "empty-flake-registry.json" ''{"flakes":[],"version":2}'';
-      use-xdg-base-directories = true;
       #use for testing
       #allow-import-from-derivation = false;
       trusted-users = [
@@ -17,6 +16,11 @@ inputs: {pkgs, ...}: {
       ];
       allowed-users = [
       ];
+      use-xdg-base-directories = true;
     };
   };
+  #fix for use-xdg-base-directories
+  environment.profiles = [
+    "$HOME/.local/state/nix/profiles/profile"
+  ];
 }

@@ -6,8 +6,6 @@ in {
   nixpkgs.allowedUnfree = ["spotify"];
   programs.spicetify = {
     enable = true;
-    spotifyPackage = spicePkgs.spotify;
-    spicetifyPackage = spicePkgs.spicetify-cli;
     enabledExtensions = [
       ex.adblock
       ex.hidePodcasts

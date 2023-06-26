@@ -290,8 +290,8 @@
         ]
       },
       "locked": {
-        "lastModified": 1687479458,
-        "narHash": "sha256-7ZeYakvK1Raz4oFwGrbcMbDe12nf9TXdXJvgp/e+N8Y=",
+        "lastModified": 1687747647,
+        "narHash": "sha256-1gkAQLFAnlzp2P55Wql8fV0o8dJjsosRtyEFSdxGj8k=",
         "path": "/home/gerg/Projects/spicetify-nix",
         "type": "path"
       },

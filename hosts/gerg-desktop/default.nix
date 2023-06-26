@@ -19,6 +19,7 @@
       kmscon.enable = true;
     };
   };
+  boot.binfmt.emulatedSystems = ["aarch64-linux"];
   hardware.nvidia = {
     package = config.boot.kernelPackages.nvidiaPackages.beta;
     nvidiaPersistenced = false;
