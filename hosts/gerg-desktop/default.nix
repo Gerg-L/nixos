@@ -57,8 +57,8 @@
       inherit (nvim-flake.packages.${pkgs.system}) neovim;
     };
     etc = {
-      "jdks/17".source = pkgs.openjdk17 + /bin;
-      "jdks/8".source = pkgs.openjdk8 + /bin;
+      "jdks/17".source = "${pkgs.openjdk17}/bin";
+      "jdks/8".source = "${pkgs.openjdk8}/bin";
     };
   };
 
