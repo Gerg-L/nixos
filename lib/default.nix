@@ -5,29 +5,31 @@ inputs @ {
 }: let
   inherit (unstable) lib;
 
+  listNixFilesRecursive = path:
+    builtins.filter (lib.hasSuffix "nix")
+    (lib.filesystem.listFilesRecursive path);
+
   importAll = path:
     map
     (module: (import module inputs))
-    (
-      builtins.filter (lib.hasSuffix ".nix")
-      (lib.filesystem.listFilesRecursive path)
-    );
+    (listNixFilesRecursive path);
 
   mkModules = path:
     lib.listToAttrs (
       map (
         name: {
-          name = lib.removePrefix (toString path + "/") (lib.removeSuffix ".nix" (toString name));
+          name = lib.pipe name [
+            toString
+            (lib.removePrefix "${path}/")
+            (lib.removeSuffix ".nix")
+          ];
           value = import name inputs;
         }
       )
-      (
-        builtins.filter (lib.hasSuffix ".nix")
-        (lib.filesystem.listFilesRecursive path)
-      )
+      (listNixFilesRecursive path)
     );
 in {
-  inherit importAll mkModules;
+  inherit importAll mkModules listNixFilesRecursive;
 
   withSystem = f:
     lib.fold lib.recursiveUpdate {}
@@ -39,12 +41,13 @@ in {
         lib.nixosSystem {
           inherit system;
           modules =
-            builtins.attrValues self.nixosModules ++ importAll (self + "/hosts/" + name);
+            builtins.attrValues self.nixosModules
+            ++ importAll "${self}/hosts/${name}";
         }
     );
   mkDisko = names:
     lib.genAttrs names (
-      name: (import (self + "/hosts/" + name + "/disko.nix") inputs)
+      name: (import "${self}/hosts/${name}/disko.nix" inputs)
     );
 
   mkPkgs = pkgs: path:
@@ -53,9 +56,6 @@ in {
         name = lib.removeSuffix ".nix" (builtins.baseNameOf module);
         value = pkgs.callPackage module {};
       })
-      (
-        builtins.filter (lib.hasSuffix ".nix")
-        (lib.filesystem.listFilesRecursive path)
-      )
+      (listNixFilesRecursive path)
     );
 }

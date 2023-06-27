@@ -16,7 +16,7 @@
       enable = true;
       displayManager = {
         sessionCommands = ''
-          ${lib.getExe pkgs.feh} --bg-center ${self.packages.${pkgs.system}.images + /recursion.png}
+          ${lib.getExe pkgs.feh} --bg-center "${self.packages.${pkgs.system}.images}/recursion.png"
           ${lib.getExe pkgs.numlockx}
           ${lib.getExe pkgs.picom} &
         '';

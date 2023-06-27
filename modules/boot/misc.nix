@@ -17,7 +17,7 @@
     plymouth = {
       enable = lib.mkDefault true;
       theme = "breeze";
-      logo = self.packages.${pkgs.system}.images + /logo.png;
+      logo = "${self.packages.${pkgs.system}.images}/logo.png";
     };
     loader = {
       grub.configurationLimit = 10;

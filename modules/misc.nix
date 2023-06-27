@@ -15,35 +15,35 @@ _: {
     };
   };
 
-  config = lib.mkMerge [
-    (lib.mkIf (config.nixpkgs.allowedUnfree != []) {
-      nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.nixpkgs.allowedUnfree;
-    })
-    {
-      environment.defaultPackages = lib.mkForce [
-        pkgs.efibootmgr #efi editor
-        pkgs.pciutils #lspci
-        pkgs.alsa-utils #volume control
-        pkgs.xclip #commandline clipboard access
-        pkgs.bottom #view tasks
-        pkgs.nix-tree #view packages
-        pkgs.nix-output-monitor #nom nom nom nom];
-      ];
+  config = {
+    nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.nixpkgs.allowedUnfree;
 
-      #enable ssh
-      programs.mtr.enable = true; #ping and traceroute
-      services.openssh = {
-        enable = true;
-        hostKeys = lib.mkForce [];
-        settings = {
-          PermitRootLogin = "yes";
-          PasswordAuthentication = false;
-          KbdInteractiveAuthentication = false;
-        };
+    environment.defaultPackages = lib.mkForce (builtins.attrValues {
+      inherit
+        (pkgs)
+        alsa-utils #volume control
+        bottom #view tasks
+        efibootmgr #efi editor
+        nix-output-monitor #nom nom nom nom;
+        nix-tree #view packages
+        pciutils #lspci
+        xclip #commandline clipboard access
+        ;
+    });
+
+    #enable ssh
+    programs.mtr.enable = true; #ping and traceroute
+    services.openssh = {
+      enable = true;
+      hostKeys = lib.mkForce [];
+      settings = {
+        PermitRootLogin = "yes";
+        PasswordAuthentication = false;
+        KbdInteractiveAuthentication = false;
       };
-      i18n.defaultLocale = "en_US.UTF-8";
-      #time settings
-      time.timeZone = "America/New_York";
-    }
-  ];
+    };
+    i18n.defaultLocale = "en_US.UTF-8";
+    #time settings
+    time.timeZone = "America/New_York";
+  };
 }

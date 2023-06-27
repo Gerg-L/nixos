@@ -3,7 +3,11 @@ inputs: {pkgs, ...}: {
   nix = {
     package = inputs.nix.packages.${pkgs.system}.default;
     settings = {
-      experimental-features = ["nix-command" "flakes" "repl-flake"];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+        "repl-flake"
+      ];
       auto-optimise-store = true;
       warn-dirty = false;
       #ignore global registry
@@ -14,8 +18,7 @@ inputs: {pkgs, ...}: {
         "root"
         "@wheel"
       ];
-      allowed-users = [
-      ];
+      allowed-users = [];
       use-xdg-base-directories = true;
     };
   };

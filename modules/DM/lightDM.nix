@@ -11,7 +11,7 @@
       displayManager = {
         lightdm = {
           enable = true;
-          background = self.packages.${pkgs.system}.images + /recursion.png;
+          background = "${self.packages.${pkgs.system}.images}/recursion.png";
           extraConfig = "minimum-vt=1";
           greeters.mini = {
             enable = true;
