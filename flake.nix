@@ -22,7 +22,7 @@
     };
     spicetify-nix = {
       #url = "github:the-argus/spicetify-nix";
-      url = "path:/home/gerg/Projects/spicetify-nix";
+      url = "github:Gerg-L/spicetify-nix/personal";
       inputs.nixpkgs.follows = "unstable";
     };
     #my own packages

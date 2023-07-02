@@ -291,14 +291,18 @@
         ]
       },
       "locked": {
-        "lastModified": 1688271042,
-        "narHash": "sha256-jO2i5SAX87yh7MJtZ2kmlWwFBC90TyeBWjCzcs6Z2Jk=",
-        "path": "/home/gerg/Projects/spicetify-nix",
-        "type": "path"
+        "lastModified": 1688272989,
+        "narHash": "sha256-chqWze799IZhOy8p2KlPc4Agr2nEWYdoFDo4RUQPDwE=",
+        "owner": "Gerg-L",
+        "repo": "spicetify-nix",
+        "rev": "b9087dda5ced8d55ec5cb69b9ba57adbbbf38407",
+        "type": "github"
       },
       "original": {
-        "path": "/home/gerg/Projects/spicetify-nix",
-        "type": "path"
+        "owner": "Gerg-L",
+        "ref": "personal",
+        "repo": "spicetify-nix",
+        "type": "github"
       }
     },
     "stable": {
