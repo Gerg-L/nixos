@@ -6,7 +6,7 @@
     stable.url = "github:nixos/nixpkgs/nixos-23.05";
     pipewire_fix.url = "github:nixos/nixpkgs/45a55711fe12d0aada3aa04746082cf1b83dfbf3";
     #nix 2.17
-    nix.url = "github:nixos/nix/03f9ff6ea59d21c6d7b29c64a03d5041bd621261";
+    nix.url = "github:nixos/nix/7b39a388b382e7912de3c5951faad42fe2d72f48";
 
     nixos-generators = {
       url = "github:nix-community/nixos-generators";

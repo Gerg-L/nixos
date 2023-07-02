@@ -7,7 +7,6 @@ _: {
   options = {
     dummyvalue = lib.mkOption {
       default = {};
-      type = lib.configType;
     };
     nixpkgs.allowedUnfree = lib.mkOption {
       type = lib.types.listOf lib.types.string;

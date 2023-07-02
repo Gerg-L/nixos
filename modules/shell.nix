@@ -66,16 +66,53 @@
       syntaxHighlighting.enable = true;
       histSize = 10000;
       histFile = "$HOME/.cache/zsh_history";
+      interactiveShellInit = ''
+          zle-line-init() {
+          emulate -L zsh
+
+          [[ $CONTEXT == start ]] || return 0
+
+          while true; do
+            zle .recursive-edit
+            local -i ret=$?
+           [[ $ret == 0 && $KEYS == $'\4' ]] || break
+           [[ -o ignore_eof ]] || exit 0
+          done
+
+         local saved_prompt=$PROMPT
+          local saved_rprompt=$RPROMPT
+          PROMPT='\$ '
+          RPROMPT='''
+          zle .reset-prompt
+          PROMPT=$saved_prompt
+          RPROMPT=$saved_rprompt
+
+          if (( ret )); then
+            zle .send-break
+          else
+            zle .accept-line
+          fi
+          return ret
+        }
+
+        zle -N zle-line-init
+      '';
     };
     #starship
     starship = {
       enable = true;
       settings = {
         add_newline = false;
-        format = "$sudo$nix_shell\${custom.direnv}$cmd_duration\n$git_metrics$git_state$git_branch\n$directory$character";
+        format = "$cmd_duration$git_metrics$git_state$git_branch\n$status$directory$character";
+        right_format = "$sudo$nix_shell\${custom.direnv} $time";
+        continuation_prompt = "▶▶ ";
         character = {
           success_symbol = "[\\$](#9ece6a bold)";
           error_symbol = "[\\$](#db4b4b bold)";
+        };
+        status = {
+          disabled = false;
+          format = "[$status]($style) ";
         };
         nix_shell = {
           format = "[󱄅 ](#74b2ff)";
@@ -104,6 +141,19 @@
           style = "#36c692";
           when = "printenv DIRENV_FILE";
         };
+        time = {
+          format = "[$time]($style)\n";
+          time_format = "%I:%M %p";
+          disabled = false;
+        };
+        #        username = {
+        #          format = "[$user]($style)";
+        #          show_always = true;
+        #        };
+        #        hostname = {
+        #          ssh_only = false;
+        #          format = "[$hostname]($style)";
+        #        };
       };
     };
   };

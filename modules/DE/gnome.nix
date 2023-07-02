@@ -4,9 +4,9 @@ _: {
   pkgs,
   ...
 }: {
-  options.localModules.DE.gnome.enable = lib.mkEnableOption "";
+  options.local.DE.gnome.enable = lib.mkEnableOption "";
 
-  config = lib.mkIf config.localModules.DE.gnome.enable {
+  config = lib.mkIf config.local.DE.gnome.enable {
     environment = {
       systemPackages = [pkgs.gnome.gnome-calculator];
       gnome.excludePackages = builtins.attrValues {

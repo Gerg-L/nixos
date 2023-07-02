@@ -1,4 +1,4 @@
-_:{
+_: {
   sops.secrets = {
     "website/sql_gitea" = {
       mode = "0444";
@@ -63,11 +63,11 @@ _:{
         gitea = {
           enable = true;
           appName = "Powered by NixOS";
-          domain = "git.gerg-l.com";
-          rootUrl = "https://git.gerg-l.com/";
-          httpPort = giteaPort;
           settings = {
             server = {
+              DOMAIN = "git.gerg-l.com";
+              ROOT_URL = "https://git.gerg-l.com/";
+              HTTP_PORT = giteaPort;
               LANDING_PAGE = "/explore/repos";
             };
             ui = {
@@ -84,7 +84,7 @@ _:{
         };
         nextcloud = {
           enable = true;
-          package = pkgs.nextcloud26;
+          package = pkgs.nextcloud27;
           hostName = "next.gerg-l.com";
           autoUpdateApps.enable = true;
           enableBrokenCiphersForSSE = false;

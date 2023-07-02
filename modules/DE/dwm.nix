@@ -8,9 +8,9 @@
   lib,
   ...
 }: {
-  options.localModules.DE.dwm.enable = lib.mkEnableOption "";
+  options.local.DE.dwm.enable = lib.mkEnableOption "";
 
-  config = lib.mkIf config.localModules.DE.dwm.enable {
+  config = lib.mkIf config.local.DE.dwm.enable {
     services.gvfs.enable = true;
     services.xserver = {
       enable = true;

@@ -3,7 +3,7 @@
   config,
   ...
 }: {
-  localModules = {
+  local = {
     remoteBuild.isBuilder = true;
     X11Programs = {
       sxhkd.enable = true;
@@ -62,6 +62,11 @@
     };
   };
 
+  services.udev.packages = [
+    pkgs.android-udev-rules
+  ];
+  programs.adb.enable = true;
+
   networking = {
     useDHCP = false;
     hostName = "gerg-desktop";
@@ -100,10 +105,10 @@
         useDefaultShell = true;
         uid = 1000;
         isNormalUser = true;
-        extraGroups = ["wheel" "audio"];
+        extraGroups = ["wheel" "audio" "adbusers"];
         openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAuO/3IF+AjH8QjW4DAUV7mjlp2Mryd+1UnpAUofS2yA gerg@gerg-phone"
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILpYY2uw0OH1Re+3BkYFlxn0O/D8ryqByJB/ljefooNc gerg@gerg-windows"
+          config.local.keys.gerg_gerg-phone
+          config.local.keys.gerg_gerg-windows
         ];
         passwordFile = config.sops.secrets.gerg.path;
       };

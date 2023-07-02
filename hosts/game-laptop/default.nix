@@ -3,7 +3,7 @@ _: {
   config,
   ...
 }: {
-  localModules = {
+  local = {
     remoteBuild.enable = true;
     DE.gnome.enable = true;
     DM = {
@@ -62,9 +62,9 @@ _: {
         uid = 0;
         home = "/root";
         openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAuO/3IF+AjH8QjW4DAUV7mjlp2Mryd+1UnpAUofS2yA gerg@gerg-phone"
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILpYY2uw0OH1Re+3BkYFlxn0O/D8ryqByJB/ljefooNc gerg@gerg-windows"
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJWbwkFJmRBgyWyWU+w3ksZ+KuFw9uXJN3PwqqE7Z/i8 gerg@gerg-desktop"
+          config.local.keys.gerg_gerg-phone
+          config.local.keys.gerg_gerg-windows
+          config.local.keys.gerg_gerg-desktop
         ];
         passwordFile = config.sops.secrets.root.path;
       };

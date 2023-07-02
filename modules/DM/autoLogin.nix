@@ -3,7 +3,7 @@ _: {
   lib,
   ...
 }: {
-  options.localModules.DM = {
+  options.local.DM = {
     autoLogin = lib.mkEnableOption "";
     loginUser = lib.mkOption {
       type = lib.types.nullOr lib.types.str;
@@ -11,11 +11,11 @@ _: {
     };
   };
 
-  config = lib.mkIf config.localModules.DM.autoLogin {
+  config = lib.mkIf config.local.DM.autoLogin {
     services.xserver.displayManager = {
       autoLogin = {
         enable = true;
-        user = config.localModules.DM.loginUser;
+        user = config.local.DM.loginUser;
       };
     };
   };

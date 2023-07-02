@@ -4,9 +4,9 @@ _: {
   lib,
   ...
 }: let
-  cfg = config.localModules.X11Programs;
+  cfg = config.local.X11Programs;
 in {
-  options.localModules.X11Programs = {
+  options.local.X11Programs = {
     sxhkd.enable = lib.mkEnableOption "";
   };
   config = lib.mkMerge [

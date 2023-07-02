@@ -4,9 +4,9 @@ _: {
   pkgs,
   ...
 }: {
-  options.localModules.DE.xfce.enable = lib.mkEnableOption "";
+  options.local.DE.xfce.enable = lib.mkEnableOption "";
 
-  config = lib.mkIf config.localModules.DE.xfce.enable {
+  config = lib.mkIf config.local.DE.xfce.enable {
     environment.systemPackages = [pkgs.xfce.xfce4-whiskermenu-plugin];
     services.xserver = {
       enable = true;

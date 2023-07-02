@@ -4,9 +4,9 @@ _: {
   lib,
   ...
 }: let
-  cfg = config.localModules.theming;
+  cfg = config.local.theming;
 in {
-  options.localModules.theming = {
+  options.local.theming = {
     enable = lib.mkEnableOption "";
     kmscon.enable = lib.mkEnableOption "";
   };

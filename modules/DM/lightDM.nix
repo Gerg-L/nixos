@@ -4,9 +4,9 @@
   pkgs,
   ...
 }: {
-  options.localModules.DM.lightdm.enable = lib.mkEnableOption "";
+  options.local.DM.lightdm.enable = lib.mkEnableOption "";
 
-  config = lib.mkIf config.localModules.DM.lightdm.enable {
+  config = lib.mkIf config.local.DM.lightdm.enable {
     services.xserver = {
       displayManager = {
         lightdm = {
@@ -15,7 +15,7 @@
           extraConfig = "minimum-vt=1";
           greeters.mini = {
             enable = true;
-            user = config.localModules.DM.loginUser;
+            user = config.local.DM.loginUser;
             extraConfig = ''
               [greeter]
               show-password-label = false

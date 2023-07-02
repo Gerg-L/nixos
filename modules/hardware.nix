@@ -3,9 +3,9 @@ _: {
   lib,
   ...
 }: let
-  cfg = config.localModules.hardware;
+  cfg = config.local.hardware;
 in {
-  options.localModules.hardware = {
+  options.local.hardware = {
     gpuAcceleration = {
       disable = lib.mkOption {
         type = lib.types.bool;
