@@ -16,8 +16,14 @@ _: {
             keep-derivations = false;
             builders-use-substitutes = true;
             max-jobs = 0;
-            substituters = ["ssh-ng://nix-ssh@gerg-desktop" "https://cache.nixos.org/"];
-            trusted-public-keys = ["gerg-desktop:6p1+h6jQnb1MOt3ra3PlQpfgEEF4zRrQWiEuAqcjBj8=" "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="];
+            substituters = [
+              "ssh-ng://nix-ssh@gerg-desktop"
+              "https://cache.nixos.org/"
+            ];
+            trusted-public-keys = [
+              "gerg-desktop:6p1+h6jQnb1MOt3ra3PlQpfgEEF4zRrQWiEuAqcjBj8="
+              "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+            ];
           };
           distributedBuilds = true;
           buildMachines = [
@@ -33,6 +39,12 @@ _: {
             }
           ];
         };
+        programs.ssh.knownHosts = {
+          gerg-desktop = {
+            extraHostNames = ["gerg-desktop.lan"];
+            publicKey = config.local.keys.root_gerg-desktop;
+          };
+        };
       }
     )
 
@@ -43,8 +55,7 @@ _: {
           config.local.keys.root_game-laptop
         ];
       in
-        lib.mkIf
-        config.local.remoteBuild.isBuilder
+        lib.mkIf config.local.remoteBuild.isBuilder
         {
           sops.secrets.store_key = {};
           users = {

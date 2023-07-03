@@ -11,7 +11,7 @@ in {
       ex.hidePodcasts
       ex.shuffle
     ];
-    theme = spicePkgs.themes.Dribbblish;
+    theme = spicePkgs.themes.Comfy;
     colorScheme = "custom";
     customColorScheme = {
       text = "f8f8f8";
