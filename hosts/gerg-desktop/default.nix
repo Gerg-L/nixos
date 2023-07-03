@@ -53,6 +53,9 @@
         xautoclick
         webcord
         prismlauncher
+        deadnix
+        statix
+        alejandra
         ;
       inherit (nvim-flake.packages.${pkgs.system}) neovim;
     };
@@ -60,6 +63,7 @@
       "jdks/17".source = "${pkgs.openjdk17}/bin";
       "jdks/8".source = "${pkgs.openjdk8}/bin";
     };
+    shellAliases.lint = "deadnix -e && statix fix && alejandra ./";
   };
 
   services.udev.packages = [
