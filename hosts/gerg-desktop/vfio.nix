@@ -1,8 +1,4 @@
-{
-  self,
-  pipewire_fix,
-  ...
-}: {
+{pipewire_fix, ...}: {
   pkgs,
   lib,
   config,
@@ -108,6 +104,7 @@ in {
   environment = {
     systemPackages = [
       pkgs.virt-manager
+      pkgs.dmidecode
     ];
     shellAliases = {
       vm-start = "virsh start Windows";
@@ -162,6 +159,6 @@ in {
   in [
     "L  /etc/Xorg/active.conf - - - - /etc/Xorg/2_mon.conf"
     "L+ /var/lib/libvirt/hooks/qemu - - - - ${qemuHook}"
-    "L+ /var/lib/libvirt/qemu/Windows.xml - - - - ${self}/misc/Windows.xml"
+    "L+ /var/lib/libvirt/qemu/Windows.xml - - - - ${./Windows.xml}"
   ];
 }

@@ -31,4 +31,12 @@
       timeout = 0;
     };
   };
+  systemd.services.efibootmgr = {
+    serviceConfig.Type = "oneshot";
+    path = [pkgs.efibootmgr];
+    wantedBy = ["default.target"];
+    script = ''
+      efibootmgr -t 0
+    '';
+  };
 }

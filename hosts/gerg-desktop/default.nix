@@ -56,6 +56,7 @@
         deadnix
         statix
         alejandra
+        nix-index
         ;
       inherit (nvim-flake.packages.${pkgs.system}) neovim;
     };

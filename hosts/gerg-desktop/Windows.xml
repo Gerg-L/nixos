@@ -29,6 +29,7 @@
     <nvram>/var/lib/libvirt/qemu/nvram/Windows_VARS.fd</nvram>
     <boot dev="hd"/>
     <bootmenu enable="no"/>
+    <smbios mode='host'/>
   </os>
   <features>
     <acpi/>

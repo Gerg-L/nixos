@@ -17,7 +17,7 @@ _: {pkgs, ...}: {
       fi
     '';
     bash.interactiveShellInit = ''
-      if [ $- == *i* ] && ! printenv PATH | grep -qc '/nix/store' && [ -z "$IN_NIX_SHELL" ] ; then
+      if [[ $- == *i* ]] && ! printenv PATH | grep -qc '/nix/store' && [ -z "$IN_NIX_SHELL" ] ; then
         eval "$(direnv hook bash)"
       fi
     '';
