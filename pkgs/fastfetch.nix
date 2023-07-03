@@ -16,18 +16,18 @@
   vulkan-loader,
   wayland,
   xfce,
-  xorg,
+  libX11,
   zlib,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "fastfetch";
-  version = "1.11.0";
+  version = "1.12.1";
 
   src = fetchFromGitHub {
     owner = "LinusDierheimer";
     repo = finalAttrs.pname;
     rev = finalAttrs.version;
-    hash = "sha256-sSQaXXKH/ZELdhbUKuvAj0gZ0fSO/Xjxsv/TU0Xq47k=";
+    hash = "sha256-tMwHoa4Vy6QOkbASjvIiMal8TBDclF+TKWYWUwvpPeM=";
   };
 
   nativeBuildInputs = [cmake pkg-config];
@@ -47,9 +47,12 @@ stdenv.mkDerivation (finalAttrs: {
     libxcb
     xfce.xfconf
     opencl-headers
-    xorg.libX11
+    libX11
   ];
   cmakeFlags = [
-    "-DTARGET_DIR_ETC=./etc"
+    "-DTARGET_DIR_ETC=./"
   ];
+  postInstall = ''
+    rm -rf $out/fastfetch
+  '';
 })
