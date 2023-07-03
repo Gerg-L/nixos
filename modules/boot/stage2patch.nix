@@ -1,4 +1,4 @@
-{unstable, ...}: {
+_: {
   lib,
   config,
   pkgs,
@@ -9,9 +9,7 @@ let
   useHostResolvConf = config.networking.resolvconf.enable && config.networking.useHostResolvConf;
 
   bootStage2 = pkgs.substituteAll {
-    src = pkgs.runCommand "stage-2-init.sh" {} ''
-      sed '2i exec 1<>/dev/null' ${unstable}/nixos/modules/system/boot/stage-2-init.sh > $out
-    '';
+    src = ./stage-2-init.sh;
     shellDebug = "${pkgs.bashInteractive}/bin/bash";
     shell = "${pkgs.bash}/bin/bash";
     inherit (config.boot) readOnlyNixStore systemdExecutable extraSystemdUnitPaths;

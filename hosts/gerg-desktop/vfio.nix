@@ -43,8 +43,22 @@ let
   ###END OF TAKEN PART
 in {
   environment.etc = {
-    "Xorg/1_mon".source = pkgs.runCommand "1_mon" {} (xserverbase + "cat '${self}/misc/1-monitor.conf' >> $out");
-    "Xorg/2_mon".source = pkgs.runCommand "2_mon" {} (xserverbase + "cat '${self}/misc/2-monitor.conf' >> $out");
+    "Xorg/1_mon.conf".source = pkgs.runCommand "1_mon.conf" {} (
+      xserverbase
+      + ''
+        cat << EOF >> $out
+        ${builtins.readFile ./1_mon.conf}
+        EOF
+      ''
+    );
+    "Xorg/2_mon.conf".source = pkgs.runCommand "2_mon.conf" {} (
+      xserverbase
+      + ''
+        cat << EOF >> $out
+        ${builtins.readFile ./2_mon.conf}
+        EOF
+      ''
+    );
   };
   ####VM SOUND BORKED
   services.pipewire.package = pipewire_fix.legacyPackages.${pkgs.system}.pipewire;
@@ -103,9 +117,9 @@ in {
 
   users.users.gerg.extraGroups = ["kvm" "libvirtd"];
 
-  services.xserver.displayManager.xserverArgs = lib.mkAfter ["-config /etc/Xorg/current"];
+  services.xserver.displayManager.xserverArgs = lib.mkAfter ["-config /etc/Xorg/active.conf"];
   services.xserver.displayManager.sessionCommands = lib.mkBefore ''
-    if ! [ -e "/tmp/ONE_MONITOR" ] ; then
+    if ! [ -e "/etc/Xorg/ONE_MONITOR" ] ; then
           xrandr --output DP-0 --auto --mode 3440x1440 --rate 120 --primary --pos 0x0
           xrandr --output HDMI-A-1-0 --auto --mode 1920x1080 --rate 144 --set TearFree on --pos 3440x360
           xset -dpms
@@ -127,8 +141,8 @@ in {
             systemctl set-property --runtime -- user.slice AllowedCPUs=8-15,24-31
             systemctl set-property --runtime -- system.slice AllowedCPUs=8-15,24-31
             systemctl set-property --runtime -- init.scope AllowedCPUs=8-15,24-31
-            ln -fs /etc/Xorg/1_mon /etc/Xorg/current
-            touch /tmp/ONE_MONITOR
+            ln -fs /etc/Xorg/1_mon.conf /etc/Xorg/active.conf
+            touch /etc/Xorg/ONE_MONITOR
             systemctl start display-manager.service
         fi
         if [ "$OPERATION" == "release" ]; then
@@ -139,14 +153,14 @@ in {
           ${pkgs.libvirt}/bin/virsh nodedev-reattach pci_0000_01_00_0
           ${pkgs.libvirt}/bin/virsh nodedev-reattach pci_0000_01_00_1
           modprobe -a nvidia_uvm nvidia_drm nvidia nvidia_modeset
-          ln -fs /etc/Xorg/2_mon /etc/Xorg/current
-          rm /tmp/ONE_MONITOR
+          ln -fs /etc/Xorg/2_mon.conf /etc/Xorg/active.conf
+          rm /etc/Xorg/ONE_MONITOR
           systemctl start display-manager.service
         fi
       fi
     '';
   in [
-    "L  /etc/Xorg/current - - - - /etc/Xorg/2_mon"
+    "L  /etc/Xorg/active.conf - - - - /etc/Xorg/2_mon.conf"
     "L+ /var/lib/libvirt/hooks/qemu - - - - ${qemuHook}"
     "L+ /var/lib/libvirt/qemu/Windows.xml - - - - ${self}/misc/Windows.xml"
   ];

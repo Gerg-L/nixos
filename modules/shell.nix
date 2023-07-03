@@ -146,14 +146,6 @@
           time_format = "%I:%M %p";
           disabled = false;
         };
-        #        username = {
-        #          format = "[$user]($style)";
-        #          show_always = true;
-        #        };
-        #        hostname = {
-        #          ssh_only = false;
-        #          format = "[$hostname]($style)";
-        #        };
       };
     };
   };
