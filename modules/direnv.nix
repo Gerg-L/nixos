@@ -12,7 +12,7 @@ _: {pkgs, ...}: {
   };
   programs = {
     zsh.interactiveShellInit = ''
-      if [[ -o interactive ]] && ! printenv PATH | grep -qc '/nix/store' && [ -z "$IN_NIX_SHELL" ] ; then
+      if ! printenv PATH | grep -qc '/nix/store' && [ -z "$IN_NIX_SHELL" ] ; then
         eval "$(direnv hook zsh)"
       fi
     '';
@@ -21,14 +21,5 @@ _: {pkgs, ...}: {
         eval "$(direnv hook bash)"
       fi
     '';
-    # doesn't work for some reason
-    #  fish.enable = true;
-    #  fish.interactiveShellInit = ''
-    #    set -g direnv_fish_mode disable_arrow
-    #    if status --is-interactive; and not printenv PATH | grep -qc '/nix/store'; and  [ -z "$IN_NIX_SHELL" ];
-    #      direnv hook fish | source;
-    #      echo "loaded direnv";
-    #    end
-    #  '';
   };
 }
