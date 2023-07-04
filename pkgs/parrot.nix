@@ -21,6 +21,8 @@ rustPlatform.buildRustPackage
     hash = "sha256-f6YAdsq2ecsOCvk+A8wsUu+ywQnW//gCAkVLF0HTn8c=";
   };
 
+  cargoHash = "sha256-e4NHgwoNkZ0//rugHrP0gU3pntaMeBJsV/YSzJfD8r4=";
+
   nativeBuildInputs = [
     pkg-config
     cmake
@@ -34,11 +36,9 @@ rustPlatform.buildRustPackage
 
   postInstall = ''
     wrapProgram $out/bin/parrot \
-      --prefix PATH ${lib.makeBinPath [
+      --prefix PATH : ${lib.makeBinPath [
       yt-dlp
       ffmpeg
-    ]}'';
-
-  cargoHash = "sha256-e4NHgwoNkZ0//rugHrP0gU3pntaMeBJsV/YSzJfD8r4=";
-  RUSTC_BOOTSTRAP = 1;
+    ]}
+  '';
 }
