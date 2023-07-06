@@ -20,8 +20,9 @@
     variables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
-      PAGER = "page";
+      PAGER = "page -WfC -q 90000 -z 90000";
       SYSTEMD_PAGERSECURE = "true";
+      MANPAGER = "page -t man";
     };
     shellAliases = {
       #make sudo use aliases
@@ -44,6 +45,7 @@
       lx = "exa -lbhHigUmuSa@ --time-style=long-iso --git --color-scale";
       lS = "exa -1";
       lt = "exa --tree --level=2";
+      page = config.environment.variables.PAGER;
     };
     interactiveShellInit = "fetch-rs";
   };
@@ -67,6 +69,13 @@
       histSize = 10000;
       histFile = "$HOME/.cache/zsh_history";
       interactiveShellInit = ''
+          ### pager ###
+          man () {
+            PROGRAM="''${@[-1]}"
+            SECTION="''${@[-2]}"
+            page -W "man://$PROGRAM''${SECTION:+($SECTION)}"
+          }
+          ### transient shell prompt ###
           zle-line-init() {
           emulate -L zsh
 

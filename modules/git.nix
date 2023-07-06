@@ -24,6 +24,7 @@ _: {
         push = {
           autoSetupRemote = true;
         };
+        advice.addIgnoredFile = false;
       };
     };
   };

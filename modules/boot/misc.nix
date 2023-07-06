@@ -11,7 +11,31 @@
   };
   boot = {
     blacklistedKernelModules = ["pcspkr"];
-    kernelParams = ["fbcon=nodefer" "bgrt_disable" "quiet" "systemd.show_status=false" "rd.udev.log_level=3" "vt.global_cursor_default=0"];
+    kernelParams = [
+      "acpi_call"
+      "pti=auto"
+      "randomize_kstack_offset=on"
+      "vsyscall=none"
+      "slab_nomerge"
+      "module.sig_enforce=1"
+      "lockdown=confidentiality"
+      "page_poison=1"
+      "page_alloc.shuffle=1"
+      "sysrq_always_enabled=0"
+      "idle=nomwait"
+      "rootflags=noatime"
+      "iommu=pt"
+      "usbcore.autosuspend=-1"
+      "noresume"
+      "acpi_backlight=native"
+      "logo.nologo"
+      "fbcon=nodefer"
+      "bgrt_disable"
+      "quiet"
+      "systemd.show_status=false"
+      "rd.udev.log_level=3"
+      "vt.global_cursor_default=0"
+    ];
     consoleLogLevel = 3;
     initrd.verbose = false;
     plymouth = {

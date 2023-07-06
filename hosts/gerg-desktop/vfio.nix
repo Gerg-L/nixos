@@ -42,24 +42,24 @@ in {
     "Xorg/1_mon.conf".source = pkgs.runCommand "1_mon.conf" {} (
       xserverbase
       + ''
-        cat << EOF >> $out
-        ${builtins.readFile ./1_mon.conf}
-        EOF
+        cat ${./1_mon.conf} >> $out
       ''
     );
     "Xorg/2_mon.conf".source = pkgs.runCommand "2_mon.conf" {} (
       xserverbase
       + ''
-        cat << EOF >> $out
-        ${builtins.readFile ./2_mon.conf}
-        EOF
+        cat ${./2_mon.conf} >> $out
       ''
     );
   };
   ####VM SOUND BORKED
   services.pipewire.package = pipewire_fix.legacyPackages.${pkgs.system}.pipewire;
   boot = {
-    kernelParams = ["amd_iommu=on" "iommu=pt" "vfio_iommu_type1.allow_unsafe_interrupts=1" "kvm.ignore_msrs=1"];
+    kernelParams = [
+      "amd_iommu=on"
+      "vfio_iommu_type1.allow_unsafe_interrupts=1"
+      "kvm.ignore_msrs=1"
+    ];
   };
   virtualisation = {
     libvirtd = {
