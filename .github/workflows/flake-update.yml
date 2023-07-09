@@ -1,0 +1,41 @@
+{
+  "name": "flake-update",
+  "on": {
+    "workflow_dispatch": null,
+    "schedule": [
+      {
+        "cron": "0 1 * * *"
+      }
+    ]
+},
+    "jobs": {
+      "lockfile": {
+        "runs-on": "ubuntu-latest",
+        "steps": [
+          {
+            "name": "checkout",
+            "uses": "actions/checkout@v3.5.3"
+          },
+          {
+            "name": "install",
+            "uses": "DeterminateSystems/nix-installer-action@v4"
+            },
+            {
+              "name": "update",
+              "uses": "DeterminateSystems/update-flake-lock@v19",
+              "with": {
+                "pr-title": "Update flake.lock",
+                "pr-labels": "CI"
+                }
+            },
+            {
+              "name": "merge",
+              "run": "gh pr merge ${{ steps.update.outputs.pull-request-number }} --squash --delete-branch\n",
+              "env": {
+                "GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}"
+                }
+            }
+        ]
+    }
+}
+}
