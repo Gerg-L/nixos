@@ -20,7 +20,7 @@
     variables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
-      PAGER = "page -WfC -q 90000 -z 90000";
+      PAGER = "page -WC -q 90000 -z 90000";
       SYSTEMD_PAGERSECURE = "true";
       MANPAGER = "page -t man";
     };
