@@ -36,6 +36,12 @@
     "steam"
     "steam-original"
   ];
+  programs.direnv = {
+    enable = true;
+    loadInNixShell = false;
+    silent = true;
+  };
+  programs.fish.enable = true;
 
   nix.settings.system-features = ["kvm" "big-parallel" "nixos-test" "benchmark"];
 
