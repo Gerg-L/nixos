@@ -19,14 +19,9 @@ jobs:
           pr-labels: |                  # Labels to be set on the PR
             dependencies
             automated
-      - name: Merge
-        uses: justinyoo/github-pr-merge-action@v1.0.0
-        with:
-          authToken: ${{ secrets.GITHUB_TOKEN }}
-          owner: Gerg-L
-          repository: nixos
-          issueId: '2'
-          mergeMethod: Squash
-          commitTitle: ''
-          commitDescription: ''
-          deleteBranch: 'true'
+      - name : merge
+        uses : nbrugger-tgm/merge-pr-action@v0.2.2
+        with :
+          pull_request: ${{ steps.update.outputs.pull-request-number }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          method: squash
