@@ -8,14 +8,26 @@ jobs:
   lockfile:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: checkout
         uses: actions/checkout@v3.5.3
-      - name: Install Nix
+      - name: install
         uses: DeterminateSystems/nix-installer-action@v4
-      - name: Update flake.lock
+      - name: update
         uses: DeterminateSystems/update-flake-lock@v19
         with:
           pr-title: "Update flake.lock" # Title of PR to be created
           pr-labels: |                  # Labels to be set on the PR
             dependencies
             automated
+            auto merge
+      - name: Merge
+        uses: justinyoo/github-pr-merge-action@v1
+        with:
+          authToken: ${{ secrets.GITHUB_TOKEN }}
+          owner: Gerg-L
+          repository: nixos
+          issueId: ${{ steps.update.outputs.pull-request-number }}
+          mergeMethod: Squash
+          commitTitle: ''
+          commitDescription: ''
+          deleteBranch: 'true'
