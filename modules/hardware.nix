@@ -35,8 +35,6 @@ in {
       hardware.pulseaudio.enable = lib.mkForce false; #disable pulseAudio
       services.pipewire = {
         enable = true;
-        audio.enable = true;
-        wireplumber.enable = true;
         alsa = {
           enable = true;
           support32Bit = true;
