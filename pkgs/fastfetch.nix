@@ -1,58 +1,80 @@
 {
-  chafa,
+  lib,
+  stdenv,
+  fetchFromGitHub,
   cmake,
+  pkg-config,
+  chafa,
   dbus,
   dconf,
-  fetchFromGitHub,
   glib,
   imagemagick_light,
   libglvnd,
+  libpulseaudio,
   libxcb,
+  libXrandr,
+  networkmanager,
   ocl-icd,
   opencl-headers,
   pciutils,
-  pkg-config,
-  stdenv,
+  rpm,
+  sqlite,
   vulkan-loader,
   wayland,
   xfce,
-  libX11,
   zlib,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "fastfetch";
-  version = "1.12.1";
+  version = "1.12.2";
 
   src = fetchFromGitHub {
     owner = "LinusDierheimer";
     repo = finalAttrs.pname;
     rev = finalAttrs.version;
-    hash = "sha256-tMwHoa4Vy6QOkbASjvIiMal8TBDclF+TKWYWUwvpPeM=";
+    hash = "sha256-l9fIm7+dBsOqGoFUYtpYESAjDy3496rDTUDQjbNU4U0=";
   };
 
-  nativeBuildInputs = [cmake pkg-config];
+  nativeBuildInputs = [
+    cmake
+    pkg-config
+  ];
 
   buildInputs = [
+    chafa
     dbus
     dconf
     glib
-    pciutils
-    zlib
-    chafa
     imagemagick_light
-    ocl-icd
     libglvnd
+    libpulseaudio
+    libxcb
+    libXrandr
+    networkmanager
+    ocl-icd
+    opencl-headers
+    pciutils
+    rpm
+    sqlite
     vulkan-loader
     wayland
-    libxcb
     xfce.xfconf
-    opencl-headers
-    libX11
+    zlib
   ];
-  cmakeFlags = [
-    "-DTARGET_DIR_ETC=./"
-  ];
-  postInstall = ''
-    rm -rf $out/fastfetch
+
+  preBuild = ''
+    export TRASH=$(mktemp -d)
   '';
+
+  cmakeFlags = [
+    "-DTARGET_DIR_ETC=$(TRASH)"
+  ];
+
+  meta = with lib; {
+    description = "Like neofetch, but much faster because written in C";
+    homepage = "https://github.com/fastfetch-cli/fastfetch";
+    license = licenses.mit;
+    platforms = platforms.linux;
+    maintainers = with maintainers; [gerg-l];
+  };
 })
