@@ -26,6 +26,7 @@ _: {
       rsync
       pavucontrol #gui volume control
       librewolf #best browser
+      chromium
       ;
   };
   services.xserver.videoDrivers = ["intel"];
