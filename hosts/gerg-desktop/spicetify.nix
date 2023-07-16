@@ -3,7 +3,7 @@
   ex = spicePkgs.extensions;
 in {
   imports = [spicetify-nix.nixosModule];
-  nixpkgs.allowedUnfree = ["spotify"];
+  local.allowedUnfree = ["spotify"];
   programs.spicetify = {
     enable = true;
     enabledExtensions = [

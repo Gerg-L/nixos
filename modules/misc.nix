@@ -4,18 +4,13 @@ _: {
   pkgs,
   ...
 }: {
-  options = {
-    dummyvalue = lib.mkOption {
-      default = {};
-    };
-    nixpkgs.allowedUnfree = lib.mkOption {
-      type = lib.types.listOf lib.types.string;
-      default = [];
-    };
+  options.local.allowedUnfree = lib.mkOption {
+    type = lib.types.listOf lib.types.string;
+    default = [];
   };
 
   config = {
-    nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.nixpkgs.allowedUnfree;
+    nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.local.allowedUnfree;
 
     environment.defaultPackages = lib.mkForce (builtins.attrValues {
       inherit

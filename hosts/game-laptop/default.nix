@@ -1,6 +1,7 @@
 _: {
   pkgs,
   config,
+  lib,
   ...
 }: {
   local = {
@@ -15,13 +16,13 @@ _: {
       enable = true;
       kmscon.enable = true;
     };
+    allowedUnfree = [
+      "nvidia-x11"
+      "nvidia-persistenced"
+      "steam"
+      "steam-original"
+    ];
   };
-  nixpkgs.allowedUnfree = [
-    "nvidia-x11"
-    "nvidia-persistenced"
-    "steam"
-    "steam-original"
-  ];
   environment = {
     systemPackages = builtins.attrValues {
       inherit
@@ -38,8 +39,8 @@ _: {
         ;
     };
     etc = {
-      "jdks/17".source = "${pkgs.openjdk17}/bin";
-      "jdks/8".source = "${pkgs.openjdk8}/bin";
+      "jdks/17".source = lib.getBin pkgs.openjdk17;
+      "jdks/8".source = lib.getBin pkgs.openjdk8;
     };
   };
   networking = {

@@ -10,13 +10,10 @@ _: {
     "L  /etc/nixos/flake.nix  - - - - /home/gerg/Projects/nixos/flake.nix"
   ];
   #create machine-id for spotify
-  environment.etc = {
-    "machine-id".text = "b6431c2851094770b614a9cfa78fb6ea";
-  };
+  environment.etc."machine-id".text = "b6431c2851094770b614a9cfa78fb6ea";
   #make sure the sopskey is found
   sops.age.sshKeyPaths = lib.mkForce ["/persist/ssh/ssh_host_ed25519_key"];
   fileSystems."/persist".neededForBoot = true;
-
   boot = {
     zfs = {
       devNodes = "/dev/disk/by-id/";
@@ -33,6 +30,13 @@ _: {
       availableKernelModules = ["hid_generic"];
       #wipe / and /var on boot
       postDeviceCommands = lib.mkAfter ''
+        #destroy last snapshot
+        zfs destroy rpool/root@lastboot
+        zfs destroy rpool/var@lastboot
+        #create new snapshot
+        zfs snapshot rpool/root@lastboot
+        zfs snapshot rpool/var@lastboot
+        #wipe everything
         zfs rollback -r rpool/root@empty
         zfs rollback -r rpool/var@empty
       '';
@@ -62,9 +66,6 @@ _: {
           }
         ];
         splashImage = null;
-        extraConfig = ''
-          GRUB_TIMEOUT_STYLE=hidden
-        '';
       };
     };
   };

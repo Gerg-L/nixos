@@ -1,5 +1,5 @@
 _: {pkgs, ...}: {
-  nixpkgs.allowedUnfree = ["hplip"];
+  local.allowedUnfree = ["hplip"];
   environment.systemPackages = [
     pkgs.gimp
     (pkgs.xsane.override {gimpSupport = true;})

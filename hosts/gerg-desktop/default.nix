@@ -1,6 +1,7 @@
 {nvim-flake, ...}: {
   pkgs,
   config,
+  lib,
   ...
 }: {
   local = {
@@ -18,6 +19,11 @@
       enable = true;
       kmscon.enable = true;
     };
+    allowedUnfree = [
+      "nvidia-x11"
+      "steam"
+      "steam-original"
+    ];
   };
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
   hardware.nvidia = {
@@ -31,11 +37,6 @@
     videoDrivers = ["nvidia" "amdgpu"];
   };
 
-  nixpkgs.allowedUnfree = [
-    "nvidia-x11"
-    "steam"
-    "steam-original"
-  ];
   programs.direnv = {
     enable = true;
     loadInNixShell = false;
@@ -67,8 +68,8 @@
       inherit (nvim-flake.packages.${pkgs.system}) neovim;
     };
     etc = {
-      "jdks/17".source = "${pkgs.openjdk17}/bin";
-      "jdks/8".source = "${pkgs.openjdk8}/bin";
+      "jdks/17".source = lib.getBin pkgs.openjdk17;
+      "jdks/8".source = lib.getBin pkgs.openjdk8;
     };
     shellAliases.lint = "deadnix -e && statix fix && alejandra ./";
   };

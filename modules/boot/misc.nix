@@ -44,7 +44,12 @@
       logo = "${self.packages.${pkgs.system}.images}/logo.png";
     };
     loader = {
-      grub.configurationLimit = 10;
+      grub = {
+        configurationLimit = 10;
+        extraConfig = ''
+          GRUB_TIMEOUT_STYLE=hidden
+        '';
+      };
       systemd-boot = {
         configurationLimit = 10;
         enable = lib.mkDefault true;

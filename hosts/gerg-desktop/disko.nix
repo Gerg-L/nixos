@@ -1,119 +1,70 @@
-{disko, ...}: {disks ? [], ...}: {
-  dummyvalue = {inherit disks;};
+{disko, ...}: {lib, ...}: let
+  disks = [
+    "nvme-SHPP41-500GM_SSB4N6719101A4N22"
+    "nvme-SHPP41-500GM_SSB4N6719101A4N0E"
+  ];
+in {
   imports = [disko.nixosModules.disko];
   disko.devices = {
-    disk = {
-      nvme0 = {
-        type = "disk";
-        device = "/dev/disk/by-id/nvme-SHPP41-500GM_SSB4N6719101A4N22";
-        content = {
-          type = "table";
-          format = "gpt";
-          partitions = [
-            {
-              name = "boot";
-              start = "0";
-              end = "1M";
-              part-type = "primary";
-              flags = ["bios_grub"];
-            }
-            {
-              name = "ESP";
-              start = "1M";
-              end = "1G";
-              bootable = true;
-              content = {
-                type = "filesystem";
-                format = "vfat";
-                mountpoint = "/boot/efis/nvme-SHPP41-500GM_SSB4N6719101A4N22";
-              };
-            }
-            {
-              name = "zfsboot";
-              start = "1G";
-              end = "5G";
-              content = {
-                type = "zfs";
-                pool = "bpool";
-              };
-            }
-            {
-              name = "swap";
-              start = "5G";
-              end = "21G";
-              content = {
-                type = "swap";
-                randomEncryption = true;
-              };
-            }
-            {
-              name = "zfsroot";
-              start = "21G";
-              end = "100%";
-              content = {
-                type = "zfs";
-                pool = "rpool";
-              };
-            }
-          ];
+    disk = lib.mkMerge (map (x: {
+        ${x} = {
+          type = "disk";
+
+          device = "/dev/disk/by-id/${x}";
+          content = {
+            type = "table";
+            format = "gpt";
+            partitions = [
+              {
+                name = "boot";
+                start = "0";
+                end = "1M";
+                part-type = "primary";
+                flags = ["bios_grub"];
+              }
+              {
+                name = "ESP";
+                start = "1M";
+                end = "1G";
+                bootable = true;
+                content = {
+                  type = "filesystem";
+                  format = "vfat";
+                  mountpoint = "/boot/efis/${x}";
+                };
+              }
+              {
+                name = "zfsboot";
+                start = "1G";
+                end = "5G";
+                content = {
+                  type = "zfs";
+                  pool = "bpool";
+                };
+              }
+              {
+                name = "swap";
+                start = "5G";
+                end = "21G";
+                content = {
+                  type = "swap";
+                  randomEncryption = true;
+                };
+              }
+              {
+                name = "zfsroot";
+                start = "21G";
+                end = "100%";
+                content = {
+                  type = "zfs";
+                  pool = "rpool";
+                };
+              }
+            ];
+          };
         };
-      };
-      nvme1 = {
-        type = "disk";
-        device = "/dev/disk/by-id/nvme-SHPP41-500GM_SSB4N6719101A4N0E";
-        content = {
-          type = "table";
-          format = "gpt";
-          partitions = [
-            {
-              name = "BIOS";
-              start = "0";
-              end = "1M";
-              part-type = "primary";
-              flags = ["bios_grub"];
-            }
-            {
-              name = "ESP";
-              start = "1M";
-              end = "1G";
-              bootable = true;
-              content = {
-                type = "filesystem";
-                format = "vfat";
-                mountpoint = "/boot/efis/nvme-SHPP41-500GM_SSB4N6719101A4N0E";
-              };
-            }
-            {
-              name = "zfsboot";
-              start = "1G";
-              end = "5G";
-              content = {
-                type = "zfs";
-                pool = "bpool";
-              };
-            }
-            {
-              name = "swap";
-              start = "5G";
-              end = "21G";
-              content = {
-                type = "swap";
-                randomEncryption = true;
-              };
-            }
-            {
-              name = "zfsroot";
-              start = "21G";
-              end = "100%";
-              content = {
-                type = "zfs";
-                pool = "rpool";
-              };
-            }
-          ];
-        };
-      };
-    };
+      })
+      disks);
     zpool = {
       rpool = {
         type = "zpool";
@@ -139,26 +90,31 @@
             type = "zfs_fs";
             options.mountpoint = "legacy";
             mountpoint = "/";
+            postCreateHook = "zfs snapshot root@empty";
           };
           "nix" = {
             type = "zfs_fs";
             options.mountpoint = "legacy";
             mountpoint = "/nix";
+            postCreateHook = "zfs snapshot nix@empty";
           };
           "var" = {
             type = "zfs_fs";
             options.mountpoint = "legacy";
             mountpoint = "/var";
+            postCreateHook = "zfs snapshot var@empty";
           };
           "persist" = {
             type = "zfs_fs";
             options.mountpoint = "legacy";
             mountpoint = "/persist";
+            postCreateHook = "zfs snapshot persist@empty";
           };
           "home" = {
             type = "zfs_fs";
             options.mountpoint = "legacy";
             mountpoint = "/home";
+            postCreateHook = "zfs snapshot home@empty";
           };
         };
       };
@@ -185,6 +141,7 @@
             type = "zfs_fs";
             options.mountpoint = "legacy";
             mountpoint = "/boot";
+            postCreateHook = "zfs snapshot boot@empty";
           };
         };
       };
