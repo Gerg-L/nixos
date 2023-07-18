@@ -90,31 +90,37 @@ in {
             type = "zfs_fs";
             options.mountpoint = "legacy";
             mountpoint = "/";
-            postCreateHook = "zfs snapshot root@empty";
+            postCreateHook = ''
+              zfs snapshot rpool/root@empty
+              zfs snapshot rpool/root@lastboot
+            '';
           };
           "nix" = {
             type = "zfs_fs";
             options.mountpoint = "legacy";
             mountpoint = "/nix";
-            postCreateHook = "zfs snapshot nix@empty";
+            postCreateHook = "zfs snapshot rpool/nix@empty";
           };
           "var" = {
             type = "zfs_fs";
             options.mountpoint = "legacy";
             mountpoint = "/var";
-            postCreateHook = "zfs snapshot var@empty";
+            postCreateHook = ''
+              zfs snapshot rpool/var@empty
+              zfs snapshot rpool/var@lastboot
+            '';
           };
           "persist" = {
             type = "zfs_fs";
             options.mountpoint = "legacy";
             mountpoint = "/persist";
-            postCreateHook = "zfs snapshot persist@empty";
+            postCreateHook = "zfs snapshot rpool/persist@empty";
           };
           "home" = {
             type = "zfs_fs";
             options.mountpoint = "legacy";
             mountpoint = "/home";
-            postCreateHook = "zfs snapshot home@empty";
+            postCreateHook = "zfs snapshot rpool/home@empty";
           };
         };
       };
@@ -141,7 +147,7 @@ in {
             type = "zfs_fs";
             options.mountpoint = "legacy";
             mountpoint = "/boot";
-            postCreateHook = "zfs snapshot boot@empty";
+            postCreateHook = "zfs snapshot bpool/boot@empty";
           };
         };
       };

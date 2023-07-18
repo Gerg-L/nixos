@@ -21,8 +21,6 @@
     };
     allowedUnfree = [
       "nvidia-x11"
-      "steam"
-      "steam-original"
     ];
   };
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
@@ -42,7 +40,6 @@
     loadInNixShell = false;
     silent = true;
   };
-  programs.fish.enable = true;
 
   nix.settings.system-features = ["kvm" "big-parallel" "nixos-test" "benchmark"];
 

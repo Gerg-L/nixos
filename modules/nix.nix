@@ -1,4 +1,8 @@
-inputs: {pkgs, ...}: {
+inputs: {
+  pkgs,
+  config,
+  ...
+}: {
   #other nix settings
   nix = {
     package = inputs.nix.packages.${pkgs.system}.default;
@@ -24,6 +28,6 @@ inputs: {pkgs, ...}: {
   };
   #fix for use-xdg-base-directories
   environment.profiles = [
-    "$HOME/.local/state/nix/profiles/profile"
+    "${config.environment.variables.XDG_STATE_HOME or "$HOME/.local/state"}/nix/profile"
   ];
 }
