@@ -28,6 +28,6 @@ inputs: {
   };
   #fix for use-xdg-base-directories
   environment.profiles = [
-    "${config.environment.variables.XDG_STATE_HOME or "$HOME/.local/state"}/nix/profile"
+    "\${XDG_STATE_HOME:-$HOME/.local/state}/nix/profile"
   ];
 }
