@@ -63,12 +63,16 @@
         nix-index
         ;
       inherit (nvim-flake.packages.${pkgs.system}) neovim;
+      lint = pkgs.writeShellScriptBin "lint" ''
+        deadnix -e "$1"
+        statix fix "$1"
+        alejandra "$1"
+      '';
     };
     etc = {
       "jdks/17".source = lib.getBin pkgs.openjdk17;
       "jdks/8".source = lib.getBin pkgs.openjdk8;
     };
-    shellAliases.lint = "deadnix -e && statix fix && alejandra ./";
   };
 
   services.udev.packages = [
