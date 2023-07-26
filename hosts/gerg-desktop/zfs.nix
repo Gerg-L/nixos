@@ -74,4 +74,5 @@ _: {
     autoScrub.enable = true;
     trim.enable = true;
   };
+  _file = ./zfs.nix;
 }

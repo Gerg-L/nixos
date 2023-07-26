@@ -26,4 +26,5 @@ inputs: {pkgs, ...}: {
   environment.profiles = [
     "\${XDG_STATE_HOME:-$HOME/.local/state}/nix/profile"
   ];
+  _file = ./nix.nix;
 }

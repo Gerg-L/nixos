@@ -19,4 +19,5 @@ _: {
       };
     };
   };
+  _file = ./autoLogin.nix;
 }

@@ -1,4 +1,5 @@
 _: {
+  lib,
   pkgs,
   config,
   ...
@@ -58,6 +59,7 @@ _: {
       };
     };
   };
+  services.openssh.settings.PermitRootLogin = lib.mkForce "prohibit-password";
   boot = {
     initrd.availableKernelModules = ["xhci-pci" "ehci-pci" "ahci" "usbhid" "sd_mod" "sr_mod" "rtsx_usb_sdmmc"];
     kernelModules = ["kvm-intel"];
@@ -82,4 +84,5 @@ _: {
       size = 8 * 1024;
     }
   ];
+  _file = ./main.nix;
 }

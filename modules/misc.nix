@@ -40,4 +40,5 @@ _: {
     #time settings
     time.timeZone = "America/New_York";
   };
+  _file = ./misc.nix;
 }

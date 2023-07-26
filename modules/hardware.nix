@@ -54,4 +54,5 @@ in {
       };
     }
   ];
+  _file = ./hardware.nix;
 }

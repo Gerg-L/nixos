@@ -39,4 +39,5 @@
     };
   };
   sound.enable = false;
+  _file = ./default.nix;
 }

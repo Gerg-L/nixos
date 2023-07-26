@@ -23,5 +23,6 @@ _: {config, ...}: {
       Option "OffTime" "0"
       Option "BlankTime" "0"
     '';
+    _file = ./prime.nix;
   };
 }

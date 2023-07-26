@@ -32,4 +32,5 @@ in {
       misc = "282a36";
     };
   };
+  _file = ./spicetify.nix;
 }

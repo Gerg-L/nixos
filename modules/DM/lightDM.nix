@@ -46,4 +46,5 @@
       };
     };
   };
+  _file = ./lightDM.nix;
 }

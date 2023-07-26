@@ -95,4 +95,5 @@ _: {
         }
     )
   ];
+  _file = ./builders.nix;
 }

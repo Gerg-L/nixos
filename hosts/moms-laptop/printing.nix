@@ -17,4 +17,5 @@ _: {pkgs, ...}: {
       drivers = [pkgs.hplipWithPlugin];
     };
   };
+  _file = ./printing.nix;
 }

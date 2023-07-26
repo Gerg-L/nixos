@@ -18,4 +18,5 @@
     };
   };
   sops.secrets.discordenv = {};
+  _file = ./sops.nix;
 }

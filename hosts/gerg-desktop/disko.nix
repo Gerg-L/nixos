@@ -153,4 +153,5 @@ in {
       };
     };
   };
+  _file = ./disko.nix;
 }

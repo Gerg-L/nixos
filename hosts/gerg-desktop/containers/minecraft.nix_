@@ -97,4 +97,5 @@ _: {
       };
     };
   };
+  _file = ./minecraft.nix;
 }

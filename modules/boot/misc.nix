@@ -68,4 +68,5 @@
       efibootmgr -t 0
     '';
   };
+  _file = ./misc.nix;
 }

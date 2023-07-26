@@ -59,4 +59,5 @@ in {
       })
       (listNixFilesRecursive path)
     );
+  _file = ./default.nix;
 }

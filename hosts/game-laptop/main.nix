@@ -47,6 +47,7 @@ _: {
     hostName = "game-laptop";
     networkmanager.enable = true;
   };
+  services.openssh.settings.PermitRootLogin = lib.mkForce "prohibit-password";
   #user managment
   sops.secrets.root.neededForUsers = true;
   users = {
@@ -86,4 +87,5 @@ _: {
   ];
 
   system.stateVersion = "23.05";
+  _file = ./main.nix;
 }

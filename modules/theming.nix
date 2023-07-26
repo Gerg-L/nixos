@@ -98,4 +98,5 @@ in {
       };
     })
   ];
+  _file = ./theming.nix;
 }
