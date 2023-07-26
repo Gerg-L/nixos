@@ -52,7 +52,7 @@
       in {
         inherit lib;
         nixosConfigurations =
-          lib.mkSystems
+          lib.mkHosts
           "x86_64-linux"
           [
             "gerg-desktop"

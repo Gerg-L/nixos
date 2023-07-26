@@ -20,8 +20,8 @@ inputs @ {
         name: {
           name = lib.pipe name [
             toString
-            (lib.removePrefix "${path}/")
             (lib.removeSuffix ".nix")
+            (lib.removePrefix "${toString path}/")
           ];
           value = import name inputs;
         }
@@ -33,9 +33,10 @@ in {
 
   withSystem = f:
     lib.fold lib.recursiveUpdate {}
-    (map f ["x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin"]);
+    (map f ["x86_64-linux"]);
+  #"x86_64-darwin" "aarch64-linux" "aarch64-darwin"
 
-  mkSystems = system: names:
+  mkHosts = system: names:
     lib.genAttrs names (
       name:
         lib.nixosSystem {

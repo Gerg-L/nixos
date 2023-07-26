@@ -1,8 +1,4 @@
-inputs: {
-  pkgs,
-  config,
-  ...
-}: {
+inputs: {pkgs, ...}: {
   #other nix settings
   nix = {
     package = inputs.nix.packages.${pkgs.system}.default;
