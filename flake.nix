@@ -74,11 +74,6 @@
         devShells.${system}.default = pkgs.mkShell {
           packages = [
             pkgs.sops
-            (pkgs.writeShellScriptBin "lint" ''
-              deadnix -qe "$1"
-              statix fix -- "$1"
-              alejandra -q "$1"
-            '')
           ];
         };
 
