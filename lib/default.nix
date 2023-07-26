@@ -51,7 +51,7 @@ in {
       name: (import "${self}/hosts/${name}/disko.nix" inputs)
     );
 
-  mkPkgs = pkgs: path:
+  mkPackages = path: pkgs:
     builtins.listToAttrs (
       map (module: {
         name = lib.removeSuffix ".nix" (builtins.baseNameOf module);

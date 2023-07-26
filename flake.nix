@@ -87,7 +87,7 @@
               ];
             };
           }
-          // lib.mkPkgs pkgs ./pkgs;
+          // lib.mkPackages ./packages pkgs ;
       }
     );
 }
