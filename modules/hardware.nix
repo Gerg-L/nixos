@@ -6,18 +6,8 @@ _: {
   cfg = config.local.hardware;
 in {
   options.local.hardware = {
-    gpuAcceleration = {
-      disable = lib.mkOption {
-        type = lib.types.bool;
-        default = false;
-      };
-    };
-    sound = {
-      disable = lib.mkOption {
-        type = lib.types.bool;
-        default = false;
-      };
-    };
+    gpuAcceleration.disable = lib.mkEnableOption "";
+    sound.disable = lib.mkEnableOption "";
   };
   config = lib.mkMerge [
     (

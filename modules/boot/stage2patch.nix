@@ -30,6 +30,11 @@ let
       '';
   };
 in {
-  system.build.bootStage2 = lib.mkForce bootStage2;
+  options.local.bootConfig.stage2patch.disable = lib.mkEnableOption "";
+  config =
+    lib.mkIf (!config.local.bootConfig.stage2patch.disable)
+    {
+      system.build.bootStage2 = lib.mkForce bootStage2;
+    };
   _file = ./stage2patch.nix;
 }

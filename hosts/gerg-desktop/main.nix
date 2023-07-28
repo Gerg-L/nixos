@@ -1,7 +1,6 @@
 {nvim-flake, ...}: {
   pkgs,
   config,
-  lib,
   ...
 }: {
   local = {
@@ -64,9 +63,9 @@
         ;
       inherit (nvim-flake.packages.${pkgs.system}) neovim;
       lint = pkgs.writeShellScriptBin "lint" ''
-        deadnix -e "$1"
-        statix fix "$1"
-        alejandra "$1"
+        deadnix -e "''${1:-.}"
+        statix fix -- "''${1:-.}"
+        alejandra "''${1:-.}"
       '';
     };
     etc = {

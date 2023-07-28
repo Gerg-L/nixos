@@ -39,17 +39,18 @@
       inputs.nixpkgs.follows = "unstable";
     };
   };
-  outputs = inputs @ {
-    unstable,
-    nixos-generators,
-    ...
-  }: let
+
+  outputs = inputs: let
     lib = import ./lib inputs;
   in
-    lib.withSystem (
-      system: let
-        pkgs = unstable.legacyPackages.${system};
-      in {
+    lib.gerg-utils {
+      allowUnfree = true;
+    } (
+      {
+        pkgs,
+        system,
+        ...
+      }: {
         inherit lib;
         nixosConfigurations =
           lib.mkHosts
@@ -58,6 +59,7 @@
             "gerg-desktop"
             "game-laptop"
             "moms-laptop"
+            "iso"
           ];
 
         nixosModules = lib.mkModules ./modules;
@@ -77,17 +79,7 @@
           ];
         };
 
-        packages.${system} =
-          {
-            nixos-iso = nixos-generators.nixosGenerate {
-              inherit system;
-              format = "install-iso";
-              modules = [
-                (import ./installer inputs)
-              ];
-            };
-          }
-          // lib.mkPackages ./packages pkgs;
+        packages.${system} = lib.mkPackages ./packages pkgs;
       }
     );
 }

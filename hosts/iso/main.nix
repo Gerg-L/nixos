@@ -1,25 +1,36 @@
-{disko, ...}: {
+{
+  disko,
+  nixos-generators,
+  ...
+}: {
   lib,
   modulesPath,
   pkgs,
   ...
 }: {
+  ##Build wtih nix build .#nixosConfigurations.iso.config.formats.iso
+  local = {
+    hardware = {
+      gpuAcceleration.disable = true;
+      sound.disable = true;
+    };
+    bootConfig = {
+      disable = true;
+      stage2patch.disable = true;
+    };
+  };
   imports = [
     "${modulesPath}/profiles/minimal.nix"
     "${modulesPath}/installer/cd-dvd/installation-cd-base.nix"
+    nixos-generators.nixosModules.all-formats
   ];
 
   environment = {
     noXlibs = lib.mkOverride 500 false;
-    defaultPackages = [];
     systemPackages = [
-      pkgs.gitMinimal
       pkgs.neovim
       disko.packages.${pkgs.system}.default
     ];
-    variables = {
-      EDITOR = "nvim";
-    };
   };
   documentation = {
     man.enable = lib.mkOverride 500 false;
@@ -32,12 +43,7 @@
     edition = lib.mkForce "gerg-minimal";
     isoName = lib.mkForce "NixOS.iso";
   };
-  nix = {
-    settings = {
-      experimental-features = ["nix-command" "flakes" "repl-flake"];
-      auto-optimise-store = true;
-    };
-  };
+
   sound.enable = false;
   _file = ./default.nix;
 }

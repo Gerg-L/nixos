@@ -31,7 +31,7 @@ _: {
       enable = true;
       hostKeys = lib.mkForce [];
       settings = {
-        PermitRootLogin = "no";
+        PermitRootLogin = lib.mkDefault "no";
         PasswordAuthentication = false;
         KbdInteractiveAuthentication = false;
       };

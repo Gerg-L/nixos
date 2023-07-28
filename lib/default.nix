@@ -31,9 +31,19 @@ inputs @ {
 in {
   inherit importAll mkModules listNixFilesRecursive;
 
-  withSystem = f:
+  gerg-utils = config: f:
     lib.fold lib.recursiveUpdate {}
-    (map f ["x86_64-linux"]);
+    (map (system:
+      f {
+        inherit system;
+        pkgs =
+          if config == {}
+          then unstable.legacyPackages.${system}
+          else
+            import unstable {
+              inherit system config;
+            };
+      }) ["x86_64-linux"]);
   #"x86_64-darwin" "aarch64-linux" "aarch64-darwin"
 
   mkHosts = system: names:
