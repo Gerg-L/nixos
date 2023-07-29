@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+STAGED="$(git diff --name-only --cached | grep "**.nix" | tr '\n' ' ')"
+
+if [ -z "$STAGED" ]; then
+  exit 0
+fi
+
+for i in $STAGED; do
+  statix fix -- "$i"
+done
+
+deadnix -qe $STAGED
+alejandra -q $STAGED
+
+git add $STAGED

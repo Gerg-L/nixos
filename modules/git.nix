@@ -25,6 +25,7 @@ _: {
           autoSetupRemote = true;
         };
         advice.addIgnoredFile = false;
+        core.hooksPath = ".githooks";
       };
     };
   };
