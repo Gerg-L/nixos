@@ -53,7 +53,12 @@ in {
           inherit system;
           modules =
             builtins.attrValues self.nixosModules
-            ++ importAll "${self}/hosts/${name}";
+            ++ importAll "${self}/hosts/${name}"
+            ++ [
+              {
+                networking.hostName = name;
+              }
+            ];
         }
     );
   mkDisko = names:

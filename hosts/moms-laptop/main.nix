@@ -31,12 +31,13 @@ _: {
       ;
   };
   services.xserver.videoDrivers = ["intel"];
-  networking = {
-    hostName = "moms-laptop";
-    networkmanager.enable = true;
-  };
+
+  networking.networkmanager.enable = true;
+
   boot.kernelPackages = pkgs.linuxPackages_latest;
+
   sops.secrets.root.neededForUsers = true;
+
   users = {
     mutableUsers = false;
     users = {

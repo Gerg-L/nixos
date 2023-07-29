@@ -81,7 +81,6 @@
 
   networking = {
     useDHCP = false;
-    hostName = "gerg-desktop";
     hostId = "288b56db";
     nameservers = [
       "192.168.1.1"

@@ -43,10 +43,9 @@ _: {
       "jdks/8".source = "${pkgs.openjdk8}/bin";
     };
   };
-  networking = {
-    hostName = "game-laptop";
-    networkmanager.enable = true;
-  };
+
+  networking.networkmanager.enable = true;
+
   services.openssh.settings.PermitRootLogin = lib.mkForce "prohibit-password";
   #user managment
   sops.secrets.root.neededForUsers = true;
