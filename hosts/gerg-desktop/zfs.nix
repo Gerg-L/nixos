@@ -30,15 +30,9 @@ _: {
       availableKernelModules = ["hid_generic"];
       #wipe / and /var on boot
       postDeviceCommands = lib.mkAfter ''
-        #destroy last snapshot
-        zfs destroy rpool/root@lastboot
-        zfs destroy rpool/var@lastboot
-        #create new snapshot
-        zfs snapshot rpool/root@lastboot
-        zfs snapshot rpool/var@lastboot
         #wipe everything
-        zfs rollback -r rpool/root@empty
-        zfs rollback -r rpool/var@empty
+         zfs rollback -r rpool/root@empty
+         zfs rollback -r rpool/var@empty
       '';
     };
     plymouth.enable = false;

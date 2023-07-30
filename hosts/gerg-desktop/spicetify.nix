@@ -2,7 +2,7 @@
   spicePkgs = spicetify-nix.legacyPackages.${pkgs.system};
   ex = spicePkgs.extensions;
 in {
-  imports = [spicetify-nix.nixosModule];
+  imports = [spicetify-nix.nixosModules.default];
   local.allowedUnfree = ["spotify"];
   programs.spicetify = {
     enable = true;

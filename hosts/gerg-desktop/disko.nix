@@ -90,10 +90,7 @@ in {
             type = "zfs_fs";
             options.mountpoint = "legacy";
             mountpoint = "/";
-            postCreateHook = ''
-              zfs snapshot rpool/root@empty
-              zfs snapshot rpool/root@lastboot
-            '';
+            postCreateHook = "zfs snapshot rpool/root@empty";
           };
           "nix" = {
             type = "zfs_fs";
@@ -105,10 +102,7 @@ in {
             type = "zfs_fs";
             options.mountpoint = "legacy";
             mountpoint = "/var";
-            postCreateHook = ''
-              zfs snapshot rpool/var@empty
-              zfs snapshot rpool/var@lastboot
-            '';
+            postCreateHook = "zfs snapshot rpool/var@empty";
           };
           "persist" = {
             type = "zfs_fs";

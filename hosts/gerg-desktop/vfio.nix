@@ -1,4 +1,4 @@
-{pipewire_fix, ...}: {
+{...}: {
   pkgs,
   lib,
   config,
@@ -9,7 +9,7 @@ let
   xcfg = config.services.xserver;
   xserverbase = let
     fontsForXServer =
-      config.fonts.fonts
+      config.fonts.packages
       ++ [
         pkgs.xorg.fontadobe100dpi
         pkgs.xorg.fontadobe75dpi
@@ -52,8 +52,6 @@ in {
       ''
     );
   };
-  ####VM SOUND BORKED
-  services.pipewire.package = pipewire_fix.legacyPackages.${pkgs.system}.pipewire;
   boot = {
     kernelParams = [
       "amd_iommu=on"

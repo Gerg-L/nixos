@@ -58,8 +58,8 @@ in {
           xrdb -load /etc/xdg/Xresources
         '';
         fonts = {
-          fonts = [pkgs.overpass];
-          enableDefaultFonts = false;
+          packages = [pkgs.overpass];
+          enableDefaultPackages = false;
           fontDir.enable = true;
           fontconfig = {
             enable = true;

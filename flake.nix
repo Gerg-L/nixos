@@ -4,7 +4,6 @@
     master.url = "github:nixos/nixpkgs";
     unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     stable.url = "github:nixos/nixpkgs/nixos-23.05";
-    pipewire_fix.url = "github:nixos/nixpkgs/45a55711fe12d0aada3aa04746082cf1b83dfbf3";
     #nix 2.17
     nix.url = "github:nixos/nix/7b39a388b382e7912de3c5951faad42fe2d72f48";
 
