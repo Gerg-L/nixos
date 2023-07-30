@@ -263,22 +263,6 @@
         "type": "github"
       }
     },
-    "pipewire_fix": {
-      "locked": {
-        "lastModified": 1684322576,
-        "narHash": "sha256-p6KBRm9bZNlYjcrADYjMAlr6vFQXEh0qD/CryPAEwV4=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "45a55711fe12d0aada3aa04746082cf1b83dfbf3",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "45a55711fe12d0aada3aa04746082cf1b83dfbf3",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "disko": "disko",
@@ -287,7 +271,6 @@
         "nix": "nix",
         "nixos-generators": "nixos-generators",
         "nvim-flake": "nvim-flake",
-        "pipewire_fix": "pipewire_fix",
         "sops-nix": "sops-nix",
         "spicetify-nix": "spicetify-nix",
         "stable": "stable",
