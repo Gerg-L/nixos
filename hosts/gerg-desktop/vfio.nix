@@ -1,4 +1,4 @@
-{...}: {
+_: {
   pkgs,
   lib,
   config,
@@ -156,8 +156,8 @@ in {
     '';
   in [
     "L  /etc/Xorg/active.conf - - - - /etc/Xorg/2_mon.conf"
-    "L+ /var/lib/libvirt/hooks/qemu - - - - ${qemuHook}"
-    "L+ /var/lib/libvirt/qemu/Windows.xml - - - - ${./Windows.xml}"
+    "C /var/lib/libvirt/hooks/qemu - - - - ${qemuHook}"
+    "C /var/lib/libvirt/qemu/Windows.xml - - - - ${./Windows.xml}"
   ];
   _file = ./vfio.nix;
 }

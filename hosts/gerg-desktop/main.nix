@@ -80,31 +80,47 @@
   programs.adb.enable = true;
 
   networking = {
+    useNetworkd = false;
     useDHCP = false;
     hostId = "288b56db";
-    nameservers = [
-      "192.168.1.1"
-      "2605:59c8:252e:500::1"
-    ];
-    defaultGateway = "192.168.1.1";
-    interfaces = {
-      "enp11s0" = {
-        name = "eth0";
-      };
-      "bridge0" = {
-        name = "bridge0";
-        macAddress = "D8:5E:D3:E5:47:90";
-        ipv4.addresses = [
-          {
-            address = "192.168.1.4";
-            prefixLength = 24;
-          }
-        ];
-      };
-    };
-    bridges."bridge0".interfaces = ["eth0"];
     firewall.enable = true;
   };
+
+  systemd.network = {
+    enable = true;
+    netdevs."br0" = {
+      netdevConfig = {
+        Kind = "bridge";
+        Name = "br0";
+      };
+    };
+    networks = {
+      "enp11s0" = {
+        name = "enp11s0";
+        bridge = ["br0"];
+        linkConfig.RequiredForOnline = "enslaved";
+      };
+      "br0" = {
+        name = "br0";
+        address = [
+          "192.168.1.4/24"
+        ];
+        gateway = [
+          "192.168.1.1"
+        ];
+        dns = [
+          "192.168.1.1"
+        ];
+        DHCP = "no";
+        bridgeConfig = {};
+        linkConfig = {
+          MACAddress = "D8:5E:D3:E5:47:90";
+          RequiredForOnline = "routable";
+        };
+      };
+    };
+  };
+
   #user managment
   sops.secrets = {
     gerg.neededForUsers = true;

@@ -10,7 +10,10 @@ _: {
     "L  /etc/nixos/flake.nix  - - - - /home/gerg/Projects/nixos/flake.nix"
   ];
   #create machine-id for spotify
-  environment.etc."machine-id".text = "b6431c2851094770b614a9cfa78fb6ea";
+  environment.etc."machine-id" = {
+    text = "b6431c2851094770b614a9cfa78fb6ea";
+    mode = "0644";
+  };
   #make sure the sopskey is found
   sops.age.sshKeyPaths = lib.mkForce ["/persist/ssh/ssh_host_ed25519_key"];
   fileSystems."/persist".neededForBoot = true;
