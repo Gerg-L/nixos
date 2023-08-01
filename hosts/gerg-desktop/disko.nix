@@ -1,70 +1,88 @@
-{disko, ...}: {lib, ...}: let
-  disks = [
-    "nvme-SHPP41-500GM_SSB4N6719101A4N22"
-    "nvme-SHPP41-500GM_SSB4N6719101A4N0E"
-  ];
-in {
+{disko, ...}: {...}: {
   imports = [disko.nixosModules.disko];
   disko.devices = {
-    disk = lib.mkMerge (map (x: {
-        ${x} = {
-          type = "disk";
+    disk = {
+      "0E" = {
+        type = "disk";
 
-          device = "/dev/disk/by-id/${x}";
-          content = {
-            type = "table";
-            format = "gpt";
-            partitions = [
-              {
-                name = "boot";
-                start = "0";
-                end = "1M";
-                part-type = "primary";
-                flags = ["bios_grub"];
-              }
-              {
-                name = "ESP";
-                start = "1M";
-                end = "1G";
-                bootable = true;
-                content = {
-                  type = "filesystem";
-                  format = "vfat";
-                  mountpoint = "/boot/efis/${x}";
-                };
-              }
-              {
-                name = "zfsboot";
-                start = "1G";
-                end = "5G";
-                content = {
-                  type = "zfs";
-                  pool = "bpool";
-                };
-              }
-              {
-                name = "swap";
-                start = "5G";
-                end = "21G";
-                content = {
-                  type = "swap";
-                  randomEncryption = true;
-                };
-              }
-              {
-                name = "zfsroot";
-                start = "21G";
-                end = "100%";
-                content = {
-                  type = "zfs";
-                  pool = "rpool";
-                };
-              }
-            ];
-          };
+        device = "/dev/disk/by-id/nvme-SHPP41-500GM_SSB4N6719101A4N0E";
+        content = {
+          type = "table";
+          format = "gpt";
+          partitions = [
+            {
+              name = "BOOT";
+              start = "0";
+              end = "4G";
+              bootable = true;
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/efi0E";
+              };
+            }
+            {
+              name = "swap";
+              start = "5G";
+              end = "21G";
+              content = {
+                type = "swap";
+                randomEncryption = true;
+              };
+            }
+            {
+              name = "zfsroot ";
+              start = "21G";
+              end = "100%";
+              content = {
+                type = "zfs";
+                pool = "rpool";
+              };
+            }
+          ];
         };
-      })
-      disks);
+      };
+      "22" = {
+        type = "disk";
+
+        device = "/dev/disk/by-id/nvme-SHPP41-500GM_SSB4N6719101A4N22";
+        content = {
+          type = "table";
+          format = "gpt";
+          partitions = [
+            {
+              name = "BOOT";
+              start = "0";
+              end = "4G";
+              bootable = true;
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/efi22";
+              };
+            }
+            {
+              name = "swap";
+              start = "5G";
+              end = "21G";
+              content = {
+                type = "swap";
+                randomEncryption = true;
+              };
+            }
+            {
+              name = "zfsroot ";
+              start = "21G";
+              end = "100%";
+              content = {
+                type = "zfs";
+                pool = "rpool";
+              };
+            }
+          ];
+        };
+      };
+    };
     zpool = {
       rpool = {
         type = "zpool";
@@ -115,33 +133,6 @@ in {
             options.mountpoint = "legacy";
             mountpoint = "/home";
             postCreateHook = "zfs snapshot rpool/home@empty";
-          };
-        };
-      };
-      bpool = {
-        type = "zpool";
-        mode = "mirror";
-        rootFsOptions = {
-          acltype = "posixacl";
-          compression = "lz4";
-          devices = "off";
-          normalization = "formD";
-          relatime = "on";
-          xattr = "sa";
-          canmount = "off";
-        };
-
-        options = {
-          compatibility = "grub2";
-          ashift = "12";
-          autotrim = "on";
-        };
-        datasets = {
-          "boot" = {
-            type = "zfs_fs";
-            options.mountpoint = "legacy";
-            mountpoint = "/boot";
-            postCreateHook = "zfs snapshot bpool/boot@empty";
           };
         };
       };

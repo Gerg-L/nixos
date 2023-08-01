@@ -16,7 +16,11 @@ _: {
   };
   #make sure the sopskey is found
   sops.age.sshKeyPaths = lib.mkForce ["/persist/ssh/ssh_host_ed25519_key"];
-  fileSystems."/persist".neededForBoot = true;
+  fileSystems = {
+    "/persist".neededForBoot = true;
+    "/efi22".options = ["nofail"];
+    "/efi0E".options = ["nofail"];
+  };
   boot = {
     zfs = {
       devNodes = "/dev/disk/by-id/";
@@ -41,25 +45,20 @@ _: {
     plymouth.enable = false;
     loader = {
       generationsDir.copyKernels = true;
-
-      #override defaults
+      #override default
       systemd-boot.enable = false;
-      efi.canTouchEfiVariables = false;
-
       grub = {
         enable = true;
-        efiInstallAsRemovable = true;
         copyKernels = true;
         efiSupport = true;
-        zfsSupport = true;
         mirroredBoots = [
           {
-            path = "/boot/efis/nvme-SHPP41-500GM_SSB4N6719101A4N0E";
-            devices = ["/dev/disk/by-id/nvme-SHPP41-500GM_SSB4N6719101A4N0E"];
+            path = "/efi22";
+            devices = ["nodev"];
           }
           {
-            path = "/boot/efis/nvme-SHPP41-500GM_SSB4N6719101A4N22";
-            devices = ["/dev/disk/by-id/nvme-SHPP41-500GM_SSB4N6719101A4N22"];
+            path = "/efi0E";
+            devices = ["nodev"];
           }
         ];
         splashImage = null;
