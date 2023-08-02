@@ -42,7 +42,11 @@
           "vt.global_cursor_default=0"
         ];
         consoleLogLevel = 3;
-        initrd.verbose = false;
+        initrd = {
+          verbose = false;
+
+          systemd.enable = true;
+        };
         plymouth = {
           enable = lib.mkDefault true;
           theme = "breeze";

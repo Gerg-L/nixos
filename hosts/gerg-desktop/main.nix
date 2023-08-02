@@ -149,7 +149,6 @@
   boot = {
     kernelModules = ["amdgpu"];
     initrd = {
-      systemd.enable = true;
       availableKernelModules = ["nvme" "xhci_pci" "ahci" "usbhid" "sd_mod"];
       includeDefaultModules = false;
     };

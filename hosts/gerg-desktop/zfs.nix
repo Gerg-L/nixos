@@ -47,9 +47,11 @@ _: {
       generationsDir.copyKernels = true;
       #override default
       systemd-boot.enable = false;
+      efi.canTouchEfiVariables = false;
       grub = {
         enable = true;
         copyKernels = true;
+        efiInstallAsRemovable = true;
         efiSupport = true;
         mirroredBoots = [
           {
