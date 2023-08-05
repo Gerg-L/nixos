@@ -41,4 +41,5 @@ rustPlatform.buildRustPackage
       ffmpeg
     ]}
   '';
+  meta.mainProgram = "parrot";
 }
