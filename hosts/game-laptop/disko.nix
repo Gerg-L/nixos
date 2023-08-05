@@ -34,6 +34,6 @@
         ];
       };
     };
-    _file = ./disko.nix;
   };
+  _file = ./disko.nix;
 }

@@ -70,7 +70,13 @@
         };
       };
       systemd.services.efibootmgr = {
-        serviceConfig.Type = "oneshot";
+        reloadIfChanged = false;
+        restartIfChanged = false;
+        stopIfChanged = false;
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+        };
         path = [pkgs.efibootmgr];
         wantedBy = ["default.target"];
         script = ''

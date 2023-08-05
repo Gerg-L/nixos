@@ -22,7 +22,7 @@ _: {
     ephemeral = true;
     autoStart = true;
     privateNetwork = true;
-    hostBridge = "bridge0";
+    hostBridge = "br0";
     localAddress = "192.168.1.11/24";
     bindMounts = {
       "/var" = {

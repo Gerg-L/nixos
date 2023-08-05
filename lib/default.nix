@@ -50,13 +50,13 @@ in {
     lib.genAttrs names (
       name:
         lib.nixosSystem {
-          inherit system;
           modules =
             builtins.attrValues self.nixosModules
             ++ importAll "${self}/hosts/${name}"
             ++ [
               {
                 networking.hostName = name;
+                nixpkgs = {inherit system;};
               }
             ];
         }

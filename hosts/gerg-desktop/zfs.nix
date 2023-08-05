@@ -1,6 +1,7 @@
 _: {
   config,
   lib,
+  pkgs,
   ...
 }: {
   #link some stuff
@@ -21,6 +22,7 @@ _: {
     "/efi22".options = ["nofail"];
     "/efi0E".options = ["nofail"];
   };
+
   boot = {
     zfs = {
       devNodes = "/dev/disk/by-id/";
@@ -29,24 +31,34 @@ _: {
     kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
     #disable hibernate and set cache max
     kernelParams = ["nohibernate" "zfs.zfs_arc_max=17179869184"];
-    supportedFilesystems = ["zfs" "vfat"];
     initrd = {
+      supportedFilesystems = ["zfs" "vfat"];
       #module for multiple swap devices
       kernelModules = ["dm_mod"];
       #keyboard module for zfs password
       availableKernelModules = ["hid_generic"];
-      #wipe / and /var on boot
-      postDeviceCommands = lib.mkAfter ''
-        #wipe everything
-         zfs rollback -r rpool/root@empty
-         zfs rollback -r rpool/var@empty
-      '';
+      systemd.services.rollback = {
+        path = [pkgs.zfs];
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+        };
+        unitConfig.DefaultDependencies = "no";
+        wantedBy = ["initrd.target"];
+        after = ["zfs-import.target"];
+        before = ["sysroot.mount"];
+        script = ''
+          zfs rollback -r rpool/root@empty
+          zfs rollback -r rpool/var@empty
+        '';
+      };
     };
     plymouth.enable = false;
     loader = {
       generationsDir.copyKernels = true;
       #override default
       systemd-boot.enable = false;
+
       efi.canTouchEfiVariables = false;
       grub = {
         enable = true;

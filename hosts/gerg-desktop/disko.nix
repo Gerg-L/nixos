@@ -31,7 +31,7 @@
               };
             }
             {
-              name = "zfsroot ";
+              name = "zfsroot";
               start = "21G";
               end = "100%";
               content = {
