@@ -13,34 +13,39 @@ in {
   nix.nixPath = lib.mapAttrsToList (x: _: "${x}=flake:${x}") flakes;
   nix.registry = lib.mapAttrs (_: flake: {inherit flake;}) flakes;
   #
-  # Ignore global registry
+  # Use nix directly from master
   #
-  nix.settings.flake-registry = builtins.toFile "empty-flake-registry.json" ''{"flakes":[],"version":2}'';
+  nix.package = inputs.nix.packages.${pkgs.system}.default;
   #
   # Other nix settings
   #
-  nix = {
-    package = inputs.nix.packages.${pkgs.system}.default;
-    settings = {
-      experimental-features = [
-        "nix-command"
-        "flakes"
-        "repl-flake"
-      ];
-      auto-optimise-store = true;
-      warn-dirty = false;
-      #use for testing
-      #allow-import-from-derivation = false;
-      trusted-users = [
-        "root"
-        "@wheel"
-      ];
-      allowed-users = [];
-      use-xdg-base-directories = true;
-    };
-  };
+  nix.settings = {
+    #
+    # Ignore global registry
+    #
+    flake-registry = builtins.toFile "empty-flake-registry.json" ''{"flakes":[],"version":2}'';
 
-  #fix for use-xdg-base-directories
+    experimental-features = [
+      "nix-command"
+      "flakes"
+      "repl-flake"
+    ];
+    auto-optimise-store = true;
+    warn-dirty = false;
+    #
+    # Use for testing
+    #
+    #allow-import-from-derivation = false;
+    trusted-users = [
+      "root"
+      "@wheel"
+    ];
+    allowed-users = [];
+    use-xdg-base-directories = true;
+  };
+  #
+  # Fix for use-xdg-base-directories https://github.com/NixOS/nixpkgs/pull/241518
+  #
   environment.profiles = [
     "\${XDG_STATE_HOME:-$HOME/.local/state}/nix/profile"
   ];
