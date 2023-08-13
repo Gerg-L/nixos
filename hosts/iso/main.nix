@@ -16,7 +16,6 @@
     };
     bootConfig = {
       disable = true;
-      stage2patch.disable = true;
     };
   };
   imports = [

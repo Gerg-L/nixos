@@ -39,6 +39,12 @@ _: {
     i18n.defaultLocale = "en_US.UTF-8";
     #time settings
     time.timeZone = "America/New_York";
+    # For`info` command.
+    documentation.info.enable = false;
+    # NixOS manual and such.
+    documentation.nixos.enable = false;
+
+    programs.command-not-found.enable = false;
   };
   _file = ./misc.nix;
 }

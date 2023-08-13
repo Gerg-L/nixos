@@ -60,6 +60,7 @@
         statix
         alejandra
         nix-index
+        element-desktop
         ;
       inherit (nvim-flake.packages.${pkgs.system}) neovim;
       lint = pkgs.writeShellScriptBin "lint" ''

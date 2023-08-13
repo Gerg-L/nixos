@@ -8,7 +8,7 @@ inputs: {
 #
 let
   alias = inputs // {nixpkgs = inputs.unstable;};
-  flakes = lib.filterAttrs (_: v: v._type == "flake") alias;
+  flakes = lib.filterAttrs (_: lib.isType "flake") alias;
 in {
   nix.nixPath = lib.mapAttrsToList (x: _: "${x}=flake:${x}") flakes;
   nix.registry = lib.mapAttrs (_: flake: {inherit flake;}) flakes;

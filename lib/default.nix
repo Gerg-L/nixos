@@ -56,7 +56,7 @@ in {
             ++ [
               {
                 networking.hostName = name;
-                nixpkgs = {inherit system;};
+                nixpkgs.hostPlatform = system;
               }
             ];
         }
