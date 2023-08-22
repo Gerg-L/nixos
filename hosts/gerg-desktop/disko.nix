@@ -2,13 +2,16 @@
   imports = [disko.nixosModules.disko];
   disko.devices = {
     disk = {
-      "0E" = {
+      "0E" = let
+        baseDevice = "/dev/disk/by-id/nvme-SHPP41-500GM_SSB4N6719101A4N0E";
+      in {
         type = "disk";
-        device = "/dev/disk/by-id/nvme-SHPP41-500GM_SSB4N6719101A4N0E";
+        device = baseDevice;
         content = {
           type = "gpt";
           partitions = {
             BOOT = {
+              device = "${baseDevice}-part1";
               type = "EF00";
               start = "0";
               end = "4G";
@@ -19,6 +22,7 @@
               };
             };
             swap = {
+              device = "${baseDevice}-part2";
               start = "5G";
               end = "21G";
               content = {
@@ -27,6 +31,7 @@
               };
             };
             zfsroot = {
+              device = "${baseDevice}-part3";
               start = "21G";
               end = "100%";
               content = {
@@ -37,13 +42,16 @@
           };
         };
       };
-      "22" = {
+      "22" = let
+        baseDevice = "/dev/disk/by-id/nvme-SHPP41-500GM_SSB4N6719101A4N22";
+      in {
         type = "disk";
-        device = "/dev/disk/by-id/nvme-SHPP41-500GM_SSB4N6719101A4N22";
+        device = baseDevice;
         content = {
           type = "gpt";
           partitions = {
             BOOT = {
+              device = "${baseDevice}-part1";
               type = "EF00";
               start = "0";
               end = "4G";
@@ -54,6 +62,7 @@
               };
             };
             swap = {
+              device = "${baseDevice}-part2";
               start = "5G";
               end = "21G";
               content = {
@@ -62,6 +71,7 @@
               };
             };
             zfsroot = {
+              device = "${baseDevice}-part3";
               start = "21G";
               end = "100%";
               content = {
