@@ -19,7 +19,6 @@
           root = {
             start = "1GiB";
             end = "100%";
-            part-type = "primary";
             type = "EF00";
             content = {
               type = "filesystem";

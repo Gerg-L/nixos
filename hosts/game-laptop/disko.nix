@@ -20,7 +20,6 @@
           root = {
             start = "1GiB";
             end = "100%";
-            part-type = "primary";
             content = {
               type = "filesystem";
               format = "ext4";
