@@ -57,11 +57,16 @@ _: {
     loader = {
       generationsDir.copyKernels = true;
       #override default
-      systemd-boot.enable = false;
-
+      systemd-boot = {
+        enable = true;
+        mirroredBoots = [
+          "/efi0E"
+          "/efi22"
+        ];
+      };
       efi.canTouchEfiVariables = false;
       grub = {
-        enable = true;
+        enable = false;
         copyKernels = true;
         efiInstallAsRemovable = true;
         efiSupport = true;
