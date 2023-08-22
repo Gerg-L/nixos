@@ -1,11 +1,11 @@
 {
   inputs = {
     #channels
-    master.url = "github:nixos/nixpkgs";
-    unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    stable.url = "github:nixos/nixpkgs/nixos-23.05";
+    master.url = "github:NixOS/nixpkgs";
+    unstable.url = "github:NixOS/nixpkgs?ref=nixos-unstable";
+    stable.url = "github:NixOS/nixpkgs?ref=nixos-23.05";
 
-    nix.url = "github:nixos/nix/10afcf06aa2607bf088f7f08989f42c1fa2689a2";
+    nix.url = "github:NixOS/nix?ref=10afcf06aa2607bf088f7f08989f42c1fa2689a2";
 
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
@@ -20,21 +20,20 @@
       inputs.nixpkgs.follows = "unstable";
     };
     spicetify-nix = {
-      #url = "github:the-argus/spicetify-nix";
       url = "github:Gerg-L/spicetify-nix";
       inputs.nixpkgs.follows = "unstable";
     };
     #my own packages
     suckless = {
-      url = "github:gerg-L/suckless";
+      url = "github:Gerg-L/suckless";
       inputs.nixpkgs.follows = "unstable";
     };
     nvim-flake = {
-      url = "github:gerg-L/nvim-flake";
+      url = "github:Gerg-L/nvim-flake";
       inputs.nixpkgs.follows = "unstable";
     };
     fetch-rs = {
-      url = "github:gerg-L/fetch-rs";
+      url = "github:Gerg-L/fetch-rs";
       inputs.nixpkgs.follows = "unstable";
     };
   };

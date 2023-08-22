@@ -29,13 +29,13 @@
       "locked": {
         "lastModified": 1691207711,
         "narHash": "sha256-k4voQfWxoC1CLxJzQKKCt7EywtAuXdVZATtzHewkHxk=",
-        "owner": "gerg-L",
+        "owner": "Gerg-L",
         "repo": "fetch-rs",
         "rev": "a6a24e30b68dac94eb21abfa1c04212822ea2ea3",
         "type": "github"
       },
       "original": {
-        "owner": "gerg-L",
+        "owner": "Gerg-L",
         "repo": "fetch-rs",
         "type": "github"
       }
@@ -106,15 +106,15 @@
     },
     "master": {
       "locked": {
-        "lastModified": 1692664499,
-        "narHash": "sha256-k9Pdbj4iRDpEdIDNgAgK/Rduhz+qI/4V3GuFNRrhbZ4=",
-        "owner": "nixos",
+        "lastModified": 1692665005,
+        "narHash": "sha256-wJ2OF51EYNbTGwuI3EmJWAJV9K5pNuP1aBpD9DXeNb4=",
+        "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "e3ffebdf09f86c4e5388d1df67d56fcd1fe6d84d",
+        "rev": "50097d75fa0dcc6be7271bc390e612fa0363a38d",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
+        "owner": "NixOS",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -145,15 +145,15 @@
       "locked": {
         "lastModified": 1692453612,
         "narHash": "sha256-T53szNMtOf6oFYAZ7gjtBHhzFTdAEOHHqm/2QYFieBQ=",
-        "owner": "nixos",
+        "owner": "NixOS",
         "repo": "nix",
         "rev": "10afcf06aa2607bf088f7f08989f42c1fa2689a2",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
+        "owner": "NixOS",
+        "ref": "10afcf06aa2607bf088f7f08989f42c1fa2689a2",
         "repo": "nix",
-        "rev": "10afcf06aa2607bf088f7f08989f42c1fa2689a2",
         "type": "github"
       }
     },
@@ -252,13 +252,13 @@
       "locked": {
         "lastModified": 1692332172,
         "narHash": "sha256-9ewt4bhdshrtDZtX8OcCgtMA5DOzlnbRgtVQL7YHPbo=",
-        "owner": "gerg-L",
+        "owner": "Gerg-L",
         "repo": "nvim-flake",
         "rev": "7b09a9802e183d9a6ee85e11393cdbfdd0c531bd",
         "type": "github"
       },
       "original": {
-        "owner": "gerg-L",
+        "owner": "Gerg-L",
         "repo": "nvim-flake",
         "type": "github"
       }
@@ -324,13 +324,13 @@
       "locked": {
         "lastModified": 1692525914,
         "narHash": "sha256-MUgZ9/9mE/EbEQA6JPdcQHkjoR5fgvaKhpy6UO67uEc=",
-        "owner": "nixos",
+        "owner": "NixOS",
         "repo": "nixpkgs",
         "rev": "475d5ae2c4cb87b904545bdb547af05681198fcc",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
+        "owner": "NixOS",
         "ref": "nixos-23.05",
         "repo": "nixpkgs",
         "type": "github"
@@ -345,13 +345,13 @@
       "locked": {
         "lastModified": 1691207820,
         "narHash": "sha256-ZpvYNq/k6fthBX+UGkaqEO2n3qfWPKpv99x5Szv5mmw=",
-        "owner": "gerg-L",
+        "owner": "Gerg-L",
         "repo": "suckless",
         "rev": "e3b8e0020882ebad12b78a7998b98c5723cf2852",
         "type": "github"
       },
       "original": {
-        "owner": "gerg-L",
+        "owner": "Gerg-L",
         "repo": "suckless",
         "type": "github"
       }
@@ -360,13 +360,13 @@
       "locked": {
         "lastModified": 1692447944,
         "narHash": "sha256-fkJGNjEmTPvqBs215EQU4r9ivecV5Qge5cF/QDLVn3U=",
-        "owner": "nixos",
+        "owner": "NixOS",
         "repo": "nixpkgs",
         "rev": "d680ded26da5cf104dd2735a51e88d2d8f487b4d",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
+        "owner": "NixOS",
         "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
