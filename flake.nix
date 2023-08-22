@@ -4,8 +4,8 @@
     master.url = "github:nixos/nixpkgs";
     unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     stable.url = "github:nixos/nixpkgs/nixos-23.05";
-    #nix 2.17
-    nix.url = "github:nixos/nix/584ff408a4e2b6eb0d74989778c640a92089b6d4";
+
+    nix.url = "github:nixos/nix/10afcf06aa2607bf088f7f08989f42c1fa2689a2";
 
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
