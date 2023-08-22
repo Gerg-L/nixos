@@ -4,82 +4,72 @@
     disk = {
       "0E" = {
         type = "disk";
-
         device = "/dev/disk/by-id/nvme-SHPP41-500GM_SSB4N6719101A4N0E";
         content = {
-          type = "table";
-          format = "gpt";
-          partitions = [
-            {
-              name = "BOOT";
+          type = "gpt";
+          partitions = {
+            BOOT = {
+              type = "EF00";
               start = "0";
               end = "4G";
-              bootable = true;
               content = {
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/efi0E";
               };
-            }
-            {
-              name = "swap";
+            };
+            swap = {
               start = "5G";
               end = "21G";
               content = {
                 type = "swap";
                 randomEncryption = true;
               };
-            }
-            {
-              name = "zfsroot";
+            };
+            zfsroot = {
               start = "21G";
               end = "100%";
               content = {
                 type = "zfs";
                 pool = "rpool";
               };
-            }
-          ];
+            };
+          };
         };
       };
       "22" = {
         type = "disk";
-
         device = "/dev/disk/by-id/nvme-SHPP41-500GM_SSB4N6719101A4N22";
         content = {
-          type = "table";
-          format = "gpt";
-          partitions = [
-            {
-              name = "BOOT";
+          type = "gpt";
+          partitions = {
+            BOOT = {
+              type = "EF00";
               start = "0";
               end = "4G";
-              bootable = true;
               content = {
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/efi22";
               };
-            }
-            {
-              name = "swap";
+            };
+            swap = {
               start = "5G";
               end = "21G";
               content = {
                 type = "swap";
                 randomEncryption = true;
               };
-            }
-            {
-              name = "zfsroot ";
+            };
+            zfsroot = {
               start = "21G";
               end = "100%";
               content = {
                 type = "zfs";
                 pool = "rpool";
               };
-            }
-          ];
+            };
+          };
         };
       };
     };
