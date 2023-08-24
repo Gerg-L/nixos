@@ -21,6 +21,7 @@ _: {
       advice.addIgnoredFile = false;
       core.hooksPath = ".githooks";
       gpg.format = "ssh";
+      push.gpgsign = "if-asked";
     };
   };
   _file = ./git.nix;
