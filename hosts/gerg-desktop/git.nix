@@ -23,5 +23,6 @@ _: {
       gpg.format = "ssh";
     };
   };
+
   _file = ./git.nix;
 }
