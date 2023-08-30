@@ -22,6 +22,7 @@ _: {
       core.hooksPath = ".githooks";
       gpg.format = "ssh";
       push.gpgsign = "if-asked";
+      commit.gpgsign = true;
     };
   };
   _file = ./git.nix;
