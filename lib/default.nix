@@ -49,7 +49,10 @@ in {
   mkHosts = system: names:
     lib.genAttrs names (
       name:
-        lib.nixosSystem {
+      # Whats lib.nixosSystem? never heard of her
+        lib.evalModules {
+          specialArgs.modulesPath = "${unstable}/nixos/modules";
+
           modules =
             builtins.attrValues self.nixosModules
             ++ importAll "${self}/hosts/${name}"
@@ -58,7 +61,8 @@ in {
                 networking.hostName = name;
                 nixpkgs.hostPlatform = system;
               }
-            ];
+            ]
+            ++ (import "${unstable}/nixos/modules/module-list.nix");
         }
     );
   mkDisko = names:
