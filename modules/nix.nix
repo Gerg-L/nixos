@@ -26,8 +26,19 @@ in {
     flake-registry = builtins.toFile "empty-flake-registry.json" ''{"flakes":[],"version":2}'';
 
     experimental-features = [
-      "nix-command"
+      "auto-allocate-uids"
+      "ca-derivations"
+      "cgroups"
+      "daemon-trust-override"
+      "dynamic-derivations"
+      "fetch-closure"
       "flakes"
+      "impure-derivations"
+      "nix-command"
+      "no-url-literals"
+      "parse-toml-timestamps"
+      "read-only-local-store"
+      "recursive-nix"
       "repl-flake"
     ];
     auto-optimise-store = true;
@@ -42,6 +53,7 @@ in {
     ];
     allowed-users = [];
     use-xdg-base-directories = true;
+    auto-allocate-uids = true;
   };
   #
   # Fix for use-xdg-base-directories https://github.com/NixOS/nixpkgs/pull/241518
