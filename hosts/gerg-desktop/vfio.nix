@@ -64,7 +64,7 @@ in {
       enable = true;
       qemu = {
         #don't hook evdev at vm start
-        package = pkgs.qemu.overrideAttrs (old: {
+        package = pkgs.qemu_kvm.overrideAttrs (old: {
           patches =
             old.patches
             ++ [
@@ -88,6 +88,8 @@ in {
                      return;
               '')
             ];
+          buildInputs = old.buildInputs ++ [pkgs.pipewire];
+          configureFlags = old.configureFlags ++ ["--enable-pipewire"];
         });
         runAsRoot = true;
         ovmf.enable = true;
