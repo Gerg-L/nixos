@@ -32,7 +32,7 @@ in {
   inherit importAll mkModules listNixFilesRecursive;
 
   gerg-utils = config: f:
-    lib.fold lib.recursiveUpdate {}
+    lib.foldr lib.recursiveUpdate {}
     (map (system:
       f {
         inherit system;

@@ -12,7 +12,7 @@
       inherit
         (pkgs)
         page
-        exa
+        eza
         ;
       inherit
         (fetch-rs.packages.${pkgs.system})
@@ -39,15 +39,15 @@
       vi = "nvim";
       vim = "nvim";
       vimdiff = "nvim -d";
-      #exa is 1 too many letters
-      ls = "exa";
-      l = "exa -lbF --git";
-      ll = "exa -lbGF --git";
-      llm = "exa -lbGd --git --sort=modified";
-      la = "exa -lbhHigUmuSa --time-style=long-iso --git --color-scale";
-      lx = "exa -lbhHigUmuSa@ --time-style=long-iso --git --color-scale";
-      lS = "exa -1";
-      lt = "exa --tree --level=2";
+      #eza is 1 too many letters
+      ls = "eza";
+      l = "eza -lbF --git";
+      ll = "eza -lbGF --git";
+      llm = "eza -lbGd --git --sort=modified";
+      la = "eza -lbhHigUmuSa --time-style=long-iso --git --color-scale";
+      lx = "eza -lbhHigUmuSa@ --time-style=long-iso --git --color-scale";
+      lS = "eza -1";
+      lt = "eza --tree --level=2";
       page = config.environment.variables.PAGER;
     };
     interactiveShellInit = "fetch-rs";
