@@ -1,8 +1,11 @@
-_: {pkgs, ...}: {
+_: {pkgs, ...}: let
+  xsane =
+    pkgs.xsane.override {gimpSupport = true;};
+in {
   local.allowedUnfree = ["hplip"];
   environment.systemPackages = [
+    xsane
     pkgs.gimp
-    (pkgs.xsane.override {gimpSupport = true;})
     pkgs.libreoffice
   ];
   users.users.jo.extraGroups = ["scanner" "lp" "cups"];
@@ -10,7 +13,7 @@ _: {pkgs, ...}: {
     enable = true;
     extraBackends = [pkgs.hplipWithPlugin];
   };
-  systemd.tmpfiles.rules = ["L /home/jo/.config/GIMP/2.10/plug-ins/xsane - - - - /run/current-system/sw/bin/xsane"];
+  systemd.user.tmpfiles.users.jo.rules = ["L %h/.config/GIMP/2.10/plug-ins/xsane - - - - ${xsane}"];
   services = {
     printing = {
       enable = true;
