@@ -1,4 +1,4 @@
-{self, ...}: {
+_: {
   pkgs,
   config,
   lib,
@@ -10,7 +10,7 @@
     wantedBy = ["multi-user.target"];
     wants = ["network-online.target"];
     after = ["network-online.target"];
-    script = lib.getExe self.packages.${pkgs.system}.parrot;
+    script = lib.getExe pkgs.parrot;
     serviceConfig = {
       EnvironmentFile = config.sops.secrets.discordenv.path;
       Restart = "on-failure";

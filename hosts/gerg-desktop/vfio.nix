@@ -88,8 +88,6 @@ in {
                      return;
               '')
             ];
-          buildInputs = old.buildInputs ++ [pkgs.pipewire];
-          configureFlags = old.configureFlags ++ ["--enable-pipewire"];
         });
         runAsRoot = true;
         ovmf.enable = true;
