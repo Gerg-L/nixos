@@ -133,7 +133,7 @@
         useDefaultShell = true;
         uid = 1000;
         isNormalUser = true;
-        extraGroups = ["wheel" "audio" "adbusers"];
+        extraGroups = ["wheel" "audio" "adbusers" "plugdev"];
         openssh.authorizedKeys.keys = [
           config.local.keys.gerg_gerg-phone
           config.local.keys.gerg_gerg-windows
