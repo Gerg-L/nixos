@@ -1,4 +1,8 @@
-{nvim-flake, ...}: {
+{
+  nvim-flake,
+  webcord_fix,
+  ...
+}: {
   pkgs,
   config,
   ...
@@ -54,13 +58,16 @@
         vlc #play stuff
         ripgrep
         xautoclick
-        webcord
         prismlauncher
         deadnix
         statix
         alejandra
         nix-index
         element-desktop
+        ;
+      inherit
+        (webcord_fix.legacyPackages.${pkgs.system})
+        webcord
         ;
       inherit (nvim-flake.packages.${pkgs.system}) neovim;
       lint = pkgs.writeShellScriptBin "lint" ''

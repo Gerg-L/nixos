@@ -275,7 +275,8 @@
         "spicetify-nix": "spicetify-nix",
         "stable": "stable",
         "suckless": "suckless",
-        "unstable": "unstable"
+        "unstable": "unstable",
+        "webcord_fix": "webcord_fix"
       }
     },
     "sops-nix": {
@@ -368,6 +369,22 @@
       "original": {
         "owner": "NixOS",
         "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "webcord_fix": {
+      "locked": {
+        "lastModified": 1694471450,
+        "narHash": "sha256-B5ZXOj31NNaxC9az9KSNDjJkwSk+i1uRVAncFlWbuWM=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "adedd9b597be1913de87b8429923b15efdea8c5b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "adedd9b597be1913de87b8429923b15efdea8c5b",
         "repo": "nixpkgs",
         "type": "github"
       }
