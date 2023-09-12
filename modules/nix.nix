@@ -13,6 +13,10 @@ in {
   nix.nixPath = lib.mapAttrsToList (x: _: "${x}=flake:${x}") flakes;
   nix.registry = lib.mapAttrs (_: flake: {inherit flake;}) flakes;
   #
+  # Ignore global registry
+  #
+  nix.settings.flake-registry = "";
+  #
   # Use nix directly from master
   #
   nix.package = inputs.nix.packages.${pkgs.system}.default;
@@ -20,11 +24,6 @@ in {
   # Other nix settings
   #
   nix.settings = {
-    #
-    # Ignore global registry
-    #
-    flake-registry = builtins.toFile "empty-flake-registry.json" ''{"flakes":[],"version":2}'';
-
     experimental-features = [
       "auto-allocate-uids"
       "ca-derivations"
