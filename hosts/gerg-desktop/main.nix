@@ -145,7 +145,7 @@
           config.local.keys.gerg_gerg-phone
           config.local.keys.gerg_gerg-windows
         ];
-        passwordFile = config.sops.secrets.gerg.path;
+        hashedPasswordFile = config.sops.secrets.gerg.path;
       };
       "root" = {
         uid = 0;

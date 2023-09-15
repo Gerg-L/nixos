@@ -56,7 +56,7 @@ _: {
           config.local.keys.gerg_gerg-windows
           config.local.keys.gerg_gerg-desktop
         ];
-        passwordFile = config.sops.secrets.root.path;
+        hashedPasswordFile = config.sops.secrets.root.path;
       };
     };
   };
