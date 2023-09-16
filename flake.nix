@@ -4,7 +4,6 @@
     master.url = "github:NixOS/nixpkgs";
     unstable.url = "github:NixOS/nixpkgs?ref=nixos-unstable";
     stable.url = "github:NixOS/nixpkgs?ref=nixos-23.05";
-    webcord_fix.url = "github:NixOS/nixpkgs?ref=adedd9b597be1913de87b8429923b15efdea8c5b";
 
     nix.url = "github:NixOS/nix?ref=10afcf06aa2607bf088f7f08989f42c1fa2689a2";
 

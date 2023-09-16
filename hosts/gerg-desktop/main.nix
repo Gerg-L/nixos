@@ -1,8 +1,4 @@
-{
-  nvim-flake,
-  webcord_fix,
-  ...
-}: {
+{nvim-flake, ...}: {
   pkgs,
   config,
   ...
@@ -64,9 +60,6 @@
         alejandra
         nix-index
         element-desktop
-        ;
-      inherit
-        (webcord_fix.legacyPackages.${pkgs.system})
         webcord
         ;
       inherit (nvim-flake.packages.${pkgs.system}) neovim;
