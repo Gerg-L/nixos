@@ -9,14 +9,6 @@ _: {
     "website/nextcloud" = {
       mode = "0444";
     };
-
-    "website/ssl_key" = {
-      mode = "0444";
-    };
-
-    "website/ssl_cert" = {
-      mode = "0444";
-    };
   };
   containers."website" = {
     ephemeral = true;
@@ -38,6 +30,7 @@ _: {
     config = {
       pkgs,
       config,
+      lib,
       ...
     }: let
       giteaPort = 3000;
@@ -46,10 +39,9 @@ _: {
       environment.systemPackages = [pkgs.neovim];
       networking = {
         defaultGateway = "192.168.1.1";
-        nameservers = ["1.1.1.1" "1.0.0.1"];
-        firewall = {
-          allowedTCPPorts = [giteaPort 80 443 22];
-        };
+        nameservers = ["192.168.1.1"];
+        useHostResolvConf = lib.mkForce false;
+        firewall.allowedTCPPorts = [giteaPort 80 443 22];
       };
       systemd.services.setmacaddr = {
         script = ''
@@ -113,29 +105,6 @@ _: {
           identMap = ''
             gitea-users gitea gitea
           '';
-        };
-        nginx = {
-          enable = true;
-          recommendedGzipSettings = true;
-          recommendedOptimisation = true;
-          recommendedProxySettings = true;
-          recommendedTlsSettings = true;
-          virtualHosts = let
-            template = {
-              forceSSL = true;
-              sslCertificate = "/secrets/ssl_cert";
-              sslCertificateKey = "/secrets/ssl_key";
-            };
-          in {
-            "git.gerg-l.com" =
-              template
-              // {
-                locations."/" = {
-                  proxyPass = "http://localhost:${toString giteaPort}";
-                };
-              };
-            "next.gerg-l.com" = template;
-          };
         };
         openssh = {
           enable = true;

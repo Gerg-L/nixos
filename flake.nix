@@ -5,7 +5,7 @@
     unstable.url = "github:NixOS/nixpkgs?ref=nixos-unstable";
     stable.url = "github:NixOS/nixpkgs?ref=nixos-23.05";
 
-    nix.url = "github:NixOS/nix?ref=10afcf06aa2607bf088f7f08989f42c1fa2689a2";
+    nix.url = "github:NixOS/nix?ref=3a62651bd663a849a568bf69017d0f3b1addd564";
 
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
