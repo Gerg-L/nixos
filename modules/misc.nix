@@ -10,7 +10,14 @@ _: {
   };
 
   config = {
-    nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.local.allowedUnfree;
+    nixpkgs = {
+      #TODO better way of doing this
+      overlays = [(self: _: {inherit (self.stdenv.hostPlatform) system;})];
+      config = {
+        allowAliases = false;
+        allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.local.allowedUnfree;
+      };
+    };
 
     environment.defaultPackages = lib.mkForce (builtins.attrValues {
       inherit
