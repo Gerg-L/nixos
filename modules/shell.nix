@@ -13,6 +13,7 @@
         (pkgs)
         page
         eza
+        fzf
         ;
       inherit
         (fetch-rs.packages.${pkgs.system})
@@ -71,7 +72,16 @@
       syntaxHighlighting.enable = true;
       histSize = 10000;
       histFile = "$HOME/.cache/zsh_history";
-      interactiveShellInit = ''
+      interactiveShellInit = let
+        fzf-tab = pkgs.fetchFromGitHub {
+          owner = "Aloxaf";
+          repo = "fzf-tab";
+          rev = "c2b4aa5ad2532cca91f23908ac7f00efb7ff09c9";
+          hash = "sha256-gvZp8P3quOtcy1Xtt1LAW1cfZ/zCtnAmnWqcwrKel6w=";
+        };
+      in ''
+          ### fzf-tab ###
+          source ${fzf-tab}/fzf-tab.plugin.zsh
           ### pager ###
           man () {
             PROGRAM="''${@[-1]}"
