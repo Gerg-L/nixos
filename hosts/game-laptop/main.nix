@@ -36,6 +36,11 @@ _: {
         obs-studio
         vlc
         webcord
+        blender
+        ;
+      inherit
+        (pkgs.libsForQt5)
+        kdenlive
         ;
     };
     etc = {

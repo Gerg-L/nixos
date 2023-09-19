@@ -29,7 +29,6 @@ _: {
           gnome-music
           simple-scan
           cheese # webcam tool
-          gedit # text editor
           epiphany # web browser
           geary # email reader
           evince # document viewer
