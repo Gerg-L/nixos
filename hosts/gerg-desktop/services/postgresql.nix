@@ -7,7 +7,10 @@ _: {
     enable = true;
     package = pkgs.postgresql_13;
     dataDir = "/persist/services/postgresql";
-    ensureDatabases = [config.services.nextcloud.config.dbname];
+    ensureDatabases = [
+      config.services.nextcloud.config.dbname
+      config.services.gitea.database.user
+    ];
     ensureUsers = [
       {
         name = config.services.nextcloud.config.dbuser;
