@@ -3,17 +3,18 @@ _: {
   lib,
   ...
 }: {
-  sops.secrets = lib.mapAttrs (_: v:
-    {
-      owner = "nginx";
-      group = "nginx";
-    }
-    // v) {
-    nixfu_ssl_cert = {};
-    nixfu_ssl_key = {};
-    gerg_ssl_key = {};
-    gerg_ssl_cert = {};
-  };
+  sops.secrets =
+    lib.genAttrs [
+      "nixfu_ssl_cert"
+      "nixfu_ssl_key"
+      "gerg_ssl_key"
+      "gerg_ssl_cert"
+    ]
+    (_: {
+      owner = config.services.nginx.user;
+      inherit (config.services.nginx) group;
+    });
+
   services.nginx = {
     enable = true;
     recommendedGzipSettings = true;
@@ -25,30 +26,29 @@ _: {
         forceSSL = true;
         sslCertificate = config.sops.secrets.nixfu_ssl_cert.path;
         sslCertificateKey = config.sops.secrets.nixfu_ssl_key.path;
-        serverAliases = ["www.nix-fu.com" "nix-fu.com"];
-        locations."/".return = "301 $scheme://www.github.com/Gerg-L$request_uri";
+        serverAliases = ["www.nix-fu.com"];
+        globalRedirect = "github.com/Gerg-L";
       };
-      "search.Gerg-L.com" = {
+      "search.gerg-l.com" = {
         forceSSL = true;
         sslCertificate = config.sops.secrets.gerg_ssl_cert.path;
         sslCertificateKey = config.sops.secrets.gerg_ssl_key.path;
-        locations."/".proxyPass = "http://localhost:${toString config.services.searx.settings.server.port}";
+        locations."/".extraConfig = "uwsgi_pass unix:${config.services.searx.uwsgiConfig.socket};";
+        extraConfig = "access_log off;";
       };
-      "git.Gerg-L.com" = {
+      "git.gerg-l.com" = {
         forceSSL = true;
         sslCertificate = config.sops.secrets.gerg_ssl_cert.path;
         sslCertificateKey = config.sops.secrets.gerg_ssl_key.path;
-        locations."/".proxyPass = "http://192.168.1.11:3000";
+        locations."/".proxyPass = "http://unix:${config.services.gitea.settings.server.HTTP_ADDR}";
       };
-      "next.Gerg-L.com" = {
+      "next.gerg-l.com" = {
         forceSSL = true;
         sslCertificate = config.sops.secrets.gerg_ssl_cert.path;
         sslCertificateKey = config.sops.secrets.gerg_ssl_key.path;
-        locations."/".proxyPass = "http://192.168.1.11:80";
       };
     };
   };
-  networking.firewall = {
-    allowedTCPPorts = [80 443];
-  };
+  networking.firewall.allowedTCPPorts = [80 443];
+  _file = ./nginx.nix;
 }

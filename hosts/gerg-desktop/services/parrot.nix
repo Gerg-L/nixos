@@ -4,7 +4,7 @@ _: {
   lib,
   ...
 }: {
-  #discord bot stuff
+  sops.secrets.discordenv = {};
   systemd.services.parrot = {
     enable = true;
     wantedBy = ["multi-user.target"];
@@ -17,6 +17,5 @@ _: {
       RestartSec = "30s";
     };
   };
-  sops.secrets.discordenv = {};
-  _file = ./sops.nix;
+  _file = ./parrot.nix;
 }
