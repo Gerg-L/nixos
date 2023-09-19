@@ -22,6 +22,13 @@ _: {
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
     virtualHosts = {
+      "_" = {
+        default = true;
+        forceSSL = true;
+        sslCertificate = config.sops.secrets.gerg_ssl_cert.path;
+        sslCertificateKey = config.sops.secrets.gerg_ssl_key.path;
+        locations."/".return = "404";
+      };
       "nix-fu.com" = {
         forceSSL = true;
         sslCertificate = config.sops.secrets.nixfu_ssl_cert.path;
@@ -46,6 +53,12 @@ _: {
         forceSSL = true;
         sslCertificate = config.sops.secrets.gerg_ssl_cert.path;
         sslCertificateKey = config.sops.secrets.gerg_ssl_key.path;
+      };
+      "flux.gerg-L.com" = {
+        forceSSL = true;
+        sslCertificate = config.sops.secrets.gerg_ssl_cert.path;
+        sslCertificateKey = config.sops.secrets.gerg_ssl_key.path;
+        locations."/".proxyPass = "http://unix:${config.systemd.services.miniflux.environment.LISTEN_ADDR}";
       };
     };
   };
