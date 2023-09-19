@@ -18,7 +18,7 @@ _: {
         allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.local.allowedUnfree;
       };
     };
-
+    programs.git.enable = true;
     environment.defaultPackages = lib.mkForce (builtins.attrValues {
       inherit
         (pkgs)
