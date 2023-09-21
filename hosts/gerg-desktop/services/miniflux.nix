@@ -4,10 +4,7 @@ _: {
   pkgs,
   ...
 }: {
-  sops.secrets.minifluxenv = {
-    owner = "miniflux";
-    group = "miniflux";
-  };
+  sops.secrets.minifluxenv.owner = "miniflux";
 
   systemd.services = {
     miniflux = {
@@ -48,6 +45,7 @@ _: {
       };
 
       environment = {
+        BASE_URL = "https://flux.gerg-l.com";
         LISTEN_ADDR = "/run/miniflux/miniflux.sock";
         DATABASE_URL = "user=miniflux host=/run/postgresql dbname=miniflux";
         RUN_MIGRATIONS = "1";
@@ -74,6 +72,7 @@ _: {
     users = {
       miniflux = {
         group = "miniflux";
+        extraGroups = ["postgres"];
         isSystemUser = true;
         uid = 377;
       };
