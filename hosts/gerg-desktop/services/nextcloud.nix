@@ -16,6 +16,7 @@ _: {
     enableBrokenCiphersForSSE = false;
     database.createLocally = true;
     config = {
+      overwriteProtocol = "https";
       dbtype = "pgsql";
       adminpassFile = config.sops.secrets.nextcloud.path;
       adminuser = "admin-root";

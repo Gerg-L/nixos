@@ -1,4 +1,4 @@
-{nvim-flake, ...}: {
+{nvim-flake, nixfmt, ...}: {
   pkgs,
   config,
   ...
@@ -43,32 +43,56 @@
   nix.settings.system-features = ["kvm" "big-parallel" "nixos-test" "benchmark"];
 
   environment = {
-    systemPackages = builtins.attrValues {
-      inherit
-        (pkgs)
-        bitwarden #store stuff
-        qbittorrent #steal stuff
-        pavucontrol #gui volume control
-        pcmanfm #file manager
-        librewolf #best browser
-        vlc #play stuff
-        ripgrep
-        xautoclick
-        prismlauncher
-        deadnix
-        statix
-        alejandra
-        nix-index
-        element-desktop
-        webcord
-        ;
-      inherit (nvim-flake.packages.${pkgs.system}) neovim;
-      lint = pkgs.writeShellScriptBin "lint" ''
-        deadnix -e "''${1:-.}"
-        statix fix -- "''${1:-.}"
-        alejandra "''${1:-.}"
-      '';
-    };
+    systemPackages = let
+      fmt = pkgs.nixfmt.overrideAttrs {
+        version = "0.6.0-${nixfmt.shortRev}";
+
+        src = nixfmt;
+      };
+    in
+      builtins.attrValues {
+        inherit
+          (pkgs)
+          bitwarden # store stuff
+          qbittorrent # steal stuff
+          pavucontrol # gui volume control
+          pcmanfm # file manager
+          librewolf # best browser
+          vlc # play stuff
+          ripgrep
+          fd
+          jq
+          xautoclick
+          prismlauncher
+          deadnix
+          statix
+          nix-index
+          element-desktop
+          webcord
+          ;
+        inherit (nvim-flake.packages.${pkgs.system}) neovim;
+        inherit fmt;
+        lint = pkgs.writeShellApplication {
+          name = "lint";
+          runtimeInputs = [
+           fmt
+            pkgs.deadnix
+            pkgs.statix
+            pkgs.fd
+          ];
+
+          text = ''
+            if [ -z "''${1:-""}" ]; then
+              fd '.*\.nix' . -x statix fix -- {} \;
+              fd '.*\.nix' . -X deadnix -e -- {} \; -X nixfmt {} \;
+            else
+              statix fix -- "$1"
+              deadnix -e "$1"
+              nixfmt "$1"
+            fi
+          '';
+        };
+      };
     etc = {
       "jdks/17".source = "${pkgs.openjdk17}/bin";
       "jdks/8".source = "${pkgs.openjdk8}/bin";

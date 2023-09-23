@@ -37,6 +37,16 @@ let
     echo >> $out
   '';
   ###END OF TAKEN PART
+
+  cfg_monitors = pkgs.writeShellApplication {
+    name = "cfg_monitors";
+    runtimeInputs = [pkgs.xorg.xrandr pkgs.xorg.xset pkgs.gawk pkgs.gnugrep];
+    text = ''
+      xrandr --output DP-0 --auto --mode 3440x1440 --rate 120 --primary --pos 0x0
+      xrandr --output "$(xrandr | grep -e 'HDMI.* connected.*'| awk '{ print$1 }')" --auto --mode 1920x1080 --rate 144 --set TearFree on --pos 3440x360
+      xset -dpms
+    '';
+  };
 in {
   environment.etc = {
     "Xorg/1_mon.conf".source = pkgs.runCommand "1_mon.conf" {} (
@@ -103,6 +113,7 @@ in {
     systemPackages = [
       pkgs.virt-manager
       pkgs.dmidecode
+      cfg_monitors
     ];
     shellAliases = {
       vm-start = "virsh start Windows";
@@ -110,53 +121,58 @@ in {
     };
   };
 
+  programs.dconf.enable = true;
+
   users.users.gerg.extraGroups = ["kvm" "libvirtd"];
 
   services.xserver.displayManager.xserverArgs = lib.mkAfter ["-config /etc/Xorg/active.conf"];
   services.xserver.displayManager.sessionCommands = lib.mkBefore ''
     if ! [ -e "/etc/Xorg/ONE_MONITOR" ] ; then
-          xrandr --output DP-0 --auto --mode 3440x1440 --rate 120 --primary --pos 0x0
-          xrandr --output "$(xrandr | grep -e 'HDMI.* connected.*'| awk '{ print$1 }')" --auto --mode 1920x1080 --rate 144 --set TearFree on --pos 3440x360
-          xset -dpms
+      ${lib.getExe cfg_monitors}
     fi
+
   '';
 
   systemd.tmpfiles.rules = let
-    qemuHook = pkgs.writeShellScript "qemu-hook" ''
-      GUEST_NAME="$1"
-      OPERATION="$2"
-      SUB_OPERATION="$3"
+    qemuHook = pkgs.writeShellApplication {
+      name = "qemu-hook";
 
-      if [ "$GUEST_NAME" == "Windows" ]; then
-        if [ "$OPERATION" == "prepare" ]; then
+      runtimeInputs = [pkgs.libvirt pkgs.systemd pkgs.kmod];
+      text = ''
+        GUEST_NAME="$1"
+        OPERATION="$2"
+
+        if [ "$GUEST_NAME" == "Windows" ]; then
+          if [ "$OPERATION" == "prepare" ]; then
+              systemctl stop display-manager.service
+              modprobe -r -a nvidia_uvm nvidia_drm nvidia nvidia_modeset
+              virsh nodedev-detach pci_0000_01_00_0
+              virsh nodedev-detach pci_0000_01_00_1
+              systemctl set-property --runtime -- user.slice AllowedCPUs=8-15,24-31
+              systemctl set-property --runtime -- system.slice AllowedCPUs=8-15,24-31
+              systemctl set-property --runtime -- init.scope AllowedCPUs=8-15,24-31
+              ln -fs /etc/Xorg/1_mon.conf /etc/Xorg/active.conf
+              touch /etc/Xorg/ONE_MONITOR
+              systemctl start display-manager.service
+          fi
+          if [ "$OPERATION" == "release" ]; then
             systemctl stop display-manager.service
-            modprobe -r -a nvidia_uvm nvidia_drm nvidia nvidia_modeset
-            ${pkgs.libvirt}/bin/virsh nodedev-detach pci_0000_01_00_0
-            ${pkgs.libvirt}/bin/virsh nodedev-detach pci_0000_01_00_1
-            systemctl set-property --runtime -- user.slice AllowedCPUs=8-15,24-31
-            systemctl set-property --runtime -- system.slice AllowedCPUs=8-15,24-31
-            systemctl set-property --runtime -- init.scope AllowedCPUs=8-15,24-31
-            ln -fs /etc/Xorg/1_mon.conf /etc/Xorg/active.conf
-            touch /etc/Xorg/ONE_MONITOR
+            systemctl set-property --runtime -- user.slice AllowedCPUs=0-31
+            systemctl set-property --runtime -- system.slice AllowedCPUs=0-31
+            systemctl set-property --runtime -- init.scope AllowedCPUs=0-31
+            virsh nodedev-reattach pci_0000_01_00_0
+            virsh nodedev-reattach pci_0000_01_00_1
+            modprobe -a nvidia_uvm nvidia_drm nvidia nvidia_modeset
+            ln -fs /etc/Xorg/2_mon.conf /etc/Xorg/active.conf
+            rm /etc/Xorg/ONE_MONITOR
             systemctl start display-manager.service
+          fi
         fi
-        if [ "$OPERATION" == "release" ]; then
-          systemctl stop display-manager.service
-          systemctl set-property --runtime -- user.slice AllowedCPUs=0-31
-          systemctl set-property --runtime -- system.slice AllowedCPUs=0-31
-          systemctl set-property --runtime -- init.scope AllowedCPUs=0-31
-          ${pkgs.libvirt}/bin/virsh nodedev-reattach pci_0000_01_00_0
-          ${pkgs.libvirt}/bin/virsh nodedev-reattach pci_0000_01_00_1
-          modprobe -a nvidia_uvm nvidia_drm nvidia nvidia_modeset
-          ln -fs /etc/Xorg/2_mon.conf /etc/Xorg/active.conf
-          rm /etc/Xorg/ONE_MONITOR
-          systemctl start display-manager.service
-        fi
-      fi
-    '';
+      '';
+    };
   in [
     "L  /etc/Xorg/active.conf - - - - /etc/Xorg/2_mon.conf"
-    "C /var/lib/libvirt/hooks/qemu - - - - ${qemuHook}"
+    "C /var/lib/libvirt/hooks/qemu - - - - ${lib.getExe qemuHook}"
     "C /var/lib/libvirt/qemu/Windows.xml - - - - ${./Windows.xml}"
   ];
   _file = ./vfio.nix;

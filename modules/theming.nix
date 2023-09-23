@@ -55,7 +55,7 @@ in {
           platformTheme = "gtk2";
         };
         services.xserver.displayManager.sessionCommands = ''
-          xrdb -load /etc/xdg/Xresources
+          ${lib.getExe' pkgs.xorg.xrdb "xrdb"} -load /etc/xdg/Xresources
         '';
         fonts = {
           packages = [pkgs.overpass];

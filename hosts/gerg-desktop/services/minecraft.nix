@@ -7,7 +7,6 @@
   config = lib.mkIf false {
     networking.firewall.allowedTCPPorts = [25565];
 
-    system.stateVersion = "unstable";
     users.users.minecraft = {
       description = "Minecraft server service user";
       home = "/persist/minecraft";
@@ -64,7 +63,7 @@
       serviceConfig = {
         Restart = "always";
         User = "minecraft";
-        WorkingDirectory = "/minecraft";
+        WorkingDirectory = "/persist/minecraft";
 
         StandardInput = "socket";
         StandardOutput = "journal";

@@ -23,7 +23,7 @@
         defaultSession = "none+dwm";
       };
       windowManager.session =
-        lib.singleton
+      [
         {
           name = "dwm";
           start = ''
@@ -43,7 +43,8 @@
             dont_stop &
             waitPID=$!
           '';
-        };
+        }
+        ];
     };
     environment.systemPackages = builtins.attrValues {
       inherit

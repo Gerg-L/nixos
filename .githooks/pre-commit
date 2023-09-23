@@ -11,6 +11,6 @@ for i in $STAGED; do
 done
 
 deadnix -qe $STAGED
-alejandra -q $STAGED
+nixfmt -q $STAGED
 
 git add $STAGED

@@ -18,17 +18,17 @@ _: {
         allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.local.allowedUnfree;
       };
     };
+
     programs.git.enable = true;
+
     environment.defaultPackages = lib.mkForce (builtins.attrValues {
       inherit
         (pkgs)
-        alsa-utils #volume control
         bottom #view tasks
         efibootmgr #efi editor
         nix-output-monitor #nom nom nom nom;
         nix-tree #view packages
         pciutils #lspci
-        xclip #commandline clipboard access
         ;
     });
 
@@ -43,14 +43,17 @@ _: {
         KbdInteractiveAuthentication = false;
       };
     };
+
     i18n.defaultLocale = "en_US.UTF-8";
     #time settings
+
     time.timeZone = "America/New_York";
-    # For`info` command.
+
+    # For `info` command.
     documentation.info.enable = false;
     # NixOS manual and such.
     documentation.nixos.enable = false;
-
+    # Useless with flakes (without configuring)
     programs.command-not-found.enable = false;
   };
   _file = ./misc.nix;

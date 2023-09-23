@@ -61,9 +61,10 @@ in {
             pkgs.brightnessctl #brightness control for laptop
             pkgs.playerctl #music control
             pkgs.xclip
-            pkgs.coreutils
           ];
-          services.xserver.displayManager.sessionCommands = "${pkgs.sxhkd}/bin/sxhkd -c ${configFile} &";
+          services.xserver.displayManager.sessionCommands = ''
+            ${lib.getExe' pkgs.sxhkd  "sxhkd"} -c ${configFile} &
+          '';
         }
     )
   ];

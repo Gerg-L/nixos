@@ -18,11 +18,9 @@ _: {
             max-jobs = 0;
             substituters = [
               "ssh-ng://nix-ssh@gerg-desktop"
-              "https://cache.nixos.org/"
             ];
             trusted-public-keys = [
               "gerg-desktop:6p1+h6jQnb1MOt3ra3PlQpfgEEF4zRrQWiEuAqcjBj8="
-              "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
             ];
           };
           distributedBuilds = true;

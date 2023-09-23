@@ -5,7 +5,10 @@
     unstable.url = "github:NixOS/nixpkgs?ref=nixos-unstable";
     stable.url = "github:NixOS/nixpkgs?ref=nixos-23.05";
 
-    nix.url = "github:NixOS/nix?ref=3a62651bd663a849a568bf69017d0f3b1addd564";
+    nix = {
+      url = "github:NixOS/nix?ref=2.17-maintenance";
+      inputs.nixpkgs.follows = "unstable";
+      };
 
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
@@ -17,6 +20,10 @@
     };
     disko = {
       url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "unstable";
+    };
+    nixfmt = {
+      url = "github:piegamesde/nixfmt?ref=rfc101-style";
       inputs.nixpkgs.follows = "unstable";
     };
     spicetify-nix = {
@@ -69,7 +76,23 @@
             "game-laptop"
             "moms-laptop"
           ];
-        formatter.${system} = pkgs.alejandra;
+        formatter.${system} = pkgs.writeShellApplication {
+          name = "lint";
+          runtimeInputs = [
+            (pkgs.nixfmt.overrideAttrs {
+              version = "0.6.0-${inputs.nixfmt.shortRev}";
+
+              src = inputs.nixfmt;
+            })
+            pkgs.deadnix
+            pkgs.statix
+            pkgs.fd
+          ];
+          text = ''
+            fd '.*\.nix' . -x statix fix -- {} \;
+            fd '.*\.nix' . -X deadnix -e -- {} \; -X nixfmt {} \;
+          '';
+        };
 
         devShells.${system}.default = pkgs.mkShell {
           packages = [
