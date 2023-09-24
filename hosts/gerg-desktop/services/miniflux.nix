@@ -1,17 +1,23 @@
-_: {
+_:
+{
   config,
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   sops.secrets.minifluxenv.owner = "miniflux";
 
   systemd.services = {
     miniflux = {
       description = "Miniflux service";
-      wantedBy = ["multi-user.target"];
-      requires = ["miniflux-dbsetup.service"];
-      after = ["network.target" "postgresql.service" "miniflux-dbsetup.service"];
+      wantedBy = [ "multi-user.target" ];
+      requires = [ "miniflux-dbsetup.service" ];
+      after = [
+        "network.target"
+        "postgresql.service"
+        "miniflux-dbsetup.service"
+      ];
       script = lib.getExe' pkgs.miniflux "miniflux";
 
       serviceConfig = {
@@ -20,8 +26,8 @@ _: {
         RuntimeDirectoryMode = "0770";
         EnvironmentFile = config.sops.secrets.minifluxenv.path;
         # Hardening
-        CapabilityBoundingSet = [""];
-        DeviceAllow = [""];
+        CapabilityBoundingSet = [ "" ];
+        DeviceAllow = [ "" ];
         LockPersonality = true;
         MemoryDenyWriteExecute = true;
         PrivateDevices = true;
@@ -35,12 +41,19 @@ _: {
         ProtectKernelModules = true;
         ProtectKernelTunables = true;
         ProtectProc = "invisible";
-        RestrictAddressFamilies = ["AF_INET" "AF_INET6" "AF_UNIX"];
+        RestrictAddressFamilies = [
+          "AF_INET"
+          "AF_INET6"
+          "AF_UNIX"
+        ];
         RestrictNamespaces = true;
         RestrictRealtime = true;
         RestrictSUIDSGID = true;
         SystemCallArchitectures = "native";
-        SystemCallFilter = ["@system-service" "~@privileged"];
+        SystemCallFilter = [
+          "@system-service"
+          "~@privileged"
+        ];
         UMask = "0077";
       };
 
@@ -54,10 +67,15 @@ _: {
     };
     miniflux-dbsetup = {
       description = "Miniflux database setup";
-      requires = ["postgresql.service"];
-      after = ["network.target" "postgresql.service"];
+      requires = [ "postgresql.service" ];
+      after = [
+        "network.target"
+        "postgresql.service"
+      ];
       script = ''
-        ${lib.getExe' config.services.postgresql.package "psql"} "miniflux" -c "CREATE EXTENSION IF NOT EXISTS hstore"
+        ${
+          lib.getExe' config.services.postgresql.package "psql"
+        } "miniflux" -c "CREATE EXTENSION IF NOT EXISTS hstore"
       '';
       serviceConfig = {
         Type = "oneshot";
@@ -72,11 +90,11 @@ _: {
     users = {
       miniflux = {
         group = "miniflux";
-        extraGroups = ["postgres"];
+        extraGroups = [ "postgres" ];
         isSystemUser = true;
         uid = 377;
       };
-      ${config.services.nginx.user}.extraGroups = ["miniflux"];
+      ${config.services.nginx.user}.extraGroups = [ "miniflux" ];
     };
   };
 }

@@ -1,46 +1,58 @@
-{disko, ...}: {lib, ...}: {
-  imports = [disko.nixosModules.disko];
+{ disko, ... }:
+{ lib, ... }:
+{
+  imports = [ disko.nixosModules.disko ];
 
-  disko.devices.disk = lib.genAttrs ["0E" "22"] (name: let
-    fullName = "/dev/disk/by-id/nvme-SHPP41-500GM_SSB4N6719101A4N${name}";
-  in {
-    type = "disk";
-    device = fullName;
-    content = {
-      type = "gpt";
-      partitions = {
-        BOOT = {
-          device = "${fullName}-part1";
-          type = "EF00";
-          start = "0";
-          end = "4G";
+  disko.devices.disk =
+    lib.genAttrs
+      [
+        "0E"
+        "22"
+      ]
+      (
+        name:
+        let
+          fullName = "/dev/disk/by-id/nvme-SHPP41-500GM_SSB4N6719101A4N${name}";
+        in
+        {
+          type = "disk";
+          device = fullName;
           content = {
-            type = "filesystem";
-            format = "vfat";
-            mountpoint = "/efi${name}";
+            type = "gpt";
+            partitions = {
+              BOOT = {
+                device = "${fullName}-part1";
+                type = "EF00";
+                start = "0";
+                end = "4G";
+                content = {
+                  type = "filesystem";
+                  format = "vfat";
+                  mountpoint = "/efi${name}";
+                };
+              };
+              swap = {
+                device = "${fullName}-part2";
+                start = "5G";
+                end = "21G";
+                content = {
+                  type = "swap";
+                  randomEncryption = true;
+                };
+              };
+              zfsroot = {
+                device = "${fullName}-part3";
+                start = "21G";
+                end = "100%";
+                content = {
+                  type = "zfs";
+                  pool = "rpool";
+                };
+              };
+            };
           };
-        };
-        swap = {
-          device = "${fullName}-part2";
-          start = "5G";
-          end = "21G";
-          content = {
-            type = "swap";
-            randomEncryption = true;
-          };
-        };
-        zfsroot = {
-          device = "${fullName}-part3";
-          start = "21G";
-          end = "100%";
-          content = {
-            type = "zfs";
-            pool = "rpool";
-          };
-        };
-      };
-    };
-  });
+        }
+      );
 
   disko.devices.zpool = {
     rpool = {

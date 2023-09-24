@@ -1,9 +1,11 @@
-_: {
+_:
+{
   config,
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   #link some stuff
   systemd.tmpfiles.rules = [
     "L+ /etc/ssh/ssh_host_ed25519_key  - - - - /persist/ssh/ssh_host_ed25519_key"
@@ -16,11 +18,11 @@ _: {
     mode = "0644";
   };
   #make sure the sopskey is found
-  sops.age.sshKeyPaths = lib.mkForce ["/persist/ssh/ssh_host_ed25519_key"];
+  sops.age.sshKeyPaths = lib.mkForce [ "/persist/ssh/ssh_host_ed25519_key" ];
   fileSystems = {
     "/persist".neededForBoot = true;
-    "/efi22".options = ["nofail"];
-    "/efi0E".options = ["nofail"];
+    "/efi22".options = [ "nofail" ];
+    "/efi0E".options = [ "nofail" ];
   };
 
   boot = {
@@ -30,23 +32,29 @@ _: {
     };
     kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
     #disable hibernate and set cache max
-    kernelParams = ["nohibernate" "zfs.zfs_arc_max=17179869184"];
+    kernelParams = [
+      "nohibernate"
+      "zfs.zfs_arc_max=17179869184"
+    ];
     initrd = {
-      supportedFilesystems = ["zfs" "vfat"];
+      supportedFilesystems = [
+        "zfs"
+        "vfat"
+      ];
       #module for multiple swap devices
-      kernelModules = ["dm_mod"];
+      kernelModules = [ "dm_mod" ];
       #keyboard module for zfs password
-      availableKernelModules = ["hid_generic"];
+      availableKernelModules = [ "hid_generic" ];
       systemd.services.rollback = {
-        path = [pkgs.zfs];
+        path = [ pkgs.zfs ];
         serviceConfig = {
           Type = "oneshot";
           RemainAfterExit = true;
         };
         unitConfig.DefaultDependencies = "no";
-        wantedBy = ["initrd.target"];
-        after = ["zfs-import.target"];
-        before = ["sysroot.mount"];
+        wantedBy = [ "initrd.target" ];
+        after = [ "zfs-import.target" ];
+        before = [ "sysroot.mount" ];
         script = ''
           zfs rollback -r rpool/root@empty
           zfs rollback -r rpool/var@empty
@@ -73,11 +81,11 @@ _: {
         mirroredBoots = [
           {
             path = "/efi22";
-            devices = ["nodev"];
+            devices = [ "nodev" ];
           }
           {
             path = "/efi0E";
-            devices = ["nodev"];
+            devices = [ "nodev" ];
           }
         ];
         splashImage = null;

@@ -1,9 +1,11 @@
-{self, ...}: {
+{ self, ... }:
+{
   lib,
   pkgs,
   config,
   ...
-}: {
+}:
+{
   options.local.bootConfig.disable = lib.mkEnableOption "";
   config = lib.mkIf (!config.local.bootConfig.disable) {
     environment.etc = {
@@ -13,7 +15,7 @@
       };
     };
     boot = {
-      blacklistedKernelModules = ["pcspkr"];
+      blacklistedKernelModules = [ "pcspkr" ];
       kernelParams = lib.mkAfter [
         "acpi_call"
         "pti=auto"
@@ -76,8 +78,8 @@
         Type = "oneshot";
         RemainAfterExit = true;
       };
-      path = [pkgs.efibootmgr];
-      wantedBy = ["default.target"];
+      path = [ pkgs.efibootmgr ];
+      wantedBy = [ "default.target" ];
       script = ''
         efibootmgr -t 0
       '';

@@ -1,8 +1,6 @@
-_: {
-  pkgs,
-  config,
-  ...
-}: {
+_:
+{ pkgs, config, ... }:
+{
   programs.git = {
     enable = true;
     package = pkgs.gitMinimal;

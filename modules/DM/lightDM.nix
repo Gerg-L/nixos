@@ -1,9 +1,11 @@
-{self, ...}: {
+{ self, ... }:
+{
   config,
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   options.local.DM.lightdm.enable = lib.mkEnableOption "";
 
   config = lib.mkIf config.local.DM.lightdm.enable {

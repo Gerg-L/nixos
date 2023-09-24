@@ -1,8 +1,6 @@
-{nvim-flake, nixfmt, ...}: {
-  pkgs,
-  config,
-  ...
-}: {
+{ nvim-flake, nixfmt, ... }:
+{ pkgs, config, ... }:
+{
   local = {
     remoteBuild.isBuilder = true;
     X11Programs = {
@@ -18,11 +16,9 @@
       enable = true;
       kmscon.enable = true;
     };
-    allowedUnfree = [
-      "nvidia-x11"
-    ];
+    allowedUnfree = [ "nvidia-x11" ];
   };
-  boot.binfmt.emulatedSystems = ["aarch64-linux"];
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   hardware.nvidia = {
     package = config.boot.kernelPackages.nvidiaPackages.beta;
     nvidiaPersistenced = false;
@@ -31,7 +27,10 @@
     open = false;
   };
   services.xserver = {
-    videoDrivers = ["nvidia" "amdgpu"];
+    videoDrivers = [
+      "nvidia"
+      "amdgpu"
+    ];
   };
 
   programs.direnv = {
@@ -40,19 +39,24 @@
     silent = true;
   };
 
-  nix.settings.system-features = ["kvm" "big-parallel" "nixos-test" "benchmark"];
+  nix.settings.system-features = [
+    "kvm"
+    "big-parallel"
+    "nixos-test"
+    "benchmark"
+  ];
 
   environment = {
-    systemPackages = let
-      fmt = pkgs.nixfmt.overrideAttrs {
-        version = "0.6.0-${nixfmt.shortRev}";
+    systemPackages =
+      let
+        fmt = pkgs.nixfmt.overrideAttrs {
+          version = "0.6.0-${nixfmt.shortRev}";
 
-        src = nixfmt;
-      };
-    in
+          src = nixfmt;
+        };
+      in
       builtins.attrValues {
-        inherit
-          (pkgs)
+        inherit (pkgs)
           bitwarden # store stuff
           qbittorrent # steal stuff
           pavucontrol # gui volume control
@@ -69,13 +73,13 @@
           nix-index
           element-desktop
           webcord
-          ;
+        ;
         inherit (nvim-flake.packages.${pkgs.system}) neovim;
         inherit fmt;
         lint = pkgs.writeShellApplication {
           name = "lint";
           runtimeInputs = [
-           fmt
+            fmt
             pkgs.deadnix
             pkgs.statix
             pkgs.fd
@@ -99,9 +103,7 @@
     };
   };
 
-  services.udev.packages = [
-    pkgs.android-udev-rules
-  ];
+  services.udev.packages = [ pkgs.android-udev-rules ];
   programs.adb.enable = true;
 
   networking = {
@@ -122,22 +124,16 @@
     networks = {
       "enp11s0" = {
         name = "enp11s0";
-        bridge = ["br0"];
+        bridge = [ "br0" ];
         linkConfig.RequiredForOnline = "enslaved";
       };
       "br0" = {
         name = "br0";
-        address = [
-          "192.168.1.4/24"
-        ];
-        gateway = [
-          "192.168.1.1"
-        ];
-        dns = [
-          "192.168.1.1"
-        ];
+        address = [ "192.168.1.4/24" ];
+        gateway = [ "192.168.1.1" ];
+        dns = [ "192.168.1.1" ];
         DHCP = "no";
-        bridgeConfig = {};
+        bridgeConfig = { };
         linkConfig = {
           MACAddress = "D8:5E:D3:E5:47:90";
           RequiredForOnline = "routable";
@@ -157,7 +153,12 @@
         useDefaultShell = true;
         uid = 1000;
         isNormalUser = true;
-        extraGroups = ["wheel" "audio" "adbusers" "plugdev"];
+        extraGroups = [
+          "wheel"
+          "audio"
+          "adbusers"
+          "plugdev"
+        ];
         openssh.authorizedKeys.keys = [
           config.local.keys.gerg_gerg-phone
           config.local.keys.gerg_gerg-windows
@@ -172,9 +173,15 @@
     };
   };
   boot = {
-    kernelModules = ["amdgpu"];
+    kernelModules = [ "amdgpu" ];
     initrd = {
-      availableKernelModules = ["nvme" "xhci_pci" "ahci" "usbhid" "sd_mod"];
+      availableKernelModules = [
+        "nvme"
+        "xhci_pci"
+        "ahci"
+        "usbhid"
+        "sd_mod"
+      ];
       includeDefaultModules = false;
     };
   };

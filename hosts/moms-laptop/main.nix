@@ -1,9 +1,11 @@
-_: {
+_:
+{
   lib,
   pkgs,
   config,
   ...
-}: {
+}:
+{
   local = {
     remoteBuild.enable = true;
     DM = {
@@ -19,18 +21,17 @@ _: {
   };
 
   environment.systemPackages = builtins.attrValues {
-    inherit
-      (pkgs)
+    inherit (pkgs)
       neovim
       vlc
       nomacs
       rsync
-      pavucontrol #gui volume control
-      librewolf #best browser
+      pavucontrol # gui volume control
+      librewolf # best browser
       chromium
-      ;
+    ;
   };
-  services.xserver.videoDrivers = ["intel"];
+  services.xserver.videoDrivers = [ "intel" ];
 
   networking.networkmanager.enable = true;
 
@@ -45,7 +46,10 @@ _: {
         useDefaultShell = true;
         uid = 1000;
         isNormalUser = true;
-        extraGroups = ["networkmanager" "audio"];
+        extraGroups = [
+          "networkmanager"
+          "audio"
+        ];
         initialHashedPassword = "";
       };
       "root" = {
@@ -62,8 +66,16 @@ _: {
   };
   services.openssh.settings.PermitRootLogin = lib.mkForce "prohibit-password";
   boot = {
-    initrd.availableKernelModules = ["xhci-pci" "ehci-pci" "ahci" "usbhid" "sd_mod" "sr_mod" "rtsx_usb_sdmmc"];
-    kernelModules = ["kvm-intel"];
+    initrd.availableKernelModules = [
+      "xhci-pci"
+      "ehci-pci"
+      "ahci"
+      "usbhid"
+      "sd_mod"
+      "sr_mod"
+      "rtsx_usb_sdmmc"
+    ];
+    kernelModules = [ "kvm-intel" ];
   };
   systemd.user.tmpfiles.users.jo.rules = [
     "L+ %h/Desktop/gimp.desktop - - - - ${pkgs.gimp}/share/applications/gimp.desktop"
@@ -79,11 +91,9 @@ _: {
 
   system.stateVersion = "23.05";
 
-  swapDevices = [
-    {
-      device = "/swapfile";
-      size = 8 * 1024;
-    }
-  ];
+  swapDevices = [ {
+    device = "/swapfile";
+    size = 8 * 1024;
+  } ];
   _file = ./main.nix;
 }

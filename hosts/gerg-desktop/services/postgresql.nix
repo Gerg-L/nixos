@@ -1,8 +1,6 @@
-_: {
-  config,
-  pkgs,
-  ...
-}: {
+_:
+{ config, pkgs, ... }:
+{
   services.postgresql = {
     enable = true;
     package = pkgs.postgresql_13;
@@ -12,12 +10,10 @@ _: {
       "miniflux"
       config.services.gitea.database.user
     ];
-    ensureUsers = [
-      {
-        name = "miniflux";
-        ensurePermissions."DATABASE miniflux" = "ALL PRIVILEGES";
-      }
-    ];
+    ensureUsers = [ {
+      name = "miniflux";
+      ensurePermissions."DATABASE miniflux" = "ALL PRIVILEGES";
+    } ];
 
     settings.unix_socket_permissions = "0770";
   };

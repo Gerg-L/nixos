@@ -1,82 +1,84 @@
-inputs @ {
-  unstable,
-  self,
-  ...
-}: let
+inputs@{ unstable, self, ... }:
+let
   inherit (unstable) lib;
 
-  listNixFilesRecursive = path:
-    builtins.filter (lib.hasSuffix "nix")
-    (lib.filesystem.listFilesRecursive path);
+  listNixFilesRecursive =
+    path:
+    builtins.filter (lib.hasSuffix "nix") (lib.filesystem.listFilesRecursive path);
 
-  importAll = path:
-    map
-    (module: (import module inputs))
-    (listNixFilesRecursive path);
+  importAll =
+    path: map (module: (import module inputs)) (listNixFilesRecursive path);
 
-  mkModules = path:
+  mkModules =
+    path:
     lib.listToAttrs (
-      map (
-        name: {
+      map
+        (name: {
           name = lib.pipe name [
             toString
             (lib.removeSuffix ".nix")
             (lib.removePrefix "${toString path}/")
           ];
           value = import name inputs;
-        }
-      )
-      (listNixFilesRecursive path)
+        })
+        (listNixFilesRecursive path)
     );
-in {
+in
+{
   inherit importAll mkModules listNixFilesRecursive;
 
-  gerg-utils = config: f:
-    lib.foldr lib.recursiveUpdate {}
-    (map (system:
-      f {
-        inherit system;
-        pkgs =
-          if config == {}
-          then unstable.legacyPackages.${system}
-          else
-            import unstable {
-              inherit system config;
-            };
-      }) ["x86_64-linux"]);
+  gerg-utils =
+    config: f:
+    lib.foldr lib.recursiveUpdate { } (
+      map
+        (
+          system:
+          f {
+            inherit system;
+            pkgs =
+              if config == { } then
+                unstable.legacyPackages.${system}
+              else
+                import unstable { inherit system config; }
+            ;
+          }
+        )
+        [ "x86_64-linux" ]
+    );
   #"x86_64-darwin" "aarch64-linux" "aarch64-darwin"
 
-  mkHosts = system: names:
+  mkHosts =
+    system: names:
     lib.genAttrs names (
       name:
       # Whats lib.nixosSystem? never heard of her
-        lib.evalModules {
-          specialArgs.modulesPath = "${unstable}/nixos/modules";
+      lib.evalModules {
+        specialArgs.modulesPath = "${unstable}/nixos/modules";
 
-          modules =
-            builtins.attrValues self.nixosModules
-            ++ importAll "${self}/hosts/${name}"
-            ++ [
-              {
-                networking.hostName = name;
-                nixpkgs.hostPlatform = system;
-              }
-            ]
-            ++ (import "${unstable}/nixos/modules/module-list.nix");
-        }
+        modules =
+          builtins.attrValues self.nixosModules
+          ++ importAll "${self}/hosts/${name}"
+          ++ [ {
+            networking.hostName = name;
+            nixpkgs.hostPlatform = system;
+          } ]
+          ++ (import "${unstable}/nixos/modules/module-list.nix")
+        ;
+      }
     );
-  mkDisko = names:
-    lib.genAttrs names (
-      name: (import "${self}/hosts/${name}/disko.nix" inputs)
-    );
+  mkDisko =
+    names:
+    lib.genAttrs names (name: (import "${self}/hosts/${name}/disko.nix" inputs));
 
-  mkPackages = path: pkgs:
+  mkPackages =
+    path: pkgs:
     builtins.listToAttrs (
-      map (module: {
-        name = lib.removeSuffix ".nix" (builtins.baseNameOf module);
-        value = pkgs.callPackage module {};
-      })
-      (listNixFilesRecursive path)
+      map
+        (module: {
+          name = lib.removeSuffix ".nix" (builtins.baseNameOf module);
+          value = pkgs.callPackage module { };
+        })
+        (listNixFilesRecursive path)
     );
   _file = ./default.nix;
 }

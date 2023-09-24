@@ -1,17 +1,17 @@
-inputs: {
-  pkgs,
-  lib,
-  ...
-}:
+inputs:
+{ pkgs, lib, ... }:
 #
 # Flake registry and $NIX_PATH pinning
 #
 let
-  alias = inputs // {nixpkgs = inputs.unstable;};
+  alias = inputs // {
+    nixpkgs = inputs.unstable;
+  };
   flakes = lib.filterAttrs (_: lib.isType "flake") alias;
-in {
+in
+{
   nix.nixPath = lib.mapAttrsToList (x: _: "${x}=flake:${x}") flakes;
-  nix.registry = lib.mapAttrs (_: flake: {inherit flake;}) flakes;
+  nix.registry = lib.mapAttrs (_: flake: { inherit flake; }) flakes;
   #
   # Ignore global registry
   #
@@ -50,15 +50,13 @@ in {
       "root"
       "@wheel"
     ];
-    allowed-users = [];
+    allowed-users = [ ];
     use-xdg-base-directories = true;
     auto-allocate-uids = true;
   };
   #
   # Fix for use-xdg-base-directories https://github.com/NixOS/nixpkgs/pull/241518
   #
-  environment.profiles = [
-    "\${XDG_STATE_HOME:-$HOME/.local/state}/nix/profile"
-  ];
+  environment.profiles = [ "\${XDG_STATE_HOME:-$HOME/.local/state}/nix/profile" ];
   _file = ./nix.nix;
 }

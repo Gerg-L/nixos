@@ -1,19 +1,20 @@
-_: {
-  config,
-  lib,
-  ...
-}: {
+_:
+{ config, lib, ... }:
+{
   sops.secrets =
-    lib.genAttrs [
-      "nixfu_ssl_cert"
-      "nixfu_ssl_key"
-      "gerg_ssl_key"
-      "gerg_ssl_cert"
-    ]
-    (_: {
-      owner = config.services.nginx.user;
-      inherit (config.services.nginx) group;
-    });
+    lib.genAttrs
+      [
+        "nixfu_ssl_cert"
+        "nixfu_ssl_key"
+        "gerg_ssl_key"
+        "gerg_ssl_cert"
+      ]
+      (
+        _: {
+          owner = config.services.nginx.user;
+          inherit (config.services.nginx) group;
+        }
+      );
 
   services.nginx = {
     enable = true;
@@ -33,7 +34,7 @@ _: {
         forceSSL = true;
         sslCertificate = config.sops.secrets.nixfu_ssl_cert.path;
         sslCertificateKey = config.sops.secrets.nixfu_ssl_key.path;
-        serverAliases = ["www.nix-fu.com"];
+        serverAliases = [ "www.nix-fu.com" ];
         globalRedirect = "github.com/Gerg-L";
       };
       "search.gerg-l.com" = {
@@ -62,6 +63,9 @@ _: {
       };
     };
   };
-  networking.firewall.allowedTCPPorts = [80 443];
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
   _file = ./nginx.nix;
 }

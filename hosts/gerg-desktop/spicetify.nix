@@ -1,17 +1,15 @@
-{spicetify-nix, ...}: {pkgs, ...}: let
+{ spicetify-nix, ... }:
+{ pkgs, ... }:
+let
   spicePkgs = spicetify-nix.legacyPackages.${pkgs.system};
-in {
-  imports = [spicetify-nix.nixosModules.default];
-  local.allowedUnfree = ["spotify"];
+in
+{
+  imports = [ spicetify-nix.nixosModules.default ];
+  local.allowedUnfree = [ "spotify" ];
   programs.spicetify = {
     enable = true;
     enabledExtensions = builtins.attrValues {
-      inherit
-        (spicePkgs.extensions)
-        adblock
-        hidePodcasts
-        shuffle
-        ;
+      inherit (spicePkgs.extensions) adblock hidePodcasts shuffle;
     };
     theme = spicePkgs.themes.Comfy;
     colorScheme = "custom";

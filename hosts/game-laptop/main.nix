@@ -1,9 +1,11 @@
-_: {
+_:
+{
   pkgs,
   config,
   lib,
   ...
-}: {
+}:
+{
   local = {
     remoteBuild.enable = true;
     DE.gnome.enable = true;
@@ -25,23 +27,19 @@ _: {
   };
   environment = {
     systemPackages = builtins.attrValues {
-      inherit
-        (pkgs)
+      inherit (pkgs)
         neovim
         heroic
         legendary-gl
         prismlauncher
-        pcmanfm #file manager
-        librewolf #best browser
+        pcmanfm # file manager
+        librewolf # best browser
         obs-studio
         vlc
         webcord
         blender
-        ;
-      inherit
-        (pkgs.libsForQt5)
-        kdenlive
-        ;
+      ;
+      inherit (pkgs.libsForQt5) kdenlive;
     };
     etc = {
       "jdks/17".source = "${pkgs.openjdk17}/bin";
@@ -61,7 +59,7 @@ _: {
         useDefaultShell = true;
         uid = 1000;
         isNormalUser = true;
-        extraGroups = ["audio"];
+        extraGroups = [ "audio" ];
         initialHashedPassword = "";
       };
       "root" = {
@@ -79,16 +77,18 @@ _: {
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
   boot = {
-    initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci"];
-    kernelModules = ["kvm-amd"];
+    initrd.availableKernelModules = [
+      "nvme"
+      "xhci_pci"
+      "ahci"
+    ];
+    kernelModules = [ "kvm-amd" ];
     kernelPackages = pkgs.linuxPackages_latest;
   };
-  swapDevices = [
-    {
-      device = "/swapfile";
-      size = 16 * 1024;
-    }
-  ];
+  swapDevices = [ {
+    device = "/swapfile";
+    size = 16 * 1024;
+  } ];
 
   system.stateVersion = "23.05";
   _file = ./main.nix;

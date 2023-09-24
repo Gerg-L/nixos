@@ -1,11 +1,14 @@
-_: {
+_:
+{
   config,
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.local.X11Programs;
-in {
+in
+{
   options.local.X11Programs = {
     sxhkd.enable = lib.mkEnableOption "";
   };
@@ -17,7 +20,7 @@ in {
         layout = "us";
         libinput.enable = true;
         xautolock.enable = false;
-        excludePackages = [pkgs.xterm];
+        excludePackages = [ pkgs.xterm ];
         desktopManager.xterm.enable = false;
       };
     }
@@ -54,18 +57,17 @@ in {
             maim -s | xclip -selection clipboard -t image/png
         '';
       in
-        lib.mkIf cfg.sxhkd.enable
-        {
-          environment.systemPackages = [
-            pkgs.maim #screenshooter
-            pkgs.brightnessctl #brightness control for laptop
-            pkgs.playerctl #music control
-            pkgs.xclip
-          ];
-          services.xserver.displayManager.sessionCommands = ''
-            ${lib.getExe' pkgs.sxhkd  "sxhkd"} -c ${configFile} &
-          '';
-        }
+      lib.mkIf cfg.sxhkd.enable {
+        environment.systemPackages = [
+          pkgs.maim # screenshooter
+          pkgs.brightnessctl # brightness control for laptop
+          pkgs.playerctl # music control
+          pkgs.xclip
+        ];
+        services.xserver.displayManager.sessionCommands = ''
+          ${lib.getExe' pkgs.sxhkd "sxhkd"} -c ${configFile} &
+        '';
+      }
     )
   ];
   _file = ./X11.nix;

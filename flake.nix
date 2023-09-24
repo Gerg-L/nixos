@@ -8,7 +8,7 @@
     nix = {
       url = "github:NixOS/nix?ref=2.17-maintenance";
       inputs.nixpkgs.follows = "unstable";
-      };
+    };
 
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
@@ -45,37 +45,29 @@
     };
   };
 
-  outputs = inputs: let
-    lib = import ./lib inputs;
-  in
-    lib.gerg-utils {
-      allowUnfree = true;
-    } (
+  outputs =
+    inputs:
+    let
+      lib = import ./lib inputs;
+    in
+    lib.gerg-utils { allowUnfree = true; } (
+      { pkgs, system, ... }:
       {
-        pkgs,
-        system,
-        ...
-      }: {
         inherit lib;
-        nixosConfigurations =
-          lib.mkHosts
-          "x86_64-linux"
-          [
-            "gerg-desktop"
-            "game-laptop"
-            "moms-laptop"
-            "iso"
-          ];
+        nixosConfigurations = lib.mkHosts "x86_64-linux" [
+          "gerg-desktop"
+          "game-laptop"
+          "moms-laptop"
+          "iso"
+        ];
 
         nixosModules = lib.mkModules ./modules;
 
-        diskoConfigurations =
-          lib.mkDisko
-          [
-            "gerg-desktop"
-            "game-laptop"
-            "moms-laptop"
-          ];
+        diskoConfigurations = lib.mkDisko [
+          "gerg-desktop"
+          "game-laptop"
+          "moms-laptop"
+        ];
         formatter.${system} = pkgs.writeShellApplication {
           name = "lint";
           runtimeInputs = [
@@ -94,11 +86,7 @@
           '';
         };
 
-        devShells.${system}.default = pkgs.mkShell {
-          packages = [
-            pkgs.sops
-          ];
-        };
+        devShells.${system}.default = pkgs.mkShell { packages = [ pkgs.sops ]; };
 
         packages.${system} = lib.mkPackages ./packages pkgs;
       }

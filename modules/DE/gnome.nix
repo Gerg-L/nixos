@@ -1,24 +1,24 @@
-_: {
+_:
+{
   config,
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   options.local.DE.gnome.enable = lib.mkEnableOption "";
 
   config = lib.mkIf config.local.DE.gnome.enable {
     environment = {
-      systemPackages = [pkgs.gnome.gnome-calculator];
+      systemPackages = [ pkgs.gnome.gnome-calculator ];
       gnome.excludePackages = builtins.attrValues {
-        inherit
-          (pkgs)
+        inherit (pkgs)
           gnome-photos
           gnome-tour
           gnome-text-editor
           gnome-online-accounts
-          ;
-        inherit
-          (pkgs.gnome)
+        ;
+        inherit (pkgs.gnome)
           gnome-weather
           gnome-shell
           gnome-disk-utility
@@ -38,7 +38,7 @@ _: {
           iagno # go game
           hitori # sudoku game
           atomix # puzzle game
-          ;
+        ;
       };
     };
 

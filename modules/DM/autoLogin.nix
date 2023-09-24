@@ -1,8 +1,6 @@
-_: {
-  config,
-  lib,
-  ...
-}: {
+_:
+{ config, lib, ... }:
+{
   options.local.DM = {
     autoLogin = lib.mkEnableOption "";
     loginUser = lib.mkOption {

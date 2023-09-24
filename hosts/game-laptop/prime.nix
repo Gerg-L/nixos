@@ -1,4 +1,6 @@
-_: {config, ...}: {
+_:
+{ config, ... }:
+{
   hardware.nvidia = {
     package = config.boot.kernelPackages.nvidiaPackages.latest;
     prime = {
@@ -11,7 +13,7 @@ _: {config, ...}: {
     modesetting.enable = true;
   };
   services.xserver = {
-    videoDrivers = ["nvidia"];
+    videoDrivers = [ "nvidia" ];
     #disable DPMS
     monitorSection = ''
       Option "DPMS" "false"

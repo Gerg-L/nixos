@@ -1,30 +1,18 @@
+{ fetch-rs, self, ... }:
 {
-  fetch-rs,
-  self,
-  ...
-}: {
   pkgs,
   config,
   lib,
   ...
-}: {
-  systemd.tmpfiles.rules = [
-    "d /tmp/neovim-page 0777 root root - -"
-  ];
+}:
+{
+  systemd.tmpfiles.rules = [ "d /tmp/neovim-page 0777 root root - -" ];
   environment = {
     systemPackages = builtins.attrValues {
-      inherit
-        (pkgs)
-        page
-        eza
-        fzf
-        ;
-      inherit
-        (fetch-rs.packages.${pkgs.system})
-        fetch-rs
-        ;
+      inherit (pkgs) page eza fzf;
+      inherit (fetch-rs.packages.${pkgs.system}) fetch-rs;
     };
-    binsh = lib.getExe pkgs.dash; #use dash for speed
+    binsh = lib.getExe pkgs.dash; # use dash for speed
     variables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
@@ -39,7 +27,8 @@
       pastebin = "curl -F 'clbin=<-' https://clbin.com";
       termbin = "nc termbin.com 9999";
       #nix stuff
-      gc-check = "nix-store --gc --print-roots | egrep -v \"^(/nix/var|/run/\w+-system|\{memory|/proc)\"";
+      gc-check = ''
+        nix-store --gc --print-roots | egrep -v "^(/nix/var|/run/w+-system|{memory|/proc)"'';
       #vim stuff
       vi = "nvim";
       vim = "nvim";
@@ -61,14 +50,16 @@
     enable = true;
     execWheelOnly = true;
     extraConfig = ''
-      Defaults env_keep += "${builtins.concatStringsSep " " (builtins.attrNames config.environment.variables)}"
+      Defaults env_keep += "${
+        builtins.concatStringsSep " " (builtins.attrNames config.environment.variables)
+      }"
       Defaults lecture = never
     '';
   };
 
   #zsh stuff
   users.defaultUserShell = pkgs.zsh;
-  environment.shells = [pkgs.zsh];
+  environment.shells = [ pkgs.zsh ];
   programs = {
     zsh = {
       enable = true;
@@ -122,7 +113,9 @@
       enable = true;
       settings = {
         add_newline = false;
-        format = "$cmd_duration$git_metrics$git_state$git_branch\n$status$directory$character";
+        format = ''
+          $cmd_duration$git_metrics$git_state$git_branch
+          $status$directory$character'';
         right_format = "$sudo$nix_shell\${custom.direnv} $time";
         continuation_prompt = "▶▶ ";
         character = {
@@ -161,7 +154,9 @@
           when = "printenv DIRENV_FILE";
         };
         time = {
-          format = "[$time]($style)\n";
+          format = ''
+            [$time]($style)
+          '';
           time_format = "%I:%M %p";
           disabled = false;
         };

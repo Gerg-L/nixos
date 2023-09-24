@@ -1,42 +1,46 @@
-_: {
+_:
+{
   lib,
   config,
   pkgs,
   ...
-}: {
+}:
+{
   options.local.allowedUnfree = lib.mkOption {
     type = lib.types.listOf lib.types.str;
-    default = [];
+    default = [ ];
   };
 
   config = {
     nixpkgs = {
       #TODO better way of doing this
-      overlays = [(self: _: {inherit (self.stdenv.hostPlatform) system;})];
+      overlays = [ (self: _: { inherit (self.stdenv.hostPlatform) system; }) ];
       config = {
         allowAliases = false;
-        allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.local.allowedUnfree;
+        allowUnfreePredicate =
+          pkg: builtins.elem (lib.getName pkg) config.local.allowedUnfree;
       };
     };
 
     programs.git.enable = true;
 
-    environment.defaultPackages = lib.mkForce (builtins.attrValues {
-      inherit
-        (pkgs)
-        bottom #view tasks
-        efibootmgr #efi editor
-        nix-output-monitor #nom nom nom nom;
-        nix-tree #view packages
-        pciutils #lspci
+    environment.defaultPackages = lib.mkForce (
+      builtins.attrValues {
+        inherit (pkgs)
+          bottom # view tasks
+          efibootmgr # efi editor
+          nix-output-monitor # nom nom nom nom;
+          nix-tree # view packages
+          pciutils # lspci
         ;
-    });
+      }
+    );
 
     #enable ssh
-    programs.mtr.enable = true; #ping and traceroute
+    programs.mtr.enable = true; # ping and traceroute
     services.openssh = {
       enable = true;
-      hostKeys = lib.mkForce [];
+      hostKeys = lib.mkForce [ ];
       settings = {
         PermitRootLogin = lib.mkDefault "no";
         PasswordAuthentication = false;

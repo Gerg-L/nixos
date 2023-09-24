@@ -1,13 +1,11 @@
+{ disko, nixos-generators, ... }:
 {
-  disko,
-  nixos-generators,
-  ...
-}: {
   lib,
   modulesPath,
   pkgs,
   ...
-}: {
+}:
+{
   ##Build wtih nix build .#nixosConfigurations.iso.config.formats.iso
   local = {
     hardware = {
