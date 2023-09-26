@@ -54,9 +54,5 @@ in
     use-xdg-base-directories = true;
     auto-allocate-uids = true;
   };
-  #
-  # Fix for use-xdg-base-directories https://github.com/NixOS/nixpkgs/pull/241518
-  #
-  environment.profiles = [ "\${XDG_STATE_HOME:-$HOME/.local/state}/nix/profile" ];
   _file = ./nix.nix;
 }
