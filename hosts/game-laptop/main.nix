@@ -38,7 +38,10 @@ _:
         vlc
         webcord
         blender
+        unzip
       ;
+
+      inherit (pkgs.wineWowPackages) unstableFull;
       inherit (pkgs.libsForQt5) kdenlive;
     };
     etc = {
