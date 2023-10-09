@@ -1,17 +1,28 @@
 inputs:
-{ pkgs, lib, ... }:
-#
-# Flake registry and $NIX_PATH pinning
-#
-let
-  alias = inputs // {
-    nixpkgs = inputs.unstable;
-  };
-  flakes = lib.filterAttrs (_: lib.isType "flake") alias;
-in
 {
-  nix.nixPath = lib.mapAttrsToList (x: _: "${x}=flake:${x}") flakes;
-  nix.registry = lib.mapAttrs (_: flake: { inherit flake; }) flakes;
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+{
+  #
+  # Flake registry and $NIX_PATH pinning
+  #
+  nix.registry = lib.pipe inputs [
+    (lib.filterAttrs (_: lib.isType "flake"))
+    (lib.mapAttrs (_: flake: { inherit flake; }))
+    (x: x // { nixpkgs.flake = inputs.unstable; })
+  ];
+
+  environment.etc =
+    lib.mapAttrs'
+      (name: value: {
+        name = "nix/path/${name}";
+        value.source = value.flake;
+      })
+      config.nix.registry;
+  nix.nixPath = [ "/etc/nix/path" ];
   #
   # Ignore global registry
   #
@@ -32,7 +43,6 @@ in
       "dynamic-derivations"
       "fetch-closure"
       "flakes"
-      "impure-derivations"
       "nix-command"
       "no-url-literals"
       "parse-toml-timestamps"
@@ -46,11 +56,8 @@ in
     # Use for testing
     #
     #allow-import-from-derivation = false;
-    trusted-users = [
-      "root"
-      "@wheel"
-    ];
-    allowed-users = [ ];
+    trusted-users = [ "root" ];
+    allowed-users = [ "@wheel" ];
     use-xdg-base-directories = true;
     auto-allocate-uids = true;
   };

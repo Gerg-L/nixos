@@ -55,15 +55,15 @@ in
       lib.evalModules {
         specialArgs.modulesPath = "${unstable}/nixos/modules";
 
-        modules =
-          builtins.attrValues self.nixosModules
-          ++ importAll "${self}/hosts/${name}"
-          ++ [ {
+        modules = builtins.concatLists [
+          (builtins.attrValues self.nixosModules)
+          (importAll "${self}/hosts/${name}")
+          (import "${unstable}/nixos/modules/module-list.nix")
+          (lib.singleton {
             networking.hostName = name;
             nixpkgs.hostPlatform = system;
-          } ]
-          ++ (import "${unstable}/nixos/modules/module-list.nix")
-        ;
+          })
+        ];
       }
     );
   mkDisko =
@@ -72,13 +72,15 @@ in
 
   mkPackages =
     path: pkgs:
-    builtins.listToAttrs (
-      map
-        (module: {
-          name = lib.removeSuffix ".nix" (builtins.baseNameOf module);
-          value = pkgs.callPackage module { };
-        })
-        (listNixFilesRecursive path)
-    );
+    lib.pipe path [
+      listNixFilesRecursive
+      (map (
+        x: {
+          name = lib.removeSuffix ".nix" (builtins.baseNameOf x);
+          value = pkgs.callPackage x { };
+        }
+      ))
+      builtins.listToAttrs
+    ];
   _file = ./default.nix;
 }

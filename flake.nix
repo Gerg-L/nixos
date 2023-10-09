@@ -6,7 +6,7 @@
     stable.url = "github:NixOS/nixpkgs?ref=nixos-23.05";
 
     nix = {
-      url = "github:NixOS/nix?ref=f89b84919c1a5c796512c50311821e7779b3678b";
+      url = "github:NixOS/nix?ref=c29b8ba142a0650d1182ca838ddc1b2d273dcd2a";
       inputs.nixpkgs.follows = "stable";
     };
 
