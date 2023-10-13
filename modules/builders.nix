@@ -19,24 +19,26 @@ _:
           ];
         };
         distributedBuilds = true;
-        buildMachines = [ {
-          hostName = "gerg-desktop";
-          protocol = "ssh-ng";
-          maxJobs = 32;
-          systems = [
-            "x86_64-linux"
-            "i686-linux"
-          ];
-          supportedFeatures = [
-            "big-parallel"
-            "nixos-test"
-            "kvm"
-            "benchmark"
-          ];
-          sshUser = "builder";
-          sshKey = "/etc/ssh/ssh_host_ed25519_key";
-          publicHostKey = config.local.keys.gerg-desktop_fingerprint;
-        } ];
+        buildMachines = [
+          {
+            hostName = "gerg-desktop";
+            protocol = "ssh-ng";
+            maxJobs = 32;
+            systems = [
+              "x86_64-linux"
+              "i686-linux"
+            ];
+            supportedFeatures = [
+              "big-parallel"
+              "nixos-test"
+              "kvm"
+              "benchmark"
+            ];
+            sshUser = "builder";
+            sshKey = "/etc/ssh/ssh_host_ed25519_key";
+            publicHostKey = config.local.keys.gerg-desktop_fingerprint;
+          }
+        ];
       };
       programs.ssh.knownHosts = {
         gerg-desktop = {
@@ -50,7 +52,7 @@ _:
       let
         keys = [
           config.local.keys.root_moms-laptop
-          config.local.keys.root_game-laptop
+          config.local.keys.root_game-desktop
         ];
       in
       lib.mkIf config.local.remoteBuild.isBuilder {

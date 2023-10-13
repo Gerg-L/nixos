@@ -77,6 +77,28 @@ _:
       };
     };
   };
+
+  hardware.nvidia = {
+    package = config.boot.kernelPackages.nvidiaPackages.latest;
+    nvidiaPersistenced = true;
+    nvidiaSettings = false;
+    modesetting.enable = true;
+  };
+  services.xserver = {
+    videoDrivers = [ "nvidia" ];
+    #disable DPMS
+    monitorSection = ''
+      Option "DPMS" "false"
+    '';
+    #disable screen blanking in total
+    serverFlagsSection = ''
+      Option "StandbyTime" "0"
+      Option "SuspendTime" "0"
+      Option "OffTime" "0"
+      Option "BlankTime" "0"
+    '';
+  };
+
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
   boot = {
@@ -88,10 +110,12 @@ _:
     kernelModules = [ "kvm-amd" ];
     kernelPackages = pkgs.linuxPackages_latest;
   };
-  swapDevices = [ {
-    device = "/swapfile";
-    size = 16 * 1024;
-  } ];
+  swapDevices = [
+    {
+      device = "/swapfile";
+      size = 16 * 1024;
+    }
+  ];
 
   system.stateVersion = "23.05";
   _file = ./main.nix;

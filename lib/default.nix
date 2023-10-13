@@ -39,8 +39,7 @@ in
               if config == { } then
                 unstable.legacyPackages.${system}
               else
-                import unstable { inherit system config; }
-            ;
+                import unstable { inherit system config; };
           }
         )
         [ "x86_64-linux" ]

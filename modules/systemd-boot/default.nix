@@ -101,8 +101,7 @@ let
         if cfg.mirroredBoots != [ ] then
           cfg.mirroredBoots
         else
-          [ efi.efiSysMountPoint ]
-      ;
+          [ efi.efiSysMountPoint ];
     in
     pkgs.writeShellScript "install-systemd-boot.sh" (
       lib.concatMapStrings
@@ -111,8 +110,7 @@ let
         '')
         installDirs
     )
-    + cfg.extraInstallCommands
-  ;
+    + cfg.extraInstallCommands;
 in
 {
   disabledModules = [
@@ -324,12 +322,14 @@ in
 
   config = mkIf cfg.enable {
     assertions =
-      [ {
-        assertion =
-          (config.boot.kernelPackages.kernel.features or { efiBootStub = true; })
-          ? efiBootStub;
-        message = "This kernel does not support the EFI boot stub";
-      } ]
+      [
+        {
+          assertion =
+            (config.boot.kernelPackages.kernel.features or { efiBootStub = true; })
+            ? efiBootStub;
+          message = "This kernel does not support the EFI boot stub";
+        }
+      ]
       ++ concatMap
         (filename: [
           {
@@ -368,8 +368,7 @@ in
                 } is invalid: files cannot be placed in the nixos/.extra-files directory";
             }
           ])
-          (builtins.attrNames cfg.extraFiles)
-    ;
+          (builtins.attrNames cfg.extraFiles);
 
     boot.loader.grub.enable = mkDefault false;
 

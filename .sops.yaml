@@ -1,7 +1,7 @@
 keys:
   - &gerg-desktop age180y8kdtdlqelayyz9mq2c7xv248rh4gdfr3amjzvdcjrz6wdaqmsj762pp
   - &moms-laptop age1vxx3qdsucv2v2slag67c4f0kwd8jtta4tue6m8d9xfl4ryrqvyusxgwl68
-  - &game-laptop age1egxes320renph0uevtmnsz4d5aw0z794c5nwrk2z6249wv2yevgqx9cf90
+  - &game-desktop age1egxes320renph0uevtmnsz4d5aw0z794c5nwrk2z6249wv2yevgqx9cf90
 creation_rules:
   - path_regex: hosts/gerg-desktop/secrets.yaml$
     key_groups:
@@ -15,6 +15,6 @@ creation_rules:
   - path_regex: hosts/game-laptop/secrets.yaml$
     key_groups:
     - age:
-      - *game-laptop
+      - *game-desktop
       - *gerg-desktop
 

@@ -56,7 +56,7 @@
         inherit lib;
         nixosConfigurations = lib.mkHosts "x86_64-linux" [
           "gerg-desktop"
-          "game-laptop"
+          "game-desktop"
           "moms-laptop"
           "iso"
         ];
@@ -65,7 +65,7 @@
 
         diskoConfigurations = lib.mkDisko [
           "gerg-desktop"
-          "game-laptop"
+          "game-desktop"
           "moms-laptop"
         ];
         formatter.${system} = pkgs.writeShellApplication {

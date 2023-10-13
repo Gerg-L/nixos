@@ -82,10 +82,12 @@ in
         extraConfig = ''
           font-size=10
         '';
-        fonts = [ {
-          name = "OverpassMono";
-          package = pkgs.nerdfonts.override { fonts = [ "Overpass" ]; };
-        } ];
+        fonts = [
+          {
+            name = "OverpassMono";
+            package = pkgs.nerdfonts.override { fonts = [ "Overpass" ]; };
+          }
+        ];
       };
       systemd.services = {
         "autovt@tty1".enable = false;

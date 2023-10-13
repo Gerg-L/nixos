@@ -22,26 +22,28 @@
         '';
         defaultSession = "none+dwm";
       };
-      windowManager.session = [ {
-        name = "dwm";
-        start = ''
-          update_time () {
-            while :
-            do
-              sleep 1
-              xsetroot -name "$(date +"%I:%M %p")"
-            done
-          }
+      windowManager.session = [
+        {
+          name = "dwm";
+          start = ''
+            update_time () {
+              while :
+              do
+                sleep 1
+                xsetroot -name "$(date +"%I:%M %p")"
+              done
+            }
 
-          dont_stop() {
-            while type dwm >/dev/null ; do dwm && continue || break ; done
-          }
+            dont_stop() {
+              while type dwm >/dev/null ; do dwm && continue || break ; done
+            }
 
-          update_time &
-          dont_stop &
-          waitPID=$!
-        '';
-      } ];
+            update_time &
+            dont_stop &
+            waitPID=$!
+          '';
+        }
+      ];
     };
     environment.systemPackages = builtins.attrValues {
       inherit (suckless.packages.${pkgs.system}) dmenu dwm st;
