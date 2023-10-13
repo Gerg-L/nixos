@@ -12,7 +12,7 @@ creation_rules:
     - age:
       - *moms-laptop
       - *gerg-desktop
-  - path_regex: hosts/game-laptop/secrets.yaml$
+  - path_regex: hosts/game-desktop/secrets.yaml$
     key_groups:
     - age:
       - *game-desktop
