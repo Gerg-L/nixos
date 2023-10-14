@@ -75,7 +75,7 @@ _:
     kernelModules = [ "kvm-intel" ];
   };
   systemd.user.tmpfiles.users.media.rules = [
-    "L+ %h/Desktop/chromium.desktop - - - - ${pkgs.chromium}/share/applications/chromium.desktop"
+    "L+ %h/Desktop/chromium-browser.desktop - - - - ${pkgs.chromium}/share/applications/chromium-browser.desktop"
     "L+ %h/Desktop/vlc.desktop - - - - ${pkgs.vlc}/share/applications/vlc.desktop"
   ];
 
