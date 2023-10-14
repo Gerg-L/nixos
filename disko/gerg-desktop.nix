@@ -1,9 +1,6 @@
-{ disko, ... }:
-{ lib, ... }:
-{
-  imports = [ disko.nixosModules.disko ];
+lib: {
 
-  disko.devices.disk =
+  disk =
     lib.genAttrs
       [
         "0E"
@@ -53,8 +50,7 @@
           };
         }
       );
-
-  disko.devices.zpool = {
+  zpool = {
     rpool = {
       type = "zpool";
       mode = "mirror";
@@ -108,5 +104,4 @@
       };
     };
   };
-  _file = ./disko.nix;
 }

@@ -1,4 +1,9 @@
-inputs@{ unstable, self, ... }:
+inputs@{
+  unstable,
+  self,
+  disko,
+  ...
+}:
 let
   inherit (unstable) lib;
 
@@ -62,12 +67,23 @@ in
             networking.hostName = name;
             nixpkgs.hostPlatform = system;
           })
+          (lib.optionals (self.diskoConfigurations ? "disko-${name}") [
+            self.diskoConfigurations."disko-${name}"
+            disko.nixosModules.default
+          ])
         ];
       }
     );
   mkDisko =
     names:
-    lib.genAttrs names (name: (import "${self}/hosts/${name}/disko.nix" inputs));
+    lib.listToAttrs (
+      map
+        (name: {
+          name = "disko-${name}";
+          value.disko.devices = import "${self}/disko/${name}.nix" lib;
+        })
+        names
+    );
 
   mkPackages =
     path: pkgs:
