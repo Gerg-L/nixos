@@ -57,7 +57,7 @@
         nixosConfigurations = lib.mkHosts "x86_64-linux" [
           "gerg-desktop"
           "game-desktop"
-          "moms-laptop"
+          "media-laptop"
           "iso"
         ];
 
@@ -66,7 +66,7 @@
         diskoConfigurations = lib.mkDisko [
           "gerg-desktop"
           "game-desktop"
-          "moms-laptop"
+          "media-laptop"
         ];
         formatter.${system} = pkgs.writeShellApplication {
           name = "lint";

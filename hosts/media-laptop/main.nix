@@ -11,7 +11,7 @@ _:
     DM = {
       lightdm.enable = true;
       autoLogin = true;
-      loginUser = "jo";
+      loginUser = "media";
     };
     DE.xfce.enable = true;
     theming = {
@@ -24,10 +24,7 @@ _:
     inherit (pkgs)
       neovim
       vlc
-      nomacs
-      rsync
       pavucontrol # gui volume control
-      librewolf # best browser
       chromium
     ;
   };
@@ -42,7 +39,7 @@ _:
   users = {
     mutableUsers = false;
     users = {
-      jo = {
+      media = {
         useDefaultShell = true;
         uid = 1000;
         isNormalUser = true;
@@ -77,16 +74,9 @@ _:
     ];
     kernelModules = [ "kvm-intel" ];
   };
-  systemd.user.tmpfiles.users.jo.rules = [
-    "L+ %h/Desktop/gimp.desktop - - - - ${pkgs.gimp}/share/applications/gimp.desktop"
-    "L+ %h/Desktop/org.gnome.Calculator.desktop - - - - ${pkgs.gnome.gnome-calculator}/share/applications/org.gnome.Calculator.desktop"
-    "L+ %h/Desktop/org.nomacs.ImageLounge.desktop - - - - ${pkgs.nomacs}/share/applications/org.nomacs.ImageLounge.desktop"
-    "L+ %h/Desktop/thunar.desktop - - - - ${pkgs.xfce.thunar}/share/applications/thunar.desktop"
-    "L+ %h/Desktop/librewolf.desktop - - - - ${pkgs.librewolf}/share/applications/librewolf.desktop"
+  systemd.user.tmpfiles.users.media.rules = [
+    "L+ %h/Desktop/chromium.desktop - - - - ${pkgs.chromium}/share/applications/chromium.desktop"
     "L+ %h/Desktop/vlc.desktop - - - - ${pkgs.vlc}/share/applications/vlc.desktop"
-    "L %h/Desktop/Downloads - - - - %h/Downloads"
-    "L %h/Desktop/Documents - - - - %h/Documents"
-    "L %h/Desktop/Pictures - - - - %h/Pictures"
   ];
 
   system.stateVersion = "23.05";

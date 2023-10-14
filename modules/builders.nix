@@ -51,7 +51,7 @@ _:
     (
       let
         keys = [
-          config.local.keys.root_moms-laptop
+          config.local.keys.root_media-laptop
           config.local.keys.root_game-desktop
         ];
       in

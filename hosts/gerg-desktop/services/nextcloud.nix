@@ -11,7 +11,6 @@ _:
     datadir = "/persist/services/nextcloud";
     hostName = "next.gerg-l.com";
     autoUpdateApps.enable = false;
-    enableBrokenCiphersForSSE = false;
     database.createLocally = true;
     config = {
       overwriteProtocol = "https";
