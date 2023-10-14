@@ -23,6 +23,8 @@ _:
     };
 
     programs.git.enable = true;
+    # Mr sandro why
+    programs.nano.enable = false;
 
     environment.defaultPackages = lib.mkForce (
       builtins.attrValues {
