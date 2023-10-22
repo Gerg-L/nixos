@@ -6,6 +6,9 @@ inputs@{
 }:
 let
   inherit (unstable) lib;
+in
+# Only good use case for rec
+rec {
 
   listNixFilesRecursive =
     path:
@@ -28,9 +31,6 @@ let
         })
         (listNixFilesRecursive path)
     );
-in
-{
-  inherit importAll mkModules listNixFilesRecursive;
 
   gerg-utils =
     config: f:
