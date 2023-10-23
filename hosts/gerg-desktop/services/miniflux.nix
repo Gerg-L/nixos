@@ -6,7 +6,7 @@ _:
   ...
 }:
 {
-  sops.secrets.minifluxenv.owner = "miniflux";
+  sops.secrets.minifluxenv = { };
 
   systemd.services = {
     miniflux = {

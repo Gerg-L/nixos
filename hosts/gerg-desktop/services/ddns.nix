@@ -17,7 +17,7 @@ _:
     startAt = "*:0/30";
 
     serviceConfig = {
-      LoadCredential = "token:${config.sops.secrets.cloudflare.path}";
+      EnvironmentFile = config.sops.secrets.cloudflare.path;
       DynamicUser = true;
     };
 
@@ -32,8 +32,6 @@ _:
         echo No Internet access... bailing early
         exit 0
       fi
-
-      AUTH="$(cat "$CREDENTIALS_DIRECTORY/token")"
 
       IP=$(grep -oP '^((?!fe80).).{22}ffee.{5}' /proc/net/if_inet6 | sed -E 's/(.{4})/\1:/g; s/.$//')
 
@@ -69,15 +67,15 @@ _:
           --url "https://api.cloudflare.com/client/v4/zones/$ZONE/dns_records/$ID" \
           --header "Authorization: Bearer $AUTH" \
           --header "Content-Type: application/json" \
-          --data "{
-          \"content\": \"$IP\",
-          \"name\": \"$RECORD\",
-          \"proxied\": $PROXY,
-          \"type\": \"AAAA\",
-          \"comment\": \"\",
-          \"tags\": [],
-          \"ttl\":  1
-        }"
+          --data '{
+          "content": "'"$IP"'",
+          "name": "'"$RECORD"'",
+          "proxied": '"$PROXY"',
+          "type": "AAAA",
+          "comment": "",
+          "tags": [],
+          "ttl":  1
+        }'
       }
 
       func "*.gerg-l.com" "8f76f071c5edbc0f947a5c5f9c5df9f8"

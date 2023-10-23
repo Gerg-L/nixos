@@ -1,18 +1,11 @@
 _:
 { config, pkgs, ... }:
 {
-  sops.secrets.searxngenv = {
-    owner = "searx";
-    group = "searx";
-  };
+  sops.secrets.searxngenv = { };
   users.users.${config.services.nginx.user}.extraGroups = [ "searx" ];
   services.searx = {
     enable = true;
     package = pkgs.searxng;
-    #Later
-    /* redisCreateLocally = true;
-       limiterSettings = {};
-    */
     runInUwsgi = true;
     uwsgiConfig = {
       socket = "/run/searx/searx.sock";
