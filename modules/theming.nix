@@ -85,7 +85,7 @@ in
         fonts = [
           {
             name = "OverpassMono";
-            package = pkgs.nerdfonts.override { fonts = [ "Overpass" ]; };
+            package = pkgs.overpass;
           }
         ];
       };
