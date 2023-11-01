@@ -1,49 +1,83 @@
 {
   inputs = {
-    #channels
-    master.url = "github:NixOS/nixpkgs";
-    unstable.url = "github:NixOS/nixpkgs?ref=nixos-unstable";
-    stable.url = "github:NixOS/nixpkgs?ref=nixos-23.05";
-
-    nix = {
-      url = "github:NixOS/nix?ref=c29b8ba142a0650d1182ca838ddc1b2d273dcd2a";
-      inputs.nixpkgs.follows = "stable";
+    #nixpkgs refs
+    master = {
+      type = "github";
+      owner = "NixOS";
+      repo = "nixpkgs";
+      ref = "master";
     };
-
+    unstable = {
+      type = "github";
+      owner = "NixOS";
+      repo = "nixpkgs";
+      ref = "nixos-unstable";
+    };
+    stable = {
+      type = "github";
+      owner = "NixOS";
+      repo = "nixpkgs";
+      ref = "nixos-23.05";
+    };
+    #nix itself
+    nix = {
+      type = "github";
+      owner = "NixOS";
+      repo = "nix";
+      ref = "e3febfcd532adb23ca05ac465a2b907d6f1a3529";
+      inputs.nixpkgs.follows = "unstable";
+    };
     nixos-generators = {
-      url = "github:nix-community/nixos-generators";
+      type = "github";
+      owner = "nix-community";
+      repo = "nixos-generators";
       inputs.nixpkgs.follows = "unstable";
     };
     sops-nix = {
-      url = "github:mic92/sops-nix";
+      type = "github";
+      owner = "mic92";
+      repo = "sops-nix";
       inputs.nixpkgs.follows = "unstable";
     };
     disko = {
-      url = "github:nix-community/disko";
+      type = "github";
+      owner = "nix-community";
+      repo = "disko";
       inputs.nixpkgs.follows = "unstable";
     };
     nixfmt = {
-      url = "github:piegamesde/nixfmt?ref=rfc101-style";
-      inputs.nixpkgs.follows = "unstable";
-    };
-    spicetify-nix = {
-      url = "github:Gerg-L/spicetify-nix";
+      type = "github";
+      owner = "piegamesde";
+      repo = "nixfmt";
+      ref = "rfc101-style";
       inputs.nixpkgs.follows = "unstable";
     };
     #my own packages
+    spicetify-nix = {
+      type = "github";
+      owner = "Gerg-L";
+      repo = "spicetify-nix";
+      inputs.nixpkgs.follows = "unstable";
+    };
     suckless = {
-      url = "github:Gerg-L/suckless";
+      type = "github";
+      owner = "Gerg-L";
+      repo = "suckless";
       inputs.nixpkgs.follows = "unstable";
     };
     nvim-flake = {
-      url = "github:Gerg-L/nvim-flake";
+      type = "github";
+      owner = "Gerg-L";
+      repo = "nvim-flake";
       inputs.nixpkgs.follows = "unstable";
     };
     fetch-rs = {
-      url = "github:Gerg-L/fetch-rs";
+      type = "github";
+      owner = "Gerg-L";
+      repo = "fetch-rs";
       inputs.nixpkgs.follows = "unstable";
     };
   };
 
-  outputs = i: import ./outputs.nix i;
+  outputs = x: import ./outputs.nix x;
 }
