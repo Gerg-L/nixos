@@ -60,7 +60,10 @@ in
         ${lib.getExe' pkgs.xorg.xrdb "xrdb"} -load /etc/xdg/Xresources
       '';
       fonts = {
-        packages = [ pkgs.overpass ];
+        packages = [
+          pkgs.overpass
+          (pkgs.nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
+        ];
         enableDefaultPackages = false;
         fontDir.enable = true;
         fontconfig = {
