@@ -58,23 +58,39 @@ rec {
     );
 
   gerg-utils =
-    config: f:
-    lib.foldr lib.recursiveUpdate { } (
+    config: outputs:
+    lib.foldAttrs lib.mergeAttrs { } (
       map
         (
           system:
-          f {
-            inherit system;
+          let
             pkgs =
               if config == { } then
                 unstable.legacyPackages.${system}
               else
                 import unstable { inherit system config; };
-          }
+          in
+          lib.mapAttrs
+            (
+              name: value:
+              if
+                builtins.elem name [
+                  "defaultPackage"
+                  "devShell"
+                  "devShells"
+                  "formatter"
+                  "legacyPackages"
+                  "packages"
+                ]
+              then
+                { ${system} = value pkgs; }
+              else
+                value
+            )
+            outputs
         )
         [ "x86_64-linux" ]
     );
-  #"x86_64-darwin" "aarch64-linux" "aarch64-darwin"
 
   mkHosts =
     system: names:
@@ -86,11 +102,11 @@ rec {
 
         modules =
           let
-            inputs' = constructInputs' system inputs;
+            importWithInputs' = map (x: import x (constructInputs' system inputs));
           in
           builtins.concatLists [
-            (map (x: import x inputs') (builtins.attrValues self.nixosModules))
-            (map (x: import x inputs') (listNixFilesRecursive "${self}/hosts/${name}"))
+            (importWithInputs' (builtins.attrValues self.nixosModules))
+            (importWithInputs' (listNixFilesRecursive "${self}/hosts/${name}"))
             (import "${unstable}/nixos/modules/module-list.nix")
             (lib.singleton {
               networking.hostName = name;

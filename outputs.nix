@@ -2,25 +2,25 @@ inputs:
 let
   lib = import ./lib inputs;
 in
-lib.gerg-utils { allowUnfree = true; } (
-  { pkgs, system, ... }:
-  {
-    inherit lib;
-    nixosConfigurations = lib.mkHosts "x86_64-linux" [
-      "gerg-desktop"
-      "game-desktop"
-      "media-laptop"
-      "iso"
-    ];
+lib.gerg-utils { } {
+  inherit lib;
+  nixosConfigurations = lib.mkHosts "x86_64-linux" [
+    "gerg-desktop"
+    "game-desktop"
+    "media-laptop"
+    "iso"
+  ];
 
-    nixosModules = lib.mkModules ./modules;
+  nixosModules = lib.mkModules ./modules;
 
-    diskoConfigurations = lib.mkDisko [
-      "gerg-desktop"
-      "game-desktop"
-      "media-laptop"
-    ];
-    formatter.${system} = pkgs.writeShellApplication {
+  diskoConfigurations = lib.mkDisko [
+    "gerg-desktop"
+    "game-desktop"
+    "media-laptop"
+  ];
+  formatter =
+    pkgs:
+    pkgs.writeShellApplication {
       name = "lint";
       runtimeInputs = [
         (pkgs.nixfmt.overrideAttrs {
@@ -38,8 +38,7 @@ lib.gerg-utils { allowUnfree = true; } (
       '';
     };
 
-    devShells.${system}.default = pkgs.mkShell { packages = [ pkgs.sops ]; };
+  devShells = pkgs: { default = pkgs.mkShell { packages = [ pkgs.sops ]; }; };
 
-    packages.${system} = lib.mkPackages ./packages pkgs;
-  }
-)
+  packages = lib.mkPackages ./packages;
+}
