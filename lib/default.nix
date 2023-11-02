@@ -10,28 +10,24 @@ in
 # Only good use case for rec
 rec {
 
+  needsSystem =
+    output:
+    builtins.elem output [
+      "defaultPackage"
+      "devShell"
+      "devShells"
+      "formatter"
+      "legacyPackages"
+      "packages"
+    ];
+
   constructInputs' =
     system: inputs:
     lib.pipe inputs [
       (lib.filterAttrs (_: lib.isType "flake"))
       (lib.mapAttrs (
         _:
-        lib.mapAttrs (
-          name: value:
-          if
-            builtins.elem name [
-              "defaultPackage"
-              "devShell"
-              "devShells"
-              "formatter"
-              "legacyPackages"
-              "packages"
-            ]
-          then
-            value.${system}
-          else
-            value
-        )
+        lib.mapAttrs (name: value: if needsSystem name then value.${system} else value)
       ))
     ];
 
@@ -71,22 +67,7 @@ rec {
                 import unstable { inherit system config; };
           in
           lib.mapAttrs
-            (
-              name: value:
-              if
-                builtins.elem name [
-                  "defaultPackage"
-                  "devShell"
-                  "devShells"
-                  "formatter"
-                  "legacyPackages"
-                  "packages"
-                ]
-              then
-                { ${system} = value pkgs; }
-              else
-                value
-            )
+            (name: value: if needsSystem name then { ${system} = value pkgs; } else value)
             outputs
         )
         [ "x86_64-linux" ]
