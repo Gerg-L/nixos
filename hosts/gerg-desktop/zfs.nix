@@ -32,15 +32,8 @@ _:
     };
     kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
     #disable hibernate and set cache max
-    kernelParams = [
-      "nohibernate"
-      "zfs.zfs_arc_max=17179869184"
-    ];
+    kernelParams = [ "zfs.zfs_arc_max=17179869184" ];
     initrd = {
-      supportedFilesystems = [
-        "zfs"
-        "vfat"
-      ];
       #module for multiple swap devices
       kernelModules = [ "dm_mod" ];
       #keyboard module for zfs password
@@ -91,11 +84,6 @@ _:
         splashImage = null;
       };
     };
-  };
-  systemd.services.zfs-mount.enable = false;
-  services.zfs = {
-    autoScrub.enable = true;
-    trim.enable = true;
   };
   _file = ./zfs.nix;
 }

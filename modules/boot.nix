@@ -16,7 +16,7 @@
     };
     boot = {
       blacklistedKernelModules = [ "pcspkr" ];
-      kernelParams = lib.mkAfter [
+      kernelParams = lib.mkBefore [
         "acpi_call"
         "pti=auto"
         "randomize_kstack_offset=on"
@@ -36,10 +36,10 @@
         "logo.nologo"
         "fbcon=nodefer"
         "bgrt_disable"
-        "systemd.show_status=false"
-        "rd.udev.log_level=3"
         "vt.global_cursor_default=0"
         "quiet"
+        "systemd.show_status=false"
+        "rd.udev.log_level=3"
         "splash"
       ];
       consoleLogLevel = 3;
