@@ -1,10 +1,5 @@
 { self, ... }:
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ config, lib, ... }:
 {
   options.local.DM.lightdm.enable = lib.mkEnableOption "";
 
@@ -13,7 +8,7 @@
       displayManager = {
         lightdm = {
           enable = true;
-          background = "${self.packages.${pkgs.system}.images}/recursion.png";
+          background = "${self.packages.images}/recursion.png";
           extraConfig = "minimum-vt=1";
           greeters.mini = {
             enable = true;

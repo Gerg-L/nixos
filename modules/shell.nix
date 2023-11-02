@@ -10,7 +10,7 @@
   environment = {
     systemPackages = builtins.attrValues {
       inherit (pkgs) page eza fzf;
-      inherit (fetch-rs.packages.${pkgs.system}) fetch-rs;
+      inherit (fetch-rs.packages) fetch-rs;
     };
     binsh = lib.getExe pkgs.dash; # use dash for speed
     variables = {
@@ -69,7 +69,7 @@
       histFile = "$HOME/.cache/zsh_history";
       interactiveShellInit = ''
           ### fzf-tab ###
-          source ${self.packages.${pkgs.system}.fzf-tab}/fzf-tab.plugin.zsh
+          source ${self.packages.fzf-tab}/fzf-tab.plugin.zsh
           ### pager ###
           man () {
             PROGRAM="''${@[-1]}"

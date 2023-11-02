@@ -74,7 +74,7 @@
           element-desktop
           webcord
         ;
-        inherit (nvim-flake.packages.${pkgs.system}) neovim;
+        inherit (nvim-flake.packages) neovim;
         inherit fmt;
         lint = pkgs.writeShellApplication {
           name = "lint";

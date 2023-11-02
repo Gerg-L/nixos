@@ -10,6 +10,31 @@ in
 # Only good use case for rec
 rec {
 
+  constructInputs' =
+    system: inputs:
+    lib.pipe inputs [
+      (lib.filterAttrs (_: lib.isType "flake"))
+      (lib.mapAttrs (
+        _:
+        lib.mapAttrs (
+          name: value:
+          if
+            builtins.elem name [
+              "defaultPackage"
+              "devShell"
+              "devShells"
+              "formatter"
+              "legacyPackages"
+              "packages"
+            ]
+          then
+            value.${system}
+          else
+            value
+        )
+      ))
+    ];
+
   listNixFilesRecursive =
     path:
     builtins.filter (lib.hasSuffix "nix") (lib.filesystem.listFilesRecursive path);
@@ -27,7 +52,7 @@ rec {
             (lib.removeSuffix ".nix")
             (lib.removePrefix "${toString path}/")
           ];
-          value = import name inputs;
+          value = name;
         })
         (listNixFilesRecursive path)
     );
@@ -59,19 +84,23 @@ rec {
       lib.evalModules {
         specialArgs.modulesPath = "${unstable}/nixos/modules";
 
-        modules = builtins.concatLists [
-          (builtins.attrValues self.nixosModules)
-          (importAll "${self}/hosts/${name}")
-          (import "${unstable}/nixos/modules/module-list.nix")
-          (lib.singleton {
-            networking.hostName = name;
-            nixpkgs.hostPlatform = system;
-          })
-          (lib.optionals (self.diskoConfigurations ? "disko-${name}") [
-            self.diskoConfigurations."disko-${name}"
-            disko.nixosModules.default
-          ])
-        ];
+        modules =
+          let
+            inputs' = constructInputs' system inputs;
+          in
+          builtins.concatLists [
+            (map (x: import x inputs') (builtins.attrValues self.nixosModules))
+            (map (x: import x inputs') (listNixFilesRecursive "${self}/hosts/${name}"))
+            (import "${unstable}/nixos/modules/module-list.nix")
+            (lib.singleton {
+              networking.hostName = name;
+              nixpkgs.hostPlatform = system;
+            })
+            (lib.optionals (self.diskoConfigurations ? "disko-${name}") [
+              self.diskoConfigurations."disko-${name}"
+              disko.nixosModules.default
+            ])
+          ];
       }
     );
   mkDisko =

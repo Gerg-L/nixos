@@ -1,7 +1,6 @@
 { spicetify-nix, ... }:
-{ pkgs, ... }:
 let
-  spicePkgs = spicetify-nix.legacyPackages.${pkgs.system};
+  spicePkgs = spicetify-nix.legacyPackages;
 in
 {
   imports = [ spicetify-nix.nixosModules.default ];

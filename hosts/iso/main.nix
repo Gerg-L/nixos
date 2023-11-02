@@ -26,7 +26,7 @@
     noXlibs = lib.mkOverride 500 false;
     systemPackages = [
       pkgs.neovim
-      disko.packages.${pkgs.system}.default
+      disko.packages.default
     ];
   };
   documentation = {

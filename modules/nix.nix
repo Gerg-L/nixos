@@ -1,10 +1,5 @@
 inputs:
-{
-  pkgs,
-  lib,
-  config,
-  ...
-}:
+{ lib, config, ... }:
 {
   #
   # Flake registry and $NIX_PATH pinning
@@ -30,7 +25,7 @@ inputs:
   #
   # Use nix directly from master
   #
-  nix.package = inputs.nix.packages.${pkgs.system}.default;
+  nix.package = inputs.nix.packages.default;
   #
   # Other nix settings
   #

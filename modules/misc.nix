@@ -13,8 +13,6 @@ _:
 
   config = {
     nixpkgs = {
-      #TODO better way of doing this
-      overlays = [ (self: _: { inherit (self.stdenv.hostPlatform) system; }) ];
       config = {
         allowAliases = false;
         allowUnfreePredicate =
