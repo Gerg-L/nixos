@@ -54,20 +54,13 @@ _:
         '';
       };
     };
-    plymouth.enable = false;
     loader = {
       generationsDir.copyKernels = true;
       #override default
-      systemd-boot = {
-        enable = true;
-        mirroredBoots = [
-          "/efi0E"
-          "/efi22"
-        ];
-      };
+      systemd-boot.enable = false;
       efi.canTouchEfiVariables = false;
       grub = {
-        enable = false;
+        enable = true;
         copyKernels = true;
         efiInstallAsRemovable = true;
         efiSupport = true;
