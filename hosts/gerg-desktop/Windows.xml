@@ -177,10 +177,19 @@
       <source dev='/dev/input/by-id/usb-Logitech_G502_HERO_Gaming_Mouse_1974396F3638-event-mouse'/>
     </input>
     <input type='evdev'>
-      <source dev='/dev/input/by-id/usb-Logitech_Gaming_Keyboard_G610_067A397A3637-event-kbd' grab='all' repeat='on'/>
+      <source dev='/dev/input/by-id/usb-Logitech_G502_HERO_Gaming_Mouse_1974396F3638-if01-event-kbd'/>
     </input>
     <input type='evdev'>
-      <source dev='/dev/input/by-id/usb-Logitech_G502_HERO_Gaming_Mouse_1974396F3638-if01-event-kbd'/>
+      <source dev='/dev/input/by-id/usb-Keychron_Keychron_V6-event-kbd' grab='all' repeat='on'/>
+    </input>
+    <input type='evdev'>
+      <source dev='/dev/input/by-id/usb-Keychron_Keychron_V6-event-if02'/>
+    </input>
+    <input type='evdev'>
+      <source dev='/dev/input/by-id/usb-Keychron_Keychron_V6-if02-event-kbd'/>
+    </input>
+    <input type='evdev'>
+      <source dev='/dev/input/by-id/usb-Keychron_Keychron_V6-if02-event-mouse'/>
     </input>
     <input type='mouse' bus='ps2'/>
     <input type='keyboard' bus='ps2'/>
@@ -208,8 +217,6 @@
     <qemu:arg value='-device'/>
     <qemu:arg value='hda-duplex,audiodev=audio0'/>
     <qemu:env name='PIPEWIRE_RUNTIME_DIR' value='/run/user/1000'/>
-    <qemu:env name='PIPEWIRE_LATENCY' value='512/48000'/>
-    <qemu:env name='LD_LIBRARY_PATH' value='$LD_LIBRARY_PATH:/run/current-system/sw/lib/pipewire'/>
   </qemu:commandline>
 </domain>
 

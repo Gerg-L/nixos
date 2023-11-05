@@ -14,9 +14,10 @@
       enable = true;
       displayManager = {
         sessionCommands = ''
-          ${lib.getExe pkgs.feh} --bg-center "${self.packages.images}/recursion.png"
-          ${lib.getExe pkgs.numlockx}
-          ${lib.getExe pkgs.picom} &
+          feh --bg-center "${self.packages.images}/recursion.png"
+          numlockx
+          picom &
+          sxhkd &
         '';
         defaultSession = "none+dwm";
       };
@@ -43,8 +44,56 @@
         }
       ];
     };
-    environment.systemPackages = builtins.attrValues {
-      inherit (suckless.packages) dmenu dwm st;
+    environment = {
+      systemPackages = builtins.attrValues {
+        inherit (suckless.packages) dmenu dwm st;
+        inherit (pkgs)
+          maim
+          playerctl
+          xclip
+          alsa-utils
+          feh
+          numlockx
+          picom
+        ;
+        sxhkd = pkgs.symlinkJoin {
+          name = "sxhkd";
+          nativeBuildInputs = [ pkgs.makeBinaryWrapper ];
+          paths = [ pkgs.sxhkd ];
+          postBuild = ''
+            wrapProgram $out/bin/sxhkd \
+              --add-flags "-c /etc/sxhkd/sxhkdrc"
+          '';
+        };
+      };
+      etc."sxhkd/sxhkdrc".text = ''
+        XF86AudioPlay
+          playerctl play-pause
+        XF86AudioPause
+          playerctl play-pause
+        XF86AudioStop
+          playerctl stop
+        XF86AudioNext
+          playerctl next
+        XF86AudioPrev
+          playerctl previous
+        XF86AudioRaiseVolume
+          amixer sset Master 1%+
+        XF86AudioLowerVolume
+          amixer sset Master 1%-
+        XF86AudioMute
+          amixer sset Master toggle
+        Print
+          maim $HOME/Screenshots/$(date +%Y-%m-%d_%H-%m-%s).jpg
+        Print + shift
+          maim | xclip -selection clipboard -t image/png
+        super + Print
+          maim -s $HOME/Screenshots/$(date +%Y-%m-%d_%H-%m-%s).jpg
+        super + Print + shift
+          maim -s | xclip -selection clipboard -t image/png
+        super + ctrl + r
+          pkill -usr1 -x sxhkd
+      '';
     };
   };
   _file = ./dwm.nix;

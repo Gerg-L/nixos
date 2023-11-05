@@ -145,11 +145,9 @@ in
 
   '';
 
-  systemd.tmpfiles.settings."vfio" = {
-    "/etc/Xorg/active.conf"."L".argument = "/etc/Xorg/2_mon.conf";
-    "/var/lib/libvirt/qemu/Windows.xml"."L+".argument = toString ./Windows.xml;
-    "/var/lib/libvirt/hooks/qemu"."L+".argument = lib.getExe (
-      pkgs.writeShellApplication {
+  systemd.tmpfiles.rules =
+    let
+      qemuHook = pkgs.writeShellApplication {
         name = "qemu-hook";
 
         runtimeInputs = [
@@ -157,11 +155,12 @@ in
           pkgs.systemd
           pkgs.kmod
         ];
+
         text = ''
           GUEST_NAME="$1"
           OPERATION="$2"
 
-          if [ "$GUEST_NAME" == "Windows" ]; then
+          if [ "$GUEST_NAME" != "Windows" ]; then
             exit 0
           fi
 
@@ -190,9 +189,14 @@ in
             rm /etc/Xorg/ONE_MONITOR
             systemctl start display-manager.service
           fi
+
         '';
-      }
-    );
-  };
+      };
+    in
+    [
+      "L  /etc/Xorg/active.conf - - - - /etc/Xorg/2_mon.conf"
+      "L+ /var/lib/libvirt/hooks/qemu - - - - ${lib.getExe qemuHook}"
+      "L+ /var/lib/libvirt/qemu/Windows.xml - - - - ${./Windows.xml}"
+    ];
   _file = ./vfio.nix;
 }

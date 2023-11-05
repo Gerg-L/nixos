@@ -3,9 +3,6 @@
 {
   local = {
     remoteBuild.isBuilder = true;
-    X11Programs = {
-      sxhkd.enable = true;
-    };
     DE.dwm.enable = true;
     DM = {
       lightdm.enable = true;
@@ -73,6 +70,9 @@
           nix-index
           element-desktop
           webcord
+          # QMK configuration
+          via
+          qmk
         ;
         inherit (nvim-flake.packages) neovim;
         inherit fmt;
@@ -103,7 +103,11 @@
     };
   };
 
-  services.udev.packages = [ pkgs.android-udev-rules ];
+  services.udev.packages = [
+    pkgs.android-udev-rules
+    pkgs.via
+    pkgs.qmk-udev-rules
+  ];
   programs.adb.enable = true;
 
   networking = {
