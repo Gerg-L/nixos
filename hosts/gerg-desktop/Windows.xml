@@ -180,16 +180,16 @@
       <source dev='/dev/input/by-id/usb-Logitech_G502_HERO_Gaming_Mouse_1974396F3638-if01-event-kbd'/>
     </input>
     <input type='evdev'>
-      <source dev='/dev/input/by-id/usb-Keychron_Keychron_V6-event-kbd' grab='all' repeat='on'/>
+      <source dev='/dev/input/by-id/usb-Keychron_Keychron_V6-event-kbd'/>
     </input>
     <input type='evdev'>
       <source dev='/dev/input/by-id/usb-Keychron_Keychron_V6-event-if02'/>
     </input>
     <input type='evdev'>
-      <source dev='/dev/input/by-id/usb-Keychron_Keychron_V6-if02-event-kbd'/>
+      <source dev='/dev/input/by-id/usb-Keychron_Keychron_V6-if02-event-mouse'/>
     </input>
     <input type='evdev'>
-      <source dev='/dev/input/by-id/usb-Keychron_Keychron_V6-if02-event-mouse'/>
+      <source dev='/dev/input/by-id/usb-Keychron_Keychron_V6-if02-event-kbd' grab='all' repeat='on'/>
     </input>
     <input type='mouse' bus='ps2'/>
     <input type='keyboard' bus='ps2'/>
