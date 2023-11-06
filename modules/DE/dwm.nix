@@ -9,15 +9,38 @@
   options.local.DE.dwm.enable = lib.mkEnableOption "";
 
   config = lib.mkIf config.local.DE.dwm.enable {
+    systemd.user.services = {
+      sxhkd = {
+        path = [ pkgs.sxhkd ];
+        script = "sxhkd -c /etc/sxhkd/sxhkdrc";
+        serviceConfig = {
+          Restart = "always";
+          RestartSec = 2;
+          ExecReload = "pkill -usr1 -x $MAINPID";
+        };
+      };
+
+      picom = {
+        path = [ pkgs.picom ];
+        script = "picom";
+        serviceConfig = {
+          Restart = "always";
+          RestartSec = 2;
+          ExecReload = "pkill -usr1 -x $MAINPID";
+        };
+      };
+    };
+
     services.gvfs.enable = true;
+
     services.xserver = {
       enable = true;
       displayManager = {
         sessionCommands = ''
           feh --bg-center "${self.packages.images}/recursion.png"
           numlockx
-          picom &
-          sxhkd &
+          systemctl --user start sxhkd
+          systemctl --user start picom
         '';
         defaultSession = "none+dwm";
       };
@@ -51,20 +74,11 @@
           maim
           playerctl
           xclip
-          alsa-utils
           feh
           numlockx
           picom
+          sxhkd
         ;
-        sxhkd = pkgs.symlinkJoin {
-          name = "sxhkd";
-          nativeBuildInputs = [ pkgs.makeBinaryWrapper ];
-          paths = [ pkgs.sxhkd ];
-          postBuild = ''
-            wrapProgram $out/bin/sxhkd \
-              --add-flags "-c /etc/sxhkd/sxhkdrc"
-          '';
-        };
       };
       etc."sxhkd/sxhkdrc".text = ''
         XF86AudioPlay
