@@ -1,4 +1,4 @@
-{ fetch-rs, self, ... }:
+{ fetch-rs, ... }:
 {
   pkgs,
   config,
@@ -68,7 +68,7 @@
       histFile = "$HOME/.cache/zsh_history";
       interactiveShellInit = ''
           ### fzf-tab ###
-          source ${self.packages.fzf-tab}/fzf-tab.plugin.zsh
+          source ${pkgs.zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh
           ### pager ###
           man () {
             PROGRAM="''${@[-1]}"
