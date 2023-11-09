@@ -92,11 +92,11 @@
         XF86AudioPrev
           playerctl previous
         XF86AudioRaiseVolume
-          amixer sset Master 1%+
+          wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+
         XF86AudioLowerVolume
-          amixer sset Master 1%-
+          wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-
         XF86AudioMute
-          amixer sset Master toggle
+          wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
         Print
           maim $HOME/Screenshots/$(date +%Y-%m-%d_%H-%m-%s).jpg
         Print + shift
