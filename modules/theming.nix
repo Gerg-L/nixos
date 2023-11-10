@@ -26,7 +26,7 @@ in
             [Settings]
             gtk-cursor-theme-name=Quintom_Ink
             gtk-cursor-theme-size=16
-            gtk-font-name = "Overpass 10"
+            gtk-font-name=Overpass 10
             gtk-icon-theme-name=Flat-Remix-Blue-Dark
             gtk-theme-name=Flat-Remix-GTK-Blue-Darkest
           '';
@@ -34,7 +34,7 @@ in
             [Settings]
             gtk-cursor-theme-name=Quintom_Ink
             gtk-cursor-theme-size=16
-            gtk-font-name = "Overpass 10"
+            gtk-font-name=Overpass 10
             gtk-icon-theme-name=Flat-Remix-Blue-Dark
             gtk-theme-name=Flat-Remix-GTK-Blue-Darkest
           '';
