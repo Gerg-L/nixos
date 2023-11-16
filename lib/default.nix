@@ -25,18 +25,13 @@ rec {
     system: inputs:
     lib.pipe inputs [
       (lib.filterAttrs (_: lib.isType "flake"))
-      (lib.mapAttrs (
-        _:
-        lib.mapAttrs (name: value: if needsSystem name then value.${system} else value)
-      ))
+      (lib.mapAttrs (_: lib.mapAttrs (name: value: if needsSystem name then value.${system} else value)))
     ];
 
   listNixFilesRecursive =
-    path:
-    builtins.filter (lib.hasSuffix "nix") (lib.filesystem.listFilesRecursive path);
+    path: builtins.filter (lib.hasSuffix ".nix") (lib.filesystem.listFilesRecursive path);
 
-  importAll =
-    path: map (module: (import module inputs)) (listNixFilesRecursive path);
+  importAll = path: map (module: (import module inputs)) (listNixFilesRecursive path);
 
   mkModules =
     path:
@@ -66,9 +61,7 @@ rec {
               else
                 import unstable { inherit system config; };
           in
-          lib.mapAttrs
-            (name: value: if needsSystem name then { ${system} = value pkgs; } else value)
-            outputs
+          lib.mapAttrs (name: value: if needsSystem name then { ${system} = value pkgs; } else value) outputs
         )
         [ "x86_64-linux" ]
     );
