@@ -29,7 +29,8 @@ rec {
     ];
 
   listNixFilesRecursive =
-    path: builtins.filter (lib.hasSuffix ".nix") (lib.filesystem.listFilesRecursive path);
+    path:
+    builtins.filter (lib.hasSuffix ".nix") (map toString (lib.filesystem.listFilesRecursive path));
 
   importAll = path: map (module: (import module inputs)) (listNixFilesRecursive path);
 
