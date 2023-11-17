@@ -27,8 +27,7 @@
       pastebin = "curl -F 'clbin=<-' https://clbin.com";
       termbin = "nc termbin.com 9999";
       #nix stuff
-      gc-check = ''
-        nix-store --gc --print-roots | egrep -v "^(/nix/var|/run/w+-system|{memory|/proc)"'';
+      gc-check = ''nix-store --gc --print-roots | egrep -v "^(/nix/var|/run/w+-system|{memory|/proc)"'';
       #vim stuff
       vi = "nvim";
       vim = "nvim";

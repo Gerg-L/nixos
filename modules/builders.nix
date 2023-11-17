@@ -14,9 +14,7 @@ _:
           builders-use-substitutes = true;
           max-jobs = 0;
           substituters = [ "ssh-ng://nix-ssh@gerg-desktop" ];
-          trusted-public-keys = [
-            "gerg-desktop:6p1+h6jQnb1MOt3ra3PlQpfgEEF4zRrQWiEuAqcjBj8="
-          ];
+          trusted-public-keys = [ "gerg-desktop:6p1+h6jQnb1MOt3ra3PlQpfgEEF4zRrQWiEuAqcjBj8=" ];
         };
         distributedBuilds = true;
         buildMachines = [

@@ -14,9 +14,7 @@ let
         pkgs.xorg.fontadobe100dpi
         pkgs.xorg.fontadobe75dpi
       ];
-      fontpath =
-        lib.optionalString (xcfg.fontPath != null)
-          ''FontPath "${xcfg.fontPath}"'';
+      fontpath = lib.optionalString (xcfg.fontPath != null) ''FontPath "${xcfg.fontPath}"'';
     in
     ''
       echo 'Section "Files"' >> $out
@@ -135,9 +133,7 @@ in
     "libvirtd"
   ];
 
-  services.xserver.displayManager.xserverArgs = lib.mkAfter [
-    "-config /etc/Xorg/active.conf"
-  ];
+  services.xserver.displayManager.xserverArgs = lib.mkAfter [ "-config /etc/Xorg/active.conf" ];
   services.xserver.displayManager.sessionCommands = lib.mkBefore ''
     if ! [ -e "/etc/Xorg/ONE_MONITOR" ] ; then
       ${lib.getExe cfg_monitors}

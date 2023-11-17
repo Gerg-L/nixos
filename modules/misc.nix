@@ -15,8 +15,7 @@ _:
     nixpkgs = {
       config = {
         allowAliases = false;
-        allowUnfreePredicate =
-          pkg: builtins.elem (lib.getName pkg) config.local.allowedUnfree;
+        allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.local.allowedUnfree;
       };
     };
 
