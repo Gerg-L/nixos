@@ -13,7 +13,7 @@ _:
     ensureUsers = [
       {
         name = "miniflux";
-        ensurePermissions."DATABASE miniflux" = "ALL PRIVILEGES";
+        ensureDBOwnership = true;
       }
     ];
 

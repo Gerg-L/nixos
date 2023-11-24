@@ -150,6 +150,22 @@
         "type": "github"
       }
     },
+    "libgit2": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1700492800,
+        "narHash": "sha256-bGNcbA6AMUWhpuagnVWR1ZBdbUcZVdZtbMaRxY5JiCU=",
+        "owner": "libgit2",
+        "repo": "libgit2",
+        "rev": "d9475611fec95cacec30fbd2c334b270e5265d3b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "libgit2",
+        "repo": "libgit2",
+        "type": "github"
+      }
+    },
     "lowdown-src": {
       "flake": false,
       "locked": {
@@ -201,6 +217,7 @@
     "nix": {
       "inputs": {
         "flake-compat": "flake-compat",
+        "libgit2": "libgit2",
         "lowdown-src": "lowdown-src",
         "nixpkgs": [
           "unstable"
@@ -208,16 +225,16 @@
         "nixpkgs-regression": "nixpkgs-regression"
       },
       "locked": {
-        "lastModified": 1699217591,
-        "narHash": "sha256-pP9Pifra+CpVZaGSxd9Dr9T3Gcc4p0ViuS1m+0JJysM=",
+        "lastModified": 1700674072,
+        "narHash": "sha256-N9zVo/TzsHaqwblbU/dI8kGZzR70epTBQOZL6qGmFZo=",
         "owner": "NixOS",
         "repo": "nix",
-        "rev": "1a14ce83811038b05b653df461a944ef0847d14d",
+        "rev": "030fb86dd103ded1a6ce8ad2718a8cdb79fe6f06",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "1a14ce83811038b05b653df461a944ef0847d14d",
+        "ref": "030fb86dd103ded1a6ce8ad2718a8cdb79fe6f06",
         "repo": "nix",
         "type": "github"
       }

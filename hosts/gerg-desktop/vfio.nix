@@ -116,7 +116,6 @@ in
   };
   environment = {
     systemPackages = [
-      pkgs.virt-manager
       pkgs.dmidecode
       cfg_monitors
     ];
@@ -126,7 +125,7 @@ in
     };
   };
 
-  programs.dconf.enable = true;
+  programs.virt-manager.enable = true;
 
   users.users.gerg.extraGroups = [
     "kvm"
