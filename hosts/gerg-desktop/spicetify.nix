@@ -10,7 +10,7 @@ in
     enabledExtensions = builtins.attrValues {
       inherit (spicePkgs.extensions) adblock hidePodcasts shuffle;
     };
-    theme = spicePkgs.themes.Dribbblish;
+    theme = spicePkgs.themes.dribbblish;
     colorScheme = "custom";
     customColorScheme = {
       text = "f8f8f8";
