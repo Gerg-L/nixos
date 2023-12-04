@@ -1,7 +1,7 @@
 _:
-{ lib, ... }:
+{lib, ...}:
 {
-  options.local.keys = lib.mkOption { };
+  options.local.keys = lib.mkOption {};
 
   config.local.keys = {
     gerg_gerg-phone = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDU6BnoHIgMLgZVGuvi03J9l5Z1yP1P5Q8QPyjRHyi77";

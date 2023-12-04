@@ -13,7 +13,7 @@ runCommand "images"
       url = "https://raw.githubusercontent.com/NixOS/nixos-artwork/376ed4ba8dc2e611b7e8a62fdc680967ead5bd87/logo/nix-snowflake.svg";
       sha256 = "sha256-SCuQlSPB14GFTq4XvExJ0QEuK2VIbrd5YYKHLRG/q5I=";
     };
-    buildInputs = [ imagemagick ];
+    buildInputs = [imagemagick];
   }
   ''
     mkdir -p $out

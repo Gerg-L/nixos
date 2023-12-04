@@ -1,12 +1,12 @@
 _:
-{ config, ... }:
+{config, ...}:
 {
   users.users = {
     ${config.services.gitea.user} = {
-      openssh.authorizedKeys.keys = [ config.local.keys.gerg_gerg-desktop ];
-      extraGroups = [ "postgres" ];
+      openssh.authorizedKeys.keys = [config.local.keys.gerg_gerg-desktop];
+      extraGroups = ["postgres"];
     };
-    ${config.services.nginx.user}.extraGroups = [ config.services.gitea.group ];
+    ${config.services.nginx.user}.extraGroups = [config.services.gitea.group];
   };
   services.gitea = {
     enable = true;

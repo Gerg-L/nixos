@@ -1,8 +1,8 @@
 _:
-{ config, pkgs, ... }:
+{config, pkgs, ...}:
 {
-  sops.secrets.searxngenv = { };
-  users.users.${config.services.nginx.user}.extraGroups = [ "searx" ];
+  sops.secrets.searxngenv = {};
+  users.users.${config.services.nginx.user}.extraGroups = ["searx"];
   services.searx = {
     enable = true;
     package = pkgs.searxng;

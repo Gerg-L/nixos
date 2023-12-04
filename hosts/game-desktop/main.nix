@@ -39,7 +39,7 @@ _:
         webcord
         blender
         unzip
-      ;
+        ;
 
       inherit (pkgs.wineWowPackages) unstableFull;
       inherit (pkgs.libsForQt5) kdenlive;
@@ -62,7 +62,7 @@ _:
         useDefaultShell = true;
         uid = 1000;
         isNormalUser = true;
-        extraGroups = [ "audio" ];
+        extraGroups = ["audio"];
         initialHashedPassword = "";
       };
       "root" = {
@@ -85,7 +85,7 @@ _:
     modesetting.enable = true;
   };
   services.xserver = {
-    videoDrivers = [ "nvidia" ];
+    videoDrivers = ["nvidia"];
     #disable DPMS
     monitorSection = ''
       Option "DPMS" "false"
@@ -107,7 +107,7 @@ _:
       "xhci_pci"
       "ahci"
     ];
-    kernelModules = [ "kvm-amd" ];
+    kernelModules = ["kvm-amd"];
     kernelPackages = pkgs.linuxPackages_latest;
   };
   swapDevices = [

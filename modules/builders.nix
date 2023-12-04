@@ -1,5 +1,5 @@
 _:
-{ config, lib, ... }:
+{config, lib, ...}:
 {
   options.local.remoteBuild = {
     enable = lib.mkEnableOption "";
@@ -13,8 +13,8 @@ _:
           keep-derivations = false;
           builders-use-substitutes = true;
           max-jobs = 0;
-          substituters = [ "ssh-ng://nix-ssh@gerg-desktop" ];
-          trusted-public-keys = [ "gerg-desktop:6p1+h6jQnb1MOt3ra3PlQpfgEEF4zRrQWiEuAqcjBj8=" ];
+          substituters = ["ssh-ng://nix-ssh@gerg-desktop"];
+          trusted-public-keys = ["gerg-desktop:6p1+h6jQnb1MOt3ra3PlQpfgEEF4zRrQWiEuAqcjBj8="];
         };
         distributedBuilds = true;
         buildMachines = [
@@ -40,7 +40,7 @@ _:
       };
       programs.ssh.knownHosts = {
         gerg-desktop = {
-          extraHostNames = [ "gerg-desktop.lan" ];
+          extraHostNames = ["gerg-desktop.lan"];
           publicKey = config.local.keys.root_gerg-desktop;
         };
       };
@@ -54,9 +54,9 @@ _:
         ];
       in
       lib.mkIf config.local.remoteBuild.isBuilder {
-        sops.secrets.store_key = { };
+        sops.secrets.store_key = {};
         users = {
-          groups.builder = { };
+          groups.builder = {};
           users.builder = {
             createHome = false;
             isSystemUser = true;

@@ -1,9 +1,9 @@
 _:
-{ pkgs, config, ... }:
+{pkgs, config, ...}:
 {
   sops.secrets.nextcloud.owner = "nextcloud";
 
-  users.users.nextcloud.extraGroups = [ "postgres" ];
+  users.users.nextcloud.extraGroups = ["postgres"];
 
   services.nextcloud = {
     enable = true;

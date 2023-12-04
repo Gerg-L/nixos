@@ -1,7 +1,7 @@
 _:
-{ config, pkgs, ... }:
+{config, pkgs, ...}:
 {
-  sops.secrets.cloudflare = { };
+  sops.secrets.cloudflare = {};
 
   systemd.services.ddns = {
     reloadIfChanged = false;
@@ -11,9 +11,9 @@ _:
       Type = "oneshot";
       RemainAfterExit = true;
     };
-    wantedBy = [ "multi-user.target" ];
-    wants = [ "network-online.target" ];
-    after = [ "network-online.target" ];
+    wantedBy = ["multi-user.target"];
+    wants = ["network-online.target"];
+    after = ["network-online.target"];
     startAt = "*:0/30";
 
     serviceConfig = {

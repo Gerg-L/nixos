@@ -26,9 +26,9 @@ _:
       vlc
       pavucontrol # gui volume control
       chromium
-    ;
+      ;
   };
-  services.xserver.videoDrivers = [ "intel" ];
+  services.xserver.videoDrivers = ["intel"];
 
   networking.networkmanager.enable = true;
 
@@ -72,7 +72,7 @@ _:
       "sr_mod"
       "rtsx_usb_sdmmc"
     ];
-    kernelModules = [ "kvm-intel" ];
+    kernelModules = ["kvm-intel"];
   };
   systemd.user.tmpfiles.users.media.rules = [
     "L+ %h/Desktop/chromium-browser.desktop - - - - ${pkgs.chromium}/share/applications/chromium-browser.desktop"

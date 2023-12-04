@@ -23,12 +23,12 @@ runCommandNoCC "papermc"
         hash = "sha256-HQpc3MOXa1wkXqgm9ciQj04FUIyuupnYiu+2RZ/sXE4=";
       };
 
-    nativeBuildInputs = [ makeBinaryWrapper ];
+    nativeBuildInputs = [makeBinaryWrapper];
 
     meta = {
       description = "High-performance Minecraft Server";
       homepage = "https://papermc.io/";
-      sourceProvenance = with lib.sourceTypes; [ binaryBytecode ];
+      sourceProvenance = with lib.sourceTypes; [binaryBytecode];
       license = lib.licenses.gpl3Only;
       platforms = lib.platforms.unix;
       maintainers = with lib.maintainers; [

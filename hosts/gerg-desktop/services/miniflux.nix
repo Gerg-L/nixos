@@ -6,13 +6,13 @@ _:
   ...
 }:
 {
-  sops.secrets.minifluxenv = { };
+  sops.secrets.minifluxenv = {};
 
   systemd.services = {
     miniflux = {
       description = "Miniflux service";
-      wantedBy = [ "multi-user.target" ];
-      requires = [ "miniflux-dbsetup.service" ];
+      wantedBy = ["multi-user.target"];
+      requires = ["miniflux-dbsetup.service"];
       after = [
         "network.target"
         "postgresql.service"
@@ -26,8 +26,8 @@ _:
         RuntimeDirectoryMode = "0770";
         EnvironmentFile = config.sops.secrets.minifluxenv.path;
         # Hardening
-        CapabilityBoundingSet = [ "" ];
-        DeviceAllow = [ "" ];
+        CapabilityBoundingSet = [""];
+        DeviceAllow = [""];
         LockPersonality = true;
         MemoryDenyWriteExecute = true;
         PrivateDevices = true;
@@ -67,15 +67,13 @@ _:
     };
     miniflux-dbsetup = {
       description = "Miniflux database setup";
-      requires = [ "postgresql.service" ];
+      requires = ["postgresql.service"];
       after = [
         "network.target"
         "postgresql.service"
       ];
       script = ''
-        ${
-          lib.getExe' config.services.postgresql.package "psql"
-        } "miniflux" -c "CREATE EXTENSION IF NOT EXISTS hstore"
+        ${lib.getExe' config.services.postgresql.package "psql"} "miniflux" -c "CREATE EXTENSION IF NOT EXISTS hstore"
       '';
       serviceConfig = {
         Type = "oneshot";
@@ -90,11 +88,11 @@ _:
     users = {
       miniflux = {
         group = "miniflux";
-        extraGroups = [ "postgres" ];
+        extraGroups = ["postgres"];
         isSystemUser = true;
         uid = 377;
       };
-      ${config.services.nginx.user}.extraGroups = [ "miniflux" ];
+      ${config.services.nginx.user}.extraGroups = ["miniflux"];
     };
   };
 }

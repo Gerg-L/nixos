@@ -1,4 +1,4 @@
-{ self, ... }:
+{self, ...}:
 {
   lib,
   pkgs,
@@ -15,7 +15,7 @@
       };
     };
     boot = {
-      blacklistedKernelModules = [ "pcspkr" ];
+      blacklistedKernelModules = ["pcspkr"];
       kernelParams = lib.mkBefore [
         "acpi_call"
         "pti=auto"
@@ -78,8 +78,8 @@
         Type = "oneshot";
         RemainAfterExit = true;
       };
-      path = [ pkgs.efibootmgr ];
-      wantedBy = [ "default.target" ];
+      path = [pkgs.efibootmgr];
+      wantedBy = ["default.target"];
       script = ''
         efibootmgr -t 0
       '';

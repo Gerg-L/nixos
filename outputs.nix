@@ -2,7 +2,7 @@ inputs:
 let
   lib = import ./lib inputs;
 in
-lib.gerg-utils { } {
+lib.gerg-utils {} {
   inherit lib;
   nixosConfigurations = lib.mkHosts "x86_64-linux" [
     "gerg-desktop"
@@ -38,7 +38,7 @@ lib.gerg-utils { } {
       '';
     };
 
-  devShells = pkgs: { default = pkgs.mkShell { packages = [ pkgs.sops ]; }; };
+  devShells = pkgs: {default = pkgs.mkShell {packages = [pkgs.sops];};};
 
   packages = lib.mkPackages ./packages;
 }

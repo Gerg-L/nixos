@@ -1,5 +1,5 @@
 _:
-{ config, lib, ... }:
+{config, lib, ...}:
 {
   options.local.DM = {
     autoLogin = lib.mkEnableOption "";
