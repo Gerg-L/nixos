@@ -22,6 +22,7 @@ _:
       "nvidia-x11"
       "nvidia-persistenced"
       "steam"
+      "steam-run"
       "steam-original"
     ];
   };
@@ -49,6 +50,8 @@ _:
       "jdks/8".source = "${pkgs.openjdk8}/bin";
     };
   };
+
+  programs.steam.enable = true;
 
   networking.networkmanager.enable = true;
 
