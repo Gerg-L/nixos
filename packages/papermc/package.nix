@@ -1,29 +1,42 @@
 {
   lib,
-  runCommandNoCC,
-  makeBinaryWrapper,
+  stdenvNoCC,
   fetchurl,
   jre,
+  makeBinaryWrapper,
 }:
-let
-  pname = "papermc";
-  version = "1.20.1.83";
-in
-runCommandNoCC "papermc"
-  {
-    inherit pname version;
+stdenvNoCC.mkDerivation (
+  finalAttrs: {
+    pname = "papermc";
+
+    version = "1.20.1.83";
 
     src =
       let
-        mcVersion = lib.versions.pad 3 version;
-        buildNum = builtins.elemAt (lib.versions.splitVersion version) 3;
+        mcVersion = lib.versions.pad 3 finalAttrs.version;
+        buildNum = builtins.elemAt (lib.splitVersion finalAttrs.version) 3;
       in
       fetchurl {
         url = "https://papermc.io/api/v2/projects/paper/versions/${mcVersion}/builds/${buildNum}/downloads/paper-${mcVersion}-${buildNum}.jar";
         hash = "sha256-HQpc3MOXa1wkXqgm9ciQj04FUIyuupnYiu+2RZ/sXE4=";
       };
 
+    installPhase = ''
+      runHook preInstall
+
+      install -D $src $out/share/papermc/papermc.jar
+
+      makeWrapper ${lib.getExe jre} "$out/bin/minecraft-server" \
+        --append-flags "-jar $out/share/papermc/papermc.jar nogui"
+
+      runHook postInstall
+    '';
+
     nativeBuildInputs = [makeBinaryWrapper];
+
+    dontUnpack = true;
+    preferLocalBuild = true;
+    allowSubstitutes = false;
 
     meta = {
       description = "High-performance Minecraft Server";
@@ -38,9 +51,4 @@ runCommandNoCC "papermc"
       mainProgram = "minecraft-server";
     };
   }
-  ''
-    install -D $src $out/share/papermc/papermc.jar
-    makeWrapper ${lib.getExe jre} "$out/bin/minecraft-server" \
-      --append-flags "-jar $out/share/papermc/papermc.jar nogui"
-
-  ''
+)
