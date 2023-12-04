@@ -105,17 +105,49 @@ rec {
         names
     );
 
+  /* /<name> -> packages named by directory
+     /<name>/call.nix ->  callPackage override imported via import <file> pkgs
+     call.nix example
+       pkgs: {
+         inherit (pkgs.python3Packages) callPackage;
+         args = {};
+      }
+
+     /<name>/package.nix -> the package itself
+  */
   mkPackages =
     path: pkgs:
     lib.pipe path [
-      listNixFilesRecursive
-      (map (
-        x: {
-          name = lib.removeSuffix ".nix" (builtins.baseNameOf x);
-          value = pkgs.callPackage x { };
-        }
+      builtins.readDir
+      (lib.filterAttrs (_: v: v == "directory"))
+      (lib.mapAttrs (
+        n: _:
+        let
+          addArgs =
+            x:
+            lib.setFunctionArgs x (
+              lib.mapAttrs
+                (
+                  n: v:
+                  {
+                    inherit inputs self;
+                    #sources = import ../npins;
+                  }
+                  .${n} or v
+                )
+                (lib.functionArgs x)
+            );
+        in
+
+        if builtins.pathExists "${path}/${n}/call.nix" then
+          let
+            x = import "${path}/${n}/call.nix" pkgs;
+          in
+          (addArgs x.callPackage "${path}/${n}/package.nix") x.args
+        else
+          (addArgs pkgs.callPackage "${path}/${n}/package.nix") {}
+
       ))
-      builtins.listToAttrs
     ];
   _file = ./default.nix;
 }
