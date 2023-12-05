@@ -161,7 +161,7 @@
           "wheel"
           "audio"
           "adbusers"
-          "plugdev"
+          #"plugdev"
         ];
         openssh.authorizedKeys.keys = [
           config.local.keys.gerg_gerg-phone
