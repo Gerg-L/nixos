@@ -49,9 +49,7 @@
     enable = true;
     execWheelOnly = true;
     extraConfig = ''
-      Defaults env_keep += "${
-        builtins.concatStringsSep " " (builtins.attrNames config.environment.variables)
-      }"
+      Defaults env_keep += "EDITOR VISUAL PAGER SYSTEMD_PAGERSECURE MANPAGER"
       Defaults lecture = never
     '';
   };
