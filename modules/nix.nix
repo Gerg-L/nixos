@@ -56,5 +56,5 @@ inputs:
     use-xdg-base-directories = true;
     auto-allocate-uids = true;
   };
-  _file = ./nix.nix;
+  #_file
 }

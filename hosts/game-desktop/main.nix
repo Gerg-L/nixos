@@ -121,5 +121,5 @@ _:
   ];
 
   system.stateVersion = "23.05";
-  _file = ./main.nix;
+  #_file
 }

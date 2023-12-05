@@ -100,5 +100,5 @@
       '';
     };
   };
-  _file = ./minecraft.nix;
+  #_file
 }

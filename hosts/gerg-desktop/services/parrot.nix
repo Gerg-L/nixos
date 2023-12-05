@@ -19,5 +19,5 @@ _:
       RestartSec = "30s";
     };
   };
-  _file = ./parrot.nix;
+  #_file
 }

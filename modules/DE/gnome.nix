@@ -48,5 +48,5 @@ _:
       displayManager.defaultSession = "gnome";
     };
   };
-  _file = ./gnome.nix;
+  #_file
 }

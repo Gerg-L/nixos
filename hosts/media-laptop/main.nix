@@ -87,5 +87,5 @@ _:
       size = 8 * 1024;
     }
   ];
-  _file = ./main.nix;
+  #_file
 }

@@ -59,5 +59,5 @@ _:
     # Useless with flakes (without configuring)
     programs.command-not-found.enable = false;
   };
-  _file = ./misc.nix;
+  #_file
 }

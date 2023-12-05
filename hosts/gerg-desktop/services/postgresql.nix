@@ -19,5 +19,5 @@ _:
 
     settings.unix_socket_permissions = "0770";
   };
-  _file = ./postgresql.nix;
+  #_file
 }

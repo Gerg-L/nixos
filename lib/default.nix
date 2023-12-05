@@ -44,7 +44,11 @@ rec {
             (lib.removeSuffix ".nix")
             (lib.removePrefix "${toString path}/")
           ];
-          value = name;
+          value = lib.pipe name [
+            builtins.readFile
+            (builtins.replaceStrings (lib.singleton "#_f") (lib.singleton ''_file = "${name}";''))
+            (builtins.toFile (builtins.baseNameOf path))
+          ];
         })
         (listNixFilesRecursive path)
     );
@@ -149,5 +153,5 @@ rec {
 
       ))
     ];
-  _file = ./default.nix;
+  #_file
 }

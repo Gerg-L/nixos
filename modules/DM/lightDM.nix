@@ -43,5 +43,5 @@
       };
     };
   };
-  _file = ./lightDM.nix;
+  #_file
 }

@@ -159,5 +159,5 @@
       };
     };
   };
-  _file = ./shell.nix;
+  #_file
 }

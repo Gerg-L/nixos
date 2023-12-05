@@ -67,5 +67,5 @@ _:
     80
     443
   ];
-  _file = ./nginx.nix;
+  #_file
 }

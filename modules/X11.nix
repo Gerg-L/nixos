@@ -10,5 +10,5 @@ _:
     excludePackages = [pkgs.xterm];
     desktopManager.xterm.enable = false;
   };
-  _file = ./X11.nix;
+  #_file
 }

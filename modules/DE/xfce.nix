@@ -19,5 +19,5 @@ _:
       displayManager.defaultSession = "xfce";
     };
   };
-  _file = ./xfce.nix;
+  #_file
 }

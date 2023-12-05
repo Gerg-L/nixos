@@ -30,5 +30,5 @@ _:
       createDatabase = true;
     };
   };
-  _file = ./gitea.nix;
+  #_file
 }

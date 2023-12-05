@@ -36,5 +36,5 @@ _:
       ui.theme_args.simple_style = "dark";
     };
   };
-  _file = ./searxng.nix;
+  #_file
 }

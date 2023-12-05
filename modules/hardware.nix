@@ -41,5 +41,5 @@ in
       };
     }
   ];
-  _file = ./hardware.nix;
+  #_file
 }

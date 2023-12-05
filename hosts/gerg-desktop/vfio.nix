@@ -193,5 +193,5 @@ in
       "L+ /var/lib/libvirt/hooks/qemu - - - - ${lib.getExe qemuHook}"
       "L+ /var/lib/libvirt/qemu/Windows.xml - - - - ${./Windows.xml}"
     ];
-  _file = ./vfio.nix;
+  #_file
 }
