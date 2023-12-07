@@ -120,8 +120,8 @@ in
       cfg_monitors
     ];
     shellAliases = {
-      vm-start = "virsh start Windows";
-      vm-stop = "virsh shutdown Windows";
+      vm-start = "virsh -c qemu:///system start Windows";
+      vm-stop = "virsh -c qemu:///system shutdown Windows";
     };
   };
 
