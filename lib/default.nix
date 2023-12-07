@@ -46,7 +46,7 @@ rec {
           ];
           value = lib.pipe name [
             builtins.readFile
-            (builtins.replaceStrings (lib.singleton "#_f") (lib.singleton ''_file = "${name}";''))
+            (builtins.replaceStrings (lib.singleton "#_file") (lib.singleton ''_file = "${name}";''))
             (builtins.toFile (builtins.baseNameOf path))
           ];
         })
