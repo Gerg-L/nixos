@@ -68,7 +68,7 @@
         qmk
         ;
       inherit (nvim-flake.packages) neovim;
-      inherit (self.packages) lint;
+      inherit (self.packages) lint nixfmt;
     };
     etc = {
       "jdks/17".source = "${pkgs.openjdk17}/bin";

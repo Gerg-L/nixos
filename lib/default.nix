@@ -130,7 +130,7 @@ rec {
           callPackage = lib.callPackageWith (
             pkgs
             // {
-              inherit inputs;
+            inputs = constructInputs' pkgs.stdenv.hostPlatform.system inputs;
               # maybe add self?
               # inherit self;
               # npins sources if i need them

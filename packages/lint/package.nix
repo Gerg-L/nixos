@@ -1,6 +1,5 @@
 {
   inputs,
-  nixfmt,
   writeShellApplication,
   deadnix,
   statix,
@@ -10,11 +9,7 @@
 writeShellApplication {
   name = "lint";
   runtimeInputs = [
-    (nixfmt.overrideAttrs {
-      version = "0.6.0-${inputs.nixfmt.shortRev}";
-
-      src = inputs.nixfmt;
-    })
+    inputs.self.packages.nixfmt
     deadnix
     statix
     fd
