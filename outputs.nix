@@ -18,25 +18,8 @@ lib.gerg-utils {} {
     "game-desktop"
     "media-laptop"
   ];
-  formatter =
-    pkgs:
-    pkgs.writeShellApplication {
-      name = "lint";
-      runtimeInputs = [
-        (pkgs.nixfmt.overrideAttrs {
-          version = "0.6.0-${inputs.nixfmt.shortRev}";
 
-          src = inputs.nixfmt;
-        })
-        pkgs.deadnix
-        pkgs.statix
-        pkgs.fd
-      ];
-      text = ''
-        fd '.*\.nix' . -x statix fix -- {} \;
-        fd '.*\.nix' . -X deadnix -e -- {} \; -X nixfmt {} \;
-      '';
-    };
+  formatter = pkgs: inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.lint;
 
   devShells = pkgs: {default = pkgs.mkShell {packages = [pkgs.sops];};};
 

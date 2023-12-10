@@ -127,29 +127,25 @@ rec {
       (lib.mapAttrs (
         n: _:
         let
-          addArgs =
-            x:
-            lib.setFunctionArgs x (
-              lib.mapAttrs
-                (
-                  n: v:
-                  {
-                    inherit inputs self;
-                    #sources = import ../npins;
-                  }
-                  .${n} or v
-                )
-                (lib.functionArgs x)
-            );
+          callPackage = lib.callPackageWith (
+            pkgs
+            // {
+              inherit inputs;
+              # maybe add self?
+              # inherit self;
+              # npins sources if i need them
+              # sources = import ./npins;
+            }
+          );
         in
 
         if builtins.pathExists "${path}/${n}/call.nix" then
           let
             x = import "${path}/${n}/call.nix" pkgs;
           in
-          (addArgs x.callPackage "${path}/${n}/package.nix") x.args
+          x.callPackage "${path}/${n}/package.nix" x.args
         else
-          (addArgs pkgs.callPackage "${path}/${n}/package.nix") {}
+          callPackage "${path}/${n}/package.nix" {}
 
       ))
     ];
