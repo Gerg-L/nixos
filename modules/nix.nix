@@ -44,6 +44,7 @@ inputs:
       "read-only-local-store"
       "recursive-nix"
       "repl-flake"
+      "configurable-impure-env"
     ];
     auto-optimise-store = true;
     warn-dirty = false;
