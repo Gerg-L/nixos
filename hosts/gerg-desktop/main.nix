@@ -34,6 +34,7 @@
     enable = true;
     loadInNixShell = false;
     silent = true;
+    nix-direnv.package = pkgs.nix-direnv.override {nix = config.nix.package;};
   };
 
   nix.settings.system-features = [
