@@ -68,7 +68,7 @@
         ;
       inherit (nvim-flake.packages) neovim;
       inherit (self.packages) lint nixfmt;
-      librewolf = pkgs.librewolf.override { cfg.speechSynthesisSupport = false; };
+      librewolf = pkgs.librewolf.override {cfg.speechSynthesisSupport = false;};
     };
     etc = {
       "jdks/17".source = "${pkgs.openjdk17}/bin";

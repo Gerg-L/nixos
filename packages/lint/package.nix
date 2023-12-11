@@ -15,7 +15,7 @@ writeShellApplication {
     fd
   ];
   text = ''
-    if [ -z "''${1:-""}" ]; then
+    if [ -z "''${1:-""}" ] || [ "$1" == "." ]; then
       fd '.*\.nix' . -x statix fix -- {} \;
       fd '.*\.nix' . -X deadnix -e -- {} \; -X nixfmt {} \;
     else
