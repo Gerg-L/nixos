@@ -54,13 +54,13 @@ let
 in
 {
   environment.etc = {
-    "Xorg/1_mon.conf".source = pkgs.runCommand "1_mon.conf" {} (
+    "Xorg/1_mon.conf".source = pkgs.runCommand "1_mon.conf" { } (
       xserverbase
       + ''
         cat ${./1_mon.conf} >> $out
       ''
     );
-    "Xorg/2_mon.conf".source = pkgs.runCommand "2_mon.conf" {} (
+    "Xorg/2_mon.conf".source = pkgs.runCommand "2_mon.conf" { } (
       xserverbase
       + ''
         cat ${./2_mon.conf} >> $out
@@ -132,7 +132,7 @@ in
     "libvirtd"
   ];
 
-  services.xserver.displayManager.xserverArgs = lib.mkAfter ["-config /etc/Xorg/active.conf"];
+  services.xserver.displayManager.xserverArgs = lib.mkAfter [ "-config /etc/Xorg/active.conf" ];
   services.xserver.displayManager.sessionCommands = lib.mkBefore ''
     if ! [ -e "/etc/Xorg/ONE_MONITOR" ] ; then
       ${lib.getExe cfg_monitors}

@@ -10,7 +10,7 @@ _:
 
   config = lib.mkIf config.local.DE.gnome.enable {
     environment = {
-      systemPackages = [pkgs.gnome.gnome-calculator];
+      systemPackages = [ pkgs.gnome.gnome-calculator ];
       gnome.excludePackages = builtins.attrValues {
         inherit (pkgs)
           gnome-photos

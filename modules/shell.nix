@@ -1,4 +1,4 @@
-{fetch-rs, ...}:
+{ fetch-rs, ... }:
 {
   pkgs,
   config,
@@ -6,7 +6,7 @@
   ...
 }:
 {
-  systemd.tmpfiles.rules = ["d /tmp/neovim-page 0777 root root - -"];
+  systemd.tmpfiles.rules = [ "d /tmp/neovim-page 0777 root root - -" ];
   environment = {
     systemPackages = builtins.attrValues {
       inherit (pkgs) page eza fzf;

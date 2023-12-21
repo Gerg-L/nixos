@@ -55,20 +55,20 @@ rec {
 
   gerg-utils =
     config: outputs:
-    lib.foldAttrs lib.mergeAttrs {} (
+    lib.foldAttrs lib.mergeAttrs { } (
       map
         (
           system:
           let
             pkgs =
-              if config == {} then
+              if config == { } then
                 unstable.legacyPackages.${system}
               else
-                import unstable {inherit system config;};
+                import unstable { inherit system config; };
           in
-          lib.mapAttrs (name: value: if needsSystem name then {${system} = value pkgs;} else value) outputs
+          lib.mapAttrs (name: value: if needsSystem name then { ${system} = value pkgs; } else value) outputs
         )
-        ["x86_64-linux"]
+        [ "x86_64-linux" ]
     );
 
   mkHosts =
@@ -145,7 +145,7 @@ rec {
           in
           x.callPackage "${path}/${n}/package.nix" x.args
         else
-          callPackage "${path}/${n}/package.nix" {}
+          callPackage "${path}/${n}/package.nix" { }
 
       ))
     ];

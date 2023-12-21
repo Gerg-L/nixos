@@ -1,5 +1,5 @@
 _:
-{config, lib, ...}:
+{ config, lib, ... }:
 let
   cfg = config.local.hardware;
 in

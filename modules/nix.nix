@@ -1,13 +1,13 @@
 inputs:
-{lib, config, ...}:
+{ lib, config, ... }:
 {
   #
   # Flake registry and $NIX_PATH pinning
   #
   nix.registry = lib.pipe inputs [
     (lib.filterAttrs (_: lib.isType "flake"))
-    (lib.mapAttrs (_: flake: {inherit flake;}))
-    (x: x // {nixpkgs.flake = inputs.unstable;})
+    (lib.mapAttrs (_: flake: { inherit flake; }))
+    (x: x // { nixpkgs.flake = inputs.unstable; })
   ];
 
   environment.etc =
@@ -17,7 +17,7 @@ inputs:
         value.source = value.flake;
       })
       config.nix.registry;
-  nix.nixPath = ["/etc/nix/path"];
+  nix.nixPath = [ "/etc/nix/path" ];
   #
   # Ignore global registry
   #
@@ -52,8 +52,8 @@ inputs:
     # Use for testing
     #
     #allow-import-from-derivation = false;
-    trusted-users = ["root"];
-    allowed-users = ["@wheel"];
+    trusted-users = [ "root" ];
+    allowed-users = [ "@wheel" ];
     use-xdg-base-directories = true;
     auto-allocate-uids = true;
   };

@@ -1,9 +1,9 @@
-{self, ...}:
-{lib, ...}:
+{ self, ... }:
+{ lib, ... }:
 {
   # I manually switch this sometimes
   config = lib.mkIf false {
-    networking.firewall.allowedTCPPorts = [25565];
+    networking.firewall.allowedTCPPorts = [ 25565 ];
 
     users.users.minecraft = {
       description = "Minecraft server service user";
@@ -12,10 +12,10 @@
       isSystemUser = true;
       group = "minecraft";
     };
-    users.groups.minecraft = {};
+    users.groups.minecraft = { };
 
     systemd.sockets.minecraft-server = {
-      bindsTo = ["minecraft-server.service"];
+      bindsTo = [ "minecraft-server.service" ];
       socketConfig = {
         ListenFIFO = "/run/minecraft-server.stdin";
         SocketMode = "0660";
@@ -29,13 +29,13 @@
     systemd.services.minecraft-server = {
       enable = true;
       description = "Minecraft Server Service";
-      wantedBy = ["multi-user.target"];
-      requires = ["minecraft-server.socket"];
+      wantedBy = [ "multi-user.target" ];
+      requires = [ "minecraft-server.socket" ];
       after = [
         "network.target"
         "minecraft-server.socket"
       ];
-      path = [self.packages.papermc];
+      path = [ self.packages.papermc ];
       script = ''
         minecraft-server \
           -Xms8G \
@@ -71,8 +71,8 @@
         StandardError = "journal";
 
         # Hardening
-        CapabilityBoundingSet = [""];
-        DeviceAllow = [""];
+        CapabilityBoundingSet = [ "" ];
+        DeviceAllow = [ "" ];
         LockPersonality = true;
         PrivateDevices = true;
         PrivateTmp = true;

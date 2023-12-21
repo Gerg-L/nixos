@@ -1,4 +1,4 @@
-{suckless, self, ...}:
+{ suckless, self, ... }:
 {
   pkgs,
   config,
@@ -11,7 +11,7 @@
   config = lib.mkIf config.local.DE.dwm.enable {
     systemd.user.services = {
       sxhkd = {
-        path = [pkgs.sxhkd];
+        path = [ pkgs.sxhkd ];
         script = "sxhkd -c /etc/sxhkd/sxhkdrc";
         serviceConfig = {
           Restart = "always";
@@ -21,7 +21,7 @@
       };
 
       picom = {
-        path = [pkgs.picom];
+        path = [ pkgs.picom ];
         script = "picom";
         serviceConfig = {
           Restart = "always";

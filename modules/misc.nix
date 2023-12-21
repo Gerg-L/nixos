@@ -8,7 +8,7 @@ _:
 {
   options.local.allowedUnfree = lib.mkOption {
     type = lib.types.listOf lib.types.str;
-    default = [];
+    default = [ ];
   };
 
   config = {
@@ -39,7 +39,7 @@ _:
     programs.mtr.enable = true; # ping and traceroute
     services.openssh = {
       enable = true;
-      hostKeys = lib.mkForce [];
+      hostKeys = lib.mkForce [ ];
       settings = {
         PermitRootLogin = lib.mkDefault "no";
         PasswordAuthentication = false;

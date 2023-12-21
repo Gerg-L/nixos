@@ -1,10 +1,10 @@
-{spicetify-nix, ...}:
+{ spicetify-nix, ... }:
 let
   spicePkgs = spicetify-nix.legacyPackages;
 in
 {
-  imports = [spicetify-nix.nixosModules.default];
-  local.allowedUnfree = ["spotify"];
+  imports = [ spicetify-nix.nixosModules.default ];
+  local.allowedUnfree = [ "spotify" ];
   programs.spicetify = {
     enable = true;
     enabledExtensions = builtins.attrValues {

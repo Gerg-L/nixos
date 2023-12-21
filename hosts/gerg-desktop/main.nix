@@ -1,5 +1,5 @@
-{nvim-flake, self, ...}:
-{pkgs, config, ...}:
+{ nvim-flake, self, ... }:
+{ pkgs, config, ... }:
 {
   local = {
     remoteBuild.isBuilder = true;
@@ -13,9 +13,9 @@
       enable = true;
       kmscon.enable = true;
     };
-    allowedUnfree = ["nvidia-x11"];
+    allowedUnfree = [ "nvidia-x11" ];
   };
-  boot.binfmt.emulatedSystems = ["aarch64-linux"];
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   hardware.nvidia = {
     package = config.boot.kernelPackages.nvidiaPackages.beta;
     nvidiaPersistenced = false;
@@ -34,7 +34,7 @@
     enable = true;
     loadInNixShell = false;
     silent = true;
-    nix-direnv.package = pkgs.nix-direnv.override {nix = config.nix.package;};
+    nix-direnv.package = pkgs.nix-direnv.override { nix = config.nix.package; };
   };
 
   nix.settings.system-features = [
@@ -68,7 +68,7 @@
         ;
       inherit (nvim-flake.packages) neovim;
       inherit (self.packages) lint nixfmt;
-      librewolf = pkgs.librewolf.override {cfg.speechSynthesisSupport = false;};
+      librewolf = pkgs.librewolf.override { cfg.speechSynthesisSupport = false; };
     };
     etc = {
       "jdks/17".source = "${pkgs.openjdk17}/bin";
@@ -101,16 +101,16 @@
     networks = {
       "enp11s0" = {
         name = "enp11s0";
-        bridge = ["br0"];
+        bridge = [ "br0" ];
         linkConfig.RequiredForOnline = "enslaved";
       };
       "br0" = {
         name = "br0";
-        address = ["192.168.1.4/24"];
-        gateway = ["192.168.1.1"];
-        dns = ["192.168.1.1"];
+        address = [ "192.168.1.4/24" ];
+        gateway = [ "192.168.1.1" ];
+        dns = [ "192.168.1.1" ];
         DHCP = "no";
-        bridgeConfig = {};
+        bridgeConfig = { };
         linkConfig = {
           MACAddress = "D8:5E:D3:E5:47:90";
           RequiredForOnline = "routable";
@@ -150,7 +150,7 @@
     };
   };
   boot = {
-    kernelModules = ["amdgpu"];
+    kernelModules = [ "amdgpu" ];
     initrd = {
       availableKernelModules = [
         "nvme"

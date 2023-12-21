@@ -1,4 +1,4 @@
-{disko, nixos-generators, ...}:
+{ disko, nixos-generators, ... }:
 {
   lib,
   modulesPath,
