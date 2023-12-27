@@ -64,6 +64,7 @@ lib: {
         encryption = "on";
         keyformat = "passphrase";
         keylocation = "prompt";
+        mountpoint = "none";
       };
       options = {
         ashift = "12";
