@@ -168,11 +168,11 @@
     },
     "master": {
       "locked": {
-        "lastModified": 1703566450,
-        "narHash": "sha256-Itu8xoqJAwlSl8Vx73Wok9AAorr/Uh6GeHsVW+VFWOg=",
+        "lastModified": 1703643441,
+        "narHash": "sha256-UsAtbIwxBuciNfiwY9g+jiLDyvYIaO5jai8avtAK+EE=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "86b7775ff38a6f12529691d8bc39ffb7d219f5a2",
+        "rev": "f930306a698f1ae7045cf3265693b7ebc9512f23",
         "type": "github"
       },
       "original": {
@@ -185,11 +185,11 @@
     "neovim-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1703552878,
-        "narHash": "sha256-9UAuPxtBwoLsKAbPN1+dzkUOMNvhn8DkoDDZd37mj80=",
+        "lastModified": 1703633178,
+        "narHash": "sha256-TKbXVF9zombPql9AxDC0uKVjkG3HnKpLQKj8gIea1QY=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "ec7453804421f738955a5f4460f44172318d42ff",
+        "rev": "c26dc1f77c792fe5cbefd578dc8d1e23c80d3688",
         "type": "github"
       },
       "original": {
@@ -381,11 +381,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1703564210,
-        "narHash": "sha256-06RooeHhfh8Ttu15a+bXLjL8gETtBJ0zO8VjRVdob/E=",
+        "lastModified": 1703650589,
+        "narHash": "sha256-Ny9gVPY824zG0Cqzrgvsvq4N/lUowi6MNDDQDo0m+XE=",
         "owner": "Gerg-L",
         "repo": "nvim-flake",
-        "rev": "fccc77b200c97d4980e0395a4aec191982d76222",
+        "rev": "12eb0b21197b719678c6f5975722139fceda65c1",
         "type": "github"
       },
       "original": {
@@ -439,11 +439,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1703477450,
-        "narHash": "sha256-KN4S8hpWOzXonBsJ7w2nR/yTUO2XWkvudc/OVql7om0=",
+        "lastModified": 1703650230,
+        "narHash": "sha256-Il6/7kjSgYvm3R4RVqDZ3L2COex4gt6Hb/bfCb6SHuU=",
         "owner": "Gerg-L",
         "repo": "spicetify-nix",
-        "rev": "d163d7d0aaf0e467ac1fd40dc80e1f92849a8c9b",
+        "rev": "cbdb2d1ae3babf15cf3dbd575ab0aa277c8d944d",
         "type": "github"
       },
       "original": {
