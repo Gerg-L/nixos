@@ -69,6 +69,7 @@ in
   };
   boot = {
     kernelParams = [
+      "iommu=pt"
       "amd_iommu=on"
       "vfio_iommu_type1.allow_unsafe_interrupts=1"
       "kvm.ignore_msrs=1"

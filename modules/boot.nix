@@ -17,22 +17,6 @@
     boot = {
       blacklistedKernelModules = [ "pcspkr" ];
       kernelParams = lib.mkBefore [
-        "acpi_call"
-        "pti=auto"
-        "randomize_kstack_offset=on"
-        "vsyscall=none"
-        "slab_nomerge"
-        "module.sig_enforce=1"
-        "lockdown=confidentiality"
-        "page_poison=1"
-        "page_alloc.shuffle=1"
-        "sysrq_always_enabled=0"
-        "idle=nomwait"
-        "rootflags=noatime"
-        "iommu=pt"
-        "usbcore.autosuspend=-1"
-        "noresume"
-        "acpi_backlight=native"
         "logo.nologo"
         "fbcon=nodefer"
         "bgrt_disable"
@@ -45,7 +29,6 @@
       consoleLogLevel = 3;
       initrd = {
         verbose = false;
-
         systemd.enable = true;
       };
       plymouth = {
