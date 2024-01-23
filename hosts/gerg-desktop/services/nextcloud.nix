@@ -13,11 +13,13 @@ _:
     autoUpdateApps.enable = false;
     database.createLocally = true;
     config = {
-      overwriteProtocol = "https";
       dbtype = "pgsql";
       adminpassFile = config.sops.secrets.nextcloud.path;
       adminuser = "admin-root";
-      defaultPhoneRegion = "US";
+    };
+    extraOptions = {
+      overwriteprotocol = "https";
+      default_phone_region = "US";
     };
   };
   #_file
