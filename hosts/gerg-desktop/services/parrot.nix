@@ -8,7 +8,7 @@ _:
 {
   sops.secrets.discordenv = { };
   systemd.services.parrot = {
-    enable = true;
+    enable = false;
     wantedBy = [ "multi-user.target" ];
     wants = [ "network-online.target" ];
     after = [ "network-online.target" ];

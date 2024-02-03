@@ -1,15 +1,15 @@
 _:
-{ config, ... }:
+{config, ... }:
 {
-  users.users = {
-    ${config.services.gitea.user} = {
-      openssh.authorizedKeys.keys = [ config.local.keys.gerg_gerg-desktop ];
-      extraGroups = [ "postgres" ];
-    };
-    ${config.services.nginx.user}.extraGroups = [ config.services.gitea.group ];
-  };
+  #  users.users = {
+  #    ${config.services.gitea.user} = {
+  #      openssh.authorizedKeys.keys = [ config.local.keys.gerg_gerg-desktop ];
+  #      extraGroups = [ "postgres" ];
+  #    };
+  #    ${config.services.nginx.user}.extraGroups = [ config.services.gitea.group ];
+  #  };
   services.gitea = {
-    enable = true;
+    enable = false;
     stateDir = "/persist/services/gitea";
     appName = "Powered by NixOS";
     settings = {

@@ -4,7 +4,7 @@ _:
   services.xserver = {
     tty = lib.mkDefault 1;
     exportConfiguration = true;
-    layout = "us";
+    xkb.layout = "us";
     libinput.enable = true;
     xautolock.enable = false;
     excludePackages = [ pkgs.xterm ];

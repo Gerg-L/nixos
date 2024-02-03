@@ -13,7 +13,12 @@
       enable = true;
       kmscon.enable = true;
     };
-    allowedUnfree = [ "nvidia-x11" ];
+    allowedUnfree = [
+      "nvidia-x11"
+      "steam"
+      "steam-run"
+      "steam-original"
+    ];
   };
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   hardware.nvidia = {
@@ -29,6 +34,8 @@
       "amdgpu"
     ];
   };
+
+  programs.steam.enable = true;
 
   programs.direnv = {
     enable = true;

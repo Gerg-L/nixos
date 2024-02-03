@@ -10,6 +10,8 @@ _:
 
   systemd.services = {
     miniflux = {
+      enable = false;
+
       description = "Miniflux service";
       wantedBy = [ "multi-user.target" ];
       requires = [ "miniflux-dbsetup.service" ];
