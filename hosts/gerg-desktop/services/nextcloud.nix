@@ -17,7 +17,7 @@ _:
       adminpassFile = config.sops.secrets.nextcloud.path;
       adminuser = "admin-root";
     };
-    extraOptions = {
+    settings = {
       overwriteprotocol = "https";
       default_phone_region = "US";
     };

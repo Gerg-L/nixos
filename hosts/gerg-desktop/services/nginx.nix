@@ -9,12 +9,10 @@ _:
         "gerg_ssl_key"
         "gerg_ssl_cert"
       ]
-      (
-        _: {
-          owner = config.services.nginx.user;
-          inherit (config.services.nginx) group;
-        }
-      );
+      (_: {
+        owner = config.services.nginx.user;
+        inherit (config.services.nginx) group;
+      });
 
   services.nginx = {
     enable = true;

@@ -1,5 +1,5 @@
 _:
-{config, ... }:
+#{ config, ... }:
 {
   #  users.users = {
   #    ${config.services.gitea.user} = {

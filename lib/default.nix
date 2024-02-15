@@ -37,38 +37,34 @@ rec {
   mkModules =
     path:
     lib.listToAttrs (
-      map
-        (name: {
-          name = lib.pipe name [
-            toString
-            (lib.removeSuffix ".nix")
-            (lib.removePrefix "${toString path}/")
-          ];
-          value = lib.pipe name [
-            builtins.readFile
-            (builtins.replaceStrings (lib.singleton "#_file") (lib.singleton ''_file = "${name}";''))
-            (builtins.toFile (builtins.baseNameOf path))
-          ];
-        })
-        (listNixFilesRecursive path)
+      map (name: {
+        name = lib.pipe name [
+          toString
+          (lib.removeSuffix ".nix")
+          (lib.removePrefix "${toString path}/")
+        ];
+        value = lib.pipe name [
+          builtins.readFile
+          (builtins.replaceStrings (lib.singleton "#_file") (lib.singleton ''_file = "${name}";''))
+          (builtins.toFile (builtins.baseNameOf path))
+        ];
+      }) (listNixFilesRecursive path)
     );
 
   gerg-utils =
     config: outputs:
     lib.foldAttrs lib.mergeAttrs { } (
-      map
-        (
-          system:
-          let
-            pkgs =
-              if config == { } then
-                unstable.legacyPackages.${system}
-              else
-                import unstable { inherit system config; };
-          in
-          lib.mapAttrs (name: value: if needsSystem name then { ${system} = value pkgs; } else value) outputs
-        )
-        [ "x86_64-linux" ]
+      map (
+        system:
+        let
+          pkgs =
+            if config == { } then
+              unstable.legacyPackages.${system}
+            else
+              import unstable { inherit system config; };
+        in
+        lib.mapAttrs (name: value: if needsSystem name then { ${system} = value pkgs; } else value) outputs
+      ) [ "x86_64-linux" ]
     );
 
   mkHosts =
@@ -101,12 +97,10 @@ rec {
   mkDisko =
     names:
     lib.listToAttrs (
-      map
-        (name: {
-          name = "disko-${name}";
-          value.disko.devices = import "${self}/disko/${name}.nix" lib;
-        })
-        names
+      map (name: {
+        name = "disko-${name}";
+        value.disko.devices = import "${self}/disko/${name}.nix" lib;
+      }) names
     );
 
   /* /<name> -> packages named by directory
