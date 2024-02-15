@@ -129,6 +129,7 @@ in
   users.users.gerg.extraGroups = [
     "kvm"
     "libvirtd"
+    "input"
   ];
 
   services.xserver.displayManager.xserverArgs = lib.mkAfter [ "-config /etc/Xorg/active.conf" ];
