@@ -139,10 +139,9 @@ in
     fi
 
   '';
-
-  systemd.tmpfiles.rules =
-    let
-      qemuHook = pkgs.writeShellApplication {
+  virtualisation.libvirtd.hooks.qemu = {
+    "AAA" = lib.getExe (
+      pkgs.writeShellApplication {
         name = "qemu-hook";
 
         runtimeInputs = [
@@ -186,12 +185,12 @@ in
           fi
 
         '';
-      };
-    in
-    [
-      "L  /etc/Xorg/active.conf - - - - /etc/Xorg/2_mon.conf"
-      "L+ /var/lib/libvirt/hooks/qemu - - - - ${lib.getExe qemuHook}"
-      "L+ /var/lib/libvirt/qemu/Windows.xml - - - - ${./Windows.xml}"
-    ];
+      }
+    );
+  };
+  systemd.tmpfiles.rules = [
+    "L  /etc/Xorg/active.conf - - - - /etc/Xorg/2_mon.conf"
+    "L+ /var/lib/libvirt/qemu/Windows.xml - - - - ${./Windows.xml}"
+  ];
   #_file
 }
