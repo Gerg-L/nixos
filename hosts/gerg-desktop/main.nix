@@ -72,10 +72,12 @@
         # QMK configuration
         via
         qmk
+        gh
         ;
       inherit (nvim-flake.packages) neovim;
       inherit (self.packages) lint nixfmt;
       librewolf = pkgs.librewolf.override { cfg.speechSynthesisSupport = false; };
+      nixpkgs-review = pkgs.nixpkgs-review.override { nix = config.nix.package; };
     };
     etc = {
       "jdks/17".source = "${pkgs.openjdk17}/bin";
