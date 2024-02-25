@@ -43,7 +43,7 @@
       <synic state='on'/>
       <stimer state='on'/>
       <reset state='off'/>
-      <vendor_id state='on' value='abcdefghijkl'/>
+      <vendor_id state='on' value='AuthenticAMD'/>
       <frequencies state='on'/>
       <reenlightenment state='off'/>
       <tlbflush state='on'/>

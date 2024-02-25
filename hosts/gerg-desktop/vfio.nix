@@ -107,7 +107,7 @@ in
         ovmf.enable = true;
         verbatimConfig = ''
           user = "gerg"
-          group = "kvm"
+          group = "users"
           namespaces = []
         '';
       };
@@ -119,18 +119,12 @@ in
       cfg_monitors
     ];
     shellAliases = {
-      vm-start = "virsh -c qemu:///system start Windows";
-      vm-stop = "virsh -c qemu:///system shutdown Windows";
+      vm-start = "virsh start Windows";
+      vm-stop = "virsh shutdown Windows";
     };
   };
 
   programs.virt-manager.enable = true;
-
-  users.users.gerg.extraGroups = [
-    "kvm"
-    "libvirtd"
-    "input"
-  ];
 
   services.xserver.displayManager.xserverArgs = lib.mkAfter [ "-config /etc/Xorg/active.conf" ];
   services.xserver.displayManager.sessionCommands = lib.mkBefore ''

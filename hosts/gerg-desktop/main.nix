@@ -141,7 +141,6 @@
         isNormalUser = true;
         extraGroups = [
           "wheel"
-          "audio"
           "adbusers"
           #"plugdev"
         ];

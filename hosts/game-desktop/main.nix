@@ -65,7 +65,6 @@ _:
         useDefaultShell = true;
         uid = 1000;
         isNormalUser = true;
-        extraGroups = [ "audio" ];
         initialHashedPassword = "";
       };
       "root" = {

@@ -43,10 +43,7 @@ _:
         useDefaultShell = true;
         uid = 1000;
         isNormalUser = true;
-        extraGroups = [
-          "networkmanager"
-          "audio"
-        ];
+        extraGroups = [ "networkmanager" ];
         initialHashedPassword = "";
       };
       "root" = {
