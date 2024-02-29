@@ -11,8 +11,7 @@
       type = "github";
       owner = "NixOS";
       repo = "nixpkgs";
-      #ref = "nixos-unstable";
-      ref = "8686026882afa61d77a6fa5b05a25e4769ee09cd";
+      ref = "nixos-unstable";
     };
     stable = {
       type = "github";
@@ -25,7 +24,7 @@
       type = "github";
       owner = "NixOS";
       repo = "nix";
-      ref = "d83008c3a797c8e4ec1e1a97c5b1bc5e6b02c561";
+      ref = "d857914e1a41670893d6571726588659afe7b1e9";
       inputs.nixpkgs.follows = "stable";
     };
     nixos-generators = {
