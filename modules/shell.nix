@@ -49,6 +49,7 @@
     enable = true;
     execWheelOnly = true;
     extraConfig = ''
+      Defaults timestamp_timeout=1
       Defaults env_keep += "EDITOR VISUAL PAGER SYSTEMD_PAGERSECURE MANPAGER"
       Defaults lecture = never
     '';

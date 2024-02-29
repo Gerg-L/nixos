@@ -47,6 +47,14 @@ _:
       };
     };
 
+    programs.ssh = {
+      startAgent = true;
+      agentTimeout = "1m";
+      extraConfig = ''
+        AddKeysToAgent yes
+      '';
+    };
+
     i18n.defaultLocale = "en_US.UTF-8";
     #time settings
 

@@ -8,7 +8,6 @@ _:
       user = {
         name = "Gerg-L";
         email = "GregLeyda@proton.me";
-        signingkey = "~/.ssh/id_ed25519.pub";
       };
       init = {
         defaultBranch = "master";
@@ -18,7 +17,15 @@ _:
       };
       advice.addIgnoredFile = false;
       core.hooksPath = ".githooks";
-      gpg.format = "ssh";
+      gpg = {
+        format = "ssh";
+        ssh.defaultKeyCommand = pkgs.writeShellScript "git_key" ''
+          if ssh-add -L | grep -vq '${config.local.keys.gerg_gerg-desktop}'; then
+            ssh-add -t 1m ~/.ssh/id_ed25519
+          fi
+          echo 'key::${config.local.keys.gerg_gerg-desktop}'
+        '';
+      };
       push.gpgsign = "if-asked";
       commit.gpgsign = true;
     };
