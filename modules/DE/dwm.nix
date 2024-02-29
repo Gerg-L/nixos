@@ -78,36 +78,46 @@
           numlockx
           picom
           sxhkd
+          alock
           ;
       };
-      etc."sxhkd/sxhkdrc".text = ''
-        XF86AudioPlay
-          playerctl play-pause
-        XF86AudioPause
-          playerctl play-pause
-        XF86AudioStop
-          playerctl stop
-        XF86AudioNext
-          playerctl next
-        XF86AudioPrev
-          playerctl previous
-        XF86AudioRaiseVolume
-          wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+
-        XF86AudioLowerVolume
-          wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-
-        XF86AudioMute
-          wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-        Print
-          maim $HOME/Screenshots/$(date +%Y-%m-%d_%H-%m-%s).jpg
-        Print + shift
-          maim | xclip -selection clipboard -t image/png
-        super + Print
-          maim -s $HOME/Screenshots/$(date +%Y-%m-%d_%H-%m-%s).jpg
-        super + Print + shift
-          maim -s | xclip -selection clipboard -t image/png
-        super + ctrl + r
-          pkill -usr1 -x sxhkd
-      '';
+      etc = {
+        "xdg/Xresources".text = ''
+          ALock*input.frame*input:  #74b2ff
+          ALock*input.frame*check:  #36c692
+          ALock*Input.frame*width:  2
+        '';
+        "sxhkd/sxhkdrc".text = ''
+          XF86AudioPlay
+            playerctl play-pause
+          XF86AudioPause
+            playerctl play-pause
+          XF86AudioStop
+            playerctl stop
+          XF86AudioNext
+            playerctl next
+          XF86AudioPrev
+            playerctl previous
+          XF86AudioRaiseVolume
+            wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+
+          XF86AudioLowerVolume
+            wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-
+          XF86AudioMute
+            wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+          Print
+            maim $HOME/Screenshots/$(date +%Y-%m-%d_%H-%m-%s).jpg
+          Print + shift
+            maim | xclip -selection clipboard -t image/png
+          super + Print
+            maim -s $HOME/Screenshots/$(date +%Y-%m-%d_%H-%m-%s).jpg
+          super + Print + shift
+            maim -s | xclip -selection clipboard -t image/png
+          super + ctrl + r
+            pkill -usr1 -x sxhkd
+          super + ctrl + l
+            sleep 1 && xset dpms force off && alock
+        '';
+      };
     };
   };
   #_file
