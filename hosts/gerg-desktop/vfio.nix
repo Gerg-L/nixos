@@ -82,7 +82,7 @@ in
         #don't hook evdev at vm start
         package = pkgs.qemu_kvm.overrideAttrs (old: {
           patches = old.patches ++ [
-            (pkgs.writeText "qemu.diff" ''
+            (builtins.toFile "qemu.diff" ''
               diff --git a/ui/input-linux.c b/ui/input-linux.c
               index e572a2e..a9d76ba 100644
               --- a/ui/input-linux.c
