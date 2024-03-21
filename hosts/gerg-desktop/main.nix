@@ -54,7 +54,7 @@
   environment = {
     systemPackages = builtins.attrValues {
       inherit (pkgs)
-        bitwarden # store stuff
+        bitwarden-desktop # store stuff
         qbittorrent # steal stuff
         pavucontrol # gui volume control
         pcmanfm # file manager
