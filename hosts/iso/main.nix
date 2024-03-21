@@ -17,30 +17,27 @@
     };
   };
   imports = [
-    "${modulesPath}/profiles/minimal.nix"
-    "${modulesPath}/installer/cd-dvd/installation-cd-base.nix"
+    "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
     nixos-generators.nixosModules.all-formats
   ];
-
-  environment = {
-    noXlibs = lib.mkOverride 500 false;
-    systemPackages = [
-      pkgs.neovim
-      disko.packages.default
-    ];
-  };
   documentation = {
-    man.enable = lib.mkOverride 500 false;
-    doc.enable = lib.mkOverride 500 false;
+    enable = lib.mkForce false;
+    man.enable = lib.mkForce false;
+    doc.enable = lib.mkForce false;
+    info.enable = lib.mkForce false;
+    nixos.enable = lib.mkForce false;
   };
 
-  fonts.fontconfig.enable = lib.mkForce false;
+  installer.cloneConfig = lib.mkForce false;
+
+  environment.systemPackages = [
+    pkgs.neovim
+    disko.packages.default
+  ];
 
   isoImage = {
     edition = lib.mkForce "gerg-minimal";
-    isoName = lib.mkForce "NixOS.iso";
+    isoName = lib.mkForce "NixOS";
   };
-
-  sound.enable = false;
   #_file
 }
