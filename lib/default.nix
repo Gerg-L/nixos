@@ -103,15 +103,16 @@ rec {
       }) names
     );
 
-  /* /<name> -> packages named by directory
-     /<name>/call.nix ->  callPackage override imported via import <file> pkgs
-     call.nix example
-       pkgs: {
-         inherit (pkgs.python3Packages) callPackage;
-         args = {};
-      }
+  /*
+    /<name> -> packages named by directory
+    /<name>/call.nix ->  callPackage override imported via import <file> pkgs
+    call.nix example
+      pkgs: {
+        inherit (pkgs.python3Packages) callPackage;
+        args = {};
+     }
 
-     /<name>/package.nix -> the package itself
+    /<name>/package.nix -> the package itself
   */
   mkPackages =
     path: pkgs:
