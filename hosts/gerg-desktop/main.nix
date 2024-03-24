@@ -44,12 +44,18 @@
     nix-direnv.package = pkgs.nix-direnv.override { nix = config.nix.package; };
   };
 
-  nix.settings.system-features = [
-    "kvm"
-    "big-parallel"
-    "nixos-test"
-    "benchmark"
-  ];
+  nix = {
+    settings.system-features = [
+      "kvm"
+      "big-parallel"
+      "nixos-test"
+      "benchmark"
+    ];
+    extraOptions = ''
+      !include ${config.sops.secrets.github_token.path}
+    '';
+  };
+  sops.secrets.github_token = { };
 
   environment = {
     systemPackages = builtins.attrValues {
@@ -129,9 +135,8 @@
   };
 
   #user managment
-  sops.secrets = {
-    gerg.neededForUsers = true;
-  };
+  sops.secrets.gerg.neededForUsers = true;
+
   users = {
     mutableUsers = false;
     users = {
