@@ -8,10 +8,9 @@ _:
 {
   sops.secrets.discordenv = { };
   systemd.services.parrot = {
-    enable = false;
-    wantedBy = [ "multi-user.target" ];
-    wants = [ "network-online.target" ];
-    after = [ "network-online.target" ];
+    #wantedBy = [ "multi-user.target" ];
+    #wants = [ "network-online.target" ];
+    #after = [ "network-online.target" ];
     script = lib.getExe pkgs.parrot;
     serviceConfig = {
       EnvironmentFile = config.sops.secrets.discordenv.path;
