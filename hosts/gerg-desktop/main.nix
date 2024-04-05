@@ -79,9 +79,11 @@
         via
         qmk
         gh
+        nixfmt-rfc-style
         ;
       inherit (nvim-flake.packages) neovim;
-      inherit (self.packages) lint nixfmt;
+      inherit (self.packages) lint;
+
       librewolf = pkgs.librewolf.override { cfg.speechSynthesisSupport = false; };
       nixpkgs-review = pkgs.nixpkgs-review.override { nix = config.nix.package; };
     };

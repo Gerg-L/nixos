@@ -1,6 +1,6 @@
 {
-  inputs,
   writeShellApplication,
+  nixfmt-rfc-style,
   deadnix,
   statix,
   fd,
@@ -9,7 +9,7 @@
 writeShellApplication {
   name = "lint";
   runtimeInputs = [
-    inputs.self.packages.nixfmt
+    nixfmt-rfc-style
     deadnix
     statix
     fd

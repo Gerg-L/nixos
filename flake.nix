@@ -45,13 +45,6 @@
       repo = "disko";
       inputs.nixpkgs.follows = "unstable";
     };
-    nixfmt = {
-      type = "github";
-      owner = "piegamesde";
-      repo = "nixfmt";
-      ref = "rfc101-style";
-      inputs.nixpkgs.follows = "unstable";
-    };
     #my own packages
     spicetify-nix = {
       type = "github";
