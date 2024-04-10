@@ -5,7 +5,7 @@ _:
   config,
   ...
 }:
-###TAKEN FROM HERE:https://github.com/NixOS/nixpkgs/blob/4787ebf7ae2ab071389be7ff86cf38edeee7e9f8/nixos/modules/services/x11/xserver.nix#L106-L136
+###TAKEN FROM HERE:https://github.com/NixOS/nixpkgs/blob/0e347b1a77a08ef429ea2bdf878eab6af99f90dc/nixos/modules/services/x11/xserver.nix#L106-L136
 let
   xcfg = config.services.xserver;
   xserverbase =
@@ -18,7 +18,7 @@ let
     in
     ''
       echo 'Section "Files"' >> $out
-      echo ${fontpath} >> $out
+      echo "${fontpath}" >> $out
       for i in ${toString fontsForXServer}; do
         if test "''${i:0:''${#NIX_STORE}}" == "$NIX_STORE"; then
           for j in $(find $i -name fonts.dir); do
@@ -26,11 +26,9 @@ let
           done
         fi
       done
-      for i in $(find ${toString xcfg.modules} -type d); do
-        if test $(echo $i/*.so* | wc -w) -ne 0; then
-          echo "  ModulePath \"$i\"" >> $out
-        fi
-      done
+      ${lib.concatMapStrings (m: ''
+        echo "  ModulePath \"${m}/lib/xorg/modules\"" >> "$out"
+      '') xcfg.modules}
       echo '${xcfg.filesSection}' >> $out
       echo 'EndSection' >> $out
       echo >> $out
