@@ -10,7 +10,7 @@ _:
   };
 
   config = lib.mkIf config.local.DM.autoLogin {
-    services.xserver.displayManager = {
+    services.displayManager = {
       autoLogin = {
         enable = true;
         user = config.local.DM.loginUser;

@@ -33,6 +33,8 @@
 
     services.gvfs.enable = true;
 
+    services.displayManager.defaultSession = "none+dwm";
+
     services.xserver = {
       enable = true;
       displayManager = {
@@ -42,7 +44,6 @@
           systemctl --user start sxhkd
           systemctl --user start picom
         '';
-        defaultSession = "none+dwm";
       };
       windowManager.session = [
         {

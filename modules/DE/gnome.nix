@@ -42,10 +42,12 @@ _:
       };
     };
 
-    services.xserver = {
-      enable = true;
-      desktopManager.gnome.enable = true;
+    services = {
       displayManager.defaultSession = "gnome";
+      xserver = {
+        enable = true;
+        desktopManager.gnome.enable = true;
+      };
     };
   };
   #_file
