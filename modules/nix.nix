@@ -52,7 +52,6 @@ inputs:
       "parse-toml-timestamps"
       "read-only-local-store"
       "recursive-nix"
-      "repl-flake"
       "configurable-impure-env"
     ];
     auto-optimise-store = true;
