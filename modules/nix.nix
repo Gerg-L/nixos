@@ -1,4 +1,4 @@
-inputs:
+inputs':
 {
   lib,
   config,
@@ -9,10 +9,10 @@ inputs:
   #
   # Flake registry and $NIX_PATH pinning
   #
-  nix.registry = lib.pipe inputs [
+  nix.registry = lib.pipe inputs' [
     (lib.filterAttrs (_: lib.isType "flake"))
     (lib.mapAttrs (_: flake: { inherit flake; }))
-    (x: x // { nixpkgs.flake = inputs.unstable; })
+    (x: x // { nixpkgs.flake = inputs'.unstable; })
   ];
 
   environment.etc = lib.mapAttrs' (name: value: {
@@ -27,7 +27,7 @@ inputs:
   #
   # Use nix directly from master
   #
-  nix.package = inputs.nix.packages.default.overrideAttrs (old: {
+  nix.package = inputs'.nix.packages.default.overrideAttrs (old: {
     patches = old.patches or [ ] ++ [
       (pkgs.fetchpatch {
         url = "https://github.com/NixOS/nix/commit/b6ae3be9c6ec4e9de55479188e76fc330b2304dd.patch";
