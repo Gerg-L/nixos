@@ -32,7 +32,13 @@ rec {
     path:
     builtins.filter (lib.hasSuffix ".nix") (map toString (lib.filesystem.listFilesRecursive path));
 
-  importAll = path: map (module: (import module inputs)) (listNixFilesRecursive path);
+  fixModuleSystem =
+    file:
+    lib.pipe file [
+      builtins.readFile
+      (builtins.replaceStrings (lib.singleton "#_file") (lib.singleton ''_file = "${file}";''))
+      (builtins.toFile (builtins.baseNameOf file))
+    ];
 
   mkModules =
     path:
@@ -43,11 +49,7 @@ rec {
           (lib.removeSuffix ".nix")
           (lib.removePrefix "${toString path}/")
         ];
-        value = lib.pipe name [
-          builtins.readFile
-          (builtins.replaceStrings (lib.singleton "#_file") (lib.singleton ''_file = "${name}";''))
-          (builtins.toFile (builtins.baseNameOf path))
-        ];
+        value = fixModuleSystem name;
       }) (listNixFilesRecursive path)
     );
 
@@ -81,7 +83,7 @@ rec {
           in
           builtins.concatLists [
             (importWithInputs' (builtins.attrValues self.nixosModules))
-            (importWithInputs' (listNixFilesRecursive "${self}/hosts/${name}"))
+            (importWithInputs' (map fixModuleSystem (listNixFilesRecursive (../. + "/hosts/${name}"))))
             (import "${unstable}/nixos/modules/module-list.nix")
             (lib.singleton {
               networking.hostName = name;
