@@ -165,6 +165,7 @@
     };
   };
   boot = {
+    kernelPatches = [ self.packages.clear-patches ];
     kernelModules = [ "amdgpu" ];
     initrd = {
       availableKernelModules = [
