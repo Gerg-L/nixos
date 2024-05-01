@@ -83,7 +83,10 @@ rec {
           in
           builtins.concatLists [
             (importWithInputs' (builtins.attrValues self.nixosModules))
-            (importWithInputs' (map fixModuleSystem (listNixFilesRecursive (../. + "/hosts/${name}"))))
+            (
+              # (map fixModuleSystem
+              importWithInputs' (listNixFilesRecursive "${self}/hosts/${name}")
+            ) # )
             (import "${unstable}/nixos/modules/module-list.nix")
             (lib.singleton {
               networking.hostName = name;
