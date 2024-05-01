@@ -1,5 +1,10 @@
 { nvim-flake, self, ... }:
-{ pkgs, config, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 {
   local = {
     remoteBuild.isBuilder = true;
@@ -165,7 +170,10 @@
     };
   };
   boot = {
-    kernelPatches = [ self.packages.clear-patches ];
+    kernelPatches = lib.singleton {
+      patch = self.packages.clear-patches;
+      name = "Clear Linux* patchset";
+    };
     kernelModules = [ "amdgpu" ];
     initrd = {
       availableKernelModules = [
