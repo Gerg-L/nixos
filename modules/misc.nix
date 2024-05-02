@@ -21,6 +21,7 @@ _:
 
     programs.git.enable = true;
     # Mr sandro why
+    services.libinput.enable = true;
     programs.nano.enable = false;
 
     environment.defaultPackages = lib.mkForce (
