@@ -17,6 +17,7 @@ lib: {
           content = {
             type = "gpt";
             partitions = {
+              #BOOT is unused
               BOOT = {
                 device = "${fullName}-part1";
                 type = "EF00";
@@ -25,7 +26,6 @@ lib: {
                 content = {
                   type = "filesystem";
                   format = "vfat";
-                  mountpoint = "/efi${name}";
                 };
               };
               swap = {

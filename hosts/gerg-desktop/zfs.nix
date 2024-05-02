@@ -1,4 +1,4 @@
-_:
+{ lanzaboote, ... }:
 {
   config,
   lib,
@@ -6,8 +6,19 @@ _:
   ...
 }:
 {
+  imports = [ lanzaboote.nixosModules.lanzaboote ];
+
+  environment.systemPackages = [ pkgs.sbctl ];
+
+  boot.lanzaboote = {
+    enable = true;
+    pkiBundle = "/etc/secureboot";
+    configurationLimit = 10;
+  };
+
   #link some stuff
   systemd.tmpfiles.rules = [
+    "L+ /etc/secureboot - - - - /persist/secureboot"
     "L+ /etc/ssh/ssh_host_ed25519_key  - - - - /persist/ssh/ssh_host_ed25519_key"
     "L+ /etc/ssh/ssh_host_ed25519_key.pub  - - - - /persist/ssh/ssh_host_ed25519_key.pub"
     "L  /etc/nixos/flake.nix  - - - - /home/gerg/Projects/nixos/flake.nix"
@@ -21,8 +32,17 @@ _:
   sops.age.sshKeyPaths = lib.mkForce [ "/persist/ssh/ssh_host_ed25519_key" ];
   fileSystems = {
     "/persist".neededForBoot = true;
-    "/efi22".options = [ "nofail" ];
-    "/efi0E".options = [ "nofail" ];
+    # These are my Windows drives partitions
+    "/efi".device = "/dev/disk/by-id/ata-Samsung_SSD_870_EVO_500GB_S6PXNM0T402828A-part1";
+    "/boot".device = "/dev/disk/by-id/ata-Samsung_SSD_870_EVO_500GB_S6PXNM0T402828A-part4";
+    "/efi/EFI/Linux" = {
+      device = "/boot/EFI/Linux";
+      options = [ "bind" ];
+    };
+    "/efi/EFI/nixos" = {
+      device = "/boot/EFI/nixos";
+      options = [ "bind" ];
+    };
   };
 
   boot = {
@@ -61,27 +81,14 @@ _:
       };
     };
     loader = {
-      generationsDir.copyKernels = true;
-      #override default
-      systemd-boot.enable = false;
-      efi.canTouchEfiVariables = false;
-      grub = {
-        enable = true;
-        copyKernels = true;
-        efiInstallAsRemovable = true;
-        efiSupport = true;
-        mirroredBoots = [
-          {
-            path = "/efi22";
-            devices = [ "nodev" ];
-          }
-          {
-            path = "/efi0E";
-            devices = [ "nodev" ];
-          }
-        ];
-        splashImage = null;
+      systemd-boot = {
+        enable = lib.mkForce false;
+        xbootldrMountPoint = "/boot";
       };
+
+      grub.enable = lib.mkForce false;
+      timeout = lib.mkForce 5;
+      efi.efiSysMountPoint = "/efi";
     };
   };
   #_file
