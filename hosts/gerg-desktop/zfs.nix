@@ -65,7 +65,6 @@
       #keyboard module for zfs password
       availableKernelModules = [ "hid_generic" ];
       systemd.services.rollback = {
-        path = [ pkgs.zfs ];
         serviceConfig = {
           Type = "oneshot";
           RemainAfterExit = true;
@@ -74,6 +73,7 @@
         wantedBy = [ "initrd.target" ];
         after = [ "zfs-import.target" ];
         before = [ "sysroot.mount" ];
+        path = [ config.boot.zfs.package ];
         script = ''
           zfs rollback -r rpool/root@empty
           zfs rollback -r rpool/var@empty
