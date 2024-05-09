@@ -48,10 +48,8 @@ rec {
     lib.listToAttrs (
       map (name: {
         name = lib.pipe name [
-
-          toString
           (lib.removeSuffix ".nix")
-          (lib.removePrefix "${toString path}/")
+          (lib.removePrefix "${path}/")
         ];
         value = fixModuleSystem name;
       }) (listNixFilesRecursiveDiscardStringContext path)

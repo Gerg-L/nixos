@@ -1,4 +1,4 @@
-_:
+{self, ...}:
 {
   pkgs,
   lib,
@@ -55,13 +55,13 @@ in
     "Xorg/1_mon.conf".source = pkgs.runCommand "1_mon.conf" { } (
       xserverbase
       + ''
-        cat ${./1_mon.conf} >> $out
+        cat ${self}/hosts/gerg-desktop/1_mon.conf >> $out
       ''
     );
     "Xorg/2_mon.conf".source = pkgs.runCommand "2_mon.conf" { } (
       xserverbase
       + ''
-        cat ${./2_mon.conf} >> $out
+        cat ${self}/hosts/gerg-desktop/1_mon.conf >> $out
       ''
     );
   };
