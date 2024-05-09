@@ -1,4 +1,4 @@
-inputs:
+inputs@{ self, ... }:
 let
   lib = import ./lib inputs;
 in
@@ -11,7 +11,7 @@ lib.gerg-utils { } {
     "iso"
   ];
 
-  nixosModules = lib.mkModules ./modules;
+  nixosModules = lib.mkModules "${self}/modules";
 
   diskoConfigurations = lib.mkDisko [
     "gerg-desktop"
@@ -23,5 +23,5 @@ lib.gerg-utils { } {
 
   devShells = pkgs: { default = pkgs.mkShell { packages = [ pkgs.sops ]; }; };
 
-  packages = lib.mkPackages ./packages;
+  packages = lib.mkPackages "${self}/packages";
 }

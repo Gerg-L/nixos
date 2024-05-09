@@ -32,6 +32,9 @@ rec {
     path:
     builtins.filter (lib.hasSuffix ".nix") (map toString (lib.filesystem.listFilesRecursive path));
 
+  listNixFilesRecursiveDiscardStringContext =
+    x: (map builtins.unsafeDiscardStringContext) (listNixFilesRecursive x);
+
   fixModuleSystem =
     file:
     lib.pipe file [
@@ -45,12 +48,13 @@ rec {
     lib.listToAttrs (
       map (name: {
         name = lib.pipe name [
+
           toString
           (lib.removeSuffix ".nix")
           (lib.removePrefix "${toString path}/")
         ];
         value = fixModuleSystem name;
-      }) (listNixFilesRecursive path)
+      }) (listNixFilesRecursiveDiscardStringContext path)
     );
 
   gerg-utils =
@@ -83,10 +87,9 @@ rec {
           in
           builtins.concatLists [
             (importWithInputs' (builtins.attrValues self.nixosModules))
-            (
-              # (map fixModuleSystem
-              importWithInputs' (listNixFilesRecursive "${self}/hosts/${name}")
-            ) # )
+            (importWithInputs' (
+              map fixModuleSystem (listNixFilesRecursiveDiscardStringContext "${self}/hosts/${name}")
+            ))
             (import "${unstable}/nixos/modules/module-list.nix")
             (lib.singleton {
               networking.hostName = name;
