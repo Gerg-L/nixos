@@ -2,7 +2,6 @@
 {
   pkgs,
   config,
-  lib,
   ...
 }:
 {
@@ -170,10 +169,6 @@
     };
   };
   boot = {
-    kernelPatches = lib.singleton {
-      patch = self.packages.clear-patches;
-      name = "Clear Linux* patchset";
-    };
     kernelModules = [ "amdgpu" ];
     initrd = {
       availableKernelModules = [
