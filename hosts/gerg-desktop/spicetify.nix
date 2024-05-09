@@ -8,7 +8,7 @@ in
   programs.spicetify = {
     enable = true;
     enabledExtensions = builtins.attrValues {
-      inherit (spicePkgs.extensions) adblock hidePodcasts shuffle;
+      inherit (spicePkgs.extensions) adblock hidePodcasts shuffle betterGenres;
     };
     theme = spicePkgs.themes.dribbblish;
     colorScheme = "custom";
