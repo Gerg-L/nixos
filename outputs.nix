@@ -6,7 +6,6 @@ lib.gerg-utils { } {
   inherit lib;
   nixosConfigurations = lib.mkHosts "x86_64-linux" [
     "gerg-desktop"
-    "game-desktop"
     "media-laptop"
     "iso"
   ];
@@ -15,7 +14,6 @@ lib.gerg-utils { } {
 
   diskoConfigurations = lib.mkDisko [
     "gerg-desktop"
-    "game-desktop"
     "media-laptop"
   ];
 
