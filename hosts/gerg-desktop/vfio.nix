@@ -5,36 +5,11 @@
   config,
   ...
 }:
-###TAKEN FROM HERE:https://github.com/NixOS/nixpkgs/blob/0e347b1a77a08ef429ea2bdf878eab6af99f90dc/nixos/modules/services/x11/xserver.nix#L106-L136
+/*
+  This section is just me bullying
+  the xserver module to do what I want when I want it to
+*/
 let
-  xcfg = config.services.xserver;
-  xserverbase =
-    let
-      fontsForXServer = config.fonts.packages ++ [
-        pkgs.xorg.fontadobe100dpi
-        pkgs.xorg.fontadobe75dpi
-      ];
-      fontpath = lib.optionalString (xcfg.fontPath != null) ''FontPath "${xcfg.fontPath}"'';
-    in
-    ''
-      echo 'Section "Files"' >> $out
-      echo "${fontpath}" >> $out
-      for i in ${toString fontsForXServer}; do
-        if test "''${i:0:''${#NIX_STORE}}" == "$NIX_STORE"; then
-          for j in $(find $i -name fonts.dir); do
-            echo "  FontPath \"$(dirname $j)\"" >> $out
-          done
-        fi
-      done
-      ${lib.concatMapStrings (m: ''
-        echo "  ModulePath \"${m}/lib/xorg/modules\"" >> "$out"
-      '') xcfg.modules}
-      echo '${xcfg.filesSection}' >> $out
-      echo 'EndSection' >> $out
-      echo >> $out
-    '';
-  ###END OF TAKEN PART
-
   cfg_monitors = pkgs.writeShellApplication {
     name = "cfg_monitors";
     runtimeInputs = [
@@ -52,23 +27,35 @@ let
 in
 {
   environment.etc = {
-    "Xorg/1_mon.conf".source = pkgs.runCommand "1_mon.conf" { } (
-      xserverbase
-      + ''
-        cat ${self}/hosts/gerg-desktop/1_mon.conf >> $out
-      ''
-    );
-    "Xorg/2_mon.conf".source = pkgs.runCommand "2_mon.conf" { } (
-      xserverbase
-      + ''
-        cat ${self}/hosts/gerg-desktop/1_mon.conf >> $out
-      ''
-    );
+    "Xorg/1_mon.conf".source = "${self}/hosts/gerg-desktop/1_mon.conf";
+    "Xorg/2_mon.conf".source = "${self}/hosts/gerg-desktop/2_mon.conf";
   };
+
+  services.xserver = {
+    config = lib.mkForce "";
+
+    displayManager.sessionCommands = lib.mkBefore ''
+      if ! [ -e "/etc/Xorg/ONE_MONITOR" ] ; then
+        ${lib.getExe cfg_monitors}
+      fi
+    '';
+  };
+
+  systemd.tmpfiles.rules = [
+    "L  /etc/X11/xorg.conf.d/99-custom.conf  - - - - /etc/Xorg/2_mon.conf"
+
+    # Everything from here down is almost sane
+    "L+ /var/lib/libvirt/qemu/Windows.xml - - - - ${self}/hosts/gerg-desktop/Windows.xml"
+  ];
+
   boot = {
     kernelParams = [
       "iommu=pt"
       "amd_iommu=on"
+      /*
+        Switch to this if for a Intel cpu
+        "intel_iommu=on"
+      */
       "vfio_iommu_type1.allow_unsafe_interrupts=1"
       "kvm.ignore_msrs=1"
     ];
@@ -77,7 +64,7 @@ in
     libvirtd = {
       enable = true;
       qemu = {
-        #don't hook evdev at vm start
+        # Patch to disable hooking the mouse via evdev at VM startup
         package = pkgs.qemu_kvm.overrideAttrs (old: {
           patches = old.patches ++ [
             (builtins.toFile "qemu.diff" ''
@@ -124,13 +111,6 @@ in
 
   programs.virt-manager.enable = true;
 
-  services.xserver.displayManager.xserverArgs = lib.mkAfter [ "-config /etc/Xorg/active.conf" ];
-  services.xserver.displayManager.sessionCommands = lib.mkBefore ''
-    if ! [ -e "/etc/Xorg/ONE_MONITOR" ] ; then
-      ${lib.getExe cfg_monitors}
-    fi
-
-  '';
   virtualisation.libvirtd.hooks.qemu = {
     "AAA" = lib.getExe (
       pkgs.writeShellApplication {
@@ -151,28 +131,49 @@ in
           fi
 
           if [ "$OPERATION" == "prepare" ]; then
+              # Stop display-manager
               systemctl stop display-manager.service
+
+              # Un-bind driver
               modprobe -r -a nvidia_uvm nvidia_drm nvidia nvidia_modeset
+
+              # Detach GPU
               virsh nodedev-detach pci_0000_01_00_0
               virsh nodedev-detach pci_0000_01_00_1
+
+              # Set allowed CPUs
               systemctl set-property --runtime -- user.slice AllowedCPUs=8-15,24-31
               systemctl set-property --runtime -- system.slice AllowedCPUs=8-15,24-31
               systemctl set-property --runtime -- init.scope AllowedCPUs=8-15,24-31
-              ln -fs /etc/Xorg/1_mon.conf /etc/Xorg/active.conf
+
+              # Dual gpu/monitor stuff
+              ln -fs /etc/Xorg/1_mon.conf /etc/X11/xorg.conf.d/99-custom.conf
               touch /etc/Xorg/ONE_MONITOR
               systemctl start display-manager.service
           fi
 
           if [ "$OPERATION" == "release" ]; then
+
+            # Dual gpu/monitor stuff
             systemctl stop display-manager.service
+
+            # Allow all CPUs
             systemctl set-property --runtime -- user.slice AllowedCPUs=0-31
             systemctl set-property --runtime -- system.slice AllowedCPUs=0-31
             systemctl set-property --runtime -- init.scope AllowedCPUs=0-31
+
+            # Re-attach GPU
             virsh nodedev-reattach pci_0000_01_00_0
             virsh nodedev-reattach pci_0000_01_00_1
+
+            # Re-bind Driver
             modprobe -a nvidia_uvm nvidia_drm nvidia nvidia_modeset
-            ln -fs /etc/Xorg/2_mon.conf /etc/Xorg/active.conf
+
+            # Dual gpu/monitor stuff
+            ln -fs /etc/Xorg/2_mon.conf /etc/X11/xorg.conf.d/99-custom.conf
             rm /etc/Xorg/ONE_MONITOR
+
+            # Restart display-manager
             systemctl start display-manager.service
           fi
 
@@ -180,9 +181,6 @@ in
       }
     );
   };
-  systemd.tmpfiles.rules = [
-    "L  /etc/Xorg/active.conf - - - - /etc/Xorg/2_mon.conf"
-    "L+ /var/lib/libvirt/qemu/Windows.xml - - - - ${self}/hosts/gerg-desktop/Windows.xml"
-  ];
+
   #_file
 }
