@@ -1,9 +1,5 @@
 { nvim-flake, self, ... }:
-{
-  pkgs,
-  config,
-  ...
-}:
+{ pkgs, config, ... }:
 {
   local = {
     remoteBuild.isBuilder = true;

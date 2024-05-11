@@ -33,7 +33,7 @@ rec {
     builtins.filter (lib.hasSuffix ".nix") (map toString (lib.filesystem.listFilesRecursive path));
 
   listNixFilesRecursiveDiscardStringContext =
-    x: (map builtins.unsafeDiscardStringContext) (listNixFilesRecursive x);
+    x: listNixFilesRecursive (builtins.unsafeDiscardStringContext x);
 
   fixModuleSystem =
     file:

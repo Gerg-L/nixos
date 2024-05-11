@@ -1,4 +1,4 @@
-{self, ...}:
+{ self, ... }:
 {
   pkgs,
   lib,
@@ -182,7 +182,7 @@ in
   };
   systemd.tmpfiles.rules = [
     "L  /etc/Xorg/active.conf - - - - /etc/Xorg/2_mon.conf"
-    "L+ /var/lib/libvirt/qemu/Windows.xml - - - - ${./Windows.xml}"
+    "L+ /var/lib/libvirt/qemu/Windows.xml - - - - ${self}/hosts/gerg-desktop/Windows.xml"
   ];
   #_file
 }
