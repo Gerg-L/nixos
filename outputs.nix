@@ -1,8 +1,8 @@
-inputs@{ self, ... }:
+inputs@{ self, unstable, ... }:
 let
   lib = import ./lib inputs;
 in
-lib.gerg-utils { } {
+lib.gerg-utils (s: unstable.legacyPackages.${s}) {
   inherit lib;
   nixosConfigurations = lib.mkHosts "x86_64-linux" [
     "gerg-desktop"

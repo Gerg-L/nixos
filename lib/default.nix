@@ -10,71 +10,73 @@ in
 # Only good use case for rec
 rec {
 
-  needsSystem =
-    output:
-    builtins.elem output [
-      "defaultPackage"
-      "devShell"
-      "devShells"
-      "formatter"
-      "legacyPackages"
-      "packages"
-    ];
+  wrench = lib.flip lib.pipe;
+
+  needsSystem = lib.flip builtins.elem [
+    "defaultPackage"
+    "devShell"
+    "devShells"
+    "formatter"
+    "legacyPackages"
+    "packages"
+  ];
 
   constructInputs' =
-    system: inputs:
-    lib.pipe inputs [
+    system:
+    wrench [
       (lib.filterAttrs (_: lib.isType "flake"))
       (lib.mapAttrs (_: lib.mapAttrs (name: value: if needsSystem name then value.${system} else value)))
     ];
 
-  listNixFilesRecursive =
-    path:
-    builtins.filter (lib.hasSuffix ".nix") (map toString (lib.filesystem.listFilesRecursive path));
-
-  listNixFilesRecursiveDiscardStringContext =
-    x: listNixFilesRecursive (builtins.unsafeDiscardStringContext x);
+  listNixFilesRecursive = wrench [
+    builtins.unsafeDiscardStringContext
+    lib.filesystem.listFilesRecursive
+    (builtins.filter (lib.hasSuffix ".nix"))
+  ];
 
   fixModuleSystem =
     file:
     lib.pipe file [
       builtins.readFile
-      (builtins.replaceStrings (lib.singleton "#_file") (lib.singleton ''_file = "${file}";''))
+      (builtins.replaceStrings [ "#_file" ] [ "_file = \"${file}\";" ])
       (builtins.toFile (builtins.baseNameOf file))
     ];
 
   mkModules =
     path:
-    lib.listToAttrs (
-      map (name: {
+    lib.pipe path [
+      listNixFilesRecursive
+      (map (name: {
         name = lib.pipe name [
           (lib.removeSuffix ".nix")
           (lib.removePrefix "${path}/")
         ];
         value = fixModuleSystem name;
-      }) (listNixFilesRecursiveDiscardStringContext path)
-    );
+      }))
+      builtins.listToAttrs
+    ];
 
   gerg-utils =
-    config: outputs:
-    lib.foldAttrs lib.mergeAttrs { } (
-      map (
-        system:
-        let
-          pkgs =
-            if config == { } then
-              unstable.legacyPackages.${system}
-            else
-              import unstable { inherit system config; };
-        in
-        lib.mapAttrs (name: value: if needsSystem name then { ${system} = value pkgs; } else value) outputs
-      ) [ "x86_64-linux" ]
-    );
+    pkgsf: outputs:
+    lib.pipe
+      [
+        "x86_64-linux"
+        "aarch64-linux"
+      ]
+      [
+        (map (
+          system:
+          builtins.mapAttrs (
+            name: value: if needsSystem name then { ${system} = value (pkgsf system); } else value
+          ) outputs
+        ))
+        (lib.foldAttrs lib.mergeAttrs { })
+      ];
 
   mkHosts =
-    system: names:
-    lib.genAttrs names (
-      name:
+    system:
+    lib.flip lib.genAttrs (
+      hostName:
       # Whats lib.nixosSystem? never heard of her
       lib.evalModules {
         specialArgs.modulesPath = "${unstable}/nixos/modules";
@@ -85,29 +87,27 @@ rec {
           in
           builtins.concatLists [
             (importWithInputs' (builtins.attrValues self.nixosModules))
-            (importWithInputs' (
-              map fixModuleSystem (listNixFilesRecursiveDiscardStringContext "${self}/hosts/${name}")
-            ))
+            (importWithInputs' (map fixModuleSystem (listNixFilesRecursive "${self}/hosts/${hostName}")))
             (import "${unstable}/nixos/modules/module-list.nix")
             (lib.singleton {
-              networking.hostName = name;
+              networking = {
+                inherit hostName;
+              };
               nixpkgs.hostPlatform = system;
             })
-            (lib.optionals (self.diskoConfigurations ? "disko-${name}") [
-              self.diskoConfigurations."disko-${name}"
+            (lib.optionals (self.diskoConfigurations ? "disko-${hostName}") [
+              self.diskoConfigurations."disko-${hostName}"
               disko.nixosModules.default
             ])
           ];
       }
     );
-  mkDisko =
-    names:
-    lib.listToAttrs (
-      map (name: {
-        name = "disko-${name}";
-        value.disko.devices = import "${self}/disko/${name}.nix" lib;
-      }) names
-    );
+  mkDisko = lib.listToAttrs (
+    map (name: {
+      name = "disko-${name}";
+      value.disko.devices = import "${self}/disko/${name}.nix" lib;
+    })
+  );
 
   /*
     /<name> -> packages named by directory
