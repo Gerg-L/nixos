@@ -16,6 +16,9 @@ jobs:
         uses: DeterminateSystems/update-flake-lock@v21
         with:
           pr-title: "Update flake.lock" 
+          pr-labels: |
+            dependencies
+            automated
       - name: merge
         run: |
           gh pr merge "$PULL_REQUEST_NUMBER" --squash --delete-branch
