@@ -102,12 +102,13 @@ rec {
           ];
       }
     );
-  mkDisko = lib.listToAttrs (
-    map (name: {
+  mkDisko = wrench [
+    (map (name: {
       name = "disko-${name}";
       value.disko.devices = import "${self}/disko/${name}.nix" lib;
-    })
-  );
+    }))
+    builtins.listToAttrs
+  ];
 
   /*
     /<name> -> packages named by directory
