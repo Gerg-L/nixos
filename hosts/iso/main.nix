@@ -1,4 +1,8 @@
-{ disko, nixos-generators, ... }:
+{
+  disko,
+  nixos-generators,
+  _file,
+}:
 {
   lib,
   modulesPath,
@@ -39,5 +43,5 @@
     edition = lib.mkForce "gerg-minimal";
     isoName = lib.mkForce "NixOS";
   };
-  #_file
+  inherit _file;
 }

@@ -1,4 +1,4 @@
-_:
+{ _file }:
 #{ config, ... }:
 {
   #  users.users = {
@@ -30,5 +30,5 @@ _:
       createDatabase = true;
     };
   };
-  #_file
+  inherit _file;
 }

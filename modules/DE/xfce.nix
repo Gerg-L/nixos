@@ -1,4 +1,4 @@
-_:
+{ _file }:
 {
   config,
   lib,
@@ -21,5 +21,5 @@ _:
       displayManager.defaultSession = "xfce";
     };
   };
-  #_file
+  inherit _file;
 }

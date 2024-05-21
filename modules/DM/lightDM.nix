@@ -1,4 +1,4 @@
-{ self, ... }:
+{ self, _file }:
 { config, lib, ... }:
 {
   options.local.DM.lightdm.enable = lib.mkEnableOption "";
@@ -41,5 +41,5 @@
       };
     };
   };
-  #_file
+  inherit _file;
 }

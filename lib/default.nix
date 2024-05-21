@@ -34,14 +34,6 @@ rec {
     (builtins.filter (lib.hasSuffix ".nix"))
   ];
 
-  fixModuleSystem =
-    file:
-    lib.pipe file [
-      builtins.readFile
-      (builtins.replaceStrings [ "#_file" ] [ "_file = \"${file}\";" ])
-      (builtins.toFile (builtins.baseNameOf file))
-    ];
-
   mkModules =
     path:
     lib.pipe path [
@@ -51,7 +43,7 @@ rec {
           (lib.removeSuffix ".nix")
           (lib.removePrefix "${path}/")
         ];
-        value = fixModuleSystem name;
+        value = name;
       }))
       builtins.listToAttrs
     ];
@@ -83,11 +75,42 @@ rec {
 
         modules =
           let
-            importWithInputs' = map (x: import x (constructInputs' system inputs));
+            importWithArgs = map (
+              x:
+              let
+                allArgs = (constructInputs' system inputs) // {
+                  inherit inputs;
+                  _dir =
+                    let
+                      dir = builtins.dirOf x;
+                    in
+                    if (dir != builtins.storeDir) then dir else null;
+                  _file = x;
+                };
+                imported = import x;
+              in
+              lib.pipe imported [
+                lib.functionArgs
+                builtins.attrNames
+                (map (
+                  x:
+                  if allArgs ? ${x} then
+                    {
+                      name = x;
+                      value = allArgs.${x};
+                    }
+                  else
+                    null
+                ))
+                (builtins.filter builtins.isAttrs)
+                builtins.listToAttrs
+                imported
+              ]
+            );
           in
           builtins.concatLists [
-            (importWithInputs' (builtins.attrValues self.nixosModules))
-            (importWithInputs' (map fixModuleSystem (listNixFilesRecursive "${self}/hosts/${hostName}")))
+            (importWithArgs (builtins.attrValues self.nixosModules))
+            (importWithArgs (listNixFilesRecursive "${self}/hosts/${hostName}"))
             (import "${unstable}/nixos/modules/module-list.nix")
             (lib.singleton {
               networking = {

@@ -1,4 +1,4 @@
-_:
+{ _file }:
 {
   config,
   lib,
@@ -50,5 +50,5 @@ _:
       };
     };
   };
-  #_file
+  inherit _file;
 }

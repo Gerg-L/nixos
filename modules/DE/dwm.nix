@@ -1,4 +1,8 @@
-{ suckless, self, ... }:
+{
+  suckless,
+  self,
+  _file,
+}:
 {
   pkgs,
   config,
@@ -121,5 +125,5 @@
       };
     };
   };
-  #_file
+  inherit _file;
 }

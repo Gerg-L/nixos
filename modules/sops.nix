@@ -1,4 +1,8 @@
-{ sops-nix, self, ... }:
+{
+  sops-nix,
+  self,
+  _file,
+}:
 {
   pkgs,
   config,
@@ -15,5 +19,5 @@
       age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     };
   };
-  #_file
+  inherit _file;
 }

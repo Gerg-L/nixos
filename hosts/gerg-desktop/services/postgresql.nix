@@ -1,4 +1,4 @@
-_:
+{ _file }:
 { config, pkgs, ... }:
 {
   services.postgresql = {
@@ -19,5 +19,5 @@ _:
 
     settings.unix_socket_permissions = "0770";
   };
-  #_file
+  inherit _file;
 }

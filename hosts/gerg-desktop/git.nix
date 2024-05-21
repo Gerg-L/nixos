@@ -1,4 +1,4 @@
-_:
+{ _file }:
 { pkgs, config, ... }:
 {
   programs.git = {
@@ -30,5 +30,5 @@ _:
       commit.gpgsign = true;
     };
   };
-  #_file
+  inherit _file;
 }

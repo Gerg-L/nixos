@@ -1,4 +1,4 @@
-{ fetch-rs, ... }:
+{ fetch-rs, _file }:
 {
   pkgs,
   config,
@@ -160,5 +160,5 @@
       };
     };
   };
-  #_file
+  inherit _file;
 }

@@ -1,4 +1,4 @@
-{ spicetify-nix, ... }:
+{ spicetify-nix, _file }:
 let
   spicePkgs = spicetify-nix.legacyPackages;
 in
@@ -7,7 +7,9 @@ in
   local.allowedUnfree = [ "spotify" ];
   programs.spicetify = {
     enable = true;
-    enabledCustomApps = builtins.attrValues { inherit (spicePkgs.apps) lyricsPlus; };
+    enabledCustomApps = builtins.attrValues {
+      inherit (spicePkgs.apps) lyricsPlus ncsVisualizer marketplace;
+    };
     enabledExtensions = builtins.attrValues {
       inherit (spicePkgs.extensions)
         adblock
@@ -37,5 +39,5 @@ in
       misc = "282a36";
     };
   };
-  #_file
+  inherit _file;
 }

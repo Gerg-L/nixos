@@ -1,4 +1,4 @@
-{ self, ... }:
+{ _file, self }:
 { lib, ... }:
 {
   # I manually switch this sometimes
@@ -100,5 +100,5 @@
       '';
     };
   };
-  #_file
+  inherit _file;
 }

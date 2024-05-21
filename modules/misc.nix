@@ -1,4 +1,4 @@
-_:
+{ _file }:
 {
   lib,
   config,
@@ -68,5 +68,5 @@ _:
     # Useless with flakes (without configuring)
     programs.command-not-found.enable = false;
   };
-  #_file
+  inherit _file;
 }

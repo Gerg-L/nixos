@@ -1,4 +1,4 @@
-{ self, ... }:
+{ self, _file }:
 {
   lib,
   pkgs,
@@ -68,5 +68,5 @@
       '';
     };
   };
-  #_file
+  inherit _file;
 }

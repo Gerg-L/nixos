@@ -1,4 +1,4 @@
-_:
+{ _file }:
 {
   pkgs,
   config,
@@ -22,5 +22,5 @@ _:
       RestartSec = "30s";
     };
   };
-  #_file
+  inherit _file;
 }

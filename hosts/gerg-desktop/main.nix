@@ -1,4 +1,8 @@
-{ nvim-flake, self, ... }:
+{
+  nvim-flake,
+  self,
+  _file,
+}:
 { pkgs, config, ... }:
 {
   local = {
@@ -34,6 +38,7 @@
       "amdgpu"
     ];
   };
+  services.gnome.gnome-keyring.enable = true;
 
   programs.steam.enable = true;
 
@@ -179,5 +184,5 @@
   };
 
   system.stateVersion = "23.05";
-  #_file
+  inherit _file;
 }

@@ -1,4 +1,4 @@
-_:
+{ _file }:
 { pkgs, config, ... }:
 {
   #sops.secrets.nextcloud.owner = "nextcloud";
@@ -22,5 +22,5 @@ _:
       default_phone_region = "US";
     };
   };
-  #_file
+  inherit _file;
 }

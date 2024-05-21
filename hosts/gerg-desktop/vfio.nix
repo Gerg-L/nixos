@@ -1,4 +1,4 @@
-{ self, ... }:
+{ _dir, _file }:
 {
   pkgs,
   lib,
@@ -27,8 +27,8 @@ let
 in
 {
   environment.etc = {
-    "Xorg/1_mon.conf".source = "${self}/hosts/gerg-desktop/1_mon.conf";
-    "Xorg/2_mon.conf".source = "${self}/hosts/gerg-desktop/2_mon.conf";
+    "Xorg/1_mon.conf".source = "${_dir}/1_mon.conf";
+    "Xorg/2_mon.conf".source = "${_dir}/2_mon.conf";
   };
 
   services.xserver = {
@@ -45,7 +45,7 @@ in
     "L  /etc/X11/xorg.conf.d/99-custom.conf  - - - - /etc/Xorg/2_mon.conf"
 
     # Everything from here down is almost sane
-    "L+ /var/lib/libvirt/qemu/Windows.xml - - - - ${self}/hosts/gerg-desktop/Windows.xml"
+    "L+ /var/lib/libvirt/qemu/Windows.xml - - - - ${_dir}/Windows.xml"
   ];
 
   boot = {
@@ -182,5 +182,5 @@ in
     );
   };
 
-  #_file
+  inherit _file;
 }

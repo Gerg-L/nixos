@@ -1,4 +1,4 @@
-_:
+{ _file }:
 { config, lib, ... }:
 {
   sops.secrets =
@@ -65,5 +65,5 @@ _:
     80
     443
   ];
-  #_file
+  inherit _file;
 }
