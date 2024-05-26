@@ -8,7 +8,7 @@ in
   programs.spicetify = {
     enable = true;
     enabledCustomApps = builtins.attrValues {
-      inherit (spicePkgs.apps) lyricsPlus ncsVisualizer marketplace;
+      inherit (spicePkgs.apps) lyricsPlus ncsVisualizer;
     };
     enabledExtensions = builtins.attrValues {
       inherit (spicePkgs.extensions)
