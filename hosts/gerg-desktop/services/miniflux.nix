@@ -10,7 +10,7 @@
 
   systemd.services = {
     miniflux = {
-      enable = true;
+      enable = false;
 
       description = "Miniflux service";
       wantedBy = [ "multi-user.target" ];
