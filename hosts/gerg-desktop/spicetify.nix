@@ -7,9 +7,7 @@ in
   local.allowedUnfree = [ "spotify" ];
   programs.spicetify = {
     enable = true;
-    enabledCustomApps = builtins.attrValues {
-      inherit (spicePkgs.apps) lyricsPlus ncsVisualizer;
-    };
+    enabledCustomApps = builtins.attrValues { inherit (spicePkgs.apps) lyricsPlus ncsVisualizer; };
     enabledExtensions = builtins.attrValues {
       inherit (spicePkgs.extensions)
         adblock

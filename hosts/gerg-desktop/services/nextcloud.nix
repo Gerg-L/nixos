@@ -8,7 +8,9 @@
   services.nextcloud = {
     enable = true;
     package = pkgs.nextcloud29;
+    home = "/persist/services/nextcloud";
     datadir = "/persist/services/nextcloud";
+    extraAppsEnable = false;
     hostName = "next.gerg-l.com";
     autoUpdateApps.enable = false;
     database.createLocally = true;

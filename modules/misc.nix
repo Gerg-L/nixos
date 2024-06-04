@@ -32,6 +32,7 @@
           nix-output-monitor # nom nom nom nom;
           nix-tree # view packages
           pciutils # lspci
+          nix-janitor # thanks nobbz
           ;
       }
     );
