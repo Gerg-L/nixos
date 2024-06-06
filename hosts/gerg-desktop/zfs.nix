@@ -46,11 +46,6 @@
   };
 
   boot = {
-    kernelPatches = lib.singleton {
-      name = "fix_amd_mem_access";
-      patch = null;
-      extraStructuredConfig.HSA_AMD_SVM = lib.kernel.yes;
-    };
     zfs = {
       package = pkgs.zfs_unstable;
       devNodes = "/dev/disk/by-id/";

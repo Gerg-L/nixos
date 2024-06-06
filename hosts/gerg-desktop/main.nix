@@ -31,13 +31,17 @@
     nvidiaSettings = false;
     modesetting.enable = true;
     open = false;
+    prime = {
+      nvidiaBusId = "PCI:1:0:0";
+      amdgpuBusId = "PCI:15:0:0";
+      #sync.enable = true;
+    };
   };
-  services.xserver = {
-    videoDrivers = [
-      "nvidia"
-      "amdgpu"
-    ];
-  };
+  services.xserver.videoDrivers = [
+    "nvidia"
+    "amdgpu"
+  ];
+
   services.gnome.gnome-keyring.enable = true;
 
   programs.steam.enable = true;

@@ -19,8 +19,13 @@ let
       pkgs.gnugrep
     ];
     text = ''
-      xrandr --output DP-0 --auto --mode 3440x1440 --rate 120 --primary --pos 0x0
-      xrandr --output "$(xrandr | grep -e 'HDMI.* connected.*'| awk '{ print$1 }')" --auto --mode 1920x1080 --rate 144 --set TearFree on --pos 3440x360
+      xrandr --setprovideroutputsource \
+        "$(xrandr --listproviders | grep -i AMD | sed -n 's/^.*name://p')" NVIDIA-0 \
+        --output DP-0 \
+        --mode 3440x1440 --rate 120 --primary --pos 0x0 \
+        --output "$(xrandr | grep -e 'HDMI.* connected.*'| awk '{ print$1 }')" \
+        --mode 1920x1080 --rate 144 --set TearFree on --pos 3440x360
+
       xset -dpms
     '';
   };
@@ -34,11 +39,17 @@ in
   services.xserver = {
     config = lib.mkForce "";
 
-    displayManager.sessionCommands = lib.mkBefore ''
+    displayManager.setupCommands = lib.mkBefore ''
       if ! [ -e "/etc/Xorg/ONE_MONITOR" ] ; then
         ${lib.getExe cfg_monitors}
       fi
     '';
+  };
+
+  boot.kernelPatches = lib.singleton {
+    name = "fix_amd_mem_access";
+    patch = null;
+    extraStructuredConfig.HSA_AMD_SVM = lib.kernel.yes;
   };
 
   systemd.tmpfiles.rules = [
