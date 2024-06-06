@@ -13,7 +13,7 @@ in
         adblock
         hidePodcasts
         shuffle
-        betterGenres
+        #betterGenres broken
         ;
     };
     theme = spicePkgs.themes.dribbblish;
