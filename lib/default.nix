@@ -31,7 +31,7 @@ rec {
   listNixFilesRecursive = wrench [
     builtins.unsafeDiscardStringContext
     lib.filesystem.listFilesRecursive
-    (builtins.filter (lib.hasSuffix ".nix"))
+    (builtins.filter (x: !lib.hasPrefix "_" x && lib.hasSuffix ".nix" x))
   ];
 
   mkModules =
