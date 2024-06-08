@@ -46,12 +46,6 @@ in
     '';
   };
 
-  boot.kernelPatches = lib.singleton {
-    name = "fix_amd_mem_access";
-    patch = null;
-    extraStructuredConfig.HSA_AMD_SVM = lib.kernel.yes;
-  };
-
   systemd.tmpfiles.rules = [
     "L  /etc/X11/xorg.conf.d/99-custom.conf  - - - - /etc/Xorg/2_mon.conf"
 
@@ -70,45 +64,13 @@ in
       "vfio_iommu_type1.allow_unsafe_interrupts=1"
       "kvm.ignore_msrs=1"
     ];
-  };
-  virtualisation = {
-    libvirtd = {
-      enable = true;
-      qemu = {
-        # Patch to disable hooking the mouse via evdev at VM startup
-        package = pkgs.qemu_kvm.overrideAttrs (old: {
-          patches = old.patches ++ [
-            (builtins.toFile "qemu.diff" ''
-              diff --git a/ui/input-linux.c b/ui/input-linux.c
-              index e572a2e..a9d76ba 100644
-              --- a/ui/input-linux.c
-              +++ b/ui/input-linux.c
-              @@ -397,12 +397,6 @@ static void input_linux_complete(UserCreatable *uc, Error **errp)
-                   }
-
-                   qemu_set_fd_handler(il->fd, input_linux_event, NULL, il);
-              -    if (il->keycount) {
-              -        /* delay grab until all keys are released */
-              -        il->grab_request = true;
-              -    } else {
-              -        input_linux_toggle_grab(il);
-              -    }
-                   QTAILQ_INSERT_TAIL(&inputs, il, next);
-                   il->initialized = true;
-                   return;
-            '')
-          ];
-        });
-        runAsRoot = true;
-        ovmf.enable = true;
-        verbatimConfig = ''
-          user = "gerg"
-          group = "users"
-          namespaces = []
-        '';
-      };
+    kernelPatches = lib.singleton {
+      name = "fix_amd_mem_access";
+      patch = null;
+      extraStructuredConfig.HSA_AMD_SVM = lib.kernel.yes;
     };
   };
+
   environment = {
     systemPackages = [
       pkgs.dmidecode
@@ -122,26 +84,60 @@ in
 
   programs.virt-manager.enable = true;
 
-  virtualisation.libvirtd.hooks.qemu = {
-    "AAA" = lib.getExe (
-      pkgs.writeShellApplication {
-        name = "qemu-hook";
+  virtualisation.libvirtd = {
+    enable = true;
+    qemu = {
+      # Patch to disable hooking the mouse via evdev at VM startup
+      package = pkgs.qemu_kvm.overrideAttrs (old: {
+        patches = old.patches ++ [
+          (builtins.toFile "qemu.diff" ''
+            diff --git a/ui/input-linux.c b/ui/input-linux.c
+            index e572a2e..a9d76ba 100644
+            --- a/ui/input-linux.c
+            +++ b/ui/input-linux.c
+            @@ -397,12 +397,6 @@ static void input_linux_complete(UserCreatable *uc, Error **errp)
+                 }
 
-        runtimeInputs = [
-          pkgs.libvirt
-          pkgs.systemd
-          pkgs.kmod
+                 qemu_set_fd_handler(il->fd, input_linux_event, NULL, il);
+            -    if (il->keycount) {
+            -        /* delay grab until all keys are released */
+            -        il->grab_request = true;
+            -    } else {
+            -        input_linux_toggle_grab(il);
+            -    }
+                 QTAILQ_INSERT_TAIL(&inputs, il, next);
+                 il->initialized = true;
+                 return;
+          '')
         ];
+      });
+      runAsRoot = true;
+      ovmf.enable = true;
+      verbatimConfig = ''
+        user = "gerg"
+        group = "users"
+        namespaces = []
+      '';
+    };
+    hooks.qemu = {
+      # Ordering is based on the name
+      "AAA" = lib.getExe (
+        pkgs.writeShellApplication {
+          name = "qemu-hook";
 
-        text = ''
-          GUEST_NAME="$1"
-          OPERATION="$2"
+          runtimeInputs = [
+            pkgs.libvirt
+            pkgs.systemd
+            pkgs.kmod
+          ];
 
-          if [ "$GUEST_NAME" != "Windows" ]; then
-            exit 0
-          fi
+          text = ''
+            GUEST_NAME="$1"
+            OPERATION="$2"
 
-          if [ "$OPERATION" == "prepare" ]; then
+            if [ "$GUEST_NAME" != "Windows" ]; then
+              exit 0
+            else if [ "$OPERATION" == "prepare" ]; then
               # Stop display-manager
               systemctl stop display-manager.service
 
@@ -161,37 +157,35 @@ in
               ln -fs /etc/Xorg/1_mon.conf /etc/X11/xorg.conf.d/99-custom.conf
               touch /etc/Xorg/ONE_MONITOR
               systemctl start display-manager.service
-          fi
+            else if [ "$OPERATION" == "release" ]; then
+              # Dual gpu/monitor stuff
+              systemctl stop display-manager.service
 
-          if [ "$OPERATION" == "release" ]; then
+              # Allow all CPUs
+              systemctl set-property --runtime -- user.slice AllowedCPUs=0-31
+              systemctl set-property --runtime -- system.slice AllowedCPUs=0-31
+              systemctl set-property --runtime -- init.scope AllowedCPUs=0-31
 
-            # Dual gpu/monitor stuff
-            systemctl stop display-manager.service
+              # Re-attach GPU
+              virsh nodedev-reattach pci_0000_01_00_0
+              virsh nodedev-reattach pci_0000_01_00_1
 
-            # Allow all CPUs
-            systemctl set-property --runtime -- user.slice AllowedCPUs=0-31
-            systemctl set-property --runtime -- system.slice AllowedCPUs=0-31
-            systemctl set-property --runtime -- init.scope AllowedCPUs=0-31
+              # Re-bind Driver
+              modprobe -a nvidia_uvm nvidia_drm nvidia nvidia_modeset
 
-            # Re-attach GPU
-            virsh nodedev-reattach pci_0000_01_00_0
-            virsh nodedev-reattach pci_0000_01_00_1
+              # Dual gpu/monitor stuff
+              ln -fs /etc/Xorg/2_mon.conf /etc/X11/xorg.conf.d/99-custom.conf
+              rm /etc/Xorg/ONE_MONITOR
 
-            # Re-bind Driver
-            modprobe -a nvidia_uvm nvidia_drm nvidia nvidia_modeset
-
-            # Dual gpu/monitor stuff
-            ln -fs /etc/Xorg/2_mon.conf /etc/X11/xorg.conf.d/99-custom.conf
-            rm /etc/Xorg/ONE_MONITOR
-
-            # Restart display-manager
-            systemctl start display-manager.service
-          fi
-
-        '';
-      }
-    );
+              # Restart display-manager
+              systemctl start display-manager.service
+            else
+             exit 0
+            fi
+          '';
+        }
+      );
+    };
   };
-
   inherit _file;
 }

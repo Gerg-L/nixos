@@ -52,7 +52,7 @@
       forceImportAll = true;
     };
     kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
-    #disable hibernate and set cache max
+    #set ARC max
     kernelParams = [ "zfs.zfs_arc_max=17179869184" ];
     initrd = {
       #module for multiple swap devices
