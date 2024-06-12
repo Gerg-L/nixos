@@ -323,6 +323,26 @@
         "type": "github"
       }
     },
+    "nix-index-database": {
+      "inputs": {
+        "nixpkgs": [
+          "unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1717919703,
+        "narHash": "sha256-4i/c31+dnpv6KdUA3BhbMDS9Lvg/CDin78caYJlq0bY=",
+        "owner": "nix-community",
+        "repo": "nix-index-database",
+        "rev": "a157a81d0a4bc909b2b6666dd71909bcdc8cd0d6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nix-index-database",
+        "type": "github"
+      }
+    },
     "nixlib": {
       "locked": {
         "lastModified": 1712450863,
@@ -495,6 +515,7 @@
         "lanzaboote": "lanzaboote",
         "master": "master",
         "nix": "nix",
+        "nix-index-database": "nix-index-database",
         "nixos-generators": "nixos-generators",
         "nvim-flake": "nvim-flake",
         "sops-nix": "sops-nix",

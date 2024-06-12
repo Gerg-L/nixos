@@ -1,4 +1,5 @@
 {
+  nix-index-database,
   nvim-flake,
   self,
   _file,
@@ -53,6 +54,11 @@
     nix-direnv.package = pkgs.nix-direnv.override { nix = config.nix.package; };
   };
 
+  programs.nix-index = {
+    enable = true;
+    package = nix-index-database.packages.nix-index-with-db;
+  };
+
   nix = {
     settings.system-features = [
       "kvm"
@@ -77,18 +83,18 @@
         ripgrep
         fd
         jq
+        wget
         xautoclick
         prismlauncher
         deadnix
         statix
-        nix-index
         element-desktop
         webcord
-        # QMK configuration
-        via
-        qmk
         gh
         nixfmt-rfc-style
+        # QMK configuration
+        #via
+        #qmk
         ;
       inherit (nvim-flake.packages) neovim;
       inherit (self.packages) lint;
@@ -102,12 +108,12 @@
     };
   };
 
-  services.udev.packages = [
-    pkgs.android-udev-rules
-    pkgs.via
-    pkgs.qmk-udev-rules
-  ];
-  programs.adb.enable = true;
+  #services.udev.packages = [
+  #  pkgs.android-udev-rules
+  #  pkgs.via
+  #  pkgs.qmk-udev-rules
+  #];
+  #programs.adb.enable = true;
 
   networking = {
     useNetworkd = false;
@@ -157,7 +163,7 @@
         isNormalUser = true;
         extraGroups = [
           "wheel"
-          "adbusers"
+          #"adbusers"
           #"plugdev"
         ];
         openssh.authorizedKeys.keys = [

@@ -137,7 +137,7 @@ in
 
             if [ "$GUEST_NAME" != "Windows" ]; then
               exit 0
-            else if [ "$OPERATION" == "prepare" ]; then
+            elif [ "$OPERATION" == "prepare" ]; then
               # Stop display-manager
               systemctl stop display-manager.service
 
@@ -157,7 +157,7 @@ in
               ln -fs /etc/Xorg/1_mon.conf /etc/X11/xorg.conf.d/99-custom.conf
               touch /etc/Xorg/ONE_MONITOR
               systemctl start display-manager.service
-            else if [ "$OPERATION" == "release" ]; then
+            elif [ "$OPERATION" == "release" ]; then
               # Dual gpu/monitor stuff
               systemctl stop display-manager.service
 

@@ -51,6 +51,12 @@
       repo = "lanzaboote";
       inputs.nixpkgs.follows = "unstable";
     };
+    nix-index-database = {
+      type = "github";
+      owner = "nix-community";
+      repo = "nix-index-database";
+      inputs.nixpkgs.follows = "unstable";
+    };
     #my own packages
     spicetify-nix = {
       type = "github";
