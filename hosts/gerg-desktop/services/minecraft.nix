@@ -1,5 +1,4 @@
-{ _file, self }:
-{ lib, ... }:
+{ self', lib }:
 {
   # I manually switch this sometimes
   config = lib.mkIf false {
@@ -35,7 +34,7 @@
         "network.target"
         "minecraft-server.socket"
       ];
-      path = [ self.packages.papermc ];
+      path = [ self'.packages.papermc ];
       script = ''
         minecraft-server \
           -Xms8G \
@@ -100,5 +99,4 @@
       '';
     };
   };
-  inherit _file;
 }

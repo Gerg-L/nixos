@@ -1,9 +1,7 @@
-{ _file }:
 {
   config,
   lib,
   pkgs,
-  ...
 }:
 {
   sops.secrets.minifluxenv = { };
@@ -97,5 +95,4 @@
       ${config.services.nginx.user}.extraGroups = [ "miniflux" ];
     };
   };
-  inherit _file;
 }

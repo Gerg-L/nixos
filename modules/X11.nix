@@ -1,5 +1,4 @@
-{ _file }:
-{ pkgs, lib, ... }:
+{ pkgs, lib }:
 {
   services.xserver = {
     tty = lib.mkDefault 1;
@@ -9,5 +8,4 @@
     excludePackages = [ pkgs.xterm ];
     desktopManager.xterm.enable = false;
   };
-  inherit _file;
 }

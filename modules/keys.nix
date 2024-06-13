@@ -1,5 +1,4 @@
-{ _file }:
-{ lib, ... }:
+{ lib }:
 {
   options.local.keys = lib.mkOption { };
 
@@ -12,5 +11,4 @@
     gerg-desktop_fingerprint = "BQxvBOWsTw1gdNDR0KzrSRmbVhDrJdG05vYXkVmw8yA";
     gerg_gerg-desktop = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJWbwkFJmRBgyWyWU+w3ksZ+KuFw9uXJN3PwqqE7Z/i8";
   };
-  inherit _file;
 }

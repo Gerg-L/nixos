@@ -1,5 +1,4 @@
-{ _file }:
-{ config, lib, ... }:
+{ config, lib }:
 {
   sops.secrets =
     lib.genAttrs
@@ -65,5 +64,4 @@
     80
     443
   ];
-  inherit _file;
 }

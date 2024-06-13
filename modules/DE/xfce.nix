@@ -1,9 +1,8 @@
-{ _file }:
 {
   config,
   lib,
   pkgs,
-  ...
+
 }:
 {
   options.local.DE.xfce.enable = lib.mkEnableOption "";
@@ -21,5 +20,4 @@
       displayManager.defaultSession = "xfce";
     };
   };
-  inherit _file;
 }

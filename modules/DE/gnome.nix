@@ -1,9 +1,8 @@
-{ _file }:
 {
   config,
   lib,
   pkgs,
-  ...
+
 }:
 {
   options.local.DE.gnome.enable = lib.mkEnableOption "";
@@ -50,5 +49,4 @@
       };
     };
   };
-  inherit _file;
 }

@@ -1,9 +1,9 @@
-{ lanzaboote, _file }:
 {
+  lanzaboote,
   config,
   lib,
   pkgs,
-  ...
+
 }:
 {
   imports = [ lanzaboote.nixosModules.lanzaboote ];
@@ -86,5 +86,4 @@
       efi.efiSysMountPoint = "/efi";
     };
   };
-  inherit _file;
 }

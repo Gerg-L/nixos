@@ -1,13 +1,10 @@
 {
-  suckless,
-  self,
-  _file,
-}:
-{
   pkgs,
   config,
   lib,
-  ...
+  suckless,
+  self',
+
 }:
 {
   options.local.DE.dwm.enable = lib.mkEnableOption "";
@@ -43,7 +40,7 @@
       enable = true;
       displayManager = {
         sessionCommands = ''
-          feh --bg-center "${self.packages.images}/recursion.png"
+          feh --bg-center "${self'.packages.images}/recursion.png"
           numlockx
           systemctl --user start sxhkd
           systemctl --user start picom
@@ -125,5 +122,4 @@
       };
     };
   };
-  inherit _file;
 }

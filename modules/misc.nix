@@ -1,9 +1,9 @@
-{ _file, self }:
 {
+  self',
   lib,
   config,
   pkgs,
-  ...
+
 }:
 {
   options.local.allowedUnfree = lib.mkOption {
@@ -33,7 +33,7 @@
           nix-tree # view packages
           pciutils # lspci
           ;
-        inherit (self.packages) nix-janitor;
+        inherit (self'.packages) nix-janitor;
       }
     );
 
@@ -69,5 +69,4 @@
     # Useless with flakes (without configuring)
     programs.command-not-found.enable = false;
   };
-  inherit _file;
 }

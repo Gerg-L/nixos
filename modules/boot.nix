@@ -1,9 +1,9 @@
-{ self, _file }:
 {
+  self',
   lib,
   pkgs,
   config,
-  ...
+
 }:
 {
   options.local.bootConfig.disable = lib.mkEnableOption "";
@@ -34,7 +34,7 @@
       plymouth = {
         enable = lib.mkDefault true;
         theme = "breeze";
-        logo = "${self.packages.images}/logo.png";
+        logo = "${self'.packages.images}/logo.png";
       };
       loader = {
         grub = {
@@ -68,5 +68,4 @@
       '';
     };
   };
-  inherit _file;
 }

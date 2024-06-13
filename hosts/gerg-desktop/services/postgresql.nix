@@ -1,5 +1,4 @@
-{ _file }:
-{ config, pkgs, ... }:
+{ config, pkgs }:
 {
   services.postgresql = {
     enable = true;
@@ -19,5 +18,4 @@
 
     settings.unix_socket_permissions = "0770";
   };
-  inherit _file;
 }

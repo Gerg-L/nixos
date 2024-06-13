@@ -1,9 +1,8 @@
-{ _file }:
 {
   lib,
   pkgs,
   config,
-  ...
+
 }:
 {
   local = {
@@ -84,5 +83,4 @@
       size = 8 * 1024;
     }
   ];
-  inherit _file;
 }

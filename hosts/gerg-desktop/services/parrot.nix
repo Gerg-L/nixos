@@ -1,9 +1,8 @@
-{ _file }:
 {
   pkgs,
   config,
   lib,
-  ...
+
 }:
 {
   sops.secrets.discordenv = { };
@@ -22,5 +21,4 @@
       RestartSec = "30s";
     };
   };
-  inherit _file;
 }

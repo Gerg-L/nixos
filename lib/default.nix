@@ -43,10 +43,73 @@ rec {
           (lib.removeSuffix ".nix")
           (lib.removePrefix "${path}/")
         ];
-        value = name;
+        value = addSchizophreniaToModule name;
       }))
       builtins.listToAttrs
     ];
+
+  addSchizophreniaToModule =
+    x:
+    let
+      imported = import x;
+    in
+    if !lib.isFunction imported then
+      x
+    else
+      let
+
+        allArgs = {
+          inherit inputs self;
+          _dir =
+            let
+              dir = builtins.dirOf x;
+            in
+            if (dir == builtins.storeDir) then null else dir;
+        };
+
+        funcArgs = lib.functionArgs imported;
+
+        argNames = builtins.attrNames inputs ++ [
+          "inputs"
+          "inputs'"
+          "self'"
+          "_dir"
+        ];
+
+        providedArgs = lib.pipe funcArgs [
+          (lib.filterAttrs (n: _: builtins.elem n argNames))
+          (lib.mapAttrs (n: _: allArgs.${n} or { }))
+        ];
+
+        neededArgs = (lib.filterAttrs (n: _: !builtins.elem n argNames) funcArgs);
+      in
+      {
+        __functor =
+          _: args:
+          imported (
+            (lib.filterAttrs (n: _: neededArgs ? ${n}) args)
+            # (formatter helping comment)
+            // (
+              providedArgs
+              // (
+                let
+                  inputs' = constructInputs' (args.pkgs.stdenv.system) inputs;
+                  actuallyAllArgs = inputs' // {
+                    inherit inputs';
+                    self' = inputs'.self;
+                  };
+                in
+                lib.filterAttrs (n: _: providedArgs ? ${n}) actuallyAllArgs
+              )
+            )
+          )
+          // {
+            _file = x;
+          };
+        __functionArgs = neededArgs // {
+          pkgs = false;
+        };
+      };
 
   gerg-utils =
     pkgsf: outputs:
@@ -73,56 +136,21 @@ rec {
       lib.evalModules {
         specialArgs.modulesPath = "${unstable}/nixos/modules";
 
-        modules =
-          let
-            importWithArgs = map (
-              x:
-              let
-                allArgs = (constructInputs' system inputs) // {
-                  inherit inputs;
-                  _dir =
-                    let
-                      dir = builtins.dirOf x;
-                    in
-                    if (dir != builtins.storeDir) then dir else null;
-                  _file = x;
-                };
-                imported = import x;
-              in
-              lib.pipe imported [
-                lib.functionArgs
-                builtins.attrNames
-                (map (
-                  x:
-                  if allArgs ? ${x} then
-                    {
-                      name = x;
-                      value = allArgs.${x};
-                    }
-                  else
-                    null
-                ))
-                (builtins.filter builtins.isAttrs)
-                builtins.listToAttrs
-                imported
-              ]
-            );
-          in
-          builtins.concatLists [
-            (importWithArgs (builtins.attrValues self.nixosModules))
-            (importWithArgs (listNixFilesRecursive "${self}/hosts/${hostName}"))
-            (import "${unstable}/nixos/modules/module-list.nix")
-            (lib.singleton {
-              networking = {
-                inherit hostName;
-              };
-              nixpkgs.hostPlatform = system;
-            })
-            (lib.optionals (self.diskoConfigurations ? "disko-${hostName}") [
-              self.diskoConfigurations."disko-${hostName}"
-              disko.nixosModules.default
-            ])
-          ];
+        modules = builtins.concatLists [
+          (builtins.attrValues self.nixosModules)
+          (map addSchizophreniaToModule (listNixFilesRecursive "${self}/hosts/${hostName}"))
+          (import "${unstable}/nixos/modules/module-list.nix")
+          (lib.singleton {
+            networking = {
+              inherit hostName;
+            };
+            nixpkgs.hostPlatform = system;
+          })
+          (lib.optionals (self.diskoConfigurations ? "disko-${hostName}") [
+            self.diskoConfigurations."disko-${hostName}"
+            disko.nixosModules.default
+          ])
+        ];
       }
     );
   mkDisko = wrench [

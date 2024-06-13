@@ -1,5 +1,4 @@
-{ _file }:
-{ config, pkgs, ... }:
+{ config, pkgs }:
 {
   sops.secrets.cloudflare = { };
 
@@ -84,5 +83,4 @@
       func "nix-fu.com" "cc2df9163c3730f58b866409ac5a108c"
     '';
   };
-  inherit _file;
 }

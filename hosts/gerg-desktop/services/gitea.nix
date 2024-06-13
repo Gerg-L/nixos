@@ -1,5 +1,4 @@
-{ _file }:
-#{ config, ... }:
+#{ config }:
 {
   #  users.users = {
   #    ${config.services.gitea.user} = {
@@ -30,5 +29,4 @@
       createDatabase = true;
     };
   };
-  inherit _file;
 }

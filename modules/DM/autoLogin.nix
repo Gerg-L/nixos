@@ -1,5 +1,4 @@
-{ _file }:
-{ config, lib, ... }:
+{ config, lib }:
 {
   options.local.DM = {
     autoLogin = lib.mkEnableOption "";
@@ -17,5 +16,4 @@
       };
     };
   };
-  inherit _file;
 }

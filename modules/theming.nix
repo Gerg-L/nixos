@@ -1,9 +1,8 @@
-{ _file }:
 {
   pkgs,
   config,
   lib,
-  ...
+
 }:
 let
   cfg = config.local.theming;
@@ -98,5 +97,4 @@ in
       };
     })
   ];
-  inherit _file;
 }

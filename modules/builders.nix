@@ -1,5 +1,4 @@
-{ _file }:
-{ config, lib, ... }:
+{ config, lib }:
 {
   options.local.remoteBuild = {
     enable = lib.mkEnableOption "";
@@ -97,5 +96,4 @@
       }
     )
   ];
-  inherit _file;
 }

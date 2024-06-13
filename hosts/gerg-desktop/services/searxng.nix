@@ -1,5 +1,4 @@
-{ _file }:
-{ config, pkgs, ... }:
+{ config, pkgs }:
 {
   sops.secrets.searxngenv = { };
   users.users.${config.services.nginx.user}.extraGroups = [ "searx" ];
@@ -36,5 +35,4 @@
       ui.theme_args.simple_style = "dark";
     };
   };
-  inherit _file;
 }

@@ -1,9 +1,8 @@
-{ _dir, _file }:
 {
+  _dir,
   pkgs,
   lib,
-  config,
-  ...
+
 }:
 /*
   This section is just me bullying
@@ -187,5 +186,4 @@ in
       );
     };
   };
-  inherit _file;
 }

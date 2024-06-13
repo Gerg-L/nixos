@@ -1,13 +1,11 @@
 {
+
   nix,
   inputs,
-  _file,
-}:
-{
   lib,
   config,
   pkgs,
-  ...
+
 }:
 {
   #
@@ -73,5 +71,4 @@
     #
     reject-flake-config = true;
   };
-  inherit _file;
 }
