@@ -1,4 +1,3 @@
-{ _file }:
 { config, lib, ... }:
 let
   cfg = config.local.hardware;
@@ -41,5 +40,4 @@ in
       };
     }
   ];
-  inherit _file;
 }

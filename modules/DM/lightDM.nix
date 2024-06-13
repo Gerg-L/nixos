@@ -1,5 +1,9 @@
-{ self, _file }:
-{ config, lib, ... }:
+{
+  self',
+  config,
+  lib,
+  ...
+}:
 {
   options.local.DM.lightdm.enable = lib.mkEnableOption "";
 
@@ -7,7 +11,7 @@
     services.xserver.displayManager = {
       lightdm = {
         enable = true;
-        background = "${self.packages.images}/recursion.png";
+        background = "${self'.packages.images}/recursion.png";
         extraConfig = "minimum-vt=1";
         greeters.mini = {
           enable = true;
@@ -41,5 +45,4 @@
       };
     };
   };
-  inherit _file;
 }

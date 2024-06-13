@@ -1,5 +1,5 @@
-{ fetch-rs, _file }:
 {
+  fetch-rs,
   pkgs,
   config,
   lib,
@@ -160,5 +160,4 @@
       };
     };
   };
-  inherit _file;
 }

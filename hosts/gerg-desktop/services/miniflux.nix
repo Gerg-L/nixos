@@ -1,4 +1,3 @@
-{ _file }:
 {
   config,
   lib,
@@ -97,5 +96,4 @@
       ${config.services.nginx.user}.extraGroups = [ "miniflux" ];
     };
   };
-  inherit _file;
 }

@@ -1,4 +1,3 @@
-{ _file }:
 { config, lib, ... }:
 {
   options.local.remoteBuild = {
@@ -97,5 +96,4 @@
       }
     )
   ];
-  inherit _file;
 }

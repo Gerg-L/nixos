@@ -1,4 +1,4 @@
-{ spicetify-nix, _file }:
+{ spicetify-nix, ... }:
 let
   spicePkgs = spicetify-nix.legacyPackages;
 in
@@ -37,5 +37,4 @@ in
       misc = "282a36";
     };
   };
-  inherit _file;
 }

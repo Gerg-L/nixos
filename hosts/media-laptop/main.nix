@@ -1,4 +1,3 @@
-{ _file }:
 {
   lib,
   pkgs,
@@ -84,5 +83,4 @@
       size = 8 * 1024;
     }
   ];
-  inherit _file;
 }

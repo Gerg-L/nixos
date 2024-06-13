@@ -1,4 +1,3 @@
-{ _file }:
 { config, lib, ... }:
 {
   options.local.DM = {
@@ -17,5 +16,4 @@
       };
     };
   };
-  inherit _file;
 }

@@ -1,10 +1,12 @@
 {
+
   nix-index-database,
   nvim-flake,
-  self,
-  _file,
+  self',
+  pkgs,
+  config,
+  ...
 }:
-{ pkgs, config, ... }:
 {
   local = {
     remoteBuild.isBuilder = true;
@@ -97,7 +99,7 @@
         #qmk
         ;
       inherit (nvim-flake.packages) neovim;
-      inherit (self.packages) lint;
+      inherit (self'.packages) lint;
 
       librewolf = pkgs.librewolf.override { cfg.speechSynthesisSupport = false; };
       nixpkgs-review = pkgs.nixpkgs-review.override { nix = config.nix.package; };
@@ -194,5 +196,4 @@
   };
 
   system.stateVersion = "23.05";
-  inherit _file;
 }

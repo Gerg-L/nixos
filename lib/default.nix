@@ -78,34 +78,53 @@ rec {
             importWithArgs = map (
               x:
               let
-                allArgs = (constructInputs' system inputs) // {
-                  inherit inputs;
+                imported = import x;
+
+                inputs' = constructInputs' system inputs;
+                self' = inputs'.self;
+                allArgs = inputs' // {
+                  inherit
+                    inputs
+                    inputs'
+                    self
+                    self'
+                    ;
+
                   _dir =
                     let
                       dir = builtins.dirOf x;
                     in
                     if (dir != builtins.storeDir) then dir else null;
-                  _file = x;
                 };
-                imported = import x;
+
+                funcArgs = lib.functionArgs imported;
               in
-              lib.pipe imported [
-                lib.functionArgs
-                builtins.attrNames
-                (map (
-                  x:
-                  if allArgs ? ${x} then
-                    {
-                      name = x;
-                      value = allArgs.${x};
-                    }
-                  else
-                    null
-                ))
-                (builtins.filter builtins.isAttrs)
-                builtins.listToAttrs
-                imported
-              ]
+              if !lib.isFunction imported then
+                x
+              else
+                lib.pipe funcArgs [
+                  builtins.attrNames
+                  (map (
+                    a:
+                    if allArgs ? ${a} then
+                      {
+                        name = a;
+                        value = allArgs.${a};
+                      }
+                    else
+                      null
+                  ))
+                  (builtins.filter builtins.isAttrs)
+                  builtins.listToAttrs
+                  (vals: {
+                    __functor = _: args: imported (args // vals);
+                    __functionArgs = removeAttrs funcArgs (builtins.attrNames vals);
+                  })
+                  (m: {
+                    imports = [ m ];
+                    _file = x;
+                  })
+                ]
             );
           in
           builtins.concatLists [

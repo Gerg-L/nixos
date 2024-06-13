@@ -1,4 +1,3 @@
-{ _file }:
 {
   pkgs,
   config,
@@ -98,5 +97,4 @@ in
       };
     })
   ];
-  inherit _file;
 }

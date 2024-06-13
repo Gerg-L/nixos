@@ -1,4 +1,3 @@
-{ _file }:
 { config, pkgs, ... }:
 {
   sops.secrets.searxngenv = { };
@@ -36,5 +35,4 @@
       ui.theme_args.simple_style = "dark";
     };
   };
-  inherit _file;
 }

@@ -1,5 +1,5 @@
-{ lanzaboote, _file }:
 {
+  lanzaboote,
   config,
   lib,
   pkgs,
@@ -86,5 +86,4 @@
       efi.efiSysMountPoint = "/efi";
     };
   };
-  inherit _file;
 }
