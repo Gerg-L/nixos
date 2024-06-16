@@ -31,7 +31,7 @@ rec {
   listNixFilesRecursive = wrench [
     builtins.unsafeDiscardStringContext
     lib.filesystem.listFilesRecursive
-    (builtins.filter (x: !lib.hasPrefix "_" x && lib.hasSuffix ".nix" x))
+    (builtins.filter (x: !lib.hasPrefix "_" (builtins.baseNameOf x) && lib.hasSuffix ".nix" x))
   ];
 
   mkModules =
@@ -81,7 +81,7 @@ rec {
           (lib.mapAttrs (n: _: allArgs.${n} or { }))
         ];
 
-        neededArgs = (lib.filterAttrs (n: _: !builtins.elem n argNames) funcArgs);
+        neededArgs = lib.filterAttrs (n: _: !builtins.elem n argNames) funcArgs;
       in
       {
         __functor =
@@ -93,10 +93,11 @@ rec {
               providedArgs
               // (
                 let
-                  inputs' = constructInputs' (args.pkgs.stdenv.system) inputs;
+                  inputs' = constructInputs' args.pkgs.stdenv.system inputs;
                   actuallyAllArgs = inputs' // {
                     inherit inputs';
                     self' = inputs'.self;
+                    inherit (inputs) self;
                   };
                 in
                 lib.filterAttrs (n: _: providedArgs ? ${n}) actuallyAllArgs

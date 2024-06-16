@@ -1,24 +1,12 @@
 {
-  lanzaboote,
   config,
   lib,
   pkgs,
-
 }:
 {
-  imports = [ lanzaboote.nixosModules.lanzaboote ];
-
-  environment.systemPackages = [ pkgs.sbctl ];
-
-  boot.lanzaboote = {
-    enable = true;
-    pkiBundle = "/etc/secureboot";
-    configurationLimit = 10;
-  };
 
   #link some stuff
   systemd.tmpfiles.rules = [
-    "L+ /etc/secureboot - - - - /persist/secureboot"
     "L+ /etc/ssh/ssh_host_ed25519_key  - - - - /persist/ssh/ssh_host_ed25519_key"
     "L+ /etc/ssh/ssh_host_ed25519_key.pub  - - - - /persist/ssh/ssh_host_ed25519_key.pub"
     "L  /etc/nixos/flake.nix  - - - - /home/gerg/Projects/nixos/flake.nix"
@@ -30,35 +18,56 @@
   };
   #make sure the sopskey is found
   sops.age.sshKeyPaths = lib.mkForce [ "/persist/ssh/ssh_host_ed25519_key" ];
-  fileSystems = {
-    "/persist".neededForBoot = true;
-    # These are my Windows drives partitions
-    "/efi".device = "/dev/disk/by-id/ata-Samsung_SSD_870_EVO_500GB_S6PXNM0T402828A-part1";
-    "/boot".device = "/dev/disk/by-id/ata-Samsung_SSD_870_EVO_500GB_S6PXNM0T402828A-part4";
-    "/efi/EFI/Linux" = {
-      device = "/boot/EFI/Linux";
-      options = [ "bind" ];
-    };
-    "/efi/EFI/nixos" = {
-      device = "/boot/EFI/nixos";
-      options = [ "bind" ];
-    };
-  };
-
+  fileSystems."/persist".neededForBoot = true;
   boot = {
+    supportedFilesystems = {
+      ntfs = true;
+    };
     zfs = {
       package = pkgs.zfs_unstable;
       devNodes = "/dev/disk/by-id/";
       forceImportAll = true;
     };
-    kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+    kernelPackages = pkgs.linuxPackagesFor (
+      let
+        version = "6.8.12";
+      in
+      (pkgs.linuxManualConfig {
+        version = "${version}-gerg";
+        modDirVersion = "${version}-gerg";
+        src = pkgs.fetchurl {
+          url = "mirror://kernel/linux/kernel/v${lib.versions.major version}.x/linux-${version}.tar.xz";
+          hash = "sha256-GbMZVtIptbnKVnH6HHQyAXloKj2NAPyGeUEUsh2oYDk=";
+        };
+
+        inherit (config.boot) kernelPatches;
+
+        config = {
+          CONFIG_RUST = "y";
+          CONFIG_MODULES = "y";
+        };
+        configfile = ./kernelConfig;
+      }).overrideAttrs
+        (old: {
+          passthru = (old.passthru or { }) // {
+            features = lib.foldr (x: y: (x.features or { }) // y) {
+              efiBootStub = true;
+              netfilterRPFilter = true;
+              ia32Emulation = true;
+            } config.boot.kernelPatches;
+          };
+        })
+    );
+
     #set ARC max
     kernelParams = [ "zfs.zfs_arc_max=17179869184" ];
     initrd = {
-      #module for multiple swap devices
-      kernelModules = [ "dm_mod" ];
-      #keyboard module for zfs password
-      availableKernelModules = [ "hid_generic" ];
+      kernelModules = [
+        #module for multiple swap devices
+        "dm_mod"
+        #keyboard module for zfs password
+        "hid_generic"
+      ];
       systemd.services.rollback = {
         serviceConfig = {
           Type = "oneshot";
@@ -77,13 +86,19 @@
     };
     loader = {
       systemd-boot = {
-        enable = lib.mkForce false;
-        xbootldrMountPoint = "/boot";
-      };
+        enable = lib.mkForce true;
+        extraFiles."shellx64.efi" = pkgs.edk2-uefi-shell.efi;
 
+        extraEntries."windows.conf" = ''
+          title  Windows
+          efi     /shellx64.efi
+          options -nointerrupt -noconsolein -noconsoleout HD2d65535a1:EFI\Microsoft\Boot\Bootmgfw.efi
+        '';
+
+      };
       grub.enable = lib.mkForce false;
       timeout = lib.mkForce 5;
-      efi.efiSysMountPoint = "/efi";
+      efi.efiSysMountPoint = "/efi22";
     };
   };
 }

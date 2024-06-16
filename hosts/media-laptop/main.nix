@@ -2,7 +2,7 @@
   lib,
   pkgs,
   config,
-
+  nvim-flake,
 }:
 {
   local = {
@@ -21,11 +21,11 @@
 
   environment.systemPackages = builtins.attrValues {
     inherit (pkgs)
-      neovim
       vlc
       pavucontrol # gui volume control
       chromium
       ;
+    inherit (nvim-flake.packages) neovim;
   };
   services.xserver.videoDrivers = [ "intel" ];
 
@@ -75,7 +75,7 @@
     "L+ %h/Desktop/vlc.desktop - - - - ${pkgs.vlc}/share/applications/vlc.desktop"
   ];
 
-  system.stateVersion = "23.05";
+  system.stateVersion = "24.11";
 
   swapDevices = [
     {

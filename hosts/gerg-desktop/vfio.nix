@@ -63,11 +63,6 @@ in
       "vfio_iommu_type1.allow_unsafe_interrupts=1"
       "kvm.ignore_msrs=1"
     ];
-    kernelPatches = lib.singleton {
-      name = "fix_amd_mem_access";
-      patch = null;
-      extraStructuredConfig.HSA_AMD_SVM = lib.kernel.yes;
-    };
   };
 
   environment = {

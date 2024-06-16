@@ -45,12 +45,6 @@
       repo = "disko";
       inputs.nixpkgs.follows = "unstable";
     };
-    lanzaboote = {
-      type = "github";
-      owner = "nix-community";
-      repo = "lanzaboote";
-      inputs.nixpkgs.follows = "unstable";
-    };
     nix-index-database = {
       type = "github";
       owner = "nix-community";
