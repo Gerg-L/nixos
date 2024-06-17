@@ -26,6 +26,9 @@ lib: {
                   type = "filesystem";
                   format = "vfat";
                   mountpoint = "/efi${name}";
+                  mountOptions = [
+                  "umask=007"
+                  ];
                 };
               };
               swap = {
