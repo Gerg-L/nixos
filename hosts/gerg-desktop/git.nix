@@ -2,7 +2,6 @@
 {
   programs.git = {
     enable = true;
-    package = pkgs.gitMinimal;
     config = {
       user = {
         name = "Gerg-L";
