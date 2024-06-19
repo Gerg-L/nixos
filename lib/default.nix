@@ -51,24 +51,22 @@ rec {
   addSchizophreniaToModule =
     x:
     let
+      # the imported module
       imported = import x;
     in
+    /*
+      If the module isn't a function then
+      it doesn't need arguments and error
+      message locations will function correctly
+    */
     if !lib.isFunction imported then
       x
     else
       let
-
-        allArgs = {
-          inherit inputs self;
-          _dir =
-            let
-              dir = builtins.dirOf x;
-            in
-            if (dir == builtins.storeDir) then null else dir;
-        };
-
-        funcArgs = lib.functionArgs imported;
-
+        /*
+          The names of all arguments which will be
+          available to be inserted into the module arguments
+        */
         argNames = builtins.attrNames inputs ++ [
           "inputs"
           "inputs'"
@@ -76,24 +74,70 @@ rec {
           "_dir"
         ];
 
+        /*
+          arguments to be passed minus
+          per system attributes
+          for example flake-parts-esque inputs'
+        */
+        argsPre = {
+          inherit inputs self;
+          /*
+            _dir is the "self" derived
+            path to the directory containing the module
+          */
+          _dir =
+            let
+              dir = builtins.dirOf x;
+            in
+            # Probably don't need this error check
+            if (dir == builtins.storeDir) then null else dir;
+        };
+
+        # all arguments defined in the module
+        funcArgs = lib.functionArgs imported;
+
+        /*
+          arguments which will be inserted
+          set to the before per-system values
+        */
         providedArgs = lib.pipe funcArgs [
           (lib.filterAttrs (n: _: builtins.elem n argNames))
-          (lib.mapAttrs (n: _: allArgs.${n} or { }))
+          (lib.mapAttrs (n: _: argsPre.${n} or { }))
         ];
 
+        /*
+          arguments which the module system
+          not provided here. either to be
+          provided by the module system or invalid
+        */
         neededArgs = lib.filterAttrs (n: _: !builtins.elem n argNames) funcArgs;
       in
       {
+        __functionArgs = neededArgs // {
+          /*
+            always require pkgs to be passed
+            to derive system from pkgs.stdenv.system
+          */
+          pkgs = false;
+        };
+
         __functor =
+          /*
+            args is specialArgs + _module.args which are needed
+            and always pkgs
+          */
           _: args:
           imported (
+            # take module system provided arguments
             (lib.filterAttrs (n: _: neededArgs ? ${n}) args)
-            # (formatter helping comment)
+            # add needed arguments
             // (
               providedArgs
+              # add system dependent arguments
               // (
                 let
                   inputs' = constructInputs' args.pkgs.stdenv.system inputs;
+
                   actuallyAllArgs = inputs' // {
                     inherit inputs';
                     self' = inputs'.self;
@@ -104,12 +148,11 @@ rec {
               )
             )
           )
+          # add _file to the final module attribute set
           // {
             _file = x;
           };
-        __functionArgs = neededArgs // {
-          pkgs = false;
-        };
+
       };
 
   gerg-utils =
