@@ -24,8 +24,6 @@ let
         --mode 3440x1440 --rate 120 --primary --pos 0x0 \
         --output "$(xrandr | grep -e 'HDMI.* connected.*'| awk '{ print$1 }')" \
         --mode 1920x1080 --rate 144 --set TearFree on --pos 3440x360
-
-      xset -dpms
     '';
   };
 in
@@ -42,6 +40,7 @@ in
       if ! [ -e "/etc/Xorg/ONE_MONITOR" ] ; then
         ${lib.getExe cfg_monitors}
       fi
+      xset -dpms
     '';
   };
 
