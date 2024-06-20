@@ -13,7 +13,6 @@ let
     name = "cfg_monitors";
     runtimeInputs = [
       pkgs.xorg.xrandr
-      pkgs.xorg.xset
       pkgs.gawk
       pkgs.gnugrep
     ];
@@ -40,7 +39,7 @@ in
       if ! [ -e "/etc/Xorg/ONE_MONITOR" ] ; then
         ${lib.getExe cfg_monitors}
       fi
-      xset -dpms
+      ${lib.getExe pkgs.xorg.xset} -dpms
     '';
   };
 
