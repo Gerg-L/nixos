@@ -128,7 +128,10 @@ rec {
           */
           _: args:
           imported (
-            # take module system provided arguments
+            /*
+              take module system provided arguments
+              filter them so only the required ones are passed
+            */
             (lib.filterAttrs (n: _: neededArgs ? ${n}) args)
             # add needed arguments
             // (
