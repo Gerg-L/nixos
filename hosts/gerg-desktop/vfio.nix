@@ -32,14 +32,14 @@ in
   };
 
   services.xserver = {
-    config = lib.mkForce "";
 
     displayManager.setupCommands = lib.mkBefore ''
       if ! [ -e "/etc/Xorg/ONE_MONITOR" ] ; then
         ${lib.getExe cfg_monitors}
       fi
-      ${lib.getExe pkgs.xorg.xset} -dpms
     '';
+
+    config = lib.mkForce (builtins.readFile "${_dir}/shared.conf");
   };
 
   systemd.tmpfiles.rules = [

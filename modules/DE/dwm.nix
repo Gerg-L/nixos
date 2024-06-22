@@ -11,9 +11,8 @@
   config = lib.mkIf config.local.DE.dwm.enable {
     systemd.user.services = {
       sxhkd = {
-        path = [ pkgs.sxhkd ];
-        script = "sxhkd -c /etc/sxhkd/sxhkdrc";
         serviceConfig = {
+          ExecStart = "${lib.getExe pkgs.sxhkd} -c /etc/sxhkd/sxhkdrc";
           Restart = "always";
           RestartSec = 2;
           ExecReload = "pkill -usr1 -x $MAINPID";
@@ -21,9 +20,8 @@
       };
 
       picom = {
-        path = [ pkgs.picom ];
-        script = "picom";
         serviceConfig = {
+          ExecStart = "${lib.getExe pkgs.picom} --backend glx";
           Restart = "always";
           RestartSec = 2;
           ExecReload = "pkill -usr1 -x $MAINPID";
@@ -79,15 +77,22 @@
           numlockx
           picom
           sxhkd
-          alock
+          xscreensaver
           ;
+
+        xsecurelock = pkgs.writeShellScriptBin "xsecurelock" ''
+          export XSECURELOCK_BLANK_TIMEOUT="30"
+          export XSECURELOCK_AUTH_TIMEOUT="30"
+          export XSECURELOCK_BLANK_DPMS_STATE="off"
+          export XSECURELOCK_BACKGROUND_COLOR="#000000"
+          export XSECURELOCK_AUTH_BACKGROUND_COLOR="#080808"
+          export XSECURELOCK_AUTH_FOREGROUND_COLOR="#bdbdbd"
+          export XSECURELOCK_FONT="Overpass"
+          export XSECURELOCK_SHOW_DATETIME="1"
+          ${lib.getExe pkgs.xsecurelock}
+        '';
       };
       etc = {
-        "xdg/Xresources".text = ''
-          ALock*input.frame*input:  #74b2ff
-          ALock*input.frame*check:  #36c692
-          ALock*Input.frame*width:  2
-        '';
         "sxhkd/sxhkdrc".text = ''
           XF86AudioPlay
             playerctl play-pause
@@ -116,7 +121,7 @@
           super + ctrl + r
             pkill -usr1 -x sxhkd
           super + ctrl + l
-            sleep 1 && xset dpms force off && alock
+            xsecurelock
         '';
       };
     };
