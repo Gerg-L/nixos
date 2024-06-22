@@ -4,7 +4,6 @@
   lib,
   suckless,
   self',
-
 }:
 {
   options.local.DE.dwm.enable = lib.mkEnableOption "";

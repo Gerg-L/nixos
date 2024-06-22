@@ -4,7 +4,6 @@
   lib,
   sops-nix,
   self',
-
 }:
 {
   imports = [ sops-nix.nixosModules.sops ];

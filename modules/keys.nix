@@ -3,7 +3,7 @@
   options.local.keys = lib.mkOption { };
 
   config.local.keys = {
-    gerg_gerg-phone = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDU6BnoHIgMLgZVGuvi03J9l5Z1yP1P5Q8QPyjRHyi77";
+    gerg_gerg-phone = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILZKIp3iObuxEUPx1dsMiN3vyMaMQb0N1gKJY78TtRxd";
     gerg_gerg-windows = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILpYY2uw0OH1Re+3BkYFlxn0O/D8ryqByJB/ljefooNc";
     root_media-laptop = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIq9YTf4jlVCKBKn44m4yJvj94C7pTOyaa4VjZFohNqD";
     root_game-desktop = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJUKHZasYQUAmRBiqtx1drDxfq18/N4rKydCtPHx461I";

@@ -2,7 +2,6 @@
   pkgs,
   config,
   lib,
-
 }:
 {
   sops.secrets.discordenv = { };

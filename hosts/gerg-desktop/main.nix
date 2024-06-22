@@ -1,5 +1,5 @@
 {
-
+  lib,
   nix-index-database,
   nvim-flake,
   self',
@@ -33,6 +33,10 @@
     nvidiaSettings = false;
     modesetting.enable = true;
     open = false;
+    powerManagement = {
+      enable = lib.mkForce false;
+      finegrained = lib.mkForce false;
+    };
     prime = {
       nvidiaBusId = "PCI:1:0:0";
       amdgpuBusId = "PCI:15:0:0";
@@ -94,8 +98,11 @@
         gh
         nixfmt-rfc-style
         # QMK configuration
+
         #via
+
         #qmk
+
         ;
       inherit (nvim-flake.packages) neovim;
       inherit (self'.packages) lint;
@@ -109,12 +116,12 @@
     };
   };
 
-  #services.udev.packages = [
-  #  pkgs.android-udev-rules
-  #  pkgs.via
-  #  pkgs.qmk-udev-rules
-  #];
-  #programs.adb.enable = true;
+  services.udev.packages = [
+    pkgs.android-udev-rules
+    # pkgs.via
+    # pkgs.qmk-udev-rules
+  ];
+  programs.adb.enable = true;
 
   networking = {
     useNetworkd = false;
@@ -164,8 +171,8 @@
         isNormalUser = true;
         extraGroups = [
           "wheel"
-          #"adbusers"
-          #"plugdev"
+          "adbusers"
+          "plugdev"
         ];
         openssh.authorizedKeys.keys = [
           config.local.keys.gerg_gerg-phone

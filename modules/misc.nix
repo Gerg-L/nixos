@@ -3,7 +3,6 @@
   lib,
   config,
   pkgs,
-
 }:
 {
   options.local.allowedUnfree = lib.mkOption {

@@ -17,14 +17,14 @@
       type = "github";
       owner = "NixOS";
       repo = "nixpkgs";
-      ref = "nixos-23.11";
+      ref = "nixos-24.05";
     };
     #nix itself
     nix = {
       type = "github";
       owner = "NixOS";
       repo = "nix";
-      ref = "bf72b78ef2110f4bda6105b8adff131dc9435bff";
+      ref = "1c131ec2b71fa7ad6fd285ed2a9fcc4cf616b3a6";
       inputs.nixpkgs.follows = "stable";
     };
     nixos-generators = {

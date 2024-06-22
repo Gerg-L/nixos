@@ -3,7 +3,6 @@
   pkgs,
   config,
   lib,
-
 }:
 {
   systemd.tmpfiles.rules = [ "d /tmp/neovim-page 0777 root root - -" ];

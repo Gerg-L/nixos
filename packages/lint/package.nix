@@ -5,7 +5,6 @@
   statix,
   fd,
 }:
-
 writeShellApplication {
   name = "lint";
   runtimeInputs = [

@@ -9,7 +9,6 @@ let
 in
 # Only good use case for rec
 rec {
-
   wrench = lib.flip lib.pipe;
 
   needsSystem = lib.flip builtins.elem [
@@ -63,6 +62,8 @@ rec {
       x
     else
       let
+        # all arguments defined in the module
+        funcArgs = lib.functionArgs imported;
         /*
           The names of all arguments which will be
           available to be inserted into the module arguments
@@ -85,16 +86,8 @@ rec {
             _dir is the "self" derived
             path to the directory containing the module
           */
-          _dir =
-            let
-              dir = builtins.dirOf x;
-            in
-            # Probably don't need this error check
-            if (dir == builtins.storeDir) then null else dir;
+          _dir = builtins.dirOf x;
         };
-
-        # all arguments defined in the module
-        funcArgs = lib.functionArgs imported;
 
         /*
           arguments which will be inserted
@@ -155,7 +148,6 @@ rec {
           // {
             _file = x;
           };
-
       };
 
   gerg-utils =
@@ -238,7 +230,6 @@ rec {
             }
           );
         in
-
         if builtins.pathExists "${path}/${n}/call.nix" then
           let
             x = import "${path}/${n}/call.nix" pkgs;
@@ -246,7 +237,6 @@ rec {
           x.callPackage "${path}/${n}/package.nix" x.args
         else
           callPackage "${path}/${n}/package.nix" { }
-
       ))
     ];
 }

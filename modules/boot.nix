@@ -3,7 +3,6 @@
   lib,
   pkgs,
   config,
-
 }:
 {
   options.local.bootConfig.disable = lib.mkEnableOption "";

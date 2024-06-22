@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-
 }:
 {
   options.local.DE.xfce.enable = lib.mkEnableOption "";

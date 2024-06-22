@@ -1,11 +1,9 @@
 {
-
   nix,
   inputs,
   lib,
   config,
   pkgs,
-
 }:
 {
   #

@@ -1,5 +1,4 @@
 lib: {
-
   disk =
     lib.genAttrs
       [

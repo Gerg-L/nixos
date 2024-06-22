@@ -14,6 +14,7 @@ in
         hidePodcasts
         shuffle
         #betterGenres broken
+
         ;
     };
     theme = spicePkgs.themes.dribbblish;

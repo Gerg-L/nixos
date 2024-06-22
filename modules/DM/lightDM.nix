@@ -2,7 +2,6 @@
   self',
   config,
   lib,
-
 }:
 {
   options.local.DM.lightdm.enable = lib.mkEnableOption "";

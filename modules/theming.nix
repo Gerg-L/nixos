@@ -2,7 +2,6 @@
   pkgs,
   config,
   lib,
-
 }:
 let
   cfg = config.local.theming;
