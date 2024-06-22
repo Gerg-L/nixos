@@ -64,6 +64,11 @@
       histSize = 10000;
       histFile = "$HOME/.cache/zsh_history";
       interactiveShellInit = ''
+          ### zsh-history-substring-search ###
+          setopt HIST_IGNORE_ALL_DUPS
+          source ${pkgs.zsh-history-substring-search}/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+          bindkey '^[[A' history-substring-search-up
+          bindkey '^[[B' history-substring-search-down
           ### fzf-tab ###
           source ${pkgs.zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh
           ### pager ###
