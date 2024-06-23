@@ -1,8 +1,8 @@
 {
   self',
   lib,
-  pkgs,
   config,
+  pkgs,
 }:
 {
   options.local.bootConfig.disable = lib.mkEnableOption "";
@@ -56,15 +56,12 @@
       reloadIfChanged = false;
       restartIfChanged = false;
       stopIfChanged = false;
+      wantedBy = [ "default.target" ];
       serviceConfig = {
+        ExecStart = "${lib.getExe' pkgs.efibootmgr "efibootmgr"} -t 0";
         Type = "oneshot";
         RemainAfterExit = true;
       };
-      path = [ pkgs.efibootmgr ];
-      wantedBy = [ "default.target" ];
-      script = ''
-        efibootmgr -t 0
-      '';
     };
   };
 }

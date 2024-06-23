@@ -18,9 +18,9 @@
         "postgresql.service"
         "miniflux-dbsetup.service"
       ];
-      script = lib.getExe' pkgs.miniflux "miniflux";
 
       serviceConfig = {
+        ExecStart = lib.getExe pkgs.miniflux;
         User = "miniflux";
         RuntimeDirectory = "miniflux";
         RuntimeDirectoryMode = "0770";
@@ -72,10 +72,8 @@
         "network.target"
         "postgresql.service"
       ];
-      script = ''
-        ${lib.getExe' config.services.postgresql.package "psql"} "miniflux" -c "CREATE EXTENSION IF NOT EXISTS hstore"
-      '';
       serviceConfig = {
+        ExecStart = "${lib.getExe' config.services.postgresql.package "psql"} 'miniflux' -c 'CREATE EXTENSION IF NOT EXISTS hstore'";
         Type = "oneshot";
         User = config.services.postgresql.superUser;
       };
