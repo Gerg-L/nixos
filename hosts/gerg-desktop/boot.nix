@@ -18,6 +18,37 @@ in
   environment.systemPackages = [ pkgs.sbctl ];
 
   boot = {
+    initrd = {
+      kernelModules = [ "igc" ];
+      network = {
+        enable = true;
+        ssh = {
+          enable = true;
+          port = 22;
+          hostKeys = [ "/persist/initrd-keys/ssh_host_ed5519_key" ];
+          authorizedKeys = [ config.local.keys.gerg_gerg-phone ];
+        };
+      };
+      systemd = {
+        network = {
+          enable = true;
+          networks.enp11s0 = {
+            name = "enp11s0";
+            address = [ "192.168.1.4/24" ];
+            gateway = [ "192.168.1.1" ];
+            dns = [ "192.168.1.1" ];
+            DHCP = "no";
+            linkConfig = {
+              MACAddress = "D8:5E:D3:E5:47:90";
+              RequiredForOnline = "routable";
+            };
+          };
+          wait-online.enable = false;
+        };
+        users.root.shell = "/bin/systemd-tty-ask-password-agent";
+      };
+    };
+
     lanzaboote = {
       enable = true;
       pkiBundle = "/etc/secureboot";
@@ -86,6 +117,5 @@ in
           };
         })
     );
-
   };
 }
