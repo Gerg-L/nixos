@@ -17,7 +17,7 @@ lib.gerg-utils (s: unstable.legacyPackages.${s}) {
     "media-laptop"
   ];
 
-  formatter = pkgs: inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.lint;
+  formatter = pkgs: inputs.self.packages.${pkgs.stdenv.system}.lint;
 
   devShells = pkgs: { default = pkgs.mkShell { packages = [ pkgs.sops ]; }; };
 
