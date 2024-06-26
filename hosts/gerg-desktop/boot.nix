@@ -62,7 +62,6 @@ in
             pkgs.sbctl
           ];
           text = ''
-            set -o pipefail
             lzbt "$@"
             MP='${config.boot.loader.efi.efiSysMountPoint}'
             cp -f '${pkgs.edk2-uefi-shell.efi}' "$MP/shellx64.efi"
@@ -89,14 +88,14 @@ in
 
     kernelPackages = pkgs.linuxPackagesFor (
       let
-        version = "6.8.12";
+        version = "6.9.6";
       in
       (pkgs.linuxManualConfig {
         version = "${version}-gerg";
         modDirVersion = "${version}-gerg";
         src = pkgs.fetchurl {
           url = "mirror://kernel/linux/kernel/v${lib.versions.major version}.x/linux-${version}.tar.xz";
-          hash = "sha256-GbMZVtIptbnKVnH6HHQyAXloKj2NAPyGeUEUsh2oYDk=";
+          hash = "sha256-XUNm4riZmPJ0q+A1V+87x4tY5H/GLBAtUeb0nl7Za0s=";
         };
 
         inherit (config.boot) kernelPatches;
