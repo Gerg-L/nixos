@@ -9,9 +9,10 @@ in
   };
   config = lib.mkMerge [
     (lib.mkIf (!cfg.gpuAcceleration.disable) {
-      hardware.graphics = {
+      hardware.opengl = {
         enable = true;
-        enable32Bit = true;
+        driSupport = true;
+        driSupport32Bit = true;
       };
     })
     (lib.mkIf (!cfg.sound.disable) {

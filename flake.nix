@@ -8,10 +8,11 @@
       ref = "master";
     };
     unstable = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixpkgs";
-      ref = "nixos-unstable";
+      follows = "stable";
+      #type = "github";
+      #owner = "NixOS";
+      #repo = "nixpkgs";
+      #ref = "nixos-unstable";
     };
     stable = {
       type = "github";
@@ -55,6 +56,13 @@
       type = "github";
       owner = "nix-community";
       repo = "lanzaboote";
+      inputs.nixpkgs.follows = "unstable";
+    };
+    nix-janitor = {
+      type = "github";
+      owner = "Nobbz";
+      repo = "nix-janitor";
+      ref = "d49fd7486d5597d2e854154bf643e7f86c5f1f6c";
       inputs.nixpkgs.follows = "unstable";
     };
     #my own packages

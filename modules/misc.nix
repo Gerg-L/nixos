@@ -1,8 +1,8 @@
 {
-  self',
   lib,
   config,
   pkgs,
+  nix-janitor,
 }:
 {
   options.local.allowedUnfree = lib.mkOption {
@@ -32,7 +32,7 @@
           nix-tree # view packages
           pciutils # lspci
           ;
-        inherit (self'.packages) nix-janitor;
+        inherit (nix-janitor.packages) default;
       }
     );
 
