@@ -8,7 +8,6 @@
 }:
 {
   local = {
-    remoteBuild.isBuilder = true;
     DE.dwm.enable = true;
     DM = {
       lightdm.enable = true;

@@ -1,9 +1,7 @@
 { config, lib }:
 {
-  options.local.remoteBuild = {
-    enable = lib.mkEnableOption "";
-    isBuilder = lib.mkEnableOption "";
-  };
+  options.local.remoteBuild.enable = lib.mkEnableOption "";
+
   config = lib.mkMerge [
     (lib.mkIf config.local.remoteBuild.enable {
       nix = {
@@ -12,8 +10,8 @@
           keep-derivations = false;
           builders-use-substitutes = true;
           max-jobs = 0;
-          substituters = [ "ssh-ng://nix-ssh@gerg-desktop" ];
-          trusted-public-keys = [ "gerg-desktop:6p1+h6jQnb1MOt3ra3PlQpfgEEF4zRrQWiEuAqcjBj8=" ];
+          substituters = [ "https://cache.gerg-l.com" ];
+          trusted-public-keys = [ "cache.gerg-l.com:6p1+h6jQnb1MOt3ra3PlQpfgEEF4zRrQWiEuAqcjBj8=" ];
         };
         distributedBuilds = true;
         buildMachines = [
@@ -37,60 +35,10 @@
           }
         ];
       };
-      programs.ssh.knownHosts = {
-        gerg-desktop = {
-          extraHostNames = [ "gerg-desktop.lan" ];
-          publicKey = config.local.keys.root_gerg-desktop;
-        };
+      programs.ssh.knownHosts.gerg-desktop = {
+        extraHostNames = [ "gerg-desktop.lan" ];
+        publicKey = config.local.keys.root_gerg-desktop;
       };
     })
-
-    (
-      let
-        keys = [ config.local.keys.root_media-laptop ];
-      in
-      lib.mkIf config.local.remoteBuild.isBuilder {
-        sops.secrets.store_key = { };
-        users = {
-          groups.builder = { };
-          users.builder = {
-            createHome = false;
-            isSystemUser = true;
-            openssh.authorizedKeys = {
-              inherit keys;
-            };
-            useDefaultShell = true;
-            group = "builder";
-          };
-        };
-        services.openssh.extraConfig = ''
-          Match User builder
-            AllowAgentForwarding no
-            AllowTcpForwarding no
-            PermitTTY no
-            PermitTunnel no
-            X11Forwarding no
-          Match All
-        '';
-
-        nix = {
-          settings = {
-            trusted-users = [
-              "builder"
-              "nix-ssh"
-            ];
-            keep-outputs = true;
-            keep-derivations = true;
-            secret-key-files = config.sops.secrets.store_key.path;
-          };
-          sshServe = {
-            enable = true;
-            write = true;
-            inherit keys;
-            protocol = "ssh-ng";
-          };
-        };
-      }
-    )
   ];
 }

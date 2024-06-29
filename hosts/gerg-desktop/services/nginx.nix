@@ -58,6 +58,12 @@
         sslCertificateKey = config.sops.secrets.gerg_ssl_key.path;
         locations."/".proxyPass = "http://unix:${config.systemd.services.miniflux.environment.LISTEN_ADDR}";
       };
+      "cache.gerg-L.com" = {
+        forceSSL = true;
+        sslCertificate = config.sops.secrets.gerg_ssl_cert.path;
+        sslCertificateKey = config.sops.secrets.gerg_ssl_key.path;
+        locations."/".proxyPass = "http://unix:/run/nix-serve/nix-serve.sock";
+      };
     };
   };
   networking.firewall.allowedTCPPorts = [
