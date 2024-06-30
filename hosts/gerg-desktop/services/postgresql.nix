@@ -7,7 +7,6 @@
 
     ensureDatabases = [
       "miniflux"
-      config.services.gitea.database.user
     ];
     ensureUsers = [
       {
