@@ -8,12 +8,12 @@
       nix-serve = { };
     };
     users = {
-
       ${config.services.nginx.user}.extraGroups = [ "nix-serve" ];
       builder = {
         isSystemUser = true;
         openssh.authorizedKeys.keys = [ config.local.keys.root_media-laptop ];
         group = "builder";
+        shell = pkgs.bashInteractive;
       };
       nix-serve = {
         isSystemUser = true;
@@ -33,10 +33,7 @@
   '';
 
   nix.settings = {
-    trusted-users = [
-      "builder"
-      "nix-ssh"
-    ];
+    trusted-users = [ "builder" ];
     allowed-users = [ "nix-serve" ];
     keep-outputs = true;
     keep-derivations = true;

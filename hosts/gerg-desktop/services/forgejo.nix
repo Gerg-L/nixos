@@ -1,11 +1,11 @@
-{ lib, config }:
+{ config }:
 {
   users = {
     groups.${config.services.forgejo.group} = { };
     users = {
       ${config.services.forgejo.user} = {
         isSystemUser = true;
-        group = config.services.forgejo.group;
+        inherit (config.services.forgejo) group;
         extraGroups = [ "postgres" ];
         openssh.authorizedKeys.keys = [ config.local.keys.gerg_gerg-desktop ];
       };

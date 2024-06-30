@@ -1,13 +1,11 @@
-{ config, pkgs }:
+{ pkgs }:
 {
   services.postgresql = {
     enable = true;
     package = pkgs.postgresql_13;
     dataDir = "/persist/services/postgresql";
 
-    ensureDatabases = [
-      "miniflux"
-    ];
+    ensureDatabases = [ "miniflux" ];
     ensureUsers = [
       {
         name = "miniflux";
