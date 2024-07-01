@@ -90,18 +90,12 @@ in
 
     kernelPackages = pkgs.linuxPackagesFor (
       let
-        version = "6.9.6";
+        inherit (config.boot.zfs.package.latestCompatibleLinuxPackages) kernel;
       in
       (pkgs.linuxManualConfig {
-        version = "${version}-gerg";
-        modDirVersion = "${version}-gerg";
-        src = pkgs.fetchurl {
-          url = "mirror://kernel/linux/kernel/v${lib.versions.major version}.x/linux-${version}.tar.xz";
-          hash = "sha256-XUNm4riZmPJ0q+A1V+87x4tY5H/GLBAtUeb0nl7Za0s=";
-        };
-
+        inherit (kernel) src;
         inherit (config.boot) kernelPatches;
-
+        version = "${kernel.version}-gerg";
         config = {
           CONFIG_RUST = "y";
           CONFIG_MODULES = "y";
