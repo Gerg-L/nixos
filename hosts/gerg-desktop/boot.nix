@@ -17,6 +17,8 @@ in
 
   environment.systemPackages = [ pkgs.sbctl ];
 
+  environment.shellAliases.windows = "bootctl set-oneshot windows.conf && reboot";
+
   boot = {
     initrd = {
       kernelModules = [ "igc" ];
