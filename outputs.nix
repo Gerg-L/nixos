@@ -19,7 +19,7 @@ lib.gerg-utils (s: unstable.legacyPackages.${s}) {
 
   formatter = pkgs: inputs.self.packages.${pkgs.stdenv.system}.lint;
 
-  devShells = pkgs: { default = pkgs.mkShell { packages = [ pkgs.sops ]; }; };
+  devShells = pkgs: { default = pkgs.mkShell { packages = [ pkgs.sops pkgs.hello ]; }; };
 
   packages = lib.mkPackages "${self}/packages";
 }

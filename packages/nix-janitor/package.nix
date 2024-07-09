@@ -1,5 +1,5 @@
-{ nix-janitor, fetchFromGitHub }:
-nix-janitor.overrideAttrs {
+{ inputs', fetchFromGitHub }:
+inputs'.master.legacyPackages.nix-janitor.overrideAttrs {
   src = fetchFromGitHub {
     owner = "NobbZ";
     repo = "nix-janitor";
