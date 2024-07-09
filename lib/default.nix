@@ -204,39 +204,72 @@ rec {
     /<name> -> packages named by directory
     /<name>/call.nix ->  callPackage override imported via import <file> pkgs
     call.nix example
-      pkgs: {
-        inherit (pkgs.python3Packages) callPackage;
+      {python3Packages}: {
+        inherit (python3Packages) callPackage;
         args = {};
      }
 
     /<name>/package.nix -> the package itself
+    /<name>/wrapper.nix:
+    a optional wrapper for the package
+    which is callPackage'd with the original package
+    as an argument named <name>-unwrapped
   */
   mkPackages =
     path: pkgs:
     lib.pipe path [
       builtins.readDir
       (lib.filterAttrs (_: v: v == "directory"))
-      (lib.mapAttrs (
-        n: _:
+      builtins.attrNames
+      (map (
+        n:
         let
-          callPackage = lib.callPackageWith (
-            pkgs
-            // {
-              inputs = constructInputs' pkgs.system inputs;
-              # maybe add self?
-              # inherit self;
-              # npins sources if i need them
-              # sources = import ./npins;
-            }
-          );
+          p = "${path}/${n}";
+
+          callPackage =
+            file: args:
+            let
+              defaultArgs =
+                pkgs
+                // (
+                  let
+                    inputs' = constructInputs' pkgs.stdenv.system inputs;
+                  in
+                  {
+                    inherit inputs' inputs;
+                    self' = inputs'.self;
+                    inherit (inputs) self;
+                    # npins sources if i ever use them
+                    # sources = lib.mapAttrs (_: pkgs.npins.mkSource) (lib.importJSON "${self}/packages/sources.json").pins;
+                  }
+                );
+              _callPackage = lib.callPackageWith defaultArgs;
+              fullPath = "${p}/${file}.nix";
+              callPath = "${p}/call.nix";
+            in
+            assert lib.assertMsg (builtins.pathExists fullPath)
+              "File attempting to be callPackage'd '${fullPath}' does not exist";
+
+            if builtins.pathExists callPath then
+              let
+                x = _callPackage callPath { };
+              in
+              x.callPackage or _callPackage fullPath (x.args or defaultArgs // args)
+
+            else
+              _callPackage fullPath args;
         in
-        if builtins.pathExists "${path}/${n}/call.nix" then
+
+        if builtins.pathExists "${p}/wrapper.nix" then
+          # My distaste for rec grows ever stronger
           let
-            x = import "${path}/${n}/call.nix" pkgs;
+            set."${n}-unwrapped" = callPackage "package" { };
           in
-          x.callPackage "${path}/${n}/package.nix" x.args
+          { ${n} = callPackage "wrapper" set; } // set
         else
-          callPackage "${path}/${n}/package.nix" { }
+          { ${n} = callPackage "package" { }; }
+
       ))
+      lib.mergeAttrsList
     ];
 }
