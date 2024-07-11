@@ -15,9 +15,14 @@ in
 {
   imports = [ lanzaboote.nixosModules.lanzaboote ];
 
-  environment.systemPackages = [ pkgs.sbctl ];
-
-  environment.shellAliases.windows = "bootctl set-oneshot windows.conf && reboot";
+  environment.systemPackages = [
+    pkgs.sbctl
+    (pkgs.writeShellScriptBin "windows" ''
+      bootctl set-oneshot windows.conf
+      bootctl set-timeout-oneshot 1
+      reboot
+    '')
+  ];
 
   boot = {
     initrd = {
