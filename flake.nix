@@ -8,11 +8,10 @@
       ref = "master";
     };
     unstable = {
-      follows = "stable";
-      #type = "github";
-      #owner = "NixOS";
-      #repo = "nixpkgs";
-      #ref = "nixos-unstable";
+      type = "github";
+      owner = "NixOS";
+      repo = "nixpkgs";
+      ref = "nixos-unstable";
     };
     stable = {
       type = "github";
