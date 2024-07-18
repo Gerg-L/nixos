@@ -93,7 +93,7 @@
         deadnix
         statix
         element-desktop
-        webcord
+        vesktop
         gh
         nixfmt-rfc-style
         # QMK configuration
