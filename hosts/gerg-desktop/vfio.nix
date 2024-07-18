@@ -75,6 +75,18 @@ in
 
   programs.virt-manager.enable = true;
 
+  programs.dconf.profiles.user.databases = [
+    {
+      lockAll = true;
+      settings = {
+        "org/virt-manager/virt-manager/connections" = {
+          autoconnect = [ "qemu:///system" ];
+          uris = [ "qemu:///system" ];
+        };
+      };
+    }
+  ];
+
   virtualisation.libvirtd = {
     enable = true;
     qemu = {
