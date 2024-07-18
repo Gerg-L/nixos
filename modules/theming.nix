@@ -57,6 +57,12 @@ in
       services.xserver.displayManager.sessionCommands = ''
         ${lib.getExe pkgs.xorg.xrdb} -load /etc/xdg/Xresources
       '';
+      programs.dconf.profiles.user.databases = [
+        {
+          lockAll = false;
+          settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+        }
+      ];
       fonts = {
         packages = [
           pkgs.overpass
