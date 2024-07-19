@@ -6,9 +6,7 @@ inputs@{
 }:
 let
   inherit (stable) lib;
-in
-# Only good use case for rec
-rec {
+
   wrench = lib.flip lib.pipe;
 
   needsSystem = lib.flip builtins.elem [
@@ -32,20 +30,6 @@ rec {
     lib.filesystem.listFilesRecursive
     (builtins.filter (x: !lib.hasPrefix "_" (builtins.baseNameOf x) && lib.hasSuffix ".nix" x))
   ];
-
-  mkModules =
-    path:
-    lib.pipe path [
-      listNixFilesRecursive
-      (map (name: {
-        name = lib.pipe name [
-          (lib.removeSuffix ".nix")
-          (lib.removePrefix "${path}/")
-        ];
-        value = addSchizophreniaToModule name;
-      }))
-      builtins.listToAttrs
-    ];
 
   addSchizophreniaToModule =
     x:
@@ -149,6 +133,27 @@ rec {
             _file = x;
           };
       };
+in {
+  inherit
+    wrench
+    needsSystem
+    constructInputs'
+    listNixFilesRecursive
+    addSchizophreniaToModule;
+
+  mkModules =
+    path:
+    lib.pipe path [
+      listNixFilesRecursive
+      (map (name: {
+        name = lib.pipe name [
+          (lib.removeSuffix ".nix")
+          (lib.removePrefix "${path}/")
+        ];
+        value = addSchizophreniaToModule name;
+      }))
+      builtins.listToAttrs
+    ];
 
   gerg-utils =
     pkgsf: outputs:
@@ -192,6 +197,7 @@ rec {
         ];
       }
     );
+
   mkDisko = wrench [
     (map (name: {
       name = "disko-${name}";
