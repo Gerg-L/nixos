@@ -27,14 +27,7 @@
   #
   # Use nix directly from master
   #
-  nix.package = nix.packages.default.overrideAttrs (old: {
-    patches = old.patches or [ ] ++ [
-      (pkgs.fetchpatch {
-        url = "https://github.com/NixOS/nix/commit/b6ae3be9c6ec4e9de55479188e76fc330b2304dd.patch";
-        hash = "sha256-VyIywGo1ie059wXmGWx+bNeHz9lNk6nlkJ/Qgd1kmzw=";
-      })
-    ];
-  });
+  nix.package = nix.packages.default;
   #
   # Other nix settings
   #
@@ -64,9 +57,5 @@
     allowed-users = [ "@wheel" ];
     use-xdg-base-directories = true;
     auto-allocate-uids = true;
-    #
-    # A option for the custom patch
-    #
-    reject-flake-config = true;
   };
 }
