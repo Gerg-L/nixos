@@ -1,11 +1,11 @@
 inputs@{
-  stable,
+  unstable,
   self,
   disko,
   ...
 }:
 let
-  inherit (stable) lib;
+  inherit (unstable) lib;
 in
 # Only good use case for rec
 rec {
@@ -173,12 +173,12 @@ rec {
       hostName:
       # Whats lib.nixosSystem? never heard of her
       lib.evalModules {
-        specialArgs.modulesPath = "${stable}/nixos/modules";
+        specialArgs.modulesPath = "${unstable}/nixos/modules";
 
         modules = builtins.concatLists [
           (builtins.attrValues self.nixosModules)
           (map addSchizophreniaToModule (listNixFilesRecursive "${self}/hosts/${hostName}"))
-          (import "${stable}/nixos/modules/module-list.nix")
+          (import "${unstable}/nixos/modules/module-list.nix")
           (lib.singleton {
             networking = {
               inherit hostName;
