@@ -96,10 +96,9 @@
         vesktop
         gh
         nixfmt-rfc-style
+        tmux
         # QMK configuration
-
         #via
-
         #qmk
 
         ;

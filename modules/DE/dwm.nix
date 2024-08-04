@@ -68,7 +68,24 @@
     };
     environment = {
       systemPackages = builtins.attrValues {
-        inherit (suckless.packages) dmenu dwm st;
+        inherit (suckless.packages) dmenu dwm;
+        st =
+          let
+            wrap = pkgs.writeShellScript "st" ''
+              ARGS="''${@:1}"
+              exec ${lib.getExe suckless.packages.st} "''${ARGS:-tmux}"
+            '';
+          in
+          pkgs.symlinkJoin {
+            name = "st";
+            paths = [ suckless.packages.st ];
+            nativeBuildInputs = [ pkgs.makeBinaryWrapper ];
+            postBuild = ''
+              unlink "$out/bin/st"
+              ln -s "${wrap}" "$out/bin/st"
+
+            '';
+          };
         inherit (pkgs)
           maim
           playerctl

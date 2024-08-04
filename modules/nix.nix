@@ -3,7 +3,6 @@
   inputs,
   lib,
   config,
-  pkgs,
 }:
 {
   #
