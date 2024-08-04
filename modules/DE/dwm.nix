@@ -71,7 +71,7 @@
         inherit (suckless.packages) dmenu dwm;
         st =
           let
-            wrap = pkgs.writeShellScript "st" ''
+            st = pkgs.writeShellScript "st" ''
               ARGS="''${@:1}"
               exec ${lib.getExe suckless.packages.st} "''${ARGS:-tmux}"
             '';
@@ -82,8 +82,7 @@
             nativeBuildInputs = [ pkgs.makeBinaryWrapper ];
             postBuild = ''
               unlink "$out/bin/st"
-              ln -s "${wrap}" "$out/bin/st"
-
+              ln -s "${st}" "$out/bin/st"
             '';
           };
         inherit (pkgs)
