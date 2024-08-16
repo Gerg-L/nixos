@@ -52,7 +52,6 @@ func () {
 
 func "*.gerg-l.com" "8f76f071c5edbc0f947a5c5f9c5df9f8"
 func "gerg-l.com" "8f76f071c5edbc0f947a5c5f9c5df9f8" "false"
-func "minecraft.gerg-l.com" "8f76f071c5edbc0f947a5c5f9c5df9f8" "false"
 func "*.nix-fu.com" "cc2df9163c3730f58b866409ac5a108c"
 func "nix-fu.com" "cc2df9163c3730f58b866409ac5a108c"
 
