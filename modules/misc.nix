@@ -40,7 +40,12 @@
     programs.mtr.enable = true; # ping and traceroute
     services.openssh = {
       enable = true;
-      hostKeys = lib.mkForce [ ];
+      hostKeys = lib.mkForce [
+        {
+          path = "/etc/ssh/ssh_host_ed25519_key";
+          type = "ed25519";
+        }
+      ];
       settings = {
         PermitRootLogin = lib.mkDefault "no";
         PasswordAuthentication = false;
