@@ -17,7 +17,7 @@
     wantedBy = [ "multi-user.target" ];
     wants = [ "network-online.target" ];
     after = [ "network-online.target" ];
-    startAt = "*:0/30";
+    startAt = "hourly";
 
     serviceConfig = {
       EnvironmentFile = config.sops.secrets.cloudflare.path;
