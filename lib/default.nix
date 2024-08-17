@@ -167,38 +167,44 @@ rec {
         (lib.foldAttrs lib.mergeAttrs { })
       ];
 
-  mkHosts =
-    system:
-    lib.flip lib.genAttrs (
-      hostName:
-      # Whats lib.nixosSystem? never heard of her
-      lib.evalModules {
+  mkHosts = wrench [
+    builtins.readDir
+    (lib.filterAttrs (_: v: v == "directory"))
+    builtins.attrNames
+    (map (x: {
+      name = x;
+      value = lib.evalModules {
         specialArgs.modulesPath = "${unstable}/nixos/modules";
-
         modules = builtins.concatLists [
           (builtins.attrValues self.nixosModules)
-          (map addSchizophreniaToModule (listNixFilesRecursive "${self}/hosts/${hostName}"))
+          (map addSchizophreniaToModule (listNixFilesRecursive "${self}/hosts/${x}"))
           (import "${unstable}/nixos/modules/module-list.nix")
-          (lib.singleton {
-            networking = {
-              inherit hostName;
-            };
-            nixpkgs.hostPlatform = system;
-          })
-          (lib.optionals (self.diskoConfigurations ? "disko-${hostName}") [
-            self.diskoConfigurations."disko-${hostName}"
+          (lib.optionals (self.diskoConfigurations ? "disko-${x}") [
+            self.diskoConfigurations."disko-${x}"
             disko.nixosModules.default
           ])
         ];
-      }
-    );
-  mkDisko = wrench [
-    (map (name: {
-      name = "disko-${name}";
-      value.disko.devices = import "${self}/disko/${name}.nix" lib;
+      };
     }))
     builtins.listToAttrs
   ];
+
+  mkDisko =
+    path:
+    lib.pipe path [
+      builtins.readDir
+      (lib.filterAttrs (n: v: v == "regular" && lib.hasSuffix ".nix" n))
+      builtins.attrNames
+      (map (x: {
+        name = lib.pipe x [
+          (lib.removeSuffix path)
+          (lib.removeSuffix ".nix")
+          (x: "disko-${x}")
+        ];
+        value.disko.devices = import "${path}/${x}" lib;
+      }))
+      builtins.listToAttrs
+    ];
 
   /*
     /<name> -> packages named by directory

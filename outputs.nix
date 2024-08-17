@@ -4,20 +4,11 @@ let
 in
 lib.gerg-utils (s: unstable.legacyPackages.${s}) {
   inherit lib;
-  nixosConfigurations = lib.mkHosts "x86_64-linux" [
-    "gerg-desktop"
-    "media-laptop"
-    "iso"
-    "minecraft"
-  ];
+  nixosConfigurations = lib.mkHosts "${self}/hosts";
 
   nixosModules = lib.mkModules "${self}/modules";
 
-  diskoConfigurations = lib.mkDisko [
-    "gerg-desktop"
-    "media-laptop"
-    "minecraft"
-  ];
+  diskoConfigurations = lib.mkDisko "${self}/disko";
 
   formatter = pkgs: inputs.self.packages.${pkgs.stdenv.system}.lint;
 

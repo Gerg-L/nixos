@@ -39,4 +39,8 @@
     edition = lib.mkForce "gerg-minimal";
     isoName = lib.mkForce "NixOS";
   };
+
+  system.stateVersion = "24.11";
+  networking.hostName = "gerg-iso";
+  nixpkgs.hostPlatform = "x86_64-linux";
 }
