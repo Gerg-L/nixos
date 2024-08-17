@@ -70,6 +70,7 @@ in
     shellAliases = {
       vm-start = "virsh start Windows";
       vm-stop = "virsh shutdown Windows";
+      fix_monitors = "xset dpms force off && xset dpms force on";
     };
   };
 
