@@ -10,10 +10,6 @@
     reloadIfChanged = false;
     restartIfChanged = false;
     stopIfChanged = false;
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-    };
     wantedBy = [ "multi-user.target" ];
     wants = [ "network-online.target" ];
     after = [ "network-online.target" ];

@@ -1,44 +1,30 @@
-{ self', lib }:
+{ lib, self' }:
 {
   # I manually switch this sometimes
   config = lib.mkIf false {
-    networking.firewall.allowedTCPPorts = [ 25565 ];
+    networking.firewall.allowedTCPPorts = [
+      25565
+      25575
+    ];
 
-    users.users.minecraft = {
-      description = "Minecraft server service user";
-      home = "/persist/minecraft";
-      createHome = true;
-      isSystemUser = true;
-      group = "minecraft";
-    };
-    users.groups.minecraft = { };
-
-    systemd.sockets.minecraft-server = {
-      bindsTo = [ "minecraft-server.service" ];
-      socketConfig = {
-        ListenFIFO = "/run/minecraft-server.stdin";
-        SocketMode = "0660";
-        SocketUser = "minecraft";
-        SocketGroup = "minecraft";
-        RemoveOnStop = true;
-        FlushPending = true;
+    users = {
+      users.minecraft = {
+        home = "/minecraft";
+        createHome = true;
+        isSystemUser = true;
+        group = "minecraft";
       };
+      groups.minecraft = { };
     };
 
     systemd.services.minecraft-server = {
-      enable = true;
-      description = "Minecraft Server Service";
+      description = "Minecraft";
       wantedBy = [ "multi-user.target" ];
-      requires = [ "minecraft-server.socket" ];
-      after = [
-        "network.target"
-        "minecraft-server.socket"
-      ];
-      path = [ self'.packages.papermc ];
+      after = [ "network.target" ];
       script = ''
-        minecraft-server \
-          -Xms8G \
-          -Xmx8G \
+        ${lib.getExe self'.packages.papermc} \
+          -Xms6G \
+          -Xmx6G \
           -XX:+UseG1GC \
           -XX:+ParallelRefProcEnabled \
           -XX:MaxGCPauseMillis=200 \
@@ -63,9 +49,9 @@
       serviceConfig = {
         Restart = "always";
         User = "minecraft";
-        WorkingDirectory = "/persist/minecraft";
+        WorkingDirectory = "/minecraft";
 
-        StandardInput = "socket";
+        StandardInput = "journal";
         StandardOutput = "journal";
         StandardError = "journal";
 

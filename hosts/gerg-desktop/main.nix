@@ -26,6 +26,7 @@
     ];
   };
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   hardware.nvidia = {
     package = config.boot.kernelPackages.nvidiaPackages.beta;
     nvidiaPersistenced = false;
@@ -47,20 +48,21 @@
     "amdgpu"
   ];
 
-  services.gnome.gnome-keyring.enable = true;
+  programs = {
+    steam.enable = true;
 
-  programs.steam.enable = true;
+    direnv = {
+      enable = true;
+      loadInNixShell = false;
+      silent = true;
+    };
 
-  programs.direnv = {
-    enable = true;
-    loadInNixShell = false;
-    silent = true;
-    nix-direnv.package = pkgs.nix-direnv.override { nix = config.nix.package; };
-  };
+    nix-index = {
+      enable = true;
+      package = nix-index-database.packages.nix-index-with-db;
+    };
 
-  programs.nix-index = {
-    enable = true;
-    package = nix-index-database.packages.nix-index-with-db;
+    adb.enable = true;
   };
 
   nix = {
@@ -119,7 +121,6 @@
     # pkgs.via
     # pkgs.qmk-udev-rules
   ];
-  programs.adb.enable = true;
 
   networking = {
     useNetworkd = false;
@@ -172,17 +173,12 @@
           "adbusers"
           "plugdev"
         ];
-        openssh.authorizedKeys.keys = [
-          config.local.keys.gerg_gerg-phone
-          config.local.keys.gerg_gerg-windows
-        ];
+        openssh.authorizedKeys.keys = builtins.attrValues {
+          inherit (config.local.keys) gerg_gerg-phone gerg_gerg-windows;
+        };
         hashedPasswordFile = config.sops.secrets.gerg.path;
       };
-      "root" = {
-        uid = 0;
-        home = "/root";
-        hashedPassword = "!";
-      };
+      root.hashedPassword = "!";
     };
   };
   boot = {

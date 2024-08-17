@@ -45,14 +45,10 @@
         extraGroups = [ "networkmanager" ];
         initialHashedPassword = "";
       };
-      "root" = {
-        uid = 0;
-        home = "/root";
-        openssh.authorizedKeys.keys = [
-          config.local.keys.gerg_gerg-phone
-          config.local.keys.gerg_gerg-windows
-          config.local.keys.gerg_gerg-desktop
-        ];
+      root = {
+        openssh.authorizedKeys.keys = builtins.attrValues {
+          inherit (config.local.keys) gerg_gerg-phone gerg_gerg-windows gerg_gerg-desktop;
+        };
         hashedPasswordFile = config.sops.secrets.root.path;
       };
     };

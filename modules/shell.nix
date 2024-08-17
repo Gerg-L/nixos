@@ -2,7 +2,6 @@
   fetch-rs,
   pkgs,
   config,
-  lib,
 }:
 {
   systemd.tmpfiles.rules = [ "d /tmp/neovim-page 0777 root root - -" ];
@@ -11,7 +10,6 @@
       inherit (pkgs) page eza fzf;
       inherit (fetch-rs.packages) fetch-rs;
     };
-    binsh = lib.getExe pkgs.dash; # use dash for speed
     variables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
