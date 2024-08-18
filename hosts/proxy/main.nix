@@ -21,7 +21,10 @@
 
   services.qemuGuest.enable = true;
 
-  environment.systemPackages = [ pkgs.neovim ];
+  environment.systemPackages = [
+    pkgs.neovim
+    pkgs.rsync
+  ];
 
   users = {
     mutableUsers = false;
@@ -47,7 +50,7 @@
   };
 
   networking = {
-    hostName = "minecraft";
+    hostName = "proxy";
     useNetworkd = false;
     useDHCP = false;
   };
@@ -55,8 +58,11 @@
   systemd.network = {
     enable = true;
     networks.default = {
-      DHCP = "yes";
       name = "en*";
+      DHCP = "ipv4";
+      addresses = [ { Address = "2a01:4ff:f0:b7fd::/64"; } ];
+      gateway = [ "fe80::1" ];
+      linkConfig.RequiredForOnline = "routable";
     };
   };
 
@@ -66,7 +72,7 @@
         canTouchEfiVariables = true;
         efiSysMountPoint = "/boot";
       };
-      systemd-boot = {
+      grub = {
         enable = true;
         configurationLimit = 10;
       };
