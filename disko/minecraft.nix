@@ -1,7 +1,7 @@
 _: {
   disk = {
     main = {
-      device = "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_51056934";
+      device = "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_51091227";
       type = "disk";
       content = {
         type = "gpt";

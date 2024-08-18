@@ -64,9 +64,9 @@
     loader = {
       efi = {
         canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot"; # ← use the same mount point here.
+        efiSysMountPoint = "/boot";
       };
-      grub = {
+      systemd-boot = {
         enable = true;
         configurationLimit = 10;
       };
