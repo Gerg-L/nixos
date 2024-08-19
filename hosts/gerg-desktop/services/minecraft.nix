@@ -83,7 +83,9 @@
         UMask = "0077";
       };
       preStart = ''
-        echo "eula=true" > eula.txt
+        if [ ! -e "eula.txt" ]; then
+          echo "eula=true" > eula.txt
+        fi
       '';
     };
   };
