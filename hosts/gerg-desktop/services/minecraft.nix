@@ -2,11 +2,13 @@
 {
   # I manually switch this sometimes
   config = lib.mkIf true {
-    networking.firewall.allowedTCPPorts = [
-      25565
-      25575
-      24454
-    ];
+    networking.firewall = {
+      allowedUDPPorts = [ 24454 ];
+      allowedTCPPorts = [
+        25565
+        25575
+      ];
+    };
 
     users = {
       users.minecraft = {
