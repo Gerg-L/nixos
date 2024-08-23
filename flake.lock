@@ -849,6 +849,26 @@
         "type": "github"
       }
     },
+    "reboot-bot": {
+      "inputs": {
+        "nixpkgs": [
+          "unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1724374563,
+        "narHash": "sha256-mQvWSUoqVuuHNIj3+ll3IuWjkJLJ470xmqC0/Pao2EQ=",
+        "owner": "Gerg-L",
+        "repo": "reboot-bot",
+        "rev": "27ecb79e87d1b25878f6c2f2e0b8833d09884b8c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Gerg-L",
+        "repo": "reboot-bot",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "disko": "disko",
@@ -860,6 +880,7 @@
         "nix-janitor": "nix-janitor",
         "nixos-generators": "nixos-generators",
         "nvim-flake": "nvim-flake",
+        "reboot-bot": "reboot-bot",
         "sops-nix": "sops-nix",
         "spicetify-nix": "spicetify-nix",
         "stable": "stable",

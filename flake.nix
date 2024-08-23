@@ -89,6 +89,13 @@
       repo = "fetch-rs";
       inputs.nixpkgs.follows = "unstable";
     };
+    reboot-bot = {
+      type = "github";
+      owner = "Gerg-L";
+      repo = "reboot-bot";
+      inputs.nixpkgs.follows = "unstable";
+    };
+
   };
 
   outputs = x: import ./outputs.nix x;
