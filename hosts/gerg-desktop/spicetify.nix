@@ -10,11 +10,10 @@ in
     enabledCustomApps = builtins.attrValues { inherit (spicePkgs.apps) lyricsPlus ncsVisualizer; };
     enabledExtensions = builtins.attrValues {
       inherit (spicePkgs.extensions)
-        adblock
+        adblockify
         hidePodcasts
         shuffle
-        #betterGenres broken
-
+        betterGenres
         ;
     };
     theme = spicePkgs.themes.dribbblish;
