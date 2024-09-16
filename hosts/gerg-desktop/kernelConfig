@@ -2042,14 +2042,14 @@ CONFIG_NVME_HOST_AUTH=y
 CONFIG_SCSI_MOD=m
 # CONFIG_RAID_ATTRS is not set
 CONFIG_SCSI_COMMON=m
-CONFIG_SCSI=m
+CONFIG_SCSI=y
 CONFIG_SCSI_DMA=y
 CONFIG_SCSI_PROC_FS=y
 
 #
 # SCSI support type (disk, tape, CD-ROM)
 #
-CONFIG_BLK_DEV_SD=m
+CONFIG_BLK_DEV_SD=y
 # CONFIG_CHR_DEV_ST is not set
 # CONFIG_BLK_DEV_SR is not set
 # CONFIG_CHR_DEV_SG is not set
@@ -4427,7 +4427,7 @@ CONFIG_USB_XHCI_PCI_RENESAS=m
 #
 # also be needed; see USB_STORAGE Help for more info
 #
-# CONFIG_USB_STORAGE is not set
+CONFIG_USB_STORAGE=y
 
 #
 # USB Imaging devices
