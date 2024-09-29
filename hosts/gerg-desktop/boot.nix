@@ -95,12 +95,16 @@ in
 
     kernelPackages = pkgs.linuxPackagesFor (
       let
-        inherit (config.boot.zfs.package.latestCompatibleLinuxPackages) kernel;
+        version = "6.10.11";
+        src = pkgs.fetchurl {
+          url = "mirror://kernel/linux/kernel/v${builtins.head (lib.splitVersion version)}.x/linux-${version}.tar.xz";
+          hash = "sha256-+02gRvjBhRWfRTfe2IejCsxp2RxVWg/3+rxFIPWaMJY=";
+        };
       in
       (pkgs.linuxManualConfig {
-        inherit (kernel) src;
+        inherit src;
         inherit (config.boot) kernelPatches;
-        version = "${kernel.version}-gerg";
+        version = "${version}-gerg";
         config = {
           CONFIG_RUST = "y";
           CONFIG_MODULES = "y";
