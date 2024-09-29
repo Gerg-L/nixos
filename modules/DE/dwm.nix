@@ -21,7 +21,7 @@
 
       picom = {
         serviceConfig = {
-          ExecStart = "${lib.getExe pkgs.picom} --backend glx";
+          ExecStart = "${lib.getExe pkgs.picom} --backend egl";
           Restart = "always";
           RestartSec = 2;
           ExecReload = "pkill -usr1 -x $MAINPID";
