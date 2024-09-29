@@ -2,7 +2,7 @@
   modulesPath,
   pkgs,
   lib,
-  ...
+  config,
 }:
 {
   local = {
@@ -30,11 +30,13 @@
     mutableUsers = false;
     users.root = {
       hashedPassword = "!";
-      openssh.authorizedKeys.keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILZKIp3iObuxEUPx1dsMiN3vyMaMQb0N1gKJY78TtRxd"
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILpYY2uw0OH1Re+3BkYFlxn0O/D8ryqByJB/ljefooNc"
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJWbwkFJmRBgyWyWU+w3ksZ+KuFw9uXJN3PwqqE7Z/i8"
-      ];
+      openssh.authorizedKeys.keys = builtins.attrValues {
+        inherit (config.local.keys)
+          gerg_gerg-phone
+          gerg_gerg-windows
+          gerg_gerg-desktop
+          ;
+      };
     };
   };
 
