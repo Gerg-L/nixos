@@ -237,6 +237,7 @@ rec {
             let
               defaultArgs =
                 pkgs
+                // pkgs.xorg
                 // (
                   let
                     inputs' = constructInputs' pkgs.stdenv.system inputs;
