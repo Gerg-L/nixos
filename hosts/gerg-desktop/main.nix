@@ -98,7 +98,6 @@
         vesktop
         gh
         nixfmt-rfc-style
-        tmux
         super-slicer-latest # 3D printer slicer
         # QMK configuration
         #via

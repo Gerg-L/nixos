@@ -11,6 +11,8 @@
   config = lib.mkIf config.local.DE.dwm.enable {
     systemd.user.services = {
       sxhkd = {
+        wantedBy = [ "graphical-session.target" ];
+        partOf = [ "graphical-session.target" ];
         serviceConfig = {
           ExecStart = "${lib.getExe pkgs.sxhkd} -c /etc/sxhkd/sxhkdrc";
           Restart = "always";
@@ -20,6 +22,8 @@
       };
 
       picom = {
+        wantedBy = [ "graphical-session.target" ];
+        partOf = [ "graphical-session.target" ];
         serviceConfig = {
           ExecStart = "${lib.getExe pkgs.picom} --backend egl";
           Restart = "always";
@@ -28,63 +32,44 @@
         };
       };
     };
-
-    services.gvfs.enable = true;
-
-    services.displayManager.defaultSession = "none+dwm";
-
-    services.xserver = {
-      enable = true;
-      displayManager = {
-        sessionCommands = ''
-          feh --bg-center "${self'.packages.images}/recursion.png"
-          numlockx
-          systemctl --user start sxhkd
-          systemctl --user start picom
-        '';
-      };
-      windowManager.session = [
-        {
-          name = "dwm";
-          start = ''
-            update_time () {
-              while :
-              do
-                sleep 1
-                xsetroot -name "$(date +"%I:%M %p")"
-              done
-            }
-
-            dont_stop() {
-              while type dwm >/dev/null ; do dwm && continue || break ; done
-            }
-
-            update_time &
-            dont_stop &
-            waitPID=$!
+    services = {
+      gvfs.enable = true;
+      displayManager.defaultSession = "none+dwm";
+      xserver = {
+        enable = true;
+        displayManager = {
+          sessionCommands = ''
+            feh --bg-center "${self'.packages.images}/recursion.png"
+            numlockx
           '';
-        }
-      ];
+        };
+        windowManager.session = [
+          {
+            name = "dwm";
+            start = ''
+              update_time () {
+                while :
+                do
+                  sleep 1
+                  xsetroot -name "$(date +"%I:%M %p")"
+                done
+              }
+
+              dont_stop() {
+                while type dwm >/dev/null ; do dwm && continue || break ; done
+              }
+
+              update_time &
+              dont_stop &
+              waitPID=$!
+            '';
+          }
+        ];
+      };
     };
     environment = {
       systemPackages = builtins.attrValues {
-        inherit (suckless.packages) dmenu dwm;
-        st =
-          let
-            st = pkgs.writeShellScript "st" ''
-              ARGS="''${@:1}"
-              exec ${lib.getExe suckless.packages.st} "''${ARGS:-tmux}"
-            '';
-          in
-          pkgs.symlinkJoin {
-            name = "st";
-            paths = [ suckless.packages.st ];
-            nativeBuildInputs = [ pkgs.makeBinaryWrapper ];
-            postBuild = ''
-              unlink "$out/bin/st"
-              ln -s "${st}" "$out/bin/st"
-            '';
-          };
+        inherit (suckless.packages) dmenu dwm st;
         inherit (pkgs)
           maim
           playerctl
