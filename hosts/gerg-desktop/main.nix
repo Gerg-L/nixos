@@ -98,7 +98,7 @@
         vesktop
         gh
         nixfmt-rfc-style
-        super-slicer-latest # 3D printer slicer
+        prusa-slicer # 3D printer slicer
         # QMK configuration
         #via
         #qmk
