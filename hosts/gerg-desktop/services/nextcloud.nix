@@ -6,7 +6,7 @@
 
   services.nextcloud = {
     enable = true;
-    package = pkgs.nextcloud29;
+    package = pkgs.nextcloud30;
     home = "/persist/services/nextcloud";
     datadir = "/persist/services/nextcloud";
     extraAppsEnable = false;
