@@ -2,6 +2,7 @@
   fetch-rs,
   pkgs,
   config,
+  lib,
 }:
 {
   systemd.tmpfiles.rules = [ "d /tmp/neovim-page 0777 root root - -" ];
@@ -18,8 +19,9 @@
       MANPAGER = "page -t man";
     };
     shellAliases = {
-      #make sudo use aliases
-      sudo = "sudo ";
+      #make run0 use aliases
+      run0 = "run0 --background='' ";
+      s = "run0";
       #paste link trick
       pastebin = "curl -F 'clbin=<-' https://clbin.com";
       termbin = "nc termbin.com 9999";
@@ -42,14 +44,11 @@
     };
     interactiveShellInit = "fetch-rs";
   };
-  security.sudo = {
-    enable = true;
-    execWheelOnly = true;
-    extraConfig = ''
-      Defaults timestamp_timeout=1
-      Defaults env_keep += "EDITOR VISUAL PAGER SYSTEMD_PAGERSECURE MANPAGER"
-      Defaults lecture = never
-    '';
+
+  #begone sudo
+  security = {
+    sudo.enable = lib.mkForce false;
+    wrappers.su.setuid = lib.mkForce false;
   };
 
   #zsh stuff
@@ -115,7 +114,7 @@
         format = ''
           $cmd_duration$git_metrics$git_state$git_branch
           $status$directory$character'';
-        right_format = "$sudo$nix_shell\${custom.direnv} $time";
+        right_format = "$nix_shell\${custom.direnv} $time";
         continuation_prompt = "▶▶ ";
         character = {
           success_symbol = "[\\$](#9ece6a bold)";
@@ -138,10 +137,6 @@
         git_branch = {
           format = "[$symbol$branch(:$remote_branch)]($style)";
           style = "bold red";
-        };
-        sudo = {
-          format = "[ ](#7aa2f7)";
-          disabled = false;
         };
         cmd_duration = {
           min_time = 5000;
