@@ -26,11 +26,7 @@
     #
     # Use nix directly from master
     #
-    package = nix.packages.default.overrideAttrs (old: {
-      meta = old.meta // {
-        mainProgram = "nix";
-      };
-    });
+    package = nix.packages.default;
     #
     # Other nix settings
     #

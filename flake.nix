@@ -26,9 +26,8 @@
       #repo = "nix";
       #ref = "08deebddf26be28e5367983fdece18c484bbe410";
 
-      owner = "yannham";
+      owner = "Gerg-L";
       repo = "nix";
-      ref = "27b2fc43d4059cb9ad7cf75f492ea8cf9d41f697";
       inputs.nixpkgs.follows = "stable";
     };
     nixos-generators = {
