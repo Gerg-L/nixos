@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4.2.0
+        uses: actions/checkout@v4.2.1
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@v14
       - name: Update flake lock
