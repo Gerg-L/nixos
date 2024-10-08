@@ -22,12 +22,9 @@
     #nix itself
     nix = {
       type = "github";
-      #owner = "NixOS";
-      #repo = "nix";
-      #ref = "08deebddf26be28e5367983fdece18c484bbe410";
-
-      owner = "Gerg-L";
+      owner = "NixOS";
       repo = "nix";
+      ref = "26c3fc11eada3fa7df0284190095868a947fefe2";
       inputs.nixpkgs.follows = "stable";
     };
     nixos-generators = {
