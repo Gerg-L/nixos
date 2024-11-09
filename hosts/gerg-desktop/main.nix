@@ -21,8 +21,8 @@
     allowedUnfree = [
       "nvidia-x11"
       "steam"
+      "steam-unwrapped"
       "steam-run"
-      "steam-original"
     ];
   };
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
