@@ -40,13 +40,6 @@
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
     virtualHosts = {
-      "nix-fu.com" = {
-        forceSSL = true;
-        sslCertificate = config.sops.secrets.nixfu_ssl_cert.path;
-        sslCertificateKey = config.sops.secrets.nixfu_ssl_key.path;
-        serverAliases = [ "www.nix-fu.com" ];
-        globalRedirect = "github.com/Gerg-L";
-      };
       "_" = {
         default = true;
         forceSSL = true;
