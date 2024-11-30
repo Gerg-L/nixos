@@ -112,12 +112,15 @@ in
         configfile = ./kernelConfig;
       }).overrideAttrs
         (old: {
-          passthru = (old.passthru or { }) // {
-            features = lib.foldr (x: y: (x.features or { }) // y) {
+          passthru = old.passthru or { } // {
+            features = lib.foldr (x: y: x.features or { } // y) {
               efiBootStub = true;
               netfilterRPFilter = true;
               ia32Emulation = true;
             } config.boot.kernelPatches;
+          };
+          meta = old.meta or { } // {
+            broken = false;
           };
         })
     );
