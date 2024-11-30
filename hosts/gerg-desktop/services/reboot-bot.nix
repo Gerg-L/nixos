@@ -7,6 +7,7 @@
   sops.secrets.reboot_token = { };
 
   systemd.services.reboot_bot = {
+    enable = false;
     wantedBy = [ "multi-user.target" ];
     wants = [ "network-online.target" ];
     after = [ "network-online.target" ];

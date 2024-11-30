@@ -32,7 +32,15 @@
           nix-tree # view packages
           pciutils # lspci
           ;
-        inherit (nix-janitor.packages) default;
+        nix-janitor = pkgs.symlinkJoin {
+          name = "nix-janitor";
+          paths = [ nix-janitor.packages.default ];
+          nativeBuildInputs = [ pkgs.makeBinaryWrapper ];
+          postBuild = ''
+            wrapProgram "$out/bin/janitor" \
+            --suffix PATH : ${lib.makeBinPath [ config.nix.package ]}
+          '';
+        };
       }
     );
 

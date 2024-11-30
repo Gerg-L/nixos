@@ -17,14 +17,14 @@
       type = "github";
       owner = "NixOS";
       repo = "nixpkgs";
-      ref = "nixos-24.05";
+      ref = "nixos-24.11";
     };
     #nix itself
     nix = {
       type = "github";
       owner = "NixOS";
       repo = "nix";
-      ref = "26c3fc11eada3fa7df0284190095868a947fefe2";
+      ref = "64000481168d1da9d2519f055dd1fdee22275c21";
       inputs.nixpkgs.follows = "stable";
     };
     nixos-generators = {
@@ -61,8 +61,7 @@
       type = "github";
       owner = "Nobbz";
       repo = "nix-janitor";
-      ref = "d49fd7486d5597d2e854154bf643e7f86c5f1f6c";
-      inputs.nixpkgs.follows = "unstable";
+      #inputs.nixpkgs.follows = "unstable";
     };
     #my own packages
     spicetify-nix = {

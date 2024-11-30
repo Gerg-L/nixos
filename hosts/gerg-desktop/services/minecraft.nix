@@ -1,7 +1,7 @@
 { lib, self' }:
 {
   # I manually switch this sometimes
-  config = lib.mkIf true {
+  config = lib.mkIf false {
     networking.firewall = {
       allowedUDPPorts = [ 24454 ];
       allowedTCPPorts = [
