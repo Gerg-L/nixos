@@ -60,7 +60,7 @@
 
         locations."/".proxyPass = "http://unix:${config.services.forgejo.settings.server.HTTP_ADDR}";
       };
-      "flux.gerg-L.com" = {
+      "flux.gerg-l.com" = {
         forceSSL = true;
         useACMEHost = "gerg-l.com";
 
@@ -74,7 +74,7 @@
           zstd_types "*";
         '';
       };
-      "cache.gerg-L.com" = {
+      "cache.gerg-l.com" = {
         forceSSL = true;
         useACMEHost = "gerg-l.com";
 
