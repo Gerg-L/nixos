@@ -86,6 +86,11 @@
           '';
         };
       };
+      "photos.gerg-l.com" = {
+        forceSSL = true;
+        useACMEHost = "gerg-l.com";
+        locations."/".proxyPass = "http://localhost:${toString config.services.immich.port}";
+      };
     };
   };
   networking.firewall.allowedTCPPorts = [
