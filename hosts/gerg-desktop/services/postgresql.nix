@@ -2,7 +2,7 @@
 {
   services.postgresql = {
     enable = true;
-    package = pkgs.postgresql_13;
+    package = pkgs.postgresql_16;
     dataDir = "/persist/services/postgresql";
 
     ensureDatabases = [ "miniflux" ];
