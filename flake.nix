@@ -61,7 +61,7 @@
       type = "github";
       owner = "Nobbz";
       repo = "nix-janitor";
-      #inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "unstable";
     };
     #my own packages
     spicetify-nix = {
