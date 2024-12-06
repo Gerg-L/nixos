@@ -48,6 +48,15 @@
     "amdgpu"
   ];
 
+  hardware.amdgpu = {
+    amdvlk = {
+      enable = true;
+      support32Bit.enable = true;
+    };
+    initrd.enable = true;
+    opencl.enable = true;
+  };
+
   programs = {
     steam.enable = true;
 
@@ -181,18 +190,15 @@
       root.hashedPassword = "!";
     };
   };
-  boot = {
-    kernelModules = [ "amdgpu" ];
-    initrd = {
-      availableKernelModules = [
-        "nvme"
-        "xhci_pci"
-        "ahci"
-        "usbhid"
-        "sd_mod"
-      ];
-      includeDefaultModules = false;
-    };
+  boot.initrd = {
+    availableKernelModules = [
+      "nvme"
+      "xhci_pci"
+      "ahci"
+      "usbhid"
+      "sd_mod"
+    ];
+    includeDefaultModules = false;
   };
 
   system.stateVersion = "24.11";
