@@ -2,7 +2,6 @@
   fetch-rs,
   pkgs,
   config,
-  lib,
 }:
 {
   systemd.tmpfiles.rules = [ "d /tmp/neovim-page 0777 root root - -" ];
@@ -47,8 +46,8 @@
 
   #begone sudo
   security = {
-    sudo.enable = lib.mkForce false;
-    wrappers.su.setuid = lib.mkForce false;
+    #sudo.enable = lib.mkForce false;
+    #wrappers.su.setuid = lib.mkForce false;
   };
 
   #zsh stuff

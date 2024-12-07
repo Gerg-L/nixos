@@ -20,6 +20,7 @@
     };
     allowedUnfree = [
       "nvidia-x11"
+      "nvidia-settings"
       "steam"
       "steam-unwrapped"
       "steam-run"
@@ -30,9 +31,9 @@
   hardware.nvidia = {
     package = config.boot.kernelPackages.nvidiaPackages.beta;
     nvidiaPersistenced = false;
-    nvidiaSettings = false;
+    nvidiaSettings = true;
     modesetting.enable = true;
-    open = false;
+    open = true;
     powerManagement = {
       enable = lib.mkForce false;
       finegrained = lib.mkForce false;
@@ -40,12 +41,11 @@
     prime = {
       nvidiaBusId = "PCI:1:0:0";
       amdgpuBusId = "PCI:15:0:0";
-      #sync.enable = true;
+      sync.enable = true;
     };
   };
   services.xserver.videoDrivers = [
     "nvidia"
-    "amdgpu"
   ];
 
   hardware.amdgpu = {
