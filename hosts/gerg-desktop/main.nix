@@ -41,11 +41,12 @@
     prime = {
       nvidiaBusId = "PCI:1:0:0";
       amdgpuBusId = "PCI:15:0:0";
-      sync.enable = true;
+      #sync.enable = true;
     };
   };
   services.xserver.videoDrivers = [
     "nvidia"
+    "amdgpu"
   ];
 
   hardware.amdgpu = {

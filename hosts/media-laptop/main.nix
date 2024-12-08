@@ -27,7 +27,7 @@
       ;
     inherit (nvim-flake.packages) neovim;
   };
-  services.xserver.videoDrivers = [ "intel" ];
+  services.xserver.videoDrivers = [ "modesetting" ];
 
   networking.networkmanager.enable = true;
 
