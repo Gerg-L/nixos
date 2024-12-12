@@ -72,6 +72,7 @@
         extraConfig = ''
           zstd on;
           zstd_types "*";
+          client_max_body_size 50000M;
         '';
       };
       "cache.gerg-l.com" = {
@@ -83,6 +84,7 @@
           extraConfig = ''
             zstd on;
             zstd_types "*";
+            client_max_body_size 50000M;
           '';
         };
       };
@@ -90,6 +92,11 @@
         forceSSL = true;
         useACMEHost = "gerg-l.com";
         locations."/".proxyPass = "http://localhost:${toString config.services.immich.port}";
+        extraConfig = ''
+          zstd on;
+          zstd_types "*";
+          client_max_body_size 50000M;
+        '';
       };
     };
   };
