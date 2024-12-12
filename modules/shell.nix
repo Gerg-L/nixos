@@ -1,21 +1,16 @@
 {
   fetch-rs,
   pkgs,
-  config,
 }:
 {
-  systemd.tmpfiles.rules = [ "d /tmp/neovim-page 0777 root root - -" ];
   environment = {
     systemPackages = builtins.attrValues {
-      inherit (pkgs) page eza fzf;
+      inherit (pkgs) eza fzf;
       inherit (fetch-rs.packages) fetch-rs;
     };
     variables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
-      PAGER = "page -WC -q 90000 -z 90000";
-      SYSTEMD_PAGERSECURE = "true";
-      MANPAGER = "page -t man";
     };
     shellAliases = {
       #paste link trick
@@ -36,7 +31,6 @@
       lx = "eza -lbhHigUmuSa@ --time-style=long-iso --git --color-scale";
       lS = "eza -1";
       lt = "eza --tree --level=2";
-      page = config.environment.variables.PAGER;
     };
     interactiveShellInit = "fetch-rs";
   };
@@ -58,12 +52,6 @@
           bindkey '^[[B' history-substring-search-down
           ### fzf-tab ###
           source ${pkgs.zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh
-          ### pager ###
-          man () {
-            PROGRAM="''${@[-1]}"
-            SECTION="''${@[-2]}"
-            page -W "man://$PROGRAM''${SECTION:+($SECTION)}"
-          }
           ### transient shell prompt ###
           zle-line-init() {
           emulate -L zsh
