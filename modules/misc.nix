@@ -11,11 +11,9 @@
   };
 
   config = {
-    nixpkgs = {
-      config = {
-        allowAliases = false;
-        allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.local.allowedUnfree;
-      };
+    nixpkgs.config = {
+      allowAliases = false;
+      allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.local.allowedUnfree;
     };
 
     programs.git.enable = true;
