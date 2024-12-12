@@ -18,10 +18,6 @@
       MANPAGER = "page -t man";
     };
     shellAliases = {
-      sudo = "sudo ";
-      #make run0 use aliases
-      run0 = "run0 --background='' ";
-      s = "run0";
       #paste link trick
       pastebin = "curl -F 'clbin=<-' https://clbin.com";
       termbin = "nc termbin.com 9999";
@@ -43,15 +39,6 @@
       page = config.environment.variables.PAGER;
     };
     interactiveShellInit = "fetch-rs";
-  };
-
-  security.sudo = {
-    execWheelOnly = true;
-    extraConfig = ''
-      Defaults timestamp_timeout=1
-      Defaults env_keep += "EDITOR VISUAL PAGER SYSTEMD_PAGERSECURE MANPAGER"
-      Defaults lecture = never
-    '';
   };
 
   #zsh stuff
