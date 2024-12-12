@@ -23,6 +23,7 @@
         "git.gerg-l.com"
         "flux.gerg-l.com"
         "cache.gerg-l.com"
+        "photos.gerg-l.com"
       ];
     };
   };
