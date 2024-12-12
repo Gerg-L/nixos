@@ -21,7 +21,6 @@
       extraDomainNames = [
         "search.gerg-l.com"
         "git.gerg-l.com"
-        "next.gerg-l.com"
         "flux.gerg-l.com"
         "cache.gerg-l.com"
       ];
@@ -65,15 +64,6 @@
         useACMEHost = "gerg-l.com";
 
         locations."/".proxyPass = "http://unix:${config.systemd.services.miniflux.environment.LISTEN_ADDR}";
-      };
-      "next.gerg-l.com" = {
-        forceSSL = true;
-        useACMEHost = "gerg-l.com";
-        extraConfig = ''
-          zstd on;
-          zstd_types "*";
-          client_max_body_size 50000M;
-        '';
       };
       "cache.gerg-l.com" = {
         forceSSL = true;
