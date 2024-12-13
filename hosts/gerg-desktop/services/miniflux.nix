@@ -1,88 +1,22 @@
 {
   config,
   lib,
-  pkgs,
 }:
 {
   sops.secrets.minifluxenv = { };
 
-  systemd.services = {
-    miniflux = {
-      enable = true;
-
-      description = "Miniflux service";
-      wantedBy = [ "multi-user.target" ];
-      requires = [ "miniflux-dbsetup.service" ];
-      after = [
-        "network.target"
-        "postgresql.service"
-        "miniflux-dbsetup.service"
-      ];
-
-      serviceConfig = {
-        ExecStart = lib.getExe pkgs.miniflux;
-        User = "miniflux";
-        RuntimeDirectory = "miniflux";
-        RuntimeDirectoryMode = "0770";
-        EnvironmentFile = config.sops.secrets.minifluxenv.path;
-        # Hardening
-        CapabilityBoundingSet = [ "" ];
-        DeviceAllow = [ "" ];
-        LockPersonality = true;
-        MemoryDenyWriteExecute = true;
-        PrivateDevices = true;
-        PrivateUsers = true;
-        ProcSubset = "pid";
-        ProtectClock = true;
-        ProtectControlGroups = true;
-        ProtectHome = true;
-        ProtectHostname = true;
-        ProtectKernelLogs = true;
-        ProtectKernelModules = true;
-        ProtectKernelTunables = true;
-        ProtectProc = "invisible";
-        RestrictAddressFamilies = [
-          "AF_INET"
-          "AF_INET6"
-          "AF_UNIX"
-        ];
-        RestrictNamespaces = true;
-        RestrictRealtime = true;
-        RestrictSUIDSGID = true;
-        SystemCallArchitectures = "native";
-        SystemCallFilter = [
-          "@system-service"
-          "~@privileged"
-        ];
-        UMask = "0077";
-      };
-
-      environment = {
-        BASE_URL = "https://flux.gerg-l.com";
-        LISTEN_ADDR = "/run/miniflux/miniflux.sock";
-        DATABASE_URL = "user=miniflux host=/run/postgresql dbname=miniflux";
-        RUN_MIGRATIONS = "1";
-        CREATE_ADMIN = "1";
-      };
+  services.miniflux = {
+    enable = true;
+    config = {
+      BASE_URL = "https://flux.gerg-l.com";
+      LISTEN_ADDR = "/run/miniflux/miniflux.sock";
     };
-    miniflux-dbsetup = {
-      description = "Miniflux database setup";
-      requires = [ "postgresql.service" ];
-      after = [
-        "network.target"
-        "postgresql.service"
-      ];
-      serviceConfig = {
-        ExecStart = "${lib.getExe' config.services.postgresql.package "psql"} 'miniflux' -c 'CREATE EXTENSION IF NOT EXISTS hstore'";
-        Type = "oneshot";
-        User = config.services.postgresql.superUser;
-      };
-    };
+    adminCredentialsFile = config.sops.secrets.minifluxenv.path;
+    createDatabaseLocally = true;
   };
+
   users = {
-    groups.miniflux = {
-      gid = 377;
-    };
+    groups.miniflux.gid = 377;
     users = {
       miniflux = {
         group = "miniflux";
@@ -94,5 +28,11 @@
     };
   };
 
-  local.nginx.proxyVhosts."flux.gerg-l.com" = "http://unix:/run/miniflux/miniflux.sock";
+  systemd.services.miniflux.serviceConfig = {
+    RuntimeDirectoryMode = lib.mkForce "0770";
+    DynamicUser = lib.mkForce false;
+  };
+
+  local.nginx.proxyVhosts."flux.gerg-l.com" =
+    "http://unix:${config.services.miniflux.config.LISTEN_ADDR}";
 }
