@@ -72,4 +72,6 @@
     };
   };
   systemd.tmpfiles.rules = [ "d /run/nix-serve - nix-serve nix-serve - -" ];
+
+  local.nginx.proxyVhosts."cache.gerg-l.com" = "http://unix:/run/nix-serve/nix-serve.sock";
 }

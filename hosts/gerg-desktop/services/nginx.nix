@@ -1,98 +1,64 @@
 { config, lib }:
 {
-  sops.secrets =
-    lib.genAttrs
-      [
-        "nixfu_ssl_cert"
-        "nixfu_ssl_key"
-        "gerg_ssl_key"
-        "gerg_ssl_cert"
-      ]
-      (_: {
-        owner = config.services.nginx.user;
-        inherit (config.services.nginx) group;
-      });
-
-  security.acme = {
-    acceptTerms = true;
-    certs."gerg-l.com" = {
-      email = "GregLeyda@proton.me";
-      webroot = "/var/lib/acme/acme-challenge";
-      extraDomainNames = [
-        "search.gerg-l.com"
-        "git.gerg-l.com"
-        "flux.gerg-l.com"
-        "cache.gerg-l.com"
-        "photos.gerg-l.com"
-      ];
+  options.local.nginx = {
+    proxyVhosts = lib.mkOption {
+      type = lib.types.attrsOf lib.types.str;
+    };
+    defaultVhosts = lib.mkOption {
+      type = lib.types.attrs;
     };
   };
 
-  systemd.tmpfiles.rules = [ "L+ /var/lib/acme - - - - /persist/services/acme" ];
-
-  users.users.${config.services.nginx.user}.extraGroups = [ "acme" ];
-
-  services.nginx = {
-    enable = true;
-    recommendedZstdSettings = true;
-    recommendedGzipSettings = true;
-    recommendedOptimisation = true;
-    recommendedProxySettings = true;
-    recommendedTlsSettings = true;
-    virtualHosts = {
-      "_" = {
-        default = true;
-        forceSSL = true;
-        useACMEHost = "gerg-l.com";
-
-        locations."/".return = "404";
-      };
-      "search.gerg-l.com" = {
-        forceSSL = true;
-        useACMEHost = "gerg-l.com";
-
-        locations."/".extraConfig = "uwsgi_pass unix:${config.services.searx.uwsgiConfig.socket};";
-        extraConfig = "access_log off;";
-      };
-      "git.gerg-l.com" = {
-        forceSSL = true;
-        useACMEHost = "gerg-l.com";
-
-        locations."/".proxyPass = "http://unix:${config.services.forgejo.settings.server.HTTP_ADDR}";
-      };
-      "flux.gerg-l.com" = {
-        forceSSL = true;
-        useACMEHost = "gerg-l.com";
-
-        locations."/".proxyPass = "http://unix:${config.systemd.services.miniflux.environment.LISTEN_ADDR}";
-      };
-      "cache.gerg-l.com" = {
-        forceSSL = true;
-        useACMEHost = "gerg-l.com";
-
-        locations."/" = {
-          proxyPass = "http://unix:/run/nix-serve/nix-serve.sock";
-          extraConfig = ''
-            zstd on;
-            zstd_types "*";
-            client_max_body_size 50000M;
-          '';
+  config = {
+    local.nginx.defaultVhosts =
+      {
+        "_" = {
+          default = true;
+          locations."/".return = "404";
         };
-      };
-      "photos.gerg-l.com" = {
-        forceSSL = true;
-        useACMEHost = "gerg-l.com";
-        locations."/".proxyPass = "http://localhost:${toString config.services.immich.port}";
-        extraConfig = ''
-          zstd on;
-          zstd_types "*";
-          client_max_body_size 50000M;
-        '';
+      }
+      // (builtins.mapAttrs (_: v: {
+        locations."/".proxyPass = v;
+      }) config.local.nginx.proxyVhosts);
+
+    sops.secrets = {
+      gerg_ssl_key.owner = config.services.nginx.user;
+      gerg_ssl_cert.owner = config.services.nginx.user;
+    };
+
+    security.acme = {
+      acceptTerms = true;
+      certs."gerg-l.com" = {
+        email = "GregLeyda@proton.me";
+        webroot = "/var/lib/acme/acme-challenge";
       };
     };
+
+    systemd.tmpfiles.rules = [ "L+ /var/lib/acme - - - - /persist/services/acme" ];
+
+    users.users.${config.services.nginx.user}.extraGroups = [ "acme" ];
+
+    services.nginx = {
+      enable = true;
+      recommendedZstdSettings = true;
+      recommendedGzipSettings = true;
+      recommendedOptimisation = true;
+      recommendedProxySettings = true;
+      recommendedTlsSettings = true;
+      # For immich
+      clientMaxBodySize = "50000M";
+      virtualHosts = builtins.mapAttrs (
+        _: v:
+        {
+          forceSSL = true;
+          useACMEHost = "gerg-l.com";
+        }
+        // v
+      ) config.local.nginx.defaultVhosts;
+    };
+    networking.firewall.allowedTCPPorts = [
+      80
+      443
+    ];
   };
-  networking.firewall.allowedTCPPorts = [
-    80
-    443
-  ];
 }

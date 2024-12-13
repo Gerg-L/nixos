@@ -93,4 +93,6 @@
       ${config.services.nginx.user}.extraGroups = [ "miniflux" ];
     };
   };
+
+  local.nginx.proxyVhosts."flux.gerg-l.com" = "http://unix:/run/miniflux/miniflux.sock";
 }

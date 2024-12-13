@@ -35,4 +35,9 @@
       ui.theme_args.simple_style = "dark";
     };
   };
+
+  local.nginx.defaultVhosts."search.gerg-l.com" = {
+    locations."/".extraConfig = "uwsgi_pass unix:${config.services.searx.uwsgiConfig.socket};";
+    extraConfig = "access_log off;";
+  };
 }

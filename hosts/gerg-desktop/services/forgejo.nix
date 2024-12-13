@@ -34,4 +34,7 @@
       createDatabase = true;
     };
   };
+
+  local.nginx.proxyVhosts."git.gerg-l.com" =
+    "http://unix:${config.services.forgejo.settings.server.HTTP_ADDR}";
 }
