@@ -10,16 +10,9 @@
   };
 
   config = {
-    local.nginx.defaultVhosts =
-      {
-        "_" = {
-          default = true;
-          locations."/".return = "404";
-        };
-      }
-      // (builtins.mapAttrs (_: v: {
-        locations."/".proxyPass = v;
-      }) config.local.nginx.proxyVhosts);
+    local.nginx.defaultVhosts = builtins.mapAttrs (_: v: {
+      locations."/".proxyPass = v;
+    }) config.local.nginx.proxyVhosts;
 
     sops.secrets = {
       gerg_ssl_key.owner = config.services.nginx.user;
@@ -31,6 +24,7 @@
       certs."gerg-l.com" = {
         email = "GregLeyda@proton.me";
         webroot = "/var/lib/acme/acme-challenge";
+        extraDomainNames = builtins.attrNames config.local.nginx.defaultVhosts;
       };
     };
 
@@ -47,14 +41,25 @@
       recommendedTlsSettings = true;
       # For immich
       clientMaxBodySize = "50000M";
-      virtualHosts = builtins.mapAttrs (
-        _: v:
-        {
-          forceSSL = true;
-          useACMEHost = "gerg-l.com";
-        }
-        // v
-      ) config.local.nginx.defaultVhosts;
+      virtualHosts =
+        builtins.mapAttrs
+          (
+            _: v:
+            {
+              forceSSL = true;
+              useACMEHost = "gerg-l.com";
+            }
+            // v
+          )
+          (
+            config.local.nginx.defaultVhosts
+            // {
+              "_" = {
+                default = true;
+                locations."/".return = "404";
+              };
+            }
+          );
     };
     networking.firewall.allowedTCPPorts = [
       80
