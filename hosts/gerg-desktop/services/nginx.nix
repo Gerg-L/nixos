@@ -41,6 +41,7 @@
       recommendedTlsSettings = true;
       # For immich
       clientMaxBodySize = "50000M";
+      proxyTimeout = "600s";
       virtualHosts =
         builtins.mapAttrs
           (
