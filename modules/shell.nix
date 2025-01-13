@@ -3,11 +3,11 @@
   pkgs,
 }:
 {
+  local.packages = {
+    inherit (pkgs) eza fzf;
+    inherit (fetch-rs.packages) fetch-rs;
+  };
   environment = {
-    systemPackages = builtins.attrValues {
-      inherit (pkgs) eza fzf;
-      inherit (fetch-rs.packages) fetch-rs;
-    };
     variables = {
       EDITOR = "nvim";
       VISUAL = "nvim";

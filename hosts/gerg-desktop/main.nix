@@ -25,6 +25,37 @@
       "steam-unwrapped"
       "steam-run"
     ];
+    packages = {
+      inherit (pkgs)
+        bitwarden-desktop # store stuff
+        qbittorrent # steal stuff
+        pavucontrol # gui volume control
+        pcmanfm # file manager
+        vlc # play stuff
+        ripgrep
+        fd
+        jq
+        wget
+        xautoclick
+        prismlauncher
+        deadnix
+        statix
+        #element-desktop
+        vesktop
+        gh
+        nixfmt-rfc-style
+        prusa-slicer # 3D printer slicer
+        # QMK configuration
+        #via
+        #qmk
+
+        ;
+      inherit (nvim-flake.packages) neovim;
+      inherit (self'.packages) lint;
+
+      librewolf = pkgs.librewolf.override { cfg.speechSynthesisSupport = false; };
+      nixpkgs-review = pkgs.nixpkgs-review.override { nix = config.nix.package; };
+    };
   };
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
@@ -88,42 +119,9 @@
   };
   sops.secrets.github_token = { };
 
-  environment = {
-    systemPackages = builtins.attrValues {
-      inherit (pkgs)
-        bitwarden-desktop # store stuff
-        qbittorrent # steal stuff
-        pavucontrol # gui volume control
-        pcmanfm # file manager
-        vlc # play stuff
-        ripgrep
-        fd
-        jq
-        wget
-        xautoclick
-        prismlauncher
-        deadnix
-        statix
-        #element-desktop
-        vesktop
-        gh
-        nixfmt-rfc-style
-        prusa-slicer # 3D printer slicer
-        # QMK configuration
-        #via
-        #qmk
-
-        ;
-      inherit (nvim-flake.packages) neovim;
-      inherit (self'.packages) lint;
-
-      librewolf = pkgs.librewolf.override { cfg.speechSynthesisSupport = false; };
-      nixpkgs-review = pkgs.nixpkgs-review.override { nix = config.nix.package; };
-    };
-    etc = {
-      "jdks/17".source = "${pkgs.openjdk17}/bin";
-      "jdks/8".source = "${pkgs.openjdk8}/bin";
-    };
+  environment.etc = {
+    "jdks/17".source = "${pkgs.openjdk17}/bin";
+    "jdks/8".source = "${pkgs.openjdk8}/bin";
   };
 
   services.udev.packages = [

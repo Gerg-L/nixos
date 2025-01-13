@@ -17,16 +17,16 @@
       enable = true;
       kmscon.enable = true;
     };
+    packages = {
+      inherit (pkgs)
+        vlc
+        pavucontrol # gui volume control
+        chromium
+        ;
+      inherit (nvim-flake.packages) neovim;
+    };
   };
 
-  environment.systemPackages = builtins.attrValues {
-    inherit (pkgs)
-      vlc
-      pavucontrol # gui volume control
-      chromium
-      ;
-    inherit (nvim-flake.packages) neovim;
-  };
   services.xserver.videoDrivers = [ "modesetting" ];
 
   networking.networkmanager.enable = true;
