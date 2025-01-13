@@ -23,6 +23,9 @@ in
       reboot
     '')
   ];
+  systemd.tmpfiles.rules = [
+    "L+ /var/lib/sbctl  - - - - /persist/secureboot"
+  ];
 
   boot = {
     initrd = {
@@ -58,7 +61,7 @@ in
 
     lanzaboote = {
       enable = true;
-      pkiBundle = "/etc/secureboot";
+      pkiBundle = "/var/lib/sbctl";
       configurationLimit = 10;
       package = lib.mkForce (
         pkgs.writeShellApplication {

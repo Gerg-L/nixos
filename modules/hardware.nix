@@ -16,15 +16,17 @@ in
     })
     (lib.mkIf (!cfg.sound.disable) {
       security.rtkit.enable = true;
-      hardware.pulseaudio.enable = lib.mkForce false; # disable pulseAudio
-      services.pipewire = {
-        enable = true;
-        alsa = {
+      services = {
+        pulseaudio.enable = lib.mkForce false; # disable pulseAudio
+        pipewire = {
           enable = true;
-          support32Bit = true;
+          alsa = {
+            enable = true;
+            support32Bit = true;
+          };
+          pulse.enable = true;
+          jack.enable = false;
         };
-        pulse.enable = true;
-        jack.enable = false;
       };
     })
 

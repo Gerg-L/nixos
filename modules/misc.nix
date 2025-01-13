@@ -11,9 +11,31 @@
   };
 
   config = {
+
     nixpkgs.config = {
       allowAliases = false;
       allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.local.allowedUnfree;
+    };
+
+    local.packages = {
+      inherit (pkgs)
+        bottom # view tasks
+        efibootmgr # efi editor
+        nix-output-monitor # nom nom nom nom;
+        nix-tree # view packages
+        pciutils # lspci
+        nixos-rebuild-ng
+        ;
+      nix-janitor = pkgs.symlinkJoin {
+        name = "nix-janitor";
+        paths = [ nix-janitor.packages.default ];
+        nativeBuildInputs = [ pkgs.makeBinaryWrapper ];
+        postBuild = ''
+          wrapProgram "$out/bin/janitor" \
+          --suffix PATH : ${lib.makeBinPath [ config.nix.package ]}
+        '';
+      };
+
     };
 
     programs.git.enable = true;
@@ -21,26 +43,7 @@
     services.libinput.enable = true;
     programs.nano.enable = false;
 
-    environment.defaultPackages = lib.mkForce (
-      builtins.attrValues {
-        inherit (pkgs)
-          bottom # view tasks
-          efibootmgr # efi editor
-          nix-output-monitor # nom nom nom nom;
-          nix-tree # view packages
-          pciutils # lspci
-          ;
-        nix-janitor = pkgs.symlinkJoin {
-          name = "nix-janitor";
-          paths = [ nix-janitor.packages.default ];
-          nativeBuildInputs = [ pkgs.makeBinaryWrapper ];
-          postBuild = ''
-            wrapProgram "$out/bin/janitor" \
-            --suffix PATH : ${lib.makeBinPath [ config.nix.package ]}
-          '';
-        };
-      }
-    );
+    environment.defaultPackages = lib.mkForce [ ];
 
     #enable ssh
     programs.mtr.enable = true; # ping and traceroute
@@ -78,5 +81,7 @@
     documentation.nixos.enable = false;
     # Useless with flakes (without configuring)
     programs.command-not-found.enable = false;
+
+    system.switch.enableNg = true;
   };
 }

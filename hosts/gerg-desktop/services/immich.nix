@@ -9,7 +9,7 @@
       createDB = true;
     };
     mediaLocation = "/persist/services/immich";
-    machine-learning.enable = false;
+    machine-learning.enable = true;
     settings = null;
     port = 2283;
     host = "0.0.0.0";
