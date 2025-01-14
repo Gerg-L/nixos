@@ -662,11 +662,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1736742095,
-        "narHash": "sha256-G5ZsiqzjIICWQQemgDKPBgI1K+vlYGqbc42gqQW5s/Q=",
+        "lastModified": 1736799472,
+        "narHash": "sha256-gkW0sjhr+PqdcvnIP3WnJvTcKEFtbo147IfKC2zbKZw=",
         "owner": "Gerg-L",
         "repo": "nvim-flake",
-        "rev": "7b2cbea0895cc98fdeefd957b6edef36ee2c837b",
+        "rev": "00404b2c890470649d7cea6e2fb596875531add9",
         "type": "github"
       },
       "original": {
