@@ -26,12 +26,22 @@ let
   };
 in
 {
+  #hardware.amdgpu = {
+  #  amdvlk = {
+  #    enable = true;
+  #    support32Bit.enable = true;
+  #  };
+  #  initrd.enable = true;
+  #  opencl.enable = true;
+  #};
   environment.etc = {
     "Xorg/1_mon.conf".source = "${_dir}/1_mon.conf";
     "Xorg/2_mon.conf".source = "${_dir}/2_mon.conf";
   };
 
   services.xserver = {
+
+    videoDrivers = ["amdgpu"];
 
     displayManager.setupCommands = lib.mkBefore ''
       if ! [ -e "/etc/Xorg/ONE_MONITOR" ] ; then
