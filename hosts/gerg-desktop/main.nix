@@ -85,9 +85,11 @@
         --mode 3440x1440 \
         --rate 120 \
         --primary \
+        --pos 0x0 \
         --output HDMI-0 \
         --mode 1920x1080 \
-        --rate 120
+        --rate 120 \
+        --pos 3440x360
     '';
     serverFlagsSection = ''
       Option "StandbyTime" "0"
