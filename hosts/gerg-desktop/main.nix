@@ -89,7 +89,15 @@
         --mode 1920x1080 \
         --rate 120
     '';
+    serverFlagsSection = ''
+      Option "StandbyTime" "0"
+      Option "SuspendTime" "0"
+      Option "OffTime" "0"
+      Option "BlankTime" "0"
+    '';
   };
+
+  services.libinput.mouse.accelProfile = "flat";
 
   programs = {
     steam.enable = true;

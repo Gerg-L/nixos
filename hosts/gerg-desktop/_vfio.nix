@@ -41,7 +41,7 @@ in
 
   services.xserver = {
 
-    videoDrivers = ["amdgpu"];
+    videoDrivers = [ "amdgpu" ];
 
     displayManager.setupCommands = lib.mkBefore ''
       if ! [ -e "/etc/Xorg/ONE_MONITOR" ] ; then
