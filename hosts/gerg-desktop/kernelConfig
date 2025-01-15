@@ -5326,7 +5326,7 @@ CONFIG_AUTOFS_FS=m
 CONFIG_FUSE_FS=m
 # CONFIG_CUSE is not set
 # CONFIG_VIRTIO_FS is not set
-# CONFIG_OVERLAY_FS is not set
+CONFIG_OVERLAY_FS=m
 
 #
 # Caches
