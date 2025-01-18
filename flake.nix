@@ -94,8 +94,41 @@
       repo = "reboot-bot";
       inputs.nixpkgs.follows = "unstable";
     };
+    systems = {
+      type = "github";
+      owner = "nix-systems";
+      repo = "default";
+    };
 
   };
-
-  outputs = x: import ./outputs.nix x;
+  outputs =
+    inputs:
+    let
+      inherit (inputs.unstable) lib;
+      myLib = import (./. + /lib/_default.nix) inputs;
+    in
+    lib.pipe ./. [
+      builtins.readDir
+      (lib.filterAttrs (n: v: v == "directory" && !lib.hasPrefix "." n))
+      (lib.flip (
+        system:
+        (builtins.mapAttrs (
+          n: _:
+          let
+            imported = import (./. + "/${n}/_default.nix");
+          in
+          if myLib.needsSystem n then
+            {
+              ${system} = imported {
+                inputs' = myLib.constructInputs' system inputs;
+                inherit system;
+              };
+            }
+          else
+            imported inputs
+        ))
+      ))
+      (lib.flip map (import inputs.systems))
+      (lib.foldAttrs (l: r: if myLib.needsSystem l then l else l // r) { })
+    ];
 }
