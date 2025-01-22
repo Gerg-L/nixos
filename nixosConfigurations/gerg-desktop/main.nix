@@ -24,6 +24,7 @@
       "steam"
       "steam-unwrapped"
       "steam-run"
+      "hplip"
     ];
     packages = {
       inherit (pkgs)
@@ -176,6 +177,17 @@
         };
       };
     };
+  };
+
+  # printing
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
+  services.printing = {
+    enable = true;
+    drivers = [ pkgs.hplipWithPlugin ];
   };
 
   #user managment
