@@ -27,6 +27,7 @@
       ref = "2cb0ddfe4eb216fab6d826c1056743c152722720";
       inputs.nixpkgs.follows = "stable";
     };
+    #other
     nixos-generators = {
       type = "github";
       owner = "nix-community";
@@ -63,6 +64,11 @@
       repo = "nix-janitor";
       inputs.nixpkgs.follows = "unstable";
     };
+    systems = {
+      type = "github";
+      owner = "nix-systems";
+      repo = "default";
+    };
     #my own packages
     spicetify-nix = {
       type = "github";
@@ -94,12 +100,6 @@
       repo = "reboot-bot";
       inputs.nixpkgs.follows = "unstable";
     };
-    systems = {
-      type = "github";
-      owner = "nix-systems";
-      repo = "default";
-    };
-
   };
   outputs =
     inputs:
