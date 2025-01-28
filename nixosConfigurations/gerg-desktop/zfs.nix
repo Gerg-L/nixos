@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
 }:
 {
   #link some stuff
@@ -23,7 +22,6 @@
     supportedFilesystems.ntfs = true;
 
     zfs = {
-      package = pkgs.zfs_unstable;
       devNodes = "/dev/disk/by-id/";
       forceImportAll = true;
     };

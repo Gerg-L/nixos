@@ -40,6 +40,8 @@ in
         };
       };
       systemd = {
+        # For linuxManualConfig to work:
+        strip = lib.mkForce false;
         network = {
           enable = true;
           networks.enp11s0 = {
@@ -95,13 +97,12 @@ in
       timeout = lib.mkForce 5;
       efi.efiSysMountPoint = "/efi22";
     };
-
     kernelPackages = pkgs.linuxPackagesFor (
       let
-        version = "6.10.11";
+        version = "6.12.11";
         src = pkgs.fetchurl {
           url = "mirror://kernel/linux/kernel/v${builtins.head (lib.splitVersion version)}.x/linux-${version}.tar.xz";
-          hash = "sha256-+02gRvjBhRWfRTfe2IejCsxp2RxVWg/3+rxFIPWaMJY=";
+          hash = "sha256-R1Fy/b2HoVPxI6V5Umcudzvbba9bWKQX0aXkGfz+7Ek=";
         };
       in
       (pkgs.linuxManualConfig {
