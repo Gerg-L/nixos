@@ -81,7 +81,5 @@
     documentation.nixos.enable = false;
     # Useless with flakes (without configuring)
     programs.command-not-found.enable = false;
-
-    system.switch.enableNg = true;
   };
 }
