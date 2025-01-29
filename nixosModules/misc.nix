@@ -24,7 +24,6 @@
         nix-output-monitor # nom nom nom nom;
         nix-tree # view packages
         pciutils # lspci
-        nixos-rebuild-ng
         ;
       nix-janitor = pkgs.symlinkJoin {
         name = "nix-janitor";
@@ -81,5 +80,7 @@
     documentation.nixos.enable = false;
     # Useless with flakes (without configuring)
     programs.command-not-found.enable = false;
+
+    system.rebuild.enableNg = true;
   };
 }
