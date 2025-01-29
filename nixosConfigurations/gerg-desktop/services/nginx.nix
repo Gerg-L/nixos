@@ -28,7 +28,15 @@
       };
     };
 
-    systemd.tmpfiles.rules = [ "L+ /var/lib/acme - - - - /persist/services/acme" ];
+    fileSystems."/var/lib/acme" = {
+      device = "/persist/services/acme";
+      fsType = "none";
+      options = [ "bind" ];
+      depends = [
+        "/persist"
+        "/var"
+      ];
+    };
 
     users.users.${config.services.nginx.user}.extraGroups = [ "acme" ];
 
