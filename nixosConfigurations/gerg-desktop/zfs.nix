@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
 }:
 {
   #link some stuff
@@ -18,9 +19,8 @@
   #make sure the sopskey is found
   sops.age.sshKeyPaths = lib.mkForce [ "/persist/ssh/ssh_host_ed25519_key" ];
   fileSystems."/persist".neededForBoot = true;
-  boot = {
-    supportedFilesystems.ntfs = true;
 
+  boot = {
     zfs = {
       devNodes = "/dev/disk/by-id/";
       forceImportAll = true;
@@ -35,23 +35,49 @@
         "dm_mod"
         #keyboard module for zfs password
         "hid_generic"
+        #stage one internet
+        "igc"
       ];
 
-      systemd.services.rollback = {
-        serviceConfig = {
-          Type = "oneshot";
-          RemainAfterExit = true;
+      network = {
+        enable = true;
+        ssh = {
+          enable = true;
+          port = 22;
+          hostKeys = [ "/persist/initrd-keys/ssh_host_ed5519_key" ];
+          authorizedKeys = [ config.local.keys.gerg_gerg-phone ];
         };
-        unitConfig.DefaultDependencies = "no";
-        wantedBy = [ "initrd.target" ];
-        after = [ "zfs-import.target" ];
-        before = [ "sysroot.mount" ];
-        path = [ config.boot.zfs.package ];
-        script = ''
-          zfs rollback -r rpool/root@empty
-          zfs rollback -r rpool/var@empty
-        '';
+      };
+      systemd = {
+        network = {
+          enable = true;
+          networks.enp11s0 = {
+            name = "enp11s0";
+            address = [ "192.168.1.4/24" ];
+            gateway = [ "192.168.1.1" ];
+            dns = [ "192.168.1.1" ];
+            DHCP = "no";
+            linkConfig = {
+              MACAddress = "D8:5E:D3:E5:47:90";
+              RequiredForOnline = "routable";
+            };
+          };
+          wait-online.enable = false;
+        };
+        users.root.shell = "/bin/systemd-tty-ask-password-agent";
       };
     };
   };
+
+  systemd.shutdownRamfs = {
+    enable = true;
+    contents."/etc/systemd/system-shutdown/zfs-rollback".source =
+      pkgs.writeShellScript "zfs-rollback" ''
+        zfs='${lib.getExe config.boot.zfs.package}'
+        zfs rollback -r rpool/root@empty
+        zfs rollback -r rpool/var@empty
+      '';
+    storePaths = [ (lib.getExe config.boot.zfs.package) ];
+  };
+
 }

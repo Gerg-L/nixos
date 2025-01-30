@@ -9,7 +9,6 @@ let
     title  Windows
     efi     /shellx64.efi
     options -nointerrupt -noconsolein -noconsoleout HD2d65535a1:EFI\Microsoft\Boot\Bootmgfw.efi
-
   '';
 in
 {
@@ -28,39 +27,6 @@ in
   ];
 
   boot = {
-    initrd = {
-      kernelModules = [ "igc" ];
-      network = {
-        enable = true;
-        ssh = {
-          enable = true;
-          port = 22;
-          hostKeys = [ "/persist/initrd-keys/ssh_host_ed5519_key" ];
-          authorizedKeys = [ config.local.keys.gerg_gerg-phone ];
-        };
-      };
-      systemd = {
-        # For linuxManualConfig to work:
-        strip = lib.mkForce false;
-        network = {
-          enable = true;
-          networks.enp11s0 = {
-            name = "enp11s0";
-            address = [ "192.168.1.4/24" ];
-            gateway = [ "192.168.1.1" ];
-            dns = [ "192.168.1.1" ];
-            DHCP = "no";
-            linkConfig = {
-              MACAddress = "D8:5E:D3:E5:47:90";
-              RequiredForOnline = "routable";
-            };
-          };
-          wait-online.enable = false;
-        };
-        users.root.shell = "/bin/systemd-tty-ask-password-agent";
-      };
-    };
-
     lanzaboote = {
       enable = true;
       pkiBundle = "/var/lib/sbctl";
@@ -97,36 +63,5 @@ in
       timeout = lib.mkForce 5;
       efi.efiSysMountPoint = "/efi22";
     };
-    kernelPackages = pkgs.linuxPackagesFor (
-      let
-        version = "6.12.11";
-        src = pkgs.fetchurl {
-          url = "mirror://kernel/linux/kernel/v${builtins.head (lib.splitVersion version)}.x/linux-${version}.tar.xz";
-          hash = "sha256-R1Fy/b2HoVPxI6V5Umcudzvbba9bWKQX0aXkGfz+7Ek=";
-        };
-      in
-      (pkgs.linuxManualConfig {
-        inherit src;
-        inherit (config.boot) kernelPatches;
-        version = "${version}-gerg";
-        config = {
-          CONFIG_RUST = "y";
-          CONFIG_MODULES = "y";
-        };
-        configfile = ./kernelConfig;
-      }).overrideAttrs
-        (old: {
-          passthru = old.passthru or { } // {
-            features = lib.foldr (x: y: x.features or { } // y) {
-              efiBootStub = true;
-              netfilterRPFilter = true;
-              ia32Emulation = true;
-            } config.boot.kernelPatches;
-          };
-          meta = old.meta or { } // {
-            broken = false;
-          };
-        })
-    );
   };
 }

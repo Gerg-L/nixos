@@ -58,7 +58,21 @@
       nixpkgs-review = pkgs.nixpkgs-review.override { nix = config.nix.package; };
     };
   };
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  boot = {
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
+
+    supportedFilesystems.ntfs = true;
+    initrd = {
+      availableKernelModules = [
+        "nvme"
+        "xhci_pci"
+        "ahci"
+        "usbhid"
+        "sd_mod"
+      ];
+      includeDefaultModules = false;
+    };
+  };
 
   hardware.nvidia = {
     package = config.boot.kernelPackages.nvidiaPackages.beta;
@@ -212,16 +226,6 @@
       };
       root.hashedPassword = "!";
     };
-  };
-  boot.initrd = {
-    availableKernelModules = [
-      "nvme"
-      "xhci_pci"
-      "ahci"
-      "usbhid"
-      "sd_mod"
-    ];
-    includeDefaultModules = false;
   };
 
   system.stateVersion = "24.11";
