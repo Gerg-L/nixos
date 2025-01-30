@@ -45,7 +45,7 @@
       }
     ];
     settings = {
-      PermitRootLogin = lib.mkDefault "no";
+      PermitRootLogin = lib.mkOverride 1001 "no";
       PasswordAuthentication = false;
       KbdInteractiveAuthentication = false;
     };
