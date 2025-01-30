@@ -72,4 +72,5 @@
   programs.command-not-found.enable = false;
 
   system.rebuild.enableNg = true;
+  services.userborn.enable = true;
 }
