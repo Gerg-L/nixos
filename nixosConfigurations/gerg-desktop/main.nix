@@ -41,7 +41,7 @@
         prismlauncher
         deadnix
         statix
-        #element-desktop
+        element-desktop
         vesktop
         gh
         nixfmt-rfc-style
