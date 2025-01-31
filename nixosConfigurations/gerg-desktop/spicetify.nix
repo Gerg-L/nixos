@@ -16,6 +16,8 @@ in
         betterGenres
         ;
     };
+    experimentalFeatures = true;
+    alwaysEnableDevTools = true;
     theme = spicePkgs.themes.dribbblish;
     colorScheme = "custom";
     customColorScheme = {
