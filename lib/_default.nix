@@ -10,6 +10,8 @@ lib.fix (myLib: {
   wrench = lib.flip lib.pipe;
 
   needsSystem = lib.flip builtins.elem [
+    "apps"
+    "checks"
     "defaultPackage"
     "devShell"
     "devShells"
