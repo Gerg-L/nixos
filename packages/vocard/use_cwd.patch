@@ -1,0 +1,84 @@
+diff --git a/function.py b/function.py
+index 6e09f5e..f0f6a11 100644
+--- a/function.py
++++ b/function.py
+@@ -18,7 +18,7 @@ from motor.motor_asyncio import (
+ 
+ ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+ 
+-if not os.path.exists(os.path.join(ROOT_DIR, "settings.json")):
++if not os.path.exists(os.path.join(os.getcwd(), "settings.json")):
+     raise Exception("Settings file not set!")
+ 
+ #--------------- Cache Var ---------------
+@@ -52,7 +52,7 @@ ALLOWED_MENTIONS = discord.AllowedMentions().none()
+ #-------------- Vocard Functions --------------
+ def open_json(path: str) -> dict:
+     try:
+-        with open(os.path.join(ROOT_DIR, path), encoding="utf8") as json_file:
++        with open(path, encoding="utf8") as json_file:
+             return json.load(json_file)
+     except:
+         return {}
+@@ -64,7 +64,7 @@ def update_json(path: str, new_data: dict) -> None:
+     
+     data.update(new_data)
+ 
+-    with open(os.path.join(ROOT_DIR, path), "w") as json_file:
++    with open(path, "w") as json_file:
+         json.dump(data, json_file, indent=4)
+ 
+ def langs_setup() -> None:
+@@ -74,7 +74,7 @@ def langs_setup() -> None:
+     
+     for language in os.listdir(os.path.join(ROOT_DIR, "local_langs")):
+         if language.endswith('.json'):
+-            LOCAL_LANGS[language[:-5]] = open_json(os.path.join("local_langs", language))
++            LOCAL_LANGS[language[:-5]] = open_json(os.path.join(ROOT_DIR, "local_langs", language))
+ 
+     return
+ 
+@@ -130,7 +130,7 @@ def get_lang_non_async(guild_id: int, *keys) -> Union[list[str], str]:
+     settings = SETTINGS_BUFFER.get(guild_id, {})
+     lang = settings.get("lang", "EN")
+     if lang in LANGS and not LANGS[lang]:
+-        LANGS[lang] = open_json(os.path.join("langs", f"{lang}.json"))
++        LANGS[lang] = open_json(os.path.join(ROOT_DIR, "langs", f"{lang}.json"))
+ 
+     if len(keys) == 1:
+         return LANGS.get(lang, {}).get(keys[0], "Language pack not found!")
+@@ -147,7 +147,7 @@ async def get_lang(guild_id:int, *keys) -> Union[list[str], str]:
+     settings = await get_settings(guild_id)
+     lang = settings.get("lang", "EN")
+     if lang in LANGS and not LANGS[lang]:
+-        LANGS[lang] = open_json(os.path.join("langs", f"{lang}.json"))
++        LANGS[lang] = open_json(os.path.join(ROOT_DIR, "langs", f"{lang}.json"))
+ 
+     if len(keys) == 1:
+         return LANGS.get(lang, {}).get(keys[0], "Language pack not found!")
+diff --git a/main.py b/main.py
+index e2c6b9e..4ff7de6 100644
+--- a/main.py
++++ b/main.py
+@@ -81,12 +81,6 @@ class Vocard(commands.Bot):
+             except Exception as e:
+                 func.logger.error(f"Cannot connected to dashboard! - Reason: {e}")
+ 
+-        if not func.settings.version or func.settings.version != update.__version__:
+-            func.update_json("settings.json", new_data={"version": update.__version__})
+-
+-            await self.tree.set_translator(Translator())
+-            await self.tree.sync()
+-
+     async def on_ready(self):
+         func.logger.info("------------------")
+         func.logger.info(f"Logging As {self.user}")
+@@ -144,7 +138,7 @@ async def get_prefix(bot, message: discord.Message):
+     return settings.get("prefix", func.settings.bot_prefix)
+ 
+ # Loading settings and logger
+-func.settings = Settings(func.open_json("settings.json"))
++func.settings = Settings(func.open_json(os.path.join(os.getcwd(),"settings.json")))
+ 
+ LOG_SETTINGS = func.settings.logging
+ if (LOG_FILE := LOG_SETTINGS.get("file", {})).get("enable", True):

@@ -2,12 +2,12 @@ keys:
   - &gerg-desktop age180y8kdtdlqelayyz9mq2c7xv248rh4gdfr3amjzvdcjrz6wdaqmsj762pp
   - &media-laptop age1vxx3qdsucv2v2slag67c4f0kwd8jtta4tue6m8d9xfl4ryrqvyusxgwl68
 creation_rules:
-  - path_regex: nixosConfigurations/gerg-desktop/secrets.yaml$
-    key_groups:
-    - age:
-      - *gerg-desktop
   - path_regex: nixosConfigurations/media-laptop/secrets.yaml$
     key_groups:
     - age:
       - *media-laptop
+      - *gerg-desktop
+  - path_regex: .*secrets.yaml$
+    key_groups:
+    - age:
       - *gerg-desktop
