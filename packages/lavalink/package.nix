@@ -18,7 +18,6 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     hash = "sha256-OznpsYoiWa6y+/8kukWN66leLi2mZU/1x+zN+uyIk1k=";
   };
 
-
   dontUnpack = true;
 
   nativeBuildInputs = [ makeBinaryWrapper ];

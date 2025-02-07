@@ -18,7 +18,7 @@ plugins:
       - WEBEMBEDDED 
     oauth:
       enabled: true
-      refreshToken: ""
+      refreshToken: "@refresh_token@"
 #  name: # Name of the plugin
 #    some_key: some_value # Some key-value pair for the plugin
 #    another_key: another_value
@@ -35,7 +35,7 @@ lavalink:
 #  defaultPluginRepository: "https://maven.lavalink.dev/releases" # optional, defaults to the Lavalink release repository
 #  defaultPluginSnapshotRepository: "https://maven.lavalink.dev/snapshots" # optional, defaults to the Lavalink snapshot repository
   server:
-    password: "youshallnotpass"
+    password: "@password@"
     sources:
       # The default Youtube source is now deprecated and won't receive further updates. Please use https://github.com/lavalink-devs/youtube-source#plugin instead.
       youtube: false
