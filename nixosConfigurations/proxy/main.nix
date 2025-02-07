@@ -17,8 +17,6 @@
     "${modulesPath}/profiles/qemu-guest.nix"
     "${modulesPath}/profiles/minimal.nix"
   ];
-  environment.noXlibs = false;
-
   services.qemuGuest.enable = true;
 
   environment.systemPackages = [
