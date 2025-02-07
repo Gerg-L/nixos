@@ -1,8 +1,9 @@
 {
+  lib,
   stdenvNoCC,
   fetchurl,
   makeBinaryWrapper,
-  jre_headless,
+  zulu17,
 }:
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "lavalink";
@@ -27,7 +28,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     install -Dm644 "$plugin" "$out/plugins/youtube-plugin.jar"
 
     mkdir -p $out/bin
-    makeWrapper ${jre_headless}/bin/java $out/bin/lavalink \
+    makeWrapper ${lib.getExe zulu17} $out/bin/lavalink \
       --add-flags "-jar -Xmx4G $out/lib/Lavalink.jar"
   '';
 
