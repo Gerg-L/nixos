@@ -14,6 +14,7 @@
       nix-output-monitor # nom nom nom nom;
       nix-tree # view packages
       pciutils # lspci
+      nixos-rebuild-ng
       ;
     nix-janitor = pkgs.symlinkJoin {
       name = "nix-janitor";
@@ -31,6 +32,7 @@
   # Mr sandro why
   services.libinput.enable = true;
   programs.nano.enable = false;
+  programs.less.enable = false;
 
   environment.defaultPackages = lib.mkForce [ ];
 
@@ -71,6 +73,8 @@
   # Useless with flakes (without configuring)
   programs.command-not-found.enable = false;
 
-  system.rebuild.enableNg = true;
+  system.disableInstallerTools = true;
   services.userborn.enable = true;
+  boot.enableContainers = false;
+
 }
