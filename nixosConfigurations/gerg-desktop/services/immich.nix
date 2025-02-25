@@ -1,6 +1,13 @@
 { config, ... }:
+let
+  cfg = config.services.immich;
+in
 {
-  users.users.${config.services.immich.user}.extraGroups = [ "postgres" ];
+  systemd.tmpfiles.rules =
+
+    [ "d ${cfg.mediaLocation} - ${cfg.user} ${cfg.group} - -" ];
+
+  users.users.${cfg.user}.extraGroups = [ "postgres" ];
   services.immich = {
     enable = true;
     openFirewall = true;
@@ -15,6 +22,5 @@
     host = "0.0.0.0";
   };
 
-  local.nginx.proxyVhosts."photos.gerg-l.com" =
-    "http://localhost:${toString config.services.immich.port}";
+  local.nginx.proxyVhosts."photos.gerg-l.com" = "http://localhost:${toString cfg.port}";
 }
