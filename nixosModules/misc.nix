@@ -14,7 +14,6 @@
       nix-output-monitor # nom nom nom nom;
       nix-tree # view packages
       pciutils # lspci
-      nixos-rebuild-ng
       ;
     nix-janitor = pkgs.symlinkJoin {
       name = "nix-janitor";
@@ -25,6 +24,13 @@
         --suffix PATH : ${lib.makeBinPath [ config.nix.package ]}
       '';
     };
+    nixos-rebuild-ng = pkgs.symlinkJoin {
+      name = "nixos-rebuild-ng";
+      paths = [ pkgs.nixos-rebuild-ng ];
+      postBuild = ''
+        ln -s "$out/bin/nixos-rebuild-ng" "$out/bin/nixos-rebuild"
+      '';
+    };
 
   };
 
@@ -32,7 +38,7 @@
   # Mr sandro why
   services.libinput.enable = true;
   programs.nano.enable = false;
-  programs.less.enable = false;
+  programs.less.enable = lib.mkForce false;
 
   environment.defaultPackages = lib.mkForce [ ];
 
@@ -74,6 +80,7 @@
   programs.command-not-found.enable = false;
 
   system.disableInstallerTools = true;
+
   services.userborn.enable = true;
   boot.enableContainers = false;
 
