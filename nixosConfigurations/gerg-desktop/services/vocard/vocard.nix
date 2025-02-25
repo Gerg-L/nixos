@@ -60,14 +60,11 @@
           builtins.replaceStrings
             [
               "@refresh_token@"
-
               "@password@"
             ]
             [
               config.sops.placeholder."lavalink/refresh_token"
-
               config.sops.placeholder."lavalink/password"
-
             ]
             (builtins.readFile ./application.yml);
       };

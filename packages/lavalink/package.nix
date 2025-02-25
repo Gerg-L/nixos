@@ -15,8 +15,8 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   };
 
   plugin = fetchurl {
-    url = "https://github.com/lavalink-devs/youtube-source/releases/download/1.11.4/youtube-plugin-1.11.4.jar";
-    hash = "sha256-OznpsYoiWa6y+/8kukWN66leLi2mZU/1x+zN+uyIk1k=";
+    url = "https://github.com/lavalink-devs/youtube-source/releases/download/1.11.5/youtube-plugin-1.11.5.jar";
+    hash = "sha256-Zz4S5mWcsVFWGmN41L34GqZeCOswt/CAn+1PN1XJtbk=";
   };
 
   dontUnpack = true;
