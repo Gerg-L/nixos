@@ -1,4 +1,8 @@
-{ config, pkgs }:
+{
+  config,
+  pkgs,
+  lib,
+}:
 {
   sops.secrets.store_key.owner = "nix-serve";
 
@@ -48,30 +52,23 @@
     path = [
       config.nix.package
       pkgs.bzip2
-      pkgs.nix-serve-ng
     ];
+
+    serviceConfig = {
+      ExecStart = "${lib.getExe pkgs.nix-serve-ng} --socket /run/nix-serve/nix-serve.sock";
+      Restart = "always";
+      RestartSec = "5s";
+      User = "nix-serve";
+      Group = "nix-serve";
+      RuntimeDirectory = "nix-serve";
+      UMask = "0117";
+    };
 
     environment = {
       NIX_REMOTE = "daemon";
       NIX_SECRET_KEY_FILE = config.sops.secrets.store_key.path;
     };
 
-    script = ''
-      nix-serve --socket /run/nix-serve/nix-serve.sock &
-      PID=$!
-      sleep 1
-      chmod 660 /run/nix-serve/nix-serve.sock
-      wait "$PID"
-    '';
-
-    serviceConfig = {
-      Restart = "always";
-      RestartSec = "5s";
-      User = "nix-serve";
-      Group = "nix-serve";
-    };
   };
-  systemd.tmpfiles.rules = [ "d /run/nix-serve - nix-serve nix-serve - -" ];
-
   local.nginx.proxyVhosts."cache.gerg-l.com" = "http://unix:/run/nix-serve/nix-serve.sock";
 }
