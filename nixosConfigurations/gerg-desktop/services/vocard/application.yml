@@ -12,41 +12,32 @@ plugins:
     # The clients to use for track loading. See below for a list of valid clients.
     # Clients are queried in the order they are given (so the first client is queried first and so on...)
     clients:
-      - MUSIC
       - TVHTML5EMBEDDED
-      - TV
-      - ANDROID_VR
-      - WEB
-      - WEBEMBEDDED 
     oauth:
       enabled: true
-      refreshToken: "@refresh_token@"
-#  name: # Name of the plugin
-#    some_key: some_value # Some key-value pair for the plugin
-#    another_key: another_value
+      # Set with env vars
+      #refreshToken: ""
 lavalink:
   plugins:
     - dependency: "dev.lavalink.youtube:youtube-plugin:1.11.5"
       snapshot: false
       # setting "enabled: true" is the bare minimum to get OAuth working.
       enabled: true
-#    - dependency: "com.github.example:example-plugin:1.0.0" # required, the coordinates of your plugin
-#      repository: "https://maven.example.com/releases" # optional, defaults to the Lavalink releases repository by default
-#      snapshot: false # optional, defaults to false, used to tell Lavalink to use the snapshot repository instead of the release repository
-#  pluginsDir: "./plugins" # optional, defaults to "./plugins"
-#  defaultPluginRepository: "https://maven.lavalink.dev/releases" # optional, defaults to the Lavalink release repository
-#  defaultPluginSnapshotRepository: "https://maven.lavalink.dev/snapshots" # optional, defaults to the Lavalink snapshot repository
+
+  # Set with env vars
+  #pluginsDir: "" 
   server:
-    password: "@password@"
+
+    # Set with env vars
+    #password: ""
     sources:
-      # The default Youtube source is now deprecated and won't receive further updates. Please use https://github.com/lavalink-devs/youtube-source#plugin instead.
       youtube: false
       bandcamp: true
       soundcloud: true
       twitch: true
       vimeo: true
       nico: true
-      http: true # warning: keeping HTTP enabled without a proxy configured could expose your server's IP address.
+      http: true 
       local: false
     filters: # All filters are enabled by default
       volume: true
@@ -95,14 +86,10 @@ metrics:
 sentry:
   dsn: ""
   environment: ""
-#  tags:
-#    some_key: some_value
-#    another_key: another_value
 
 logging:
   file:
-    path: ./logs/
-
+    path: null
   level:
     root: INFO
     lavalink: INFO
@@ -115,7 +102,6 @@ logging:
     includeQueryString: true
     includePayload: true
     maxPayloadLength: 10000
-
 
   logback:
     rollingpolicy:

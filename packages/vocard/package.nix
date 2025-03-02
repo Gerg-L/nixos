@@ -38,7 +38,7 @@ stdenv.mkDerivation {
     runHook postBuild
   '';
 
-  patches = [ ./use_cwd.patch ];
+  patches = [ ./useLoadCredential.patch ];
 
   nativeBuildInputs = [
     makeBinaryWrapper

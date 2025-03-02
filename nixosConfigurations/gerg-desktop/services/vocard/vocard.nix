@@ -6,82 +6,66 @@
 {
   sops = {
     secrets =
-      builtins.mapAttrs
-        (
-          _: v:
-          v
-          // {
-            sopsFile = ./secrets.yaml;
-          }
-        )
-        {
-          "vocard/token" = { };
-          "vocard/client_id" = { };
-          "vocard/spotify_client_id" = { };
-          "vocard/spotify_client_secret" = { };
-          "lavalink/refresh_token" = { };
-          "lavalink/password" = { };
-
+      {
+        lavalink = {
+          sopsFile = ./secrets.yaml;
+          restartUnits = [
+            "vocard.service"
+            "lavalink.service"
+          ];
         };
-    templates = {
-      vocard = {
-        path = "/persist/services/vocard/settings.json";
-        restartUnits = [
-          "vocard.service"
-          "lavalink.service"
-        ];
-        content =
-          builtins.replaceStrings
-            [
-              "@token@"
-              "@client_id@"
-              "@spotify_client_id@"
-              "@spotify_client_secret@"
-              "@password@"
-            ]
-            [
-              config.sops.placeholder."vocard/token"
-              config.sops.placeholder."vocard/client_id"
-              config.sops.placeholder."vocard/spotify_client_id"
-              config.sops.placeholder."vocard/spotify_client_secret"
-              config.sops.placeholder."lavalink/password"
 
-            ]
-            (builtins.readFile ./settings.json);
-      };
+      }
+      // builtins.listToAttrs (
+        map
+          (x: {
+            name = "vocard/${x}";
+            value.sopsFile = ./secrets.yaml;
+          })
+          [
+            "token"
+            "client_id"
+            "spotify_client_id"
+            "spotify_client_secret"
+            "password"
+          ]
+      );
 
-      lavalink = {
-        path = "/persist/services/lavalink/application.yml";
-        restartUnits = [
-          "vocard.service"
-          "lavalink.service"
-        ];
-        content =
-          builtins.replaceStrings
-            [
-              "@refresh_token@"
-              "@password@"
-            ]
-            [
-              config.sops.placeholder."lavalink/refresh_token"
-              config.sops.placeholder."lavalink/password"
-            ]
-            (builtins.readFile ./application.yml);
-      };
+    templates.vocard = {
+      restartUnits = [
+        "vocard.service"
+        "lavalink.service"
+      ];
+      content =
+        builtins.replaceStrings
+          [
+            "@token@"
+            "@client_id@"
+            "@spotify_client_id@"
+            "@spotify_client_secret@"
+            "@password@"
+          ]
+          (builtins.attrValues {
+            inherit (config.sops.placeholder)
+              "vocard/token"
+              "vocard/client_id"
+              "vocard/spotify_client_id"
+              "vocard/spotify_client_secret"
+              "vocard/password"
+              ;
+          })
+          (builtins.readFile ./settings.json);
     };
   };
-
-  systemd.tmpfiles.rules = [
-    "d /persist/services/vocard - - - - -"
-    "d /persist/services/lavalink - - - - -"
-  ];
 
   systemd.services = {
     vocard = {
       wantedBy = [ "multi-user.target" ];
-      wants = [
+
+      bindsTo = [ "lavalink.service" ];
+
+      requires = [
         "network-online.target"
-        "lavalink.service"
         "ferretdb.service"
       ];
       after = [
@@ -92,7 +76,8 @@
       ];
       serviceConfig = {
         ExecStart = lib.getExe self'.packages.vocard;
-        WorkingDirectory = "/persist/services/vocard";
+        DynamicUser = true;
+        LoadCredential = "settings.json:${config.sops.templates.vocard.path}";
         Restart = "on-failure";
         RestartSec = "30s";
       };
@@ -104,9 +89,13 @@
         "syslog.target"
         "network-online.target"
       ];
+
+      environment.LAVALINK_PLUGINS_DIR = self'.packages.lavalinkPlugins;
+
       serviceConfig = {
-        ExecStart = lib.getExe self'.packages.lavalink;
-        WorkingDirectory = "/persist/services/lavalink";
+        ExecStart = "${lib.getExe self'.packages.lavalink} --spring.config.location='file:${./application.yml}'";
+        DynamicUser = true;
+        EnvironmentFile = config.sops.secrets.lavalink.path;
         Restart = "on-failure";
         RestartSec = "30s";
       };
@@ -114,4 +103,15 @@
   };
 
   services.ferretdb.enable = true;
+
+  systemd.mounts = [
+    {
+      what = "/persist/services/ferretdb";
+      where = "/var/lib/private/ferretdb";
+      wantedBy = [ "ferretdb.service" ];
+      bindsTo = [ "ferretdb.service" ];
+      type = "none";
+      options = "bind";
+    }
+  ];
 }
