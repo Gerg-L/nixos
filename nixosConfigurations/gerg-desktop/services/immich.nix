@@ -1,11 +1,11 @@
 { config, ... }:
 let
   cfg = config.services.immich;
+  link = config.local.links.immich;
 in
 {
-  systemd.tmpfiles.rules =
-
-    [ "d ${cfg.mediaLocation} - ${cfg.user} ${cfg.group} - -" ];
+  local.links.immich = { };
+  systemd.tmpfiles.rules = [ "d ${cfg.mediaLocation} - ${cfg.user} ${cfg.group} - -" ];
 
   users.users.${cfg.user}.extraGroups = [ "postgres" ];
   services.immich = {
@@ -18,9 +18,9 @@ in
     mediaLocation = "/persist/services/immich";
     machine-learning.enable = true;
     settings = null;
-    port = 2283;
-    host = "0.0.0.0";
+    inherit (link) port;
+    host = link.ipv4;
   };
 
-  local.nginx.proxyVhosts."photos.gerg-l.com" = "http://localhost:${toString cfg.port}";
+  local.nginx.proxyVhosts."photos.gerg-l.com" = link.url;
 }

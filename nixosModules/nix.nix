@@ -59,7 +59,6 @@
       #
       #allow-import-from-derivation = false;
       trusted-users = [ "root" ];
-      allowed-users = [ "@wheel" ];
       use-xdg-base-directories = true;
       auto-allocate-uids = true;
     };

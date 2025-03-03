@@ -1,5 +1,9 @@
 { config }:
+let
+  link = config.local.links.forgejo;
+in
 {
+  local.links.forgejo = { };
   users = {
     groups.${config.services.forgejo.group} = { };
     users = {
@@ -10,7 +14,6 @@
         openssh.authorizedKeys.keys = [ config.local.keys.gerg_gerg-desktop ];
       };
 
-      ${config.services.nginx.user}.extraGroups = [ config.services.forgejo.group ];
     };
   };
   services.forgejo = {
@@ -22,9 +25,8 @@
         DOMAIN = "git.gerg-l.com";
         ROOT_URL = "https://git.gerg-l.com/";
         LANDING_PAGE = "/explore/repos";
-        HTTP_ADDR = "/run/forgejo/forgejo.sock";
-        PROTOCOL = "http+unix";
-        UNIX_SOCKET_PERMISSION = "660";
+        HTTP_ADDR = link.ipv4;
+        HTTP_PORT = link.port;
       };
       ui.DEFAULT_THEME = "forgejo-dark";
       service.DISABLE_REGISTRATION = true;
@@ -35,6 +37,5 @@
     };
   };
 
-  local.nginx.proxyVhosts."git.gerg-l.com" =
-    "http://unix:${config.services.forgejo.settings.server.HTTP_ADDR}";
+  local.nginx.proxyVhosts."git.gerg-l.com" = link.url;
 }

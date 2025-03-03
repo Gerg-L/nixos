@@ -647,11 +647,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1740880178,
-        "narHash": "sha256-NBPrFkKsTB/C8L6JDeC6p5Dxek/NMtcCRWYkafsyL38=",
+        "lastModified": 1740960270,
+        "narHash": "sha256-JsNqwyqD2I/5h0KJ5ntrvULJpFgJdJb9jHNFucCLXJw=",
         "owner": "Gerg-L",
         "repo": "nvim-flake",
-        "rev": "b7488d039a8c63b7015c67f026da0564ae54b833",
+        "rev": "57f3e79cf0330cb4db3c1c612307dddd84c05a42",
         "type": "github"
       },
       "original": {

@@ -1,15 +1,19 @@
 {
   config,
-  lib,
 }:
+let
+  link = config.local.links.miniflux;
+in
 {
+  local.links.miniflux = { };
+
   sops.secrets.minifluxenv = { };
 
   services.miniflux = {
     enable = true;
     config = {
       BASE_URL = "https://flux.gerg-l.com";
-      LISTEN_ADDR = "/run/miniflux/miniflux.sock";
+      LISTEN_ADDR = link.tuple;
     };
     adminCredentialsFile = config.sops.secrets.minifluxenv.path;
     createDatabaseLocally = true;
@@ -28,11 +32,5 @@
     };
   };
 
-  systemd.services.miniflux.serviceConfig = {
-    RuntimeDirectoryMode = lib.mkForce "0770";
-    DynamicUser = lib.mkForce false;
-  };
-
-  local.nginx.proxyVhosts."flux.gerg-l.com" =
-    "http://unix:${config.services.miniflux.config.LISTEN_ADDR}";
+  local.nginx.proxyVhosts."flux.gerg-l.com" = link.url;
 }

@@ -1,5 +1,10 @@
 { config, pkgs }:
+let
+  link = config.local.links.searx;
+in
 {
+  local.links.searx = { };
+
   sops.secrets.searxngenv = { };
   users.users.${config.services.nginx.user}.extraGroups = [ "searx" ];
   services.searx = {
@@ -7,8 +12,7 @@
     package = pkgs.searxng;
     runInUwsgi = true;
     uwsgiConfig = {
-      socket = "/run/searx/searx.sock";
-      chmod-socket = "660";
+      http = link.tuple;
       disable-logging = true;
     };
     environmentFile = config.sops.secrets.searxngenv.path;
@@ -37,7 +41,7 @@
   };
 
   local.nginx.defaultVhosts."search.gerg-l.com" = {
-    locations."/".extraConfig = "uwsgi_pass unix:${config.services.searx.uwsgiConfig.socket};";
+    locations."/".proxyPass = link.url;
     extraConfig = "access_log off;";
   };
 }
