@@ -21,6 +21,7 @@
       "quiet" # Less log messages
       "systemd.show_status=auto" # Only show systemd errors
       "udev.log_level=3" # Only show udev errors
+      "plymouth.use-simpledrm" # Faster plymouth splash
       "splash" # Show splash
     ];
     consoleLogLevel = 3; # Only errors
