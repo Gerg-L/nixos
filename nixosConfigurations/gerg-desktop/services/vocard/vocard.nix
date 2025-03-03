@@ -45,15 +45,13 @@
             "@spotify_client_secret@"
             "@password@"
           ]
-          (builtins.attrValues {
-            inherit (config.sops.placeholder)
-              "vocard/token"
-              "vocard/client_id"
-              "vocard/spotify_client_id"
-              "vocard/spotify_client_secret"
-              "vocard/password"
-              ;
-          })
+          (map (x: config.sops.placeholder.${x}) [
+            "vocard/token"
+            "vocard/client_id"
+            "vocard/spotify_client_id"
+            "vocard/spotify_client_secret"
+            "vocard/password"
+          ])
           (builtins.readFile ./settings.json);
     };
   };
