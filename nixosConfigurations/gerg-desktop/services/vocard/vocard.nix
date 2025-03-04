@@ -2,8 +2,18 @@
   self',
   lib,
   config,
+  pkgs,
 }:
+let
+  link = config.local.links.lavalink;
+  ferretLink = config.local.links.ferretdb;
+in
 {
+  local.links = {
+    lavalink = { };
+    ferretdb.protocol = "mongodb";
+  };
+
   sops = {
     secrets =
       {
@@ -36,23 +46,12 @@
         "vocard.service"
         "lavalink.service"
       ];
-      content =
-        builtins.replaceStrings
-          [
-            "@token@"
-            "@client_id@"
-            "@spotify_client_id@"
-            "@spotify_client_secret@"
-            "@password@"
-          ]
-          (map (x: config.sops.placeholder.${x}) [
-            "vocard/token"
-            "vocard/client_id"
-            "vocard/spotify_client_id"
-            "vocard/spotify_client_secret"
-            "vocard/password"
-          ])
-          (builtins.readFile ./settings.json);
+      content = builtins.toJSON (
+        import ./_settings.nix {
+          inherit link ferretLink;
+          p = config.sops.placeholder;
+        }
+      );
     };
   };
 
@@ -88,10 +87,20 @@
         "network-online.target"
       ];
 
-      environment.LAVALINK_PLUGINS_DIR = self'.packages.lavalinkPlugins;
-
       serviceConfig = {
-        ExecStart = "${lib.getExe self'.packages.lavalink} --spring.config.location='file:${./application.yml}'";
+        ExecStart =
+          let
+            configFile = pkgs.writeText "application.yml" (
+              builtins.toJSON (
+                import ./_application.nix {
+                  inherit link;
+                  inherit (self'.packages) lavalinkPlugins;
+                }
+              )
+            );
+          in
+
+          "${lib.getExe self'.packages.lavalink} --spring.config.location='file:${configFile}'";
         DynamicUser = true;
         EnvironmentFile = config.sops.secrets.lavalink.path;
         Restart = "on-failure";
@@ -100,7 +109,10 @@
     };
   };
 
-  services.ferretdb.enable = true;
+  services.ferretdb = {
+    enable = true;
+    settings.FERRETDB_LISTEN_ADDR = ferretLink.tuple;
+  };
 
   systemd.mounts = [
     {
