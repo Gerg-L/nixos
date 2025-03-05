@@ -51,6 +51,7 @@
         "read-only-local-store"
         "recursive-nix"
         "configurable-impure-env"
+        "pipe-operators"
       ];
       auto-optimise-store = true;
       warn-dirty = false;
