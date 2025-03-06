@@ -7,6 +7,7 @@
     address = link.ipv4;
   };
   lavalink = {
+    pluginsDir = lavalinkPlugins;
     plugins = [
       {
         dependency = "dev.lavalink.youtube:youtube-plugin:1.11.5";
@@ -74,7 +75,6 @@
   metrics.prometheus.enabled = false;
 
   plugins = {
-    pluginsDir = lavalinkPlugins;
     youtube = {
       allowDirectPlaylistIds = true;
       allowDirectVideoIds = true;

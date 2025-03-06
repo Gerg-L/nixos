@@ -90,7 +90,7 @@
   mongodb_name = "vocard";
   mongodb_url = ferretLink.url;
   nodes.DEFAULT = {
-    host = link.ipv4;
+    host = link.hostname;
     identifier = "DEFAULT";
     password = p."vocard/password";
     inherit (link) port;

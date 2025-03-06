@@ -17,6 +17,7 @@ in
   sops = {
     secrets =
       {
+        ferretdb = { };
         lavalink = {
           sopsFile = ./secrets.yaml;
           restartUnits = [
@@ -88,19 +89,15 @@ in
       ];
 
       serviceConfig = {
-        ExecStart =
-          let
-            configFile = pkgs.writeText "application.yml" (
-              builtins.toJSON (
-                import ./_application.nix {
-                  inherit link;
-                  inherit (self'.packages) lavalinkPlugins;
-                }
-              )
-            );
-          in
-
-          "${lib.getExe self'.packages.lavalink} --spring.config.location='file:${configFile}'";
+        ExecStart = lib.getExe self'.packages.lavalink;
+        WorkingDirectory = lib.pipe ./_application.nix [
+          (lib.flip import {
+            inherit link;
+            inherit (self'.packages) lavalinkPlugins;
+          })
+          builtins.toJSON
+          (pkgs.writeTextDir "application.yml")
+        ];
         DynamicUser = true;
         EnvironmentFile = config.sops.secrets.lavalink.path;
         Restart = "on-failure";
@@ -109,9 +106,54 @@ in
     };
   };
 
-  services.ferretdb = {
-    enable = true;
-    settings.FERRETDB_LISTEN_ADDR = ferretLink.tuple;
+  services.postgresql = {
+    ensureDatabases = [ "ferretdb" ];
+    ensureUsers = [
+      {
+        name = "ferretdb";
+        ensureDBOwnership = true;
+      }
+    ];
+  };
+
+  systemd.services.ferretdb = {
+    description = "FerretDB";
+    after = [ "network.target" ];
+    wantedBy = [ "multi-user.target" ];
+
+    environment = {
+      FERRETDB_HANDLER = "pg";
+      FERRETDB_LISTEN_ADDR = ferretLink.tuple;
+    };
+
+    serviceConfig = {
+      ExecStart =
+        let
+          dbLink = config.local.links.postgresql;
+        in
+        "${lib.getExe pkgs.ferretdb} --debug-addr='-' --telemetry='disable' --postgresql-url=\"postgres:///ferretdb?user=ferretdb&host=${dbLink.hostname}&port=${dbLink.portStr}&passfile=\${CREDENTIALS_DIRECTORY}/password\"";
+      Type = "simple";
+      StateDirectory = "ferretdb";
+      WorkingDirectory = "%S/ferretdb";
+      LoadCredential = "password:${config.sops.secrets.ferretdb.path}";
+      Restart = "on-failure";
+      ProtectHome = true;
+      ProtectSystem = "strict";
+      PrivateTmp = true;
+      PrivateDevices = true;
+      ProtectHostname = true;
+      ProtectClock = true;
+      ProtectKernelTunables = true;
+      ProtectKernelModules = true;
+      ProtectKernelLogs = true;
+      ProtectControlGroups = true;
+      NoNewPrivileges = true;
+      RestrictRealtime = true;
+      RestrictSUIDSGID = true;
+      RemoveIPC = true;
+      PrivateMounts = true;
+      DynamicUser = true;
+    };
   };
 
   systemd.mounts = [

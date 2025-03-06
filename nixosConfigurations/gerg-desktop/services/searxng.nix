@@ -22,10 +22,13 @@ in
         secret_key = "@SEARXNG_SECRET@";
         base_url = "https://search.gerg-l.com";
       };
-      search.formats = [
-        "html"
-        "json"
-      ];
+      search = {
+        default_lang = "en";
+        formats = [
+          "html"
+          "json"
+        ];
+      };
       engines = [
         {
           name = "bing";

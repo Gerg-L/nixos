@@ -1,4 +1,5 @@
 {
+  lib,
   config,
 }:
 let
@@ -14,22 +15,14 @@ in
     config = {
       BASE_URL = "https://flux.gerg-l.com";
       LISTEN_ADDR = link.tuple;
+      DATABASE_URL =
+        let
+          dbLink = config.local.links.postgresql;
+        in
+        lib.mkForce "user=miniflux host=${dbLink.hostname} port=${dbLink.portStr} dbname=miniflux sslmode=disable";
     };
     adminCredentialsFile = config.sops.secrets.minifluxenv.path;
     createDatabaseLocally = true;
-  };
-
-  users = {
-    groups.miniflux.gid = 377;
-    users = {
-      miniflux = {
-        group = "miniflux";
-        extraGroups = [ "postgres" ];
-        isSystemUser = true;
-        uid = 377;
-      };
-      ${config.services.nginx.user}.extraGroups = [ "miniflux" ];
-    };
   };
 
   local.nginx.proxyVhosts."flux.gerg-l.com" = link.url;
