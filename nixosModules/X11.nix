@@ -1,5 +1,6 @@
 { pkgs, lib }:
 {
+  services.libinput.mouse.accelProfile = "flat";
   services.xserver = {
     tty = lib.mkDefault 1;
     exportConfiguration = true;

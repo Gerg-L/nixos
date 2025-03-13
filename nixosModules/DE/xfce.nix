@@ -8,13 +8,11 @@
 
   config = lib.mkIf config.local.DE.xfce.enable {
     environment.systemPackages = [ pkgs.xfce.xfce4-whiskermenu-plugin ];
-    services = {
-      xserver = {
+    services.xserver = {
+      enable = true;
+      desktopManager.xfce = {
         enable = true;
-        desktopManager.xfce = {
-          enable = true;
-          enableScreensaver = true;
-        };
+        enableScreensaver = true;
       };
       displayManager.defaultSession = "xfce";
     };

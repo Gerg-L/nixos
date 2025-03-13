@@ -14,7 +14,7 @@
         extraConfig = "minimum-vt=1";
         greeters.mini = {
           enable = true;
-          user = config.local.DM.loginUser;
+          inherit (config.services.displayManager.autoLogin) user;
           extraConfig = ''
             [greeter]
             show-password-label = false

@@ -7,11 +7,7 @@
 {
   local = {
     remoteBuild.enable = true;
-    DM = {
-      lightdm.enable = true;
-      autoLogin = true;
-      loginUser = "media";
-    };
+    DM.lightdm.enable = true;
     DE.xfce.enable = true;
     theming = {
       enable = true;
@@ -35,6 +31,10 @@
 
   sops.secrets.root.neededForUsers = true;
 
+  services.displayManager.autoLogin = {
+    enable = true;
+    user = "media";
+  };
   users = {
     mutableUsers = false;
     users = {

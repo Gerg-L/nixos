@@ -38,36 +38,62 @@
       sxhkd = {
         wantedBy = [ "graphical-session.target" ];
         partOf = [ "graphical-session.target" ];
-        serviceConfig = {
-          ExecStart = "${lib.getExe pkgs.sxhkd} -c /etc/sxhkd/sxhkdrc";
-          Restart = "always";
-          RestartSec = 2;
-          ExecReload = "pkill -usr1 -x $MAINPID";
-        };
+        serviceConfig =
+          let
+            configFile = pkgs.writeText "sxhkdrc" ''
+              XF86AudioPlay
+                playerctl play-pause
+              XF86AudioPause
+                playerctl play-pause
+              XF86AudioStop
+                playerctl stop
+              XF86AudioNext
+                playerctl next
+              XF86AudioPrev
+                playerctl previous
+              XF86AudioRaiseVolume
+                wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+
+              XF86AudioLowerVolume
+                wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-
+              XF86AudioMute
+                wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+              Print
+                maim $HOME/Screenshots/$(date +%Y-%m-%d_%H-%m-%s).jpg
+              Print + shift
+                maim | xclip -selection clipboard -t image/png
+              super + Print
+                maim -s $HOME/Screenshots/$(date +%Y-%m-%d_%H-%m-%s).jpg
+              super + Print + shift
+                maim -s | xclip -selection clipboard -t image/png
+              super + ctrl + r
+                pkill -usr1 -x sxhkd
+              super + ctrl + l
+                xsecurelock
+            '';
+          in
+
+          {
+            ExecStart = "${lib.getExe pkgs.sxhkd} -c '${configFile}'";
+            Restart = "always";
+            RestartSec = 2;
+            ExecReload = "pkill -usr1 -x $MAINPID";
+          };
       };
 
       picom = {
         wantedBy = [ "graphical-session.target" ];
         partOf = [ "graphical-session.target" ];
-        serviceConfig = {
-          ExecStart = "${lib.getExe pkgs.picom} --backend egl";
-          Restart = "always";
-          RestartSec = 2;
-          ExecReload = "pkill -usr1 -x $MAINPID";
-        };
+        serviceConfig.ExecStart = "${lib.getExe pkgs.picom} --backend egl";
       };
     };
     services = {
-      gvfs.enable = true;
       displayManager.defaultSession = "none+dwm";
       xserver = {
         enable = true;
-        displayManager = {
-          sessionCommands = ''
-            feh --bg-center "${self'.packages.images}/recursion.png"
-            numlockx
-          '';
-        };
+        displayManager.sessionCommands = ''
+          feh --bg-center "${self'.packages.images}/recursion.png"
+          numlockx
+        '';
         windowManager.session = [
           {
             name = "dwm";
@@ -93,35 +119,5 @@
       };
     };
 
-    environment.etc."sxhkd/sxhkdrc".text = ''
-      XF86AudioPlay
-        playerctl play-pause
-      XF86AudioPause
-        playerctl play-pause
-      XF86AudioStop
-        playerctl stop
-      XF86AudioNext
-        playerctl next
-      XF86AudioPrev
-        playerctl previous
-      XF86AudioRaiseVolume
-        wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+
-      XF86AudioLowerVolume
-        wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-
-      XF86AudioMute
-        wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-      Print
-        maim $HOME/Screenshots/$(date +%Y-%m-%d_%H-%m-%s).jpg
-      Print + shift
-        maim | xclip -selection clipboard -t image/png
-      super + Print
-        maim -s $HOME/Screenshots/$(date +%Y-%m-%d_%H-%m-%s).jpg
-      super + Print + shift
-        maim -s | xclip -selection clipboard -t image/png
-      super + ctrl + r
-        pkill -usr1 -x sxhkd
-      super + ctrl + l
-        xsecurelock
-    '';
   };
 }

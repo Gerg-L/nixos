@@ -9,11 +9,7 @@
 {
   local = {
     DE.dwm.enable = true;
-    DM = {
-      lightdm.enable = true;
-      autoLogin = true;
-      loginUser = "gerg";
-    };
+    DM.lightdm.enable = true;
     theming = {
       enable = true;
       kmscon.enable = true;
@@ -114,7 +110,10 @@
     '';
   };
 
-  services.libinput.mouse.accelProfile = "flat";
+  services.displayManager.autoLogin = {
+    enable = true;
+    user = "gerg";
+  };
 
   programs = {
     steam.enable = true;
