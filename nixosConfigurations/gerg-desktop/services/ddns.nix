@@ -10,7 +10,6 @@
     reloadIfChanged = false;
     restartIfChanged = false;
     stopIfChanged = false;
-    wantedBy = [ "multi-user.target" ];
     wants = [ "network-online.target" ];
     after = [ "network-online.target" ];
     startAt = "hourly";
