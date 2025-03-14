@@ -631,11 +631,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1741483537,
-        "narHash": "sha256-z0enmKFtlFiJXeXMmiWRtRMSvbfVyICmTmDDdMHdkL0=",
+        "lastModified": 1741910893,
+        "narHash": "sha256-W66Plcq5rOWSOa64VySwCKfOuv3ottMuFIk37Eorj+Q=",
         "owner": "Gerg-L",
         "repo": "nvim-flake",
-        "rev": "cf2223a7d041af388ad8e05cea5265c8e04c84d8",
+        "rev": "ad53aad5d8fe0c5215a703dbb2df5b2704f08a13",
         "type": "github"
       },
       "original": {
