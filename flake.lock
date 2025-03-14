@@ -42,11 +42,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1737589030,
-        "narHash": "sha256-vEomFIFl2nXUJQC0fuSKexUYqufhebbkyx+hF2l1bX8=",
+        "lastModified": 1741820453,
+        "narHash": "sha256-GUItxBNz/VtVAjPnltF0RYCDChIhfn0YV5T/GSG9jFI=",
         "owner": "Gerg-L",
         "repo": "fetch-rs",
-        "rev": "b9b2e406412a6f416d6ac2c6fab24ac79cb78d15",
+        "rev": "d4a675837ac40c54cf1b3987c783645376d6cbbb",
         "type": "github"
       },
       "original": {
