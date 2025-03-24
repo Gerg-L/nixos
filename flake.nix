@@ -24,7 +24,7 @@
       type = "github";
       owner = "NixOS";
       repo = "nix";
-      ref = "31923aaac0358336442244ec6baf8f6517463afd";
+      ref = "5a4e306cc5853922b292525ed23c59ba07f9d243";
       inputs.nixpkgs.follows = "stable";
     };
     #other
