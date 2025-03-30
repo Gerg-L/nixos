@@ -31,8 +31,9 @@
     # Other nix settings
     #
     settings = {
-      substituters = [
-        "https://nix-community.cachix.org?priority=10"
+      substituters = lib.mkForce [
+        "https://cache.nixos.org?priority=2"
+        "https://nix-community.cachix.org?priority=3"
       ];
       trusted-public-keys = [
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
