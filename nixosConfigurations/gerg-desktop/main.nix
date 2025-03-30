@@ -28,7 +28,7 @@
         qbittorrent # steal stuff
         pavucontrol # gui volume control
         pcmanfm # file manager
-        vlc # play stuff
+        mpv # play stuff
         ripgrep
         fd
         jq

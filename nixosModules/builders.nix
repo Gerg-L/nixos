@@ -10,7 +10,7 @@
           keep-derivations = false;
           builders-use-substitutes = true;
           max-jobs = 0;
-          substituters = [ "https://cache.gerg-l.com" ];
+          substituters = [ "https://cache.gerg-l.com?priority=-1&compression=zstd" ];
           trusted-public-keys = [ "cache.gerg-l.com:6p1+h6jQnb1MOt3ra3PlQpfgEEF4zRrQWiEuAqcjBj8=" ];
         };
         distributedBuilds = true;
