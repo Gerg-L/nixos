@@ -17,7 +17,8 @@
       pastebin = "curl -F 'clbin=<-' https://clbin.com";
       termbin = "nc termbin.com 9999";
       #nix stuff
-      gc-check = ''nix-store --gc --print-roots | egrep -v "^(/nix/var|/run/w+-system|{memory|/proc)"'';
+      gc-check = "nix-store --gc --print-roots | awk '{print $1}' | rg -v '^/(run/.*-system|proc|nix/var)'";
+      clean-bootloader = "/run/current-system/bin/switch-to-configuration boot";
       #vim stuff
       vi = "nvim";
       vim = "nvim";
