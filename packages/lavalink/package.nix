@@ -4,6 +4,7 @@
   fetchurl,
   makeBinaryWrapper,
   zulu17,
+  udev,
 }:
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "lavalink";
@@ -23,7 +24,8 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
     mkdir -p "$out/bin"
     makeWrapper '${lib.getExe zulu17}' "$out/bin/lavalink" \
-      --add-flags "-jar $out/lib/Lavalink.jar"
+      --add-flags "-jar $out/lib/Lavalink.jar" \
+      --set 'LD_LIBRARY_PATH' '${lib.makeLibraryPath [ udev ]}'
   '';
 
   meta.mainProgram = "lavalink";
