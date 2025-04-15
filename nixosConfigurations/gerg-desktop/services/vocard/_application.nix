@@ -10,7 +10,7 @@
     pluginsDir = lavalinkPlugins;
     plugins = [
       {
-        dependency = "dev.lavalink.youtube:youtube-plugin:1.11.5";
+        dependency = "dev.lavalink.youtube:youtube-plugin:1.12.0";
         enabled = true;
         snapshot = false;
       }

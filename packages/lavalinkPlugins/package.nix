@@ -4,10 +4,10 @@
 }:
 linkFarm "lavalinkPlugins" [
   {
-    name = "youtube-plugin-1.11.5.jar";
+    name = "youtube-plugin-1.12.0.jar";
     path = fetchurl {
-      url = "https://github.com/lavalink-devs/youtube-source/releases/download/1.11.5/youtube-plugin-1.11.5.jar";
-      hash = "sha256-Zz4S5mWcsVFWGmN41L34GqZeCOswt/CAn+1PN1XJtbk=";
+      url = "https://github.com/lavalink-devs/youtube-source/releases/download/1.12.0/youtube-plugin-1.12.0.jar";
+      hash = "sha256-M9CDMDGR7fBldPLLG/I5TN21DLNN440nzF1l34MrQK0=";
     };
   }
 ]
