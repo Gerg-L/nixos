@@ -25,7 +25,7 @@
     packages = {
       inherit (pkgs)
         bitwarden-desktop # store stuff
-        qbittorrent # steal stuff
+        #qbittorrent # steal stuff
         pavucontrol # gui volume control
         pcmanfm # file manager
         mpv # play stuff
@@ -41,11 +41,11 @@
         vesktop
         gh
         nixfmt-rfc-style
-        prusa-slicer # 3D printer slicer
+        #prusa-slicer # 3D printer slicer
         # QMK configuration
         #via
         #qmk
-
+        tidal-hifi
         ;
       inherit (nvim-flake.packages) neovim;
       inherit (self'.packages) lint;
