@@ -142,5 +142,5 @@
   spotify_client_id = p."vocard/spotify_client_id";
   spotify_client_secret = p."vocard/spotify_client_secret";
   token = p."vocard/token";
-  version = "v2.6.9";
+  version = "v2.7.1";
 }

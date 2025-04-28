@@ -6,7 +6,7 @@
   makeBinaryWrapper,
 }:
 let
-  version = "2.6.9";
+  version = "2.7.1";
   python = python3.withPackages (p: [
     p.discordpy
     p.motor
@@ -26,7 +26,7 @@ stdenv.mkDerivation {
     owner = "ChocoMeow";
     repo = "Vocard";
     tag = "v${version}";
-    hash = "sha256-21n+6LqXYVXc8ynS62IvWHxK76xxfatN8e99KDPueps=";
+    hash = "sha256-0cSR9z6JNB0xdHMyDrDRJQ7xilqGVifCowXuNKipgjQ=";
   };
 
   buildPhase = ''
