@@ -21,6 +21,7 @@
       "steam-unwrapped"
       "steam-run"
       "hplip"
+      "castlabs-electron"
     ];
     packages = {
       inherit (pkgs)

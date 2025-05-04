@@ -11,10 +11,10 @@
 
     kernelPackages = pkgs.linuxPackagesFor (
       let
-        version = "6.12.11";
+        version = "6.14.5";
         src = pkgs.fetchurl {
           url = "mirror://kernel/linux/kernel/v${builtins.head (lib.splitVersion version)}.x/linux-${version}.tar.xz";
-          hash = "sha256-R1Fy/b2HoVPxI6V5Umcudzvbba9bWKQX0aXkGfz+7Ek=";
+          hash = "sha256-KCB+xSu+qjUHAQrv+UT0QvfZ8isoa3nK9F7G3xsk9Ak=";
         };
       in
       (pkgs.linuxManualConfig {
