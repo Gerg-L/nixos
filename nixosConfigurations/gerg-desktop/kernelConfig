@@ -5292,16 +5292,16 @@ CONFIG_BUFFER_HEAD=y
 CONFIG_LEGACY_DIRECT_IO=y
 # CONFIG_EXT2_FS is not set
 # CONFIG_EXT3_FS is not set
-# CONFIG_EXT4_FS is not set
+CONFIG_EXT4_FS=y
 # CONFIG_REISERFS_FS is not set
 # CONFIG_JFS_FS is not set
-# CONFIG_XFS_FS is not set
+CONFIG_XFS_FS=y
 # CONFIG_GFS2_FS is not set
 # CONFIG_OCFS2_FS is not set
-# CONFIG_BTRFS_FS is not set
+CONFIG_BTRFS_FS is not set
 # CONFIG_NILFS2_FS is not set
 # CONFIG_F2FS_FS is not set
-# CONFIG_BCACHEFS_FS is not set
+CONFIG_BCACHEFS_FS=y
 # CONFIG_ZONEFS_FS is not set
 # CONFIG_FS_DAX is not set
 CONFIG_FS_POSIX_ACL=y

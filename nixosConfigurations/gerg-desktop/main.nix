@@ -60,7 +60,10 @@
   boot = {
     binfmt.emulatedSystems = [ "aarch64-linux" ];
 
-    supportedFilesystems.ntfs = true;
+    supportedFilesystems = {
+      ext4 = true;
+      ntfs = true;
+    };
     initrd = {
       availableKernelModules = [
         "nvme"
