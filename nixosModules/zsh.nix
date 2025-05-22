@@ -16,6 +16,8 @@
           bindkey '^[[B' history-substring-search-down
           ### fzf-tab ###
           source ${pkgs.zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh
+          ### vi-mode ###
+          source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
           ### transient shell prompt ###
           zle-line-init() {
           emulate -L zsh
