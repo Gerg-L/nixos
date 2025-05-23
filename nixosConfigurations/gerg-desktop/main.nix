@@ -43,6 +43,7 @@
         nixfmt-rfc-style
         zellij
         tidal-hifi
+        hyperfine
 
         #prusa-slicer # 3D printer slicer
         # QMK configuration
