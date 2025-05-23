@@ -130,6 +130,27 @@
       silent = true;
     };
 
+
+    zsh = {
+      interactiveShellInit =
+        let
+          monitorScript = pkgs.replaceVarsWith {
+            src = ./monitor.ps;
+            replacements = builtins.mapAttrs (_: lib.getExe) {
+              inherit (pkgs) perl xdotool;
+            };
+            isExecutable = true;
+          };
+        in
+        ''
+          if [[ -z "$ZELLIJ" ]]; then
+            MONITOR="$(${monitorScript} || true)"
+            zellij attach -c "''${MONITOR:+"$MONITOR@"}$USER"
+            exit
+          fi
+        '';
+    };
+
     nix-index = {
       enable = true;
       package = nix-index-database.packages.nix-index-with-db;
