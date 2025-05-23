@@ -130,8 +130,10 @@
       silent = true;
     };
 
+    zoxide.enable = true;
 
     zsh = {
+      shellAliases.cd = "z";
       interactiveShellInit =
         let
           monitorScript = pkgs.replaceVarsWith {
