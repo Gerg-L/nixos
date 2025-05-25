@@ -41,7 +41,6 @@
         vesktop
         gh
         nixfmt-rfc-style
-        zellij
         tidal-hifi
         hyperfine
 
@@ -135,23 +134,6 @@
 
     zsh = {
       shellAliases.cd = "z";
-      interactiveShellInit =
-        let
-          monitorScript = pkgs.replaceVarsWith {
-            src = ./monitor.ps;
-            replacements = builtins.mapAttrs (_: lib.getExe) {
-              inherit (pkgs) perl xdotool;
-            };
-            isExecutable = true;
-          };
-        in
-        ''
-          if [[ -z "$ZELLIJ" ]]; then
-            MONITOR="$(${monitorScript} || true)"
-            zellij attach -c "''${MONITOR:+"$MONITOR@"}$USER"
-            exit
-          fi
-        '';
     };
 
     nix-index = {
