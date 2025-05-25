@@ -130,12 +130,6 @@
       silent = true;
     };
 
-    zoxide.enable = true;
-
-    zsh = {
-      shellAliases.cd = "z";
-    };
-
     nix-index = {
       enable = true;
       package = nix-index-database.packages.nix-index-with-db;

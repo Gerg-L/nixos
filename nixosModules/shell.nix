@@ -32,10 +32,12 @@
       lx = "eza -lbhHigUmuSa@ --time-style=long-iso --git --color-scale";
       lS = "eza -1";
       lt = "eza --tree --level=2";
+      cd = "z";
     };
     interactiveShellInit = "fetch-rs";
   };
 
+  programs.zoxide.enable = true;
   programs.starship = {
     enable = true;
     settings = {
