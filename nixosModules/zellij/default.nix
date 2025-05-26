@@ -31,7 +31,6 @@
             MONITOR="$(${monitorScript} || true)"
             zellij attach -c "''${MONITOR:+"$MONITOR@"}$USER"
           fi
-          exit
         fi
       '';
 
