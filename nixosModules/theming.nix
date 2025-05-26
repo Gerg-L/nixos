@@ -77,7 +77,10 @@ in
             sansSerif = [ "Overpass" ];
             monospace = [ "Overpass Mono" ];
           };
-          hinting.enable = true;
+          hinting = {
+            enable = true;
+            style = "medium";
+          };
           antialias = true;
         };
       };

@@ -10,7 +10,7 @@
 
   config = lib.mkIf config.local.DE.dwm.enable {
     local.packages = {
-      inherit (suckless.packages) dmenu dwm st;
+      inherit (suckless.packages) dmenu dwm;
       inherit (pkgs)
         maim
         playerctl

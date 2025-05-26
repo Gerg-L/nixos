@@ -631,11 +631,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1748217776,
-        "narHash": "sha256-H5yi/nBlTL8TZ3GKvjJhJReEMc3z1xLBocVvewaJ5SY=",
+        "lastModified": 1748279748,
+        "narHash": "sha256-0rJJVtQH0dkrmxHWpVl0MZboG7prkc8r3GgM18ltEkY=",
         "owner": "Gerg-L",
         "repo": "nvim-flake",
-        "rev": "19ee0aebca7d0d675539efde545dc49cee7e3d20",
+        "rev": "f21def6b0cdaa84a43fd6981f5c97d4713665bf6",
         "type": "github"
       },
       "original": {
@@ -810,11 +810,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1747956973,
-        "narHash": "sha256-L2El+D70h0vZhHmaERqAw8fZaNvwPZZIIKxamDQfMU4=",
+        "lastModified": 1748284985,
+        "narHash": "sha256-5ebKhRtcCWG6LTO9F0IjtNmNc/VUBmiFLqRrfsn3MLU=",
         "owner": "Gerg-L",
         "repo": "suckless",
-        "rev": "f144825dd53f99203b05d3af31475e7431e55b1c",
+        "rev": "ebedaf1b454ef1da343a96f63dc95f1cd7aa57f3",
         "type": "github"
       },
       "original": {

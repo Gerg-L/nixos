@@ -56,6 +56,11 @@
       librewolf = pkgs.librewolf.override { cfg.speechSynthesisSupport = false; };
       nixpkgs-review = pkgs.nixpkgs-review.override { nix = config.nix.package; };
     };
+
+    ghostty = {
+      enable = true;
+      defaultSettings = true;
+    };
   };
   boot = {
     binfmt.emulatedSystems = [ "aarch64-linux" ];
