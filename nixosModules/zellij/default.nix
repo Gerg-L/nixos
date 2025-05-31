@@ -24,12 +24,20 @@
         };
       in
       ''
+
+        run_zellij () {
+            if ! systemctl is-active --quiet --user "zellij$2.scope"; then
+             systemd-run --scope --unit="zellij$2" --user zellij attach -b "$1"
+            fi
+            zellij attach "$1"
+        }
+
         if [[ -z "$ZELLIJ" ]]; then
           if [[ -n "$SSH_TTY" ]]; then
-            zellij attach -c "SSH@$USER"
+            run_zellij "$SSH@$USER" ""
           else
             MONITOR="$(${monitorScript} || true)"
-            zellij attach -c "''${MONITOR:+"$MONITOR@"}$USER"
+            run_zellij "''${MONITOR:+"$MONITOR@"}$USER" "-''${MONITOR:+"$MONITOR"}"
           fi
         fi
       '';
