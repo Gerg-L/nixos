@@ -12,9 +12,7 @@ let
       if builtins.isString v then
         ''${k} = "${toString v}"''
       else
-        ''${k} = ${
-          if builtins.isBool v then if v then "true" else "false" else toString v
-        }'';
+        ''${k} = ${if builtins.isBool v then if v then "true" else "false" else toString v}'';
   };
   configFile = format.generate "ghostty-config" cfg.settings;
 in
@@ -62,6 +60,9 @@ in
           "14=#85dc85"
           "15=#e2637f"
         ];
+        mouse-hide-while-typing = true;
+        app-notifications = "no-clipboard-copy";
+
         copy-on-select = false;
         clipboard-read = "allow";
         clipboard-write = "allow";
@@ -72,6 +73,8 @@ in
         ];
 
         auto-update = "off";
+        confirm-close-surface = false;
+        shell-integration = "detect";
       }
     );
 
