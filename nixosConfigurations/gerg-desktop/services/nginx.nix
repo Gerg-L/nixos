@@ -44,7 +44,7 @@
 
       services.nginx = {
         enable = true;
-        recommendedZstdSettings = true;
+        experimentalZstdSettings = true;
         recommendedOptimisation = true;
         recommendedProxySettings = true;
         recommendedTlsSettings = true;

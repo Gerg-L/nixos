@@ -40,7 +40,7 @@
         element-desktop
         vesktop
         gh
-        nixfmt-rfc-style
+        nixfmt
         tidal-hifi
         hyperfine
 

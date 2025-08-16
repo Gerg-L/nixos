@@ -10,7 +10,7 @@ in
   services.searx = {
     enable = true;
     package = pkgs.searxng;
-    runInUwsgi = true;
+    configureUwsgi = true;
     uwsgiConfig = {
       http = link.tuple;
       disable-logging = true;
