@@ -7,10 +7,10 @@
 
   boot.kernelPackages = pkgs.linuxPackagesFor (
     let
-      version = "6.14.5";
+      version = "6.16.9";
       src = pkgs.fetchurl {
         url = "mirror://kernel/linux/kernel/v${builtins.head (lib.splitVersion version)}.x/linux-${version}.tar.xz";
-        hash = "sha256-KCB+xSu+qjUHAQrv+UT0QvfZ8isoa3nK9F7G3xsk9Ak=";
+        hash = "sha256-esjIo88FR2N13qqoXfzuCVqCb/5Ve0N/Q3dPw7ZM5Y0=";
       };
     in
     (pkgs.linuxManualConfig {
@@ -22,6 +22,9 @@
         CONFIG_MODULES = "y";
       };
       configfile = ./kernelConfig;
+      extraMeta = {
+        broken = false;
+      };
     }).overrideAttrs
       (old: {
         passthru = old.passthru or { } // {
@@ -30,9 +33,6 @@
             netfilterRPFilter = true;
             ia32Emulation = true;
           } config.boot.kernelPatches;
-        };
-        meta = old.meta or { } // {
-          broken = false;
         };
       })
   );
