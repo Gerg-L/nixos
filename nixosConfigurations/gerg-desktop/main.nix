@@ -162,7 +162,6 @@
   };
 
   services.udev.packages = [
-    pkgs.android-udev-rules
     # pkgs.via
     # pkgs.qmk-udev-rules
   ];
@@ -226,7 +225,6 @@
         isNormalUser = true;
         extraGroups = [
           "wheel"
-          "adbusers"
           "plugdev"
         ];
         openssh.authorizedKeys.keys = builtins.attrValues {
