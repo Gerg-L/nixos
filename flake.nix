@@ -58,12 +58,6 @@
       repo = "lanzaboote";
       inputs.nixpkgs.follows = "unstable";
     };
-    nix-janitor = {
-      type = "github";
-      owner = "Nobbz";
-      repo = "nix-janitor";
-      inputs.nixpkgs.follows = "unstable";
-    };
     systems = {
       type = "github";
       owner = "nix-systems";
