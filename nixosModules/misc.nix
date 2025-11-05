@@ -1,8 +1,6 @@
 {
   lib,
-  config,
   pkgs,
-  nix-janitor,
 }:
 {
 
@@ -14,16 +12,8 @@
       nix-output-monitor # nom nom nom nom;
       nix-tree # view packages
       pciutils # lspci
+      nix-janitor
       ;
-    nix-janitor = pkgs.symlinkJoin {
-      name = "nix-janitor";
-      paths = [ nix-janitor.packages.default ];
-      nativeBuildInputs = [ pkgs.makeBinaryWrapper ];
-      postBuild = ''
-        wrapProgram "$out/bin/janitor" \
-        --suffix PATH : ${lib.makeBinPath [ config.nix.package ]}
-      '';
-    };
     nixos-rebuild-ng = pkgs.symlinkJoin {
       name = "nixos-rebuild-ng";
       paths = [ pkgs.nixos-rebuild-ng ];
