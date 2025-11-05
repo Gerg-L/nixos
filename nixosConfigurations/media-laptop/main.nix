@@ -16,7 +16,7 @@
     packages = {
       inherit (pkgs)
         mpv
-        pavucontrol # gui volume control
+        pwvucontrol # gui volume control
         librewolf
         ;
       inherit (nvim-flake.packages) neovim;

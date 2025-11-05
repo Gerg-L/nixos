@@ -26,7 +26,7 @@
     packages = {
       inherit (pkgs)
         bitwarden-desktop # store stuff
-        pavucontrol # gui volume control
+        pwvucontrol # gui volume control
         pcmanfm # file manager
         mpv # play stuff
         ripgrep
