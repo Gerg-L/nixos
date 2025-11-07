@@ -14,14 +14,6 @@
       pciutils # lspci
       nix-janitor
       ;
-    nixos-rebuild-ng = pkgs.symlinkJoin {
-      name = "nixos-rebuild-ng";
-      paths = [ pkgs.nixos-rebuild-ng ];
-      postBuild = ''
-        ln -s "$out/bin/nixos-rebuild-ng" "$out/bin/nixos-rebuild"
-      '';
-    };
-
   };
 
   programs.git.enable = true;
@@ -69,7 +61,10 @@
   # Useless with flakes (without configuring)
   programs.command-not-found.enable = false;
 
-  system.disableInstallerTools = true;
+  system = {
+    disableInstallerTools = true;
+    tools.nixos-rebuild.enable = true;
+  };
 
   services.userborn.enable = true;
   boot.enableContainers = false;
