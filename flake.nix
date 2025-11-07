@@ -52,12 +52,6 @@
       repo = "nix-index-database";
       inputs.nixpkgs.follows = "unstable";
     };
-    lanzaboote = {
-      type = "github";
-      owner = "nix-community";
-      repo = "lanzaboote";
-      inputs.nixpkgs.follows = "unstable";
-    };
     systems = {
       type = "github";
       owner = "nix-systems";
