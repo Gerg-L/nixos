@@ -15,32 +15,31 @@ in
   };
 
   sops = {
-    secrets =
-      {
-        ferretdb = { };
-        lavalink = {
-          sopsFile = ./secrets.yaml;
-          restartUnits = [
-            "vocard.service"
-            "lavalink.service"
-          ];
-        };
+    secrets = {
+      ferretdb = { };
+      lavalink = {
+        sopsFile = ./secrets.yaml;
+        restartUnits = [
+          "vocard.service"
+          "lavalink.service"
+        ];
+      };
 
-      }
-      // builtins.listToAttrs (
-        map
-          (x: {
-            name = "vocard/${x}";
-            value.sopsFile = ./secrets.yaml;
-          })
-          [
-            "token"
-            "client_id"
-            "spotify_client_id"
-            "spotify_client_secret"
-            "password"
-          ]
-      );
+    }
+    // builtins.listToAttrs (
+      map
+        (x: {
+          name = "vocard/${x}";
+          value.sopsFile = ./secrets.yaml;
+        })
+        [
+          "token"
+          "client_id"
+          "spotify_client_id"
+          "spotify_client_secret"
+          "password"
+        ]
+    );
 
     templates.vocard = {
       restartUnits = [
