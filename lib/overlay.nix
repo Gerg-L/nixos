@@ -1,6 +1,25 @@
 { self, ... }@inputs:
+myLib: lib:
+let
+  systemDependent = {
+    appendSystem = system: x: "${x}-${system}";
+  };
+in
+{
 
-myLib: lib: {
+  inherit systemDependent;
+
+  __functor =
+    self: system:
+    let
+      systemDependent = builtins.mapAttrs (_: v: v system) self.sysDependantFuncs;
+    in
+    self
+    // {
+      inherit systemDependent;
+    }
+    // systemDependent;
+
   overlay = import ./overlay.nix inputs;
 
   wrench = lib.flip lib.pipe;
@@ -135,3 +154,4 @@ myLib: lib: {
       };
 
 }
+// systemDependent
