@@ -34,8 +34,6 @@ in
 
         adjust-cursor-thickness = 2;
 
-        bold-is-bright = false;
-
         background = "#080808";
         foreground = "#bdbdbd";
         selection-background = "#b2ceee";
@@ -75,6 +73,7 @@ in
         auto-update = "off";
         confirm-close-surface = false;
         shell-integration = "detect";
+        shell-integration-features = "no-path,sudo,cursor,ssh-env,ssh-terminfo";
       }
     );
 
