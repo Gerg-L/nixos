@@ -12,7 +12,6 @@ func () {
   ZONE="$2"
   PROXY="${3:-"true"}"
 
-
   REQ=$(curl --silent \
     --request GET \
     --url "https://api.cloudflare.com/client/v4/zones/$ZONE/dns_records" \
@@ -33,7 +32,6 @@ func () {
     fi
   done
 
-
   curl --silent \
     --request PATCH \
     --url "https://api.cloudflare.com/client/v4/zones/$ZONE/dns_records/$ID" \
@@ -51,6 +49,5 @@ func () {
 }
 
 func "*.gerg-l.com" "8f76f071c5edbc0f947a5c5f9c5df9f8"
-func "gerg-l.com" "8f76f071c5edbc0f947a5c5f9c5df9f8" "false"
+func "gerg-l.com" "8f76f071c5edbc0f947a5c5f9c5df9f8"
 func "ipv6.gerg-l.com" "8f76f071c5edbc0f947a5c5f9c5df9f8" "false"
-
