@@ -11,13 +11,18 @@ in
       global = {
         inherit (link) port;
         address = link.ipv4;
-        database_backend = "rocksdb";
-        #allow_registration = true;
-        allow_federation = true;
         server_name = "gerg-l.com";
+        database_backend = "rocksdb";
+
+        allow_registration = false;
+        allow_encryption = true;
+        allow_federation = true;
+        enable_lightning_bolt = false;
+        allow_check_for_updates = false;
         trusted_servers = [
           "matrix.org"
           "nixos.org"
+          "libera.chat"
         ];
       };
     };
