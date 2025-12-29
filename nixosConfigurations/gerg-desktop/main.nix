@@ -34,7 +34,6 @@
         jq
         wget
         xautoclick
-        prismlauncher
         deadnix
         statix
         fluffychat
@@ -61,7 +60,10 @@
       enable = true;
       defaultSettings = true;
     };
+
+    prismlauncher.enable = true;
   };
+
   boot = {
     binfmt.emulatedSystems = [ "aarch64-linux" ];
 
@@ -155,11 +157,6 @@
     '';
   };
   sops.secrets.github_token.owner = "gerg";
-
-  environment.etc = {
-    "jdks/17".source = "${pkgs.openjdk17}/bin";
-    "jdks/8".source = "${pkgs.openjdk8}/bin";
-  };
 
   services.udev.packages = [
     # pkgs.via
