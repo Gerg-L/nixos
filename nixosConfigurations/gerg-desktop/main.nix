@@ -37,7 +37,7 @@
         prismlauncher
         deadnix
         statix
-        element-desktop
+        fluffychat
         vesktop
         gh
         nixfmt
