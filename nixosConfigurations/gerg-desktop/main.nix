@@ -166,6 +166,11 @@
     # pkgs.qmk-udev-rules
   ];
 
+  services.gnome = {
+    gnome-keyring.enable = true;
+    gcr-ssh-agent.enable = false;
+  };
+
   networking = {
     useNetworkd = false;
     useDHCP = false;
