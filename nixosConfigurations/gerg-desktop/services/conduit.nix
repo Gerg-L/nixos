@@ -1,0 +1,57 @@
+{ config }:
+let
+  link = config.local.links.conduit;
+in
+{
+  networking.firewall.allowedTCPPorts = [ 8448 ];
+  local.links.conduit = { };
+  services.matrix-conduit = {
+    enable = true;
+    settings = {
+      global = {
+        inherit (link) port;
+        address = link.ipv4;
+        database_backend = "rocksdb";
+        #allow_registration = true;
+        allow_federation = true;
+        server_name = "gerg-l.com";
+        trusted_servers = [
+          "matrix.org"
+          "nixos.org"
+        ];
+      };
+    };
+  };
+  systemd.mounts = [
+    {
+      what = "/persist/services/conduit";
+      where = "/var/lib/private/matrix-conduit";
+      type = "none";
+      options = "bind";
+      wantedBy = [ "conduit.service" ];
+      bindsTo = [ "conduit.service" ];
+    }
+  ];
+
+  local.nginx.defaultVhosts."matrix.gerg-l.com".locations."/" = {
+    proxyPass = link.url;
+    extraConfig = ''
+      proxy_set_header Host $host;
+      proxy_buffering off;
+      proxy_read_timeout 5m;
+    '';
+  };
+
+  services.nginx.virtualHosts."_" = {
+    locations."=/.well-known/matrix/server".extraConfig = ''
+      add_header Content-Type application/json;
+      add_header Access-Control-Allow-Origin *;
+      return 200 '{"m.server":"matrix.gerg-l.com:443"}';
+    '';
+    locations."=/.well-known/matrix/client".extraConfig = ''
+      add_header Content-Type application/json;
+      add_header Access-Control-Allow-Origin *;
+      return 200 '{"m.homeserver": {"base_url": "https://matrix.gerg-l.com:443"}}';
+    '';
+  };
+}
