@@ -87,5 +87,11 @@ in
           --add-flag '--config-file="${configFile}"'
       '';
     };
+
+    # remove ghostty from PATH to allow conditional direnv loading
+    programs.zsh.interactiveShellInit = lib.mkAfter ''
+      export PATH=$(printenv PATH | sed -e 's|:${pkgs.ghostty}/bin||')
+    '';
+
   };
 }

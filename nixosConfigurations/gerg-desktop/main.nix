@@ -133,7 +133,7 @@
 
     direnv = {
       enable = true;
-      loadInNixShell = true;
+      loadInNixShell = false;
       silent = true;
     };
 
