@@ -14,6 +14,7 @@ in
         server_name = "gerg-l.com";
         database_backend = "rocksdb";
 
+        max_request_size = 1000 * 1000 * 100 * 20;
         allow_registration = false;
         allow_encryption = true;
         allow_federation = true;
@@ -23,6 +24,7 @@ in
           "matrix.org"
           "nixos.org"
           "libera.chat"
+          "conduit.rs"
         ];
       };
     };
@@ -40,6 +42,7 @@ in
 
   local.nginx.defaultVhosts."matrix.gerg-l.com".locations."/" = {
     proxyPass = link.url;
+    proxyWebsockets = true;
     extraConfig = ''
       proxy_set_header Host $host;
       proxy_buffering off;
