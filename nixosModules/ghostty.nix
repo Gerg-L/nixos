@@ -89,7 +89,7 @@ in
     };
 
     # remove ghostty from PATH to allow conditional direnv loading
-    programs.zsh.interactiveShellInit = lib.mkAfter ''
+    programs.zsh.interactiveShellInit = lib.mkBefore ''
       export PATH=$(printenv PATH | sed -e 's|:${pkgs.ghostty}/bin||')
     '';
 
