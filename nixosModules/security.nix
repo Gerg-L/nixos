@@ -14,9 +14,23 @@
         Defaults lecture = never
       '';
     };
+    polkit.extraConfig = ''
+      polkit.addRule(function(action, subject) {
+          if (
+              action.id == "org.freedesktop.systemd1.run" &&
+              subject.isInGroup("wheel")
+          ) {
+              return polkit.Result.AUTH_KEEP;
+          }
+      });
+    '';
     pam.services.systemd-run0 = {
       setEnvironment = true;
       pamMount = false;
     };
   };
+  environment.etc."polkit-1/localauthority/50-local.d/99-custom.pkla".text = ''
+    [Authorization]
+    DefaultTimeoutStartSec=60
+  '';
 }
