@@ -42,6 +42,7 @@
         nixfmt
         tidal-hifi
         hyperfine
+        android-tools
 
         #prusa-slicer # 3D printer slicer
         # QMK configuration
@@ -141,8 +142,6 @@
       enable = true;
       package = nix-index-database.packages.nix-index-with-db;
     };
-
-    adb.enable = true;
   };
 
   nix = {
