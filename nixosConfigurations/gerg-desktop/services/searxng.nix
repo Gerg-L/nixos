@@ -40,6 +40,13 @@ in
         }
       ];
       ui.theme_args.simple_style = "dark";
+      hostnames = {
+        replace = { };
+        remove = [
+          "(.*\.)?mynixos.com$"
+          "(.*\.)?nixos.wiki$"
+        ];
+      };
     };
   };
 
