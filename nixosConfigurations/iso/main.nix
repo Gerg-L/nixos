@@ -34,10 +34,10 @@
     pkgs.neovim
     disko.packages.default
   ];
+  image.fileName = lib.mkForce "NixOS";
 
   isoImage = {
     edition = lib.mkForce "gerg-minimal";
-    isoName = lib.mkForce "NixOS";
   };
 
   system.stateVersion = "24.11";
