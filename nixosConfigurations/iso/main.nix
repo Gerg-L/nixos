@@ -8,6 +8,7 @@
 {
   ##Build wtih nix build .#nixosConfigurations.iso.config.formats.iso
   local = {
+    zellij.disable = true;
     hardware = {
       gpuAcceleration.disable = true;
       sound.disable = true;
@@ -40,7 +41,10 @@
     edition = lib.mkForce "gerg-minimal";
   };
 
-  system.stateVersion = "24.11";
+  system = {
+    disableInstallerTools = lib.mkForce false;
+    stateVersion = lib.trivial.release;
+  };
   networking.hostName = "gerg-iso";
   nixpkgs.hostPlatform = "x86_64-linux";
 }
