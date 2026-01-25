@@ -3,6 +3,7 @@
   nix-index-database,
   nvim-flake,
   self',
+  master,
   pkgs,
   config,
 }:
@@ -53,7 +54,7 @@
       inherit (nvim-flake.packages) neovim;
       inherit (self'.packages) lint;
 
-      librewolf = pkgs.librewolf.override { cfg.speechSynthesisSupport = false; };
+      librewolf = master.legacyPackages.librewolf.override { cfg.speechSynthesisSupport = false; };
       nixpkgs-review = pkgs.nixpkgs-review.override { nix = config.nix.package; };
     };
 
