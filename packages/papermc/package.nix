@@ -1,41 +1,7 @@
 {
-  lib,
-  stdenvNoCC,
   fetchurl,
-  jre,
-  makeBinaryWrapper,
 }:
-stdenvNoCC.mkDerivation (finalAttrs: {
-  pname = "papermc";
-
-  version = "1.20.1.196";
-
-  src =
-    let
-      mcVersion = lib.versions.pad 3 finalAttrs.version;
-      buildNum = builtins.elemAt (lib.splitVersion finalAttrs.version) 3;
-    in
-    fetchurl {
-      url = "https://papermc.io/api/v2/projects/paper/versions/${mcVersion}/builds/${buildNum}/downloads/paper-${mcVersion}-${buildNum}.jar";
-      hash = "sha256-I0qbMgmBAMb8EWZk1k42zNtYtbZJrw+AvMywiwJV6uo=";
-    };
-
-  installPhase = ''
-    runHook preInstall
-
-    install -D $src $out/share/papermc/papermc.jar
-
-    makeWrapper ${lib.getExe jre} "$out/bin/minecraft-server" \
-      --append-flags "-jar $out/share/papermc/papermc.jar nogui"
-
-    runHook postInstall
-  '';
-
-  nativeBuildInputs = [ makeBinaryWrapper ];
-
-  dontUnpack = true;
-  preferLocalBuild = true;
-  allowSubstitutes = false;
-
-  meta.mainProgram = "minecraft-server";
-})
+fetchurl {
+  url = "https://papermc.io/api/v2/projects/paper/versions/1.20.1/builds/196/downloads/paper-1.20.1-196.jar";
+  hash = "sha256-I0qbMgmBAMb8EWZk1k42zNtYtbZJrw+AvMywiwJV6uo=";
+}
