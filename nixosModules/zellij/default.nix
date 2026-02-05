@@ -23,6 +23,7 @@
           isExecutable = true;
         };
       in
+      #bash
       ''
 
         run_zellij () {
@@ -39,6 +40,8 @@
             MONITOR="$(${monitorScript} || true)"
             run_zellij "''${MONITOR:+"$MONITOR@"}$USER" "-''${MONITOR:+"$MONITOR"}"
           fi
+        else
+          alias exit="echo 'In Zellij not exiting'"
         fi
       '';
 
