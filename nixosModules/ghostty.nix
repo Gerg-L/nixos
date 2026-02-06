@@ -73,7 +73,7 @@ in
         auto-update = "off";
         confirm-close-surface = false;
         shell-integration = "detect";
-        shell-integration-features = "no-path,sudo,cursor,ssh-env,ssh-terminfo";
+        shell-integration-features = "no-path,cursor,ssh-env,ssh-terminfo";
       }
     );
 

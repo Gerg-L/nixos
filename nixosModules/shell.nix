@@ -45,7 +45,7 @@
       format = ''
         $cmd_duration$git_metrics$git_state$git_branch
         $status$directory$character'';
-      right_format = "$sudo$nix_shell\${custom.direnv} $time";
+      right_format = "$nix_shell\${custom.direnv} $time";
       continuation_prompt = "▶▶ ";
       character = {
         success_symbol = "[\\$](#9ece6a bold)";
@@ -83,10 +83,6 @@
           [$time]($style)
         '';
         time_format = "%I:%M %p";
-        disabled = false;
-      };
-      sudo = {
-        format = "[ ](#7aa2f7)";
         disabled = false;
       };
     };
