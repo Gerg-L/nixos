@@ -30,7 +30,7 @@
             if ! systemctl is-active --quiet --user "zellij$2.scope"; then
              systemd-run --scope --unit="zellij$2" --user zellij attach -b "$1"
             fi
-            zellij attach "$1"
+            exec zellij attach "$1"
         }
 
         if [[ -z "$ZELLIJ" ]]; then
@@ -40,7 +40,7 @@
             MONITOR="$(${monitorScript} || true)"
             run_zellij "''${MONITOR:+"$MONITOR@"}$USER" "-''${MONITOR:+"$MONITOR"}"
           fi
-        else
+        elif [ "$SHLVL" -le  "3" ]; then
           alias exit="echo 'In Zellij not exiting'"
         fi
       '';
