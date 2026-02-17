@@ -35,7 +35,7 @@ in
   systemd.mounts = [
     {
       what = "/persist/services/tuwunel";
-      where = "/var/lib/private/matrix-tuwunel";
+      where = "/var/lib/private/tuwunel";
       type = "none";
       options = "bind";
       wantedBy = [ "tuwunel.service" ];
