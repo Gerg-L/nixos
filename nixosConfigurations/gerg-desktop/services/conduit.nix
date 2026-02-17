@@ -1,25 +1,28 @@
 { config }:
 let
-  link = config.local.links.conduit;
+  link = config.local.links.tuwunel;
 in
 {
   networking.firewall.allowedTCPPorts = [ 8448 ];
-  local.links.conduit = { };
-  services.matrix-conduit = {
+
+  local.links.tuwunel = { };
+  services.matrix-tuwunel = {
     enable = true;
     settings = {
       global = {
-        inherit (link) port;
-        address = link.ipv4;
+        port = [ link.port ];
+        address = [ link.ipv4 ];
         server_name = "gerg-l.com";
-        database_backend = "rocksdb";
-
+        new_user_displayname_suffix = "";
         max_request_size = 1000 * 1000 * 100 * 20;
-        allow_registration = false;
+
+        allow_registration = true;
+        registration_token_file = config.sops.secrets.tuwunel_reg.path;
+        grant_admin_to_first_user = true;
+
         allow_encryption = true;
         allow_federation = true;
-        enable_lightning_bolt = false;
-        allow_check_for_updates = false;
+
         trusted_servers = [
           "matrix.org"
           "nixos.org"
@@ -31,12 +34,12 @@ in
   };
   systemd.mounts = [
     {
-      what = "/persist/services/conduit";
-      where = "/var/lib/private/matrix-conduit";
+      what = "/persist/services/tuwunel";
+      where = "/var/lib/private/matrix-tuwunel";
       type = "none";
       options = "bind";
-      wantedBy = [ "conduit.service" ];
-      bindsTo = [ "conduit.service" ];
+      wantedBy = [ "tuwunel.service" ];
+      bindsTo = [ "tuwunel.service" ];
     }
   ];
 
@@ -62,4 +65,6 @@ in
       return 200 '{"m.homeserver": {"base_url": "https://matrix.gerg-l.com:443"}}';
     '';
   };
+
+  sops.secrets.tuwunel_reg.owner = config.services.matrix-tuwunel.user;
 }
