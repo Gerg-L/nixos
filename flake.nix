@@ -7,18 +7,8 @@
       repo = "nixpkgs";
       ref = "master";
     };
-    unstable = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixpkgs";
-      ref = "nixos-unstable";
-    };
-    stable = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixpkgs";
-      ref = "nixos-25.11";
-    };
+    unstable.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
+    stable.url = "https://channels.nixos.org/nixos-25.11/nixexprs.tar.xz";
     #nix itself
     nix = {
       type = "github";
