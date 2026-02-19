@@ -11,7 +11,7 @@ let
   cfg_monitors = pkgs.writeShellApplication {
     name = "cfg_monitors";
     runtimeInputs = [
-      pkgs.xorg.xrandr
+      pkgs.xrandr
       pkgs.gawk
       pkgs.gnugrep
     ];

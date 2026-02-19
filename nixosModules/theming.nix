@@ -55,7 +55,7 @@ in
         platformTheme = "gtk2";
       };
       services.xserver.displayManager.sessionCommands = ''
-        ${lib.getExe pkgs.xorg.xrdb} -load /etc/xdg/Xresources
+        ${lib.getExe pkgs.xrdb} -load /etc/xdg/Xresources
       '';
       programs.dconf.profiles.user.databases = [
         {
