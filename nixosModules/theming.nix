@@ -65,6 +65,7 @@ in
       ];
       fonts = {
         packages = [
+          pkgs.noto-fonts-color-emoji
           pkgs.overpass
           pkgs.nerd-fonts.symbols-only
         ];
@@ -72,10 +73,12 @@ in
         fontDir.enable = true;
         fontconfig = {
           enable = true;
+          useEmbeddedBitmaps = true;
           defaultFonts = {
             serif = [ "Overpass" ];
             sansSerif = [ "Overpass" ];
             monospace = [ "Overpass Mono" ];
+            emoji = [ "Noto Color Emoji" ];
           };
           hinting = {
             enable = true;

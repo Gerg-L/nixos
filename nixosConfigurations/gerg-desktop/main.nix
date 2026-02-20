@@ -37,13 +37,13 @@
         xautoclick
         deadnix
         statix
-        fluffychat
         vesktop
         gh
         nixfmt
         tidal-hifi
         hyperfine
         android-tools
+        element-desktop
 
         #prusa-slicer # 3D printer slicer
         # QMK configuration
@@ -213,6 +213,14 @@
   services.printing = {
     enable = true;
     drivers = [ pkgs.hplipWithPlugin ];
+  };
+
+  xdg.portal = {
+    config.common.default = "gtk";
+    enable = true;
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+    ];
   };
 
   #user managment
