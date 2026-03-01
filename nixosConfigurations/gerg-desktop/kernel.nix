@@ -7,32 +7,24 @@
 
   boot.kernelPackages = pkgs.linuxPackagesFor (
     let
-      version = "6.16.9";
+      version = "6.19.5";
       src = pkgs.fetchurl {
         url = "mirror://kernel/linux/kernel/v${builtins.head (lib.splitVersion version)}.x/linux-${version}.tar.xz";
-        hash = "sha256-esjIo88FR2N13qqoXfzuCVqCb/5Ve0N/Q3dPw7ZM5Y0=";
+        hash = "sha256-la4FyMcJ41PA6FBsBy78VZjYW4t7Vkoeusfug0UEL/o=";
       };
     in
     (pkgs.linuxManualConfig {
       inherit src;
       inherit (config.boot) kernelPatches;
       version = "${version}-gerg";
-      config = {
-        CONFIG_RUST = "y";
-        CONFIG_MODULES = "y";
-      };
+      config = pkgs.linuxPackages_latest.kernel.config;
       configfile = ./kernelConfig;
-      extraMeta = {
-        broken = false;
-      };
     }).overrideAttrs
       (old: {
         passthru = old.passthru or { } // {
-          features = lib.foldr (x: y: x.features or { } // y) {
-            efiBootStub = true;
-            netfilterRPFilter = true;
-            ia32Emulation = true;
-          } config.boot.kernelPatches;
+          features = builtins.foldl' (
+            x: y: x.features or { } // y
+          ) pkgs.linuxPackages_latest.kernel.features config.boot.kernelPatches;
         };
       })
   );
