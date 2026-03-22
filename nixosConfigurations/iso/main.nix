@@ -8,7 +8,7 @@
 {
   ##Build wtih nix build .#nixosConfigurations.iso.config.formats.iso
   local = {
-    zellij.disable = true;
+    zellij.enable = true;
     hardware = {
       gpuAcceleration.disable = true;
       sound.disable = true;

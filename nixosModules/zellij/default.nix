@@ -4,13 +4,21 @@
   config,
 }:
 {
-  options.local.zellij = lib.mkEnableOption "zellij" // {
-    default = true;
+  options.local.zellij = {
+    enable = lib.mkEnableOption "zellij";
+    force = lib.mkEnableOption "force";
   };
 
   config = lib.mkIf config.local.zellij {
     local.packages = {
-      inherit (pkgs) zellij;
+      zellij = pkgs.zellij.overrideAttrs (oldAttrs: {
+        patches = oldAttrs.patches or [ ] ++ [
+          (pkgs.fetchpatch2 {
+            url = "https://patch-diff.githubusercontent.com/raw/zellij-org/zellij/pull/4545.patch?full-index=1";
+            hash = "sha256-jTKDaHXkKVfLAxAZUqodeYzxf7hYDMdtMmqIYsrNdEY=";
+          })
+        ];
+      });
     };
 
     programs.zsh.interactiveShellInit =
@@ -30,7 +38,7 @@
             if ! systemctl is-active --quiet --user "zellij$2.scope"; then
              systemd-run --scope --unit="zellij$2" --user zellij attach -b "$1"
             fi
-            exec zellij attach "$1"
+            ${lib.optionalString config.local.zellij.force "exec "}zellij attach "$1"
         }
 
         if [[ -z "$ZELLIJ" ]]; then

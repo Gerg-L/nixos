@@ -6,6 +6,7 @@
 }:
 {
   local = {
+    zellij.enable = true;
     remoteBuild.enable = true;
     DM.lightdm.enable = true;
     DE.xfce.enable = true;

@@ -9,6 +9,10 @@
 }:
 {
   local = {
+    zellij = {
+      enable = true;
+      force = true;
+    };
     DE.dwm.enable = true;
     DM.lightdm.enable = true;
     theming = {
