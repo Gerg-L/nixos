@@ -11,14 +11,7 @@
 
   config = lib.mkIf config.local.zellij.enable {
     local.packages = {
-      zellij = pkgs.zellij.overrideAttrs (oldAttrs: {
-        patches = oldAttrs.patches or [ ] ++ [
-          (pkgs.fetchpatch2 {
-            url = "https://patch-diff.githubusercontent.com/raw/zellij-org/zellij/pull/4545.patch?full-index=1";
-            hash = "sha256-jTKDaHXkKVfLAxAZUqodeYzxf7hYDMdtMmqIYsrNdEY=";
-          })
-        ];
-      });
+      inherit (pkgs) zellij;
     };
 
     programs.zsh.interactiveShellInit =
