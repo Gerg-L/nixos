@@ -41,6 +41,7 @@
     };
   };
 
+  services.gnome.gcr-ssh-agent.enable = lib.mkForce false;
   programs.ssh = {
     startAgent = true;
     agentTimeout = "1m";
