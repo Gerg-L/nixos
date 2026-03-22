@@ -31,6 +31,7 @@
     # Other nix settings
     #
     settings = {
+      lint-url-literals = "fatal";
       substituters = lib.mkForce [
         "https://cache.nixos.org?priority=2"
         "https://nix-community.cachix.org?priority=3"
@@ -47,7 +48,6 @@
         "fetch-closure"
         "flakes"
         "nix-command"
-        "no-url-literals"
         "parse-toml-timestamps"
         "read-only-local-store"
         "recursive-nix"
