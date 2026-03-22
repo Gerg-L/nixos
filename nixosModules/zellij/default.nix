@@ -9,7 +9,7 @@
     force = lib.mkEnableOption "force";
   };
 
-  config = lib.mkIf config.local.zellij {
+  config = lib.mkIf config.local.zellij.enable {
     local.packages = {
       zellij = pkgs.zellij.overrideAttrs (oldAttrs: {
         patches = oldAttrs.patches or [ ] ++ [
