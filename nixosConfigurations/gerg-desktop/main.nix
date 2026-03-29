@@ -44,12 +44,12 @@
         vesktop
         gh
         nixfmt
-        tidal-hifi
+        #tidal-hifi
         hyperfine
         android-tools
         element-desktop
 
-        #prusa-slicer # 3D printer slicer
+        prusa-slicer # 3D printer slicer
         # QMK configuration
         #via
         #qmk

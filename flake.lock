@@ -226,6 +226,27 @@
         "type": "github"
       }
     },
+    "nix-github-actions": {
+      "inputs": {
+        "nixpkgs": [
+          "run0-sudo-shim",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1737420293,
+        "narHash": "sha256-F1G5ifvqTpJq7fdkT34e/Jy9VCyzd5XfJ9TO8fHhJWE=",
+        "owner": "nix-community",
+        "repo": "nix-github-actions",
+        "rev": "f4158fa080ef4503c8f4c820967d946c2af31ec9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nix-github-actions",
+        "type": "github"
+      }
+    },
     "nix-index-database": {
       "inputs": {
         "nixpkgs": [
@@ -346,12 +367,35 @@
         "nix-index-database": "nix-index-database",
         "nixos-generators": "nixos-generators",
         "nvim-flake": "nvim-flake",
+        "run0-sudo-shim": "run0-sudo-shim",
         "sops-nix": "sops-nix",
         "spicetify-nix": "spicetify-nix",
         "stable": "stable",
         "suckless": "suckless",
         "systems": "systems_3",
         "unstable": "unstable"
+      }
+    },
+    "run0-sudo-shim": {
+      "inputs": {
+        "nix-github-actions": "nix-github-actions",
+        "nixpkgs": [
+          "unstable"
+        ],
+        "treefmt-nix": "treefmt-nix"
+      },
+      "locked": {
+        "lastModified": 1774702115,
+        "narHash": "sha256-iZ0HSQwjr9nYpVn10ZI4zQTdqvSggfxhXZ1c4oSZnuc=",
+        "owner": "LordGrimmauld",
+        "repo": "run0-sudo-shim",
+        "rev": "c9e06e2f220ab2fcf2228d4315c0a7fc2dc6e438",
+        "type": "github"
+      },
+      "original": {
+        "owner": "LordGrimmauld",
+        "repo": "run0-sudo-shim",
+        "type": "github"
       }
     },
     "sops-nix": {
@@ -470,6 +514,27 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "treefmt-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "run0-sudo-shim",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1773297127,
+        "narHash": "sha256-6E/yhXP7Oy/NbXtf1ktzmU8SdVqJQ09HC/48ebEGBpk=",
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "rev": "71b125cd05fbfd78cab3e070b73544abe24c5016",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "treefmt-nix",
         "type": "github"
       }
     },

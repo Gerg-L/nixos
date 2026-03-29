@@ -42,6 +42,12 @@
       repo = "nix-index-database";
       inputs.nixpkgs.follows = "unstable";
     };
+    run0-sudo-shim = {
+      type = "github";
+      owner = "LordGrimmauld";
+      repo = "run0-sudo-shim";
+      inputs.nixpkgs.follows = "unstable";
+    };
     systems = {
       type = "github";
       owner = "nix-systems";

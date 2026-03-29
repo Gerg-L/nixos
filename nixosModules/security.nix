@@ -1,7 +1,10 @@
+{ run0-sudo-shim }:
 {
+  imports = [ run0-sudo-shim.nixosModules.default ];
+
   environment.shellAliases = {
-    #make run0 use aliases
     run0 = "run0 --background='' ";
+    sudo = "sudo --run0-extra-arg=--background='' ";
     s = "run0";
   };
   services.dbus.implementation = "broker";
@@ -9,15 +12,9 @@
     sudo.enable = false;
     polkit = {
       enable = true;
-      extraConfig = ''
-        polkit.addRule(function(action, subject) {
-          if (action.id == "org.freedesktop.policykit.exec"
-              || action.id.indexOf("org.freedesktop.systemd1.") == 0) {
-            return polkit.Result.AUTH_ADMIN_KEEP;
-          }
-        });
-      '';
+      persistentAuthentication = true;
     };
+    run0-sudo-shim.enable = true;
   };
   environment.etc."polkit-1/polkitd.conf".text = ''
     [Polkitd]
