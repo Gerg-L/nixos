@@ -44,7 +44,7 @@
         vesktop
         gh
         nixfmt
-        #tidal-hifi
+        tidal-hifi
         hyperfine
         android-tools
         element-desktop
