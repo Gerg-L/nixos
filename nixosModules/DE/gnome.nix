@@ -8,44 +8,23 @@
 
   config = lib.mkIf config.local.DE.gnome.enable {
     environment = {
-      systemPackages = [ pkgs.gnome.gnome-calculator ];
-      gnome.excludePackages = builtins.attrValues {
-        inherit (pkgs)
-          gnome-photos
-          gnome-tour
-          gnome-text-editor
-          gnome-online-accounts
-          ;
-        inherit (pkgs.gnome)
-          gnome-weather
-          gnome-shell
-          gnome-disk-utility
-          gnome-maps
-          gnome-clocks
-          gnome-remote-desktop
-          gnome-calendar
-          gnome-music
-          simple-scan
-          cheese # webcam tool
-          epiphany # web browser
-          geary # email reader
-          evince # document viewer
-          gnome-characters
-          totem # video player
-          tali # poker game
-          iagno # go game
-          hitori # sudoku game
-          atomix # puzzle game
-          ;
-      };
+      systemPackages = [
+        pkgs.gnome-calculator
+        pkgs.gnome-clocks
+        pkgs.gnome-console
+        pkgs.gnome-tweaks
+        pkgs.gnome-extension-manager
+        pkgs.gnomeExtensions.desktop-icons-ng-ding
+      ];
     };
 
     services = {
-      displayManager.defaultSession = "gnome";
-      xserver = {
-        enable = true;
-        desktopManager.gnome.enable = true;
+      gnome = {
+        games.enable = false;
+        core-apps.enable = false;
       };
+      displayManager.defaultSession = "gnome";
+      desktopManager.gnome.enable = true;
     };
   };
 }

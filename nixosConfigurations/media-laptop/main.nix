@@ -8,8 +8,7 @@
   local = {
     zellij.enable = true;
     remoteBuild.enable = true;
-    DM.lightdm.enable = true;
-    DE.xfce.enable = true;
+    DE.gnome.enable = true;
     theming = {
       enable = true;
       kmscon.enable = true;
@@ -23,9 +22,18 @@
       librewolf = pkgs.librewolf.override { cfg.speechSynthesisSupport = false; };
     };
   };
-
+  services.displayManager.gdm = {
+    enable = true;
+    wayland = true;
+  };
+  hardware.graphics = {
+    extraPackages = [
+      pkgs.intel-compute-runtime-legacy1
+      pkgs.intel-media-driver
+    ];
+    extraPackages32 = [ pkgs.driversi686Linux.intel-media-driver ];
+  };
   services = {
-    xserver.videoDrivers = [ "modesetting" ];
     displayManager.autoLogin = {
       enable = true;
       user = "media";
@@ -70,6 +78,11 @@
       "rtsx_usb_sdmmc"
     ];
     kernelModules = [ "kvm-intel" ];
+    kernelParams = [
+      "i915.enable_guc=2"
+      "i915.enable_fbc=1"
+      "i915.enable_psr=2"
+    ];
   };
 
   systemd.user.tmpfiles.users.media.rules = [
