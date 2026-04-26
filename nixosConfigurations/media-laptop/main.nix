@@ -32,11 +32,7 @@
   };
   services = {
     xserver = {
-      videoDrivers = [ "intel" ];
-      deviceSection = ''
-        Option "DRI" "2"
-        Option "TearFree" "true"
-      '';
+      videoDrivers = [ "modesetting" ];
     };
     displayManager.autoLogin = {
       enable = true;
