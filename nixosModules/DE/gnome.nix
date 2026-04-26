@@ -15,8 +15,6 @@
           gnome-tour
           gnome-text-editor
           gnome-online-accounts
-          ;
-        inherit (pkgs.gnome)
           gnome-weather
           gnome-shell
           gnome-disk-utility
