@@ -8,7 +8,6 @@
   local = {
     zellij.enable = true;
     remoteBuild.enable = true;
-    DM.lightdm.enable = true;
     DE.gnome.enable = true;
     theming = {
       enable = true;
@@ -22,6 +21,10 @@
         ;
       inherit (nvim-flake.packages) neovim;
     };
+  };
+  services.displayManager.gdm = {
+    enable = true;
+    wayland = true;
   };
   hardware.graphics = {
     extraPackages = [
