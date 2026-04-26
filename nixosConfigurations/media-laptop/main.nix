@@ -9,7 +9,7 @@
     zellij.enable = true;
     remoteBuild.enable = true;
     DM.lightdm.enable = true;
-    DE.xfce.enable = true;
+    DE.gnome.enable = true;
     theming = {
       enable = true;
       kmscon.enable = true;
