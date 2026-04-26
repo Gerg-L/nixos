@@ -8,7 +8,7 @@
 
   config = lib.mkIf config.local.DE.gnome.enable {
     environment = {
-      systemPackages = [ pkgs.gnome.gnome-calculator ];
+      systemPackages = [ pkgs.gnome-calculator ];
       gnome.excludePackages = builtins.attrValues {
         inherit (pkgs)
           gnome-photos
@@ -40,10 +40,7 @@
 
     services = {
       displayManager.defaultSession = "gnome";
-      xserver = {
-        enable = true;
-        desktopManager.gnome.enable = true;
-      };
+      desktopManager.gnome.enable = true;
     };
   };
 }
