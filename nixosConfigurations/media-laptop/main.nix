@@ -18,9 +18,9 @@
       inherit (pkgs)
         mpv
         pwvucontrol # gui volume control
-        librewolf
         ;
       inherit (nvim-flake.packages) neovim;
+      librewolf = pkgs.librewolf.override { cfg.speechSynthesisSupport = false; };
     };
   };
 

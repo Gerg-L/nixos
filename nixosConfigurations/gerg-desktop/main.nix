@@ -58,7 +58,7 @@
       inherit (nvim-flake.packages) neovim;
       inherit (self'.packages) lint;
 
-      librewolf = master.legacyPackages.librewolf.override { cfg.speechSynthesisSupport = false; };
+      librewolf = pkgs.librewolf.override { cfg.speechSynthesisSupport = false; };
       nixpkgs-review = pkgs.nixpkgs-review.override { nix = config.nix.package; };
     };
 
