@@ -32,7 +32,6 @@ lib.pipe ./. [
         let
           defaultArgs =
             pkgs
-            // pkgs.xorg
             // {
               inherit inputs';
               self' = inputs'.self;

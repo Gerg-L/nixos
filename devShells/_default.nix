@@ -15,7 +15,6 @@ lib.pipe ./. [
     {
       ${lib.removeSuffix ".nix" x} = lib.callPackageWith (
         pkgs
-        // pkgs.xorg
         // {
           inherit inputs';
           self' = inputs'.self;
