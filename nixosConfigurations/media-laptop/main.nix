@@ -23,9 +23,21 @@
       inherit (nvim-flake.packages) neovim;
     };
   };
-
+  hardware.graphics = {
+    extraPackages = [
+      pkgs.intel-compute-runtime-legacy1
+      pkgs.intel-media-driver
+    ];
+    extraPackages32 = [ pkgs.driversi686Linux.intel-media-driver ];
+  };
   services = {
-    xserver.videoDrivers = [ "modesetting" ];
+    xserver = {
+      videoDrivers = [ "intel" ];
+      deviceSection = ''
+        Option "DRI" "2"
+        Option "TearFree" "true"
+      '';
+    };
     displayManager.autoLogin = {
       enable = true;
       user = "media";
@@ -70,6 +82,11 @@
       "rtsx_usb_sdmmc"
     ];
     kernelModules = [ "kvm-intel" ];
+    kernelParams = [
+      "i915.enable_guc=2"
+      "i915.enable_fbc=1"
+      "i915.enable_psr=2"
+    ];
   };
 
   systemd.user.tmpfiles.users.media.rules = [
