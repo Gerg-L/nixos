@@ -85,9 +85,16 @@
     ];
   };
 
-  systemd.user.tmpfiles.users.media.rules = [
-    "L+ %h/Desktop/librewolf.desktop - - - - ${pkgs.librewolf}/share/applications/librewolf.desktop"
-  ];
+  systemd.user.tmpfiles.users.media.rules =
+    let
+      desktop_link = pkgs.runCommand "desktop_link" { } ''
+        cat "${pkgs.librewolf}/share/applications/librewolf.desktop" > "$out"
+        chmod +x "$out"
+      '';
+    in
+    [
+      "L+ %h/Desktop/librewolf.desktop - - - - ${desktop_link}"
+    ];
 
   # Reformat at some point
   swapDevices = [

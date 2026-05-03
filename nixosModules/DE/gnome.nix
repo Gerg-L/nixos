@@ -15,6 +15,7 @@
         pkgs.gnome-tweaks
         pkgs.gnome-extension-manager
         pkgs.gnomeExtensions.desktop-icons-ng-ding
+        pkgs.nautilus
       ];
     };
 
