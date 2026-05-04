@@ -23,6 +23,7 @@
   boot = {
     zfs = {
       devNodes = "/dev/disk/by-id/";
+      forceImportRoot = true;
       forceImportAll = true;
     };
 
