@@ -5,6 +5,16 @@
 {
   local.packages = {
     inherit (pkgs) sbctl;
+    windows = pkgs.writeShellScriptBin "windows" ''
+      if ! [ $(id -u) = 0 ]; then
+         echo "Run as root!"
+         exit 1
+      fi
+
+      NUM="$(efibootmgr | awk '/Windows/ { sub(/Boot/, "", $1); print $1 }')"
+      efibootmgr --bootnext "$NUM"
+      reboot
+    '';
   };
 
   systemd.tmpfiles.rules = [
