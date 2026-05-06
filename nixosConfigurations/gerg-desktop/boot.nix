@@ -11,8 +11,8 @@
          exit 1
       fi
 
-      NUM="$(efibootmgr | awk '/Windows/ { sub(/Boot/, "", $1); print $1 }')"
-      efibootmgr --bootnext "$NUM"
+      bootctl set-oneshot 'Windows'
+      bootctl set-timeout-oneshot 1
       reboot
     '';
   };
