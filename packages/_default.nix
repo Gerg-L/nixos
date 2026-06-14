@@ -30,14 +30,12 @@ lib.pipe ./. [
       callPackage =
         file: args:
         let
-          defaultArgs =
-            pkgs
-            // {
-              inherit inputs';
-              self' = inputs'.self;
-              # npins sources if i ever use them
-              # sources = lib.mapAttrs (_: pkgs.npins.mkSource) (lib.importJSON "${self}/packages/sources.json").pins;
-            };
+          defaultArgs = pkgs // {
+            inherit inputs';
+            self' = inputs'.self;
+            # npins sources if i ever use them
+            # sources = lib.mapAttrs (_: pkgs.npins.mkSource) (lib.importJSON "${self}/packages/sources.json").pins;
+          };
           _callPackage = lib.callPackageWith defaultArgs;
           fullPath = p + "/${file}.nix";
           callPath = p + /call.nix;

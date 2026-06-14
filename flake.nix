@@ -8,13 +8,13 @@
       ref = "master";
     };
     unstable.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
-    stable.url = "https://channels.nixos.org/nixos-25.11/nixexprs.tar.xz";
+    stable.url = "https://channels.nixos.org/nixos-26.05/nixexprs.tar.xz";
     #nix itself
     nix = {
       type = "github";
       owner = "NixOS";
       repo = "nix";
-      ref = "53ab7375a110825814837005aaf5a256edea6eae";
+      ref = "02abc7a8c990cf8bf97b084dfc2852b59dfcdfef";
       inputs.nixpkgs.follows = "stable";
     };
     #other

@@ -3,7 +3,6 @@
   nix-index-database,
   nvim-flake,
   self',
-  master,
   pkgs,
   config,
 }:
@@ -69,6 +68,11 @@
 
     prismlauncher.enable = true;
   };
+
+  #for bitwarden
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-39.8.10"
+  ];
 
   boot = {
     binfmt.emulatedSystems = [ "aarch64-linux" ];

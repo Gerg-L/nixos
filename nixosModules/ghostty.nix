@@ -12,7 +12,7 @@ let
       if builtins.isString v then
         ''${k} = "${toString v}"''
       else
-        ''${k} = ${if builtins.isBool v then if v then "true" else "false" else toString v}'';
+        "${k} = ${if builtins.isBool v then if v then "true" else "false" else toString v}";
   };
   configFile = format.generate "ghostty-config" cfg.settings;
 in

@@ -14,7 +14,7 @@ lib.pipe ./. [
       (lib.removeSuffix ".nix")
       (lib.removePrefix "${./.}/")
       (lib.removeSuffix "/default")
-      (builtins.replaceStrings ["/"] ["-"])
+      (builtins.replaceStrings [ "/" ] [ "-" ])
     ];
     value = myLib.addSchizophreniaToModule name;
   }))

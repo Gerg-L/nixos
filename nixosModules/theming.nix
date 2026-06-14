@@ -91,16 +91,11 @@ in
     (lib.mkIf cfg.kmscon.enable {
       services.kmscon = {
         enable = true;
-        hwRender = false;
-        extraConfig = ''
-          font-size=10
-        '';
-        fonts = [
-          {
-            name = "OverpassMono";
-            package = pkgs.overpass;
-          }
-        ];
+        config = {
+          font-size = 10;
+          font-name = "OverPassMono";
+          hwaccel = true;
+        };
       };
       systemd.services = {
         "autovt@tty1".enable = false;

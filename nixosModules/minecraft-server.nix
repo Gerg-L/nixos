@@ -8,7 +8,7 @@
   options = {
     local.minecraft-servers = lib.mkOption {
       type = lib.types.attrsOf (
-        lib.types.submodule ({
+        lib.types.submodule {
           options = {
             enable = lib.mkEnableOption "this Minecraft server";
             java = lib.mkOption {
@@ -33,7 +33,7 @@
               };
             };
           };
-        })
+        }
       );
       default = { };
     };

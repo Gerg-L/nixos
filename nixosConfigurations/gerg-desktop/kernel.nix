@@ -7,10 +7,10 @@
 
   boot.kernelPackages = pkgs.linuxPackagesFor (
     let
-      version = "6.19.10";
+      version = "7.0.12";
       src = pkgs.fetchurl {
         url = "mirror://kernel/linux/kernel/v${builtins.head (lib.splitVersion version)}.x/linux-${version}.tar.xz";
-        hash = "sha256-Rm1EGg6l4EtwI2GLeyAb/WDv+rIl+Ab9Qc5mNIQ5Whw=";
+        hash = "sha256-V+3JpB78HKa3l6+o9KWHow2ir2vKc1brVuHhpK2iZdo=";
       };
     in
     (pkgs.linuxManualConfig {
