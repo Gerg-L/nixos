@@ -92,9 +92,10 @@ in
       services.kmscon = {
         enable = true;
         config = {
-          font-size = 10;
-          font-name = "OverPassMono";
+          font-size = 12;
+          font-name = "Overpass Mono";
           hwaccel = true;
+          multi-monitor = "largest";
         };
       };
       systemd.services = {
