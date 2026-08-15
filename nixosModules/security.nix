@@ -13,11 +13,8 @@
     polkit = {
       enable = true;
       persistentAuthentication = true;
+      settings.Polkitd.ExpirationSeconds = 60;
     };
     run0-sudo-shim.enable = true;
   };
-  environment.etc."polkit-1/polkitd.conf".text = ''
-    [Polkitd]
-    ExpirationSeconds=60
-  '';
 }
