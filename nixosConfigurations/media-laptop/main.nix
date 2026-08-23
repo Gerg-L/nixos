@@ -22,10 +22,7 @@
       librewolf = pkgs.librewolf.override { cfg.speechSynthesisSupport = false; };
     };
   };
-  services.displayManager.gdm = {
-    enable = true;
-    wayland = true;
-  };
+  services.displayManager.gdm.enable = true;
   hardware.graphics = {
     extraPackages = [
       pkgs.intel-compute-runtime-legacy1
