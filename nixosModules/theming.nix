@@ -43,8 +43,8 @@ in
       };
       qt = {
         enable = true;
-        style = "gtk2";
-        platformTheme = "gtk2";
+        style = "adwaita-dark";
+        platformTheme = "gnome";
       };
       services.xserver.displayManager.sessionCommands = ''
         ${lib.getExe pkgs.xrdb} -load /etc/xdg/Xresources

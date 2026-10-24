@@ -13,7 +13,6 @@ in
         adblockify
         hidePodcasts
         shuffle
-        betterGenres
         ;
     };
     experimentalFeatures = true;

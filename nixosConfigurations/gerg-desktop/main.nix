@@ -21,6 +21,7 @@
     allowedUnfree = [
       "nvidia-x11"
       "nvidia-settings"
+      "nvidia-kernel-modules"
       "steam"
       "steam-unwrapped"
       "steam-run"
@@ -94,7 +95,7 @@
   };
 
   hardware.nvidia = {
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    package = config.boot.kernelPackages.nvidiaPackages.latest;
     nvidiaPersistenced = false;
     nvidiaSettings = true;
     modesetting.enable = true;
